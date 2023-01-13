@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class GroupBuyingRepository {
-
     private final EntityManager em;
 
     public Long save(GroupBuying groupBuying) {

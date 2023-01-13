@@ -34,6 +34,9 @@ public class GroupBuying extends Contents {
     public void setImage(String image){
         this.image = image;
     }
+    public void addMember(GroupBuyingIntersection groupBuyingIntersection){
+        memberList.add(groupBuyingIntersection);
+    }
     public Long update(GroupBuyingRequestDto groupBuyingRequestDto) {
         this.cost = groupBuyingRequestDto.getPrice();
         this.limitMember = groupBuyingRequestDto.getMemberLimit();

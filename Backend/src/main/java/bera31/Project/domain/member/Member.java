@@ -75,6 +75,12 @@ public class Member {
         this.gu = gu;
         this.authority = Authority.ROLE_USER;
     }
+    public void postGroupBuying(GroupBuying groupBuying){
+        buyingList.add(groupBuying);
+    }
+    public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection){
+        participantingGroupBuying.add(groupBuyingIntersection);
+    }
     public void changePassword(String password) {
         this.password = password;
     }
