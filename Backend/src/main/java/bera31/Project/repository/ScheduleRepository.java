@@ -5,28 +5,28 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class ScheduleRepository {
-
     private final EntityManager em;
-
-    public Schedule save(Schedule memo) {
+    public Long save(Schedule memo) {
         em.persist(memo);
-        return memo;
+        return memo.getId();
     }
-
     public void delete(Schedule memo) {
         em.remove(memo);
         return;
     }
-
     public Schedule findById(Long id) {
-        return em.createQuery("select m from Schedule m where m.id =:id", Schedule.class)
+        return em.createQuery("select s from Schedule s where s.id =:id", Schedule.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
 
-
+    public List<Schedule> findAllSchedule(){
+        return em.createQuery("select s from Schedule s", Schedule.class)
+                .getResultList();
+    }
 }
