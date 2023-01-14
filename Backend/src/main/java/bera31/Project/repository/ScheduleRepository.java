@@ -24,9 +24,4 @@ public class ScheduleRepository {
                 .setParameter("id", id)
                 .getSingleResult();
     }
-
-    public List<Schedule> findAllSchedule(){
-        return em.createQuery("select s from Schedule s", Schedule.class)
-                .getResultList();
-    }
 }

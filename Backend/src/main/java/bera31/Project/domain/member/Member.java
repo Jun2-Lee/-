@@ -67,6 +67,7 @@ public class Member {
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
     private List<Schedule> memoList = new ArrayList<>();
+
     public Member(String email, String password, String nickname, String dong, String gu){
         this.email = email;
         this.password = password;

@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @Transactional
@@ -50,8 +52,12 @@ public class AuthService {
     }
 
     public AuthTokenDto signIn(LogInDto logInDto){
-        if(memberRepository.findByEmail(logInDto.getEmail()).isEmpty())
+        Optional<Member> findedMember = memberRepository.findByEmail(logInDto.getEmail());
+
+        if(findedMember.isEmpty())
             throw new IllegalArgumentException("존재하지 않는 유저입니다.");
+        if(!passwordEncoder.matches(logInDto.getPassword(), findedMember.get().getPassword()))
+            throw new IllegalArgumentException("Password가 일치하지 않습니다.");
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(logInDto.getEmail(), logInDto.getPassword());

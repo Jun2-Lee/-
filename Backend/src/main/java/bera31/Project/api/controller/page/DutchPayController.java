@@ -1,4 +1,4 @@
-package bera31.Project.api.controller;
+package bera31.Project.api.controller.page;
 
 import bera31.Project.domain.dto.requestdto.DutchPayRequestDto;
 import bera31.Project.domain.dto.responsedto.DutchPayListResponseDto;

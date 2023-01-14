@@ -37,6 +37,10 @@ public class S3Uploader {
         return uploadImageUrl; // DB에 저장되는건 End point
     }
 
+    public void deleteRemoteFile(String fileName){
+        amazonS3Client.deleteObject(this.bucket, (fileName).replace(File.separatorChar, '/'));
+    }
+
     private void removeLocalFile(File target){
         if(target.delete()){
             log.info("파일이 정상적으로 삭제되었습니다.");

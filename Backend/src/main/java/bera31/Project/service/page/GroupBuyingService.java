@@ -50,8 +50,8 @@ public class GroupBuyingService {
     }
 
     public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
-        String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
-        Member findedMember = memberRepository.findByEmail(currentMemberEmail).get();
+        Member findedMember = loadCurrentMember();
+
         GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, findedMember);
         newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
 
@@ -60,8 +60,7 @@ public class GroupBuyingService {
     }
 
     public Long participantGroupBuying(Long postId){
-        String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
-        Member findedMember = memberRepository.findByEmail(currentMemberEmail).get();
+        Member findedMember = loadCurrentMember();
         GroupBuying findedPost = groupBuyingRepository.findById(postId);
 
         GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(findedMember, findedPost);
@@ -89,5 +88,10 @@ public class GroupBuyingService {
 
     public void deleteGroupBuying(Long postId) {
         groupBuyingRepository.delete(groupBuyingRepository.findById(postId));
+    }
+
+    private Member loadCurrentMember(){
+        String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
+        return memberRepository.findByEmail(currentMemberEmail).get();
     }
 }

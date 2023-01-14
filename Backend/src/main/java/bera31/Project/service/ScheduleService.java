@@ -24,8 +24,7 @@ public class ScheduleService {
 
     @Transactional
     public Long postSchedule(ScheduleRequestDto scheduleRequestDto) {
-        String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
-        Member findedMember = memberRepository.findByEmail(currentMemberEmail).get();
+        Member findedMember = loadCurrentMember();
 
         Schedule newMemo = new Schedule(scheduleRequestDto);
         findedMember.addMemo(newMemo);
@@ -34,8 +33,10 @@ public class ScheduleService {
 
     @Transactional
     public List<ScheduleListResponseDto> renderSchedule(){
-        return scheduleRepository.findAllSchedule()
-                .stream()
+        Member findedMember = loadCurrentMember();
+        List<Schedule> memoList = findedMember.getMemoList();
+
+        return memoList.stream()
                 .map(ScheduleListResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -49,5 +50,10 @@ public class ScheduleService {
     @Transactional
     public void deleteSchedule(Long postId) {
         scheduleRepository.delete(scheduleRepository.findById(postId));
+    }
+
+    private Member loadCurrentMember(){
+        String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
+        return memberRepository.findByEmail(currentMemberEmail).get();
     }
 }
