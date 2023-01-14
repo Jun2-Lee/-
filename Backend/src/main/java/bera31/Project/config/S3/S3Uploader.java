@@ -38,7 +38,7 @@ public class S3Uploader {
     }
 
     public void deleteRemoteFile(String fileName){
-        amazonS3Client.deleteObject(this.bucket, (fileName).replace(File.separatorChar, '/'));
+        amazonS3Client.deleteObject(this.bucket, "profileImage/" + fileName);
     }
 
     private void removeLocalFile(File target){

@@ -29,6 +29,7 @@ public class MemberService {
     public String changeMyInfo(String dong, String gu, MultipartFile profileImage) throws IOException {
         Member findedMember = loadCurrentMember();
 
+
         findedMember.changeImage(s3Uploader.upload(profileImage, "profileImage"));
         findedMember.changeAddress(dong, gu);
         return "OK";
