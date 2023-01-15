@@ -2,13 +2,13 @@ import './detail_purchase.css';
 import moment from 'moment';
 import 'moment/locale/ko';
 import React  from 'react';
-import Comment from "../../components/comment";
 import {useState} from 'react';
+
 
 function DetailPurchase() {
     const nowTime = moment().format('YYYY-MM-DD');
 
-    let [userName] = useState('');
+    let [userName] = useState('뭐먹지 님');
     let [comment, setComment] = useState(''); //사용자가 입력하고 있는 댓글
     let [feedComments, setFeedComments] = useState([]); //댓글 리스트
     let [isValid, setIsValid] = useState(false); 
@@ -22,20 +22,129 @@ function DetailPurchase() {
     
     };//유효성 검사를 통과하고 '등록' 클릭 시 발생하는 함수 post
 
-    const CommentList = props => {
-        return (
-            <div className='userCommentBox'>
-                <p className='userName'>{props.userName}</p>
-                <div className='userComment'>{props.userComment}</div>
+
+    let[reply,setReply] = useState(''); //사용자가 입력하고 있는 답글
+    let[feedReply, setFeedReply] = useState([]); //답글 리스트
+    let[isValidReply,setIsValidReply] = useState(false);
+    //답글 버튼 누를때마다 console count
+
+    const [number,setNumber] = useState(1);
+
+    const increaseNumber = () => {
+          setNumber(number + 1);
+
+      };
+
+
+    let postReply = e => {
+      const copyFeedReply = [...feedReply];
+      copyFeedReply.push(comment); //copyFeedComments에 comment를 push
+      setFeedReply(copyFeedReply);//feedComment를 setFeedComment로 변경
+      setReply('');//댓글창 초기화
+    };
+//답글
+    const ReplyList = props =>{return(
+      <div>
+        
+        <div className='reply_cmp'>
+              
+              <img className = "replyImg"  src='assets/img/reply.png'>
+              </img>
+              <img className = "smallImg"  src='assets/img/smallcomment.png'>
+              </img>
                 
+          </div>
+          <div className='userReplyBox'>
+              <p className='userName' style={{color : "#FF8327"}}>{props.userName}</p>
+              <div className='userComment'>{props.userComment}</div>
+          </div>
+
+          <div className='inputreply'>
+                    <input 
+                        type="text"
+                        className='inputReply'
+                        placeholder='답글 작성하기...'
+                        onChange = {e => {
+                            setReply(e.target.value);
+                        }}
+                        onKeyUp={e=> {
+                            e.target.value.length>0
+                                ? setIsValidReply(true)
+                                : setIsValidReply(false);
+                        }}
+                        value = {reply}
+                    ></input> 
+                    <div className='buttonblankReply'>
+                        <button 
+                          type='button'
+                          className='submitReply'
+                          onClick={postReply}
+                          disabled={isValidReply ? false : true}
+                          
+                    >
+                        등록
+                      </button>
+                      
+                    </div>
+
+                    </div>
+                    
+
+        
+          <div className='Reply'>
+            <button 
+                type='button'
+                className='reply'
+                onClick={()=>{postReply();increaseNumber();}}
                 
-            </div>
-            
-        );
-    }
+                >답글
+            </button>
+            {
+              console.log({number})
+            }
+          </div>
+          <div className='commentLine'>
+            <img className='commentline' src = 'assets/img/commentLine.png'></img>
+          </div>
+
+          
+      </div>
+    )}
+
+//댓글
+    const CommentList = props =>{return(
+      <div>
+          <div className='comment_cmp'>
+              <img className = "smallimg"  src='assets/img/smallcomment.png'>
+              </img>
+              
+          </div>
+          <div className='userCommentBox'>
+              <p className='userName' style={{color : "#FF8327",marginLeft:"45px"}}>{props.userName}</p>
+              <div className='userComment'>{props.userComment}</div>
+          </div>
+          <div className='Reply'>
+            <button 
+                type='button'
+                className='reply'
+                onClick={postReply}
+                >답글
+            </button>
+          </div>
+          <div className='commentLine'>
+            <img className='commentline' src = 'assets/img/commentLine.png'></img>
+          </div>
+
+          
+      </div>
+  )
+}
+
+  
+
     
     return(
-      <div className="detail_purchase">
+      <div className="detail_purchase" >
        
             <div className='detail_Title'>
               <p id = "detail_title">제목</p>
@@ -55,7 +164,7 @@ function DetailPurchase() {
               <img className = "profileImg"  src='assets/img/default_profile.png'>
               </img>
             </div>
-
+          
 
           <div className='component_purchase'>
             <div className='detailImg'></div>
@@ -109,25 +218,43 @@ function DetailPurchase() {
               <button className = "like">찜</button>
               <button className = "application">신청하기</button>
             </div>   
-
-
-              <div className='purchase_comment'>
-                          {feedComments.map((commentArr,i) => {
+            
+            <div className='comment_cmp1' style={{overflow:'scroll'}} >
+           
+              <div className='purchase_comment' >
+                
+                    {feedComments.map((commentArr,i) => {
                           return (
                         
                             <CommentList
+                              
                               userName = {userName}
                               userComment = {commentArr}
                               key = {i}
+                  
                             
                           />
                         
                       );
                       
-                  })}
-                
-            
-                  <div className='inputcomment'>
+                  })}</div>
+
+              <div className='purchase_reply'>
+                {feedReply.map((replyArr,i)=>{
+                  return(
+                    <ReplyList
+                              userName = {userName}
+                              userComment = {replyArr}
+                              key = {i}
+                              />
+                  )
+                })}
+              </div>
+              
+                  
+            </div>
+          <div className='commentBox'>
+            <div className='inputcomment'>
                     <input 
                         type="text"
                         className='inputComment'
@@ -152,9 +279,12 @@ function DetailPurchase() {
                     >
                         등록
                       </button>
-            </div>
+                      
             </div>
           </div>
+        </div>                  
+            
+
       
 
         )
