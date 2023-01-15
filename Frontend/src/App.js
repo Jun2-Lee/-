@@ -1,5 +1,4 @@
-import axios from 'axios'
-import {useEffect, useState} from 'react';
+
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import * as React from "react";
@@ -20,24 +19,9 @@ import PostgroupBuying from "./pages/post/post_groupBuying";
 import EditProfile from "./pages/profile/profile_edit";
 import MyWriting from "./pages/myWriting";
 import Layout from "./components/Layout";
-const SERVER_URL = 'http://3.36.144.128:8080/naong-api';
+import Note from "./pages/note/note";
+
 function App() {
-
-  const fetchData = async () =>{
-    const response = await axios.get('http://3.36.144.128:8080/naong-api');
-  };
-
-  useEffect(()=>{
-    fetchData();
-  }, []);
-
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    const text = e.target.text.value;
-    const done = e.target.done.checked;
-    await axios.post(SERVER_URL,{text, done});
-    fetchData();
-  };
 
   return (
     <Router>
@@ -57,6 +41,7 @@ function App() {
           <Route path="/postGroupBuying" element={<PostgroupBuying />} />
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/myWriting" element={<MyWriting />} />
+          <Route path="/note" element={<Note />} />
         </Route>
       </Routes>
     </Router>
