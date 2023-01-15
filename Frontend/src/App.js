@@ -1,5 +1,4 @@
-import axios from 'axios'
-import {useEffect, useState} from 'react';
+
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import * as React from "react";
@@ -22,6 +21,9 @@ import MyWriting from "./pages/myWriting";
 import MyPage from "./pages/mypage";
 import Layout from "./components/Layout";
 
+import Note from "./pages/note/note";
+
+
 function App() {
 
   /*const fetchData = async () =>{
@@ -39,6 +41,7 @@ function App() {
     await axios.post(SERVER_URL,{text, done});
     fetchData();
   };*/
+
 
   return (
     <Router>
@@ -58,7 +61,11 @@ function App() {
           <Route path="/postGroupBuying" element={<PostgroupBuying />} />
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/myWriting" element={<MyWriting />} />
+
+          <Route path="/note" element={<Note />} />
+
           <Route path="/myPage" element={<MyPage />} />
+
         </Route>
       </Routes>
     </Router>

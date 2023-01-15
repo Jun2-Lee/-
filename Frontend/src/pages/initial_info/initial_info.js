@@ -1,9 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import './initial_info.css'
+import './initial_info.css';
+import axios from 'axios';
 
 function InitialInfo() {
-  const getInfo = document.getElementById("getInfo");
+
+ const getInfo = document.getElementById("getInfo");
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -37,6 +39,7 @@ function InitialInfo() {
         console.log(data);
       });
   };
+
 
   const [nickName, setNickName] = useState("");
   

@@ -47,7 +47,7 @@ function Layout() {
           <Link className="profile_link" id="logoutLink" to="/">
             로그아웃
           </Link>
-          <Link className="profile_link" to="/">
+          <Link className="profile_link" to="/Note">
             쪽지
           </Link>
         </div>
