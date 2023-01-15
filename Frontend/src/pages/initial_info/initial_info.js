@@ -1,8 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import './initial_info.css'
+import './initial_info.css';
+import axios from 'axios';
 
 function InitialInfo() {
+
   const [nickName, setNickName] = useState("");
   
   const handleChange = ({ target: { value } }) => setNickName(value);
