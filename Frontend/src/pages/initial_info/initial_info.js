@@ -5,12 +5,57 @@ import axios from 'axios';
 
 function InitialInfo() {
 
+ const getInfo = document.getElementById("getInfo");
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    const nickName_linkage = document.getElementsByClassName("nickName_linkage");
+    const gu = document.getElementsByClassName("gu");
+    const dong = document.getElementsByClassName("dong");
+
+    formData.append("nickName_linkage", nickName_linkage);
+    formData.append("gu", gu);
+    formData.append("dong", dong);
+
+    fetch("http://3.36.144.128:8080/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      body: new FormData(getInfo),
+    })
+      .then((response) => {
+        if (response.ok === true) {
+          return response.json();
+        }
+        throw new Error("에러 발생");
+      })
+      .catch((error) => {
+        alert(error);
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
+
   const [nickName, setNickName] = useState("");
   
   const handleChange = ({ target: { value } }) => setNickName(value);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const nickName_linkage = document.getElementsByClassName("nickName_linkage");
+    const gu = document.getElementsByClassName("gu");
+    const dong = document.getElementsByClassName("dong");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({
+      nickName_linkage,
+      gu,
+      dong,
+    });
   };
 
   //파일 미리 볼 url을 저장해줄 state
@@ -29,7 +74,7 @@ function InitialInfo() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form id="getInfo" onSubmit={handleSubmit}>
         <div className="nick_name">
           <label className="form-label">닉네임</label>
           {/*nickName의 margin-top을 바꾸면 signup 페이지(1-3)에도 영향이 가서 className 다르게 설정*/}
@@ -44,7 +89,7 @@ function InitialInfo() {
         <div className="profile_upload">
           <label className="form-label">프로필 사진</label>
           <div className="profileUpload"></div>
-          <input type="file" accept="image/*" hidden="true" onChange={saveFileImage}></input>  
+          <input type="file" accept="image/*" hidden={true} onChange={saveFileImage}></input>  
         </div>
 
         <div className="address">
@@ -66,7 +111,7 @@ function InitialInfo() {
         </div>
         
         <div className="submit">
-          <input type="submit" className="submit_user_info" value="저장하기"></input>
+          <input type="submit" className="submit_user_info" value="저장하기" onClick={onSubmitHandler}></input>
         </div>
       </form>
     </div>

@@ -24,49 +24,56 @@ public class Member {
     @Id
     @GeneratedValue
     @Column(name = "MEMBER_ID")
-    Long id;
-
-    String email;
-    String nickname;
-    String password;
-    String profileImage;
+    private Long id;
+    private String email;
+    private String nickname;
+    private String password;
+    private String profileImage;
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
     @Embedded
-    Address address;
-    double manner;
+    private Address address;
+    private double manner;
 
     @OneToMany(mappedBy = "user")
-    List<Sharing> sharingList = new ArrayList<>();
+    private List<Sharing> sharingList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    List<GroupBuying> buyingList = new ArrayList<>();
+    private List<GroupBuying> buyingList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    List<DutchPay> dutchPayList = new ArrayList<>();
+    private List<DutchPay> dutchPayList = new ArrayList<>();
 
     @OneToMany(mappedBy = "participant")
-    List<GroupBuyingIntersection> participantingGroupBuying = new ArrayList<>();
+    private List<GroupBuyingIntersection> participantingGroupBuying = new ArrayList<>();
 
     @OneToMany(mappedBy = "participant")
-    List<DutchPayIntersection> participantingDutchPay = new ArrayList<>();
+    private List<DutchPayIntersection> participantingDutchPay = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
-    List<Sharing> favoriteSharing = new ArrayList<>();
+    private List<Sharing> favoriteSharing = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
-    List<GroupBuying> favoriteBuying = new ArrayList<>();
+    private List<GroupBuying> favoriteBuying = new ArrayList<>();
 
     @Transient
-    List<String> favoriteFood = new ArrayList<>();
+    private List<String> favoriteFood = new ArrayList<>();
 
     @OneToMany(mappedBy = "member1")
-    List<Room> roomList = new ArrayList<>();
+    private List<Room> roomList = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
-    List<Schedule> memoList = new ArrayList<>();
-
+    private List<Schedule> memoList = new ArrayList<>();
+    public Member(String email, String password, String nickname, Address address){
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.address = address;
+        this.authority = Authority.ROLE_USER;
+    }
     public void changePassword(String password) {
         this.password = password;
     }

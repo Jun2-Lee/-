@@ -1,0 +1,132 @@
+.mypage_body {
+    display: grid;
+    grid-template-columns: 9.25rem 43.625rem;
+    column-gap: 1.125rem;
+    row-gap: 0.938rem;
+    justify-content: center;
+    background-color: var(--background);
+    padding-top: 2.25rem;
+}
+
+.mypage_categoryBar {
+    background-color: var(--sub_orange);
+    width: 148px;
+    height: 561px;
+    border-radius: 5px;
+    /*margin-bottom: 39px;*/
+}
+
+.mypage_box {
+    display: flex;
+    flex-wrap: wrap;
+    width: 750px;
+    height: 561px;
+}
+
+.mypage_container {
+    width: 316px;
+    height: 165px;
+    border-radius: 5px;
+    background-color: var(--sub_orange);
+    margin-left: 42px;
+    margin-bottom: 33px;
+}
+
+#mypage_label {
+    margin-top: 12px;
+    margin-left: 15px;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.mypage_profile {
+    display: flex;
+    align-items: center;
+}
+
+.mypage_profile > span {
+    font-weight: 700;
+    font-size: 14px;
+    margin-left: 19px;
+}
+
+.mypage_profile > img {
+    width: 74px;
+    height: 74px;
+    margin-left: 15px;
+}
+
+.modify_profile {
+    font-weight: 700;
+    font-size: 12px;
+    color: #737373;
+    margin-top: 21px;
+    margin-right: 16px;
+    text-align: end;
+}
+
+.participation_list {
+    display: flex;
+    align-items: center;
+    width: 282px;
+    height: 20px;
+    background: #FFFFFF;
+    border-radius: 4.32515px;
+    margin-left: 15px;
+    margin-bottom: 8px;
+}
+
+.scrap_list {
+    display: flex;
+    margin-bottom: 14px;
+}
+
+.box1 {
+    width: 45px;
+    height: 45px;
+    background: #FFFFFF;
+    border-radius: 4.32515px;
+    margin-left: 18px;
+}
+
+.box2 {
+    margin-left: 10px;
+    width: 224px;
+    height: 45px;
+    background: #FFFFFF;
+    border-radius: 4.32515px;
+}
+
+.mypost {
+    font-weight: 700;
+    font-size: 12px;
+    color: #737373;
+    margin-left: 32px;
+}
+
+.calendar_container {
+    display: flex;
+}
+
+.mydate {
+    width: 99px;
+    height: 104px;
+    border-radius: 4.32515px;
+    background-color: var(--main_orange);
+    margin-left: 18px;
+    margin-right: 15px;
+}
+
+.schedule_list {
+    width: 165px;
+    height: 20px;
+    border-radius: 4.32515px;
+    background-color: white;
+    margin-bottom: 8px;
+}
+
+
+
+  
+  

@@ -22,7 +22,8 @@ function CategoryBar() {
       <div style={{ 
         fontSize: "10px",
         textAlign: "center",
-        margin: "1rem"
+        margin: "1rem",
+        fontWeight: "700",
       }}>
           카테고리
       </div>

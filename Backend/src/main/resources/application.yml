@@ -19,6 +19,9 @@ spring:
         #show_sql: true
         format_sql: true
         default_batch_fetch_size: 100
+  redis:
+    host: localhost
+    port: 6379
 cloud:
   aws:
     credentials:
@@ -30,7 +33,8 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
-
+jwt:
+  secret: bmV2ZXJtaW5kaWxsZmluZHNvbWVvbmVsaWtleW91aXdpc2g=
 logging.level:
   org.hibernate.SQL: debug
   # org.hibernate.type: trace
