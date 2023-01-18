@@ -37,7 +37,7 @@ public class GroupBuying extends Contents {
     public void addMember(GroupBuyingIntersection groupBuyingIntersection){
         memberList.add(groupBuyingIntersection);
     }
-    public Long update(GroupBuyingRequestDto groupBuyingRequestDto) {
+    public Long update(GroupBuyingRequestDto groupBuyingRequestDto, String image) {
         this.cost = groupBuyingRequestDto.getPrice();
         this.limitMember = groupBuyingRequestDto.getMemberLimit();
         this.content = groupBuyingRequestDto.getContent();
@@ -45,6 +45,7 @@ public class GroupBuying extends Contents {
         this.deadLine = groupBuyingRequestDto.getDeadLine();
         this.link = groupBuyingRequestDto.getLink();
         this.title = groupBuyingRequestDto.getTitle();
+        this.image = image;
         return this.getId();
     }
 

@@ -34,7 +34,7 @@ public class AuthController {
     }
 
     @PostMapping("/reissue")
-    public AuthTokenDto reissue(TokenRequestDto tokenRequestDto){
+    public AuthTokenDto reissue(@RequestBody TokenRequestDto tokenRequestDto){
         return authService.reissue(tokenRequestDto);
     }
 }

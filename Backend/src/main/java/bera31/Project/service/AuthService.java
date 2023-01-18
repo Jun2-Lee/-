@@ -34,7 +34,7 @@ public class AuthService {
     private final JwtTokenProvider tokenProvider;
     private final RedisUtility redisUtility;
     private final S3Uploader s3Uploader;
-    private static final long REFRESH_TOKEN_LIFETIME = 14 * 24 * 60 * 60 * 1000;
+    private static final long REFRESH_TOKEN_LIFETIME = 14 * 24 * 60 * 60 * 1000; // 14일
 
     public Long signUp(SignUpDto signUpDto, MultipartFile profileImage) throws Exception {
         if (memberRepository.findByEmail(signUpDto.getEmail()).isPresent()) {
@@ -76,13 +76,16 @@ public class AuthService {
     }
 
     public AuthTokenDto reissue(TokenRequestDto tokenRequestDto){
-        String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
-        if(redisUtility.getValues(currentMemberEmail).isEmpty())
-            throw new IllegalArgumentException("Refresh Token이 존재하지 않습니다!");
-
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
+        String refreshToken = redisUtility.getValues(authentication.getName());
+
+        if(refreshToken == null)
+            throw new RuntimeException("로그아웃 된 사용자 입니다.");
+        if(!refreshToken.equals(tokenRequestDto.getRefreshToken()))
+            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
+
         AuthTokenDto authTokenDto = tokenProvider.generateToken(authentication);
-        redisUtility.setValues(currentMemberEmail, authTokenDto.getRefreshToken());
+        redisUtility.setValues(authentication.getName(), refreshToken, REFRESH_TOKEN_LIFETIME);
         return authTokenDto;
     }
 }

@@ -70,8 +70,11 @@ public class GroupBuyingService {
         return intersectionRepository.save(newGroupBuyingIntersection);
     }
 
-    public Long updateGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, Long postId) {
-        return groupBuyingRepository.findById(postId).update(groupBuyingRequestDto);
+    public Long updateGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage, Long postId) throws IOException {
+        GroupBuying findedPost = groupBuyingRepository.findById(postId);
+        s3Uploader.deleteRemoteFile(findedPost.getImage().substring(52));
+
+        return findedPost.update(groupBuyingRequestDto, s3Uploader.upload(postImage, "groupBuying"));
     }
 
     public GroupBuyingResponseDto findGroupBuying(Long postId) {

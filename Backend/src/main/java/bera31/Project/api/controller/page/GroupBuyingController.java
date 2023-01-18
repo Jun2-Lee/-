@@ -36,9 +36,11 @@ public class GroupBuyingController {
         return new ResponseEntity<>(groupBuyingService.postGroupBuying(groupBuyingRequestDto, postImage), HttpStatus.OK);
     }
 
-    @PostMapping("/update/{postId}")
-    public ResponseEntity<Long> updateGroupBuying(@RequestBody GroupBuyingRequestDto groupBuyingRequestDto, @PathVariable Long postId) {
-        return new ResponseEntity<>(groupBuyingService.updateGroupBuying(groupBuyingRequestDto, postId), HttpStatus.OK);
+    @PutMapping("/{postId}")
+    public ResponseEntity<Long> updateGroupBuying(@RequestPart GroupBuyingRequestDto groupBuyingRequestDto,
+                                                  @RequestPart MultipartFile postImage,
+                                                  @PathVariable Long postId) throws IOException {
+        return new ResponseEntity<>(groupBuyingService.updateGroupBuying(groupBuyingRequestDto, postImage, postId), HttpStatus.OK);
     }
 
     @GetMapping("/{postId}")
@@ -56,12 +58,12 @@ public class GroupBuyingController {
         return new ResponseEntity<>(groupBuyingService.searchGroupBuying(keyword), HttpStatus.OK);
     }
 
-    @PostMapping("/{postId}/heart")
+    @PostMapping("/{postId}/heart") // 개발 예정
     public void addFavoriteGroupBuying(@PathVariable Long postId){
         groupBuyingService.updateFavoriteGroupBuying(postId);
     }
 
-    @DeleteMapping("/{postId}")
+    @DeleteMapping("/{postId}") // 단순 글 삭제
     public void deleteGroupBuying(@PathVariable Long postId){
         groupBuyingService.deleteGroupBuying(postId);
     }
