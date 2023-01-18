@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {useEffect, useState} from 'react';
 import "./App.css";
+import "./reset.css";
 import "bootstrap/dist/css/bootstrap.css";
 import * as React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
@@ -21,6 +22,9 @@ import EditProfile from "./pages/profile/profile_edit";
 import MyWriting from "./pages/myWriting";
 import MyPage from "./pages/mypage";
 import Layout from "./components/Layout";
+
+import Test from "./pages/test/test";
+import AddressSelect from "./components/addressSelect";
 
 function App() {
 
@@ -59,6 +63,9 @@ function App() {
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/myWriting" element={<MyWriting />} />
           <Route path="/myPage" element={<MyPage />} />
+
+          <Route path="/test" element={<Test />} />
+
         </Route>
       </Routes>
     </Router>
