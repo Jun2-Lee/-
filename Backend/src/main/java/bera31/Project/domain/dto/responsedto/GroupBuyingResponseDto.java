@@ -12,8 +12,8 @@ public class GroupBuyingResponseDto {
     String profileImage;
     String nickName;
     Double manner;
-    String category; //
-    String product;//
+    String category;
+    String product;
     LocalDateTime deadLine;
     int limitMember;
     int currentMember;
