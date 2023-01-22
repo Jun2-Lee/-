@@ -1,9 +1,6 @@
 package bera31.Project.service.page;
 
-import bera31.Project.domain.dto.responsedto.DutchPayListResponseDto;
-import bera31.Project.domain.dto.responsedto.GroupBuyingListResponseDto;
-import bera31.Project.domain.dto.responsedto.MyPageResponseDto;
-import bera31.Project.domain.dto.responsedto.SharingListResponseDto;
+import bera31.Project.domain.dto.responsedto.*;
 import bera31.Project.domain.member.Member;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.ScheduleRepository;
@@ -12,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,12 +22,33 @@ public class MyPageService {
     public MyPageResponseDto showMyPage(){
         Member findedMember = loadCurrentMember();
 
+        // Refactoring 대상
+        List<SimpleGroupBuyingResponseDto> simpleGBlist
+                = findedMember.getBuyingList().stream()
+                    .limit(4)
+                    .map(SimpleGroupBuyingResponseDto::new)
+                    .collect(Collectors.toList());
+
+        List<SimpleFavoriteGroupBuyingResponseDto> simpleFGBlist
+                = findedMember.getFavoriteBuying().stream()
+                .limit(4)
+                .map(SimpleFavoriteGroupBuyingResponseDto::new)
+                .collect(Collectors.toList());
+
+        List<TodayScheduleResponseDto> todaySchedules
+                = findedMember.getMemoList().stream()
+                .filter(s -> s.getTitle().equals(LocalDateTime.now().toString().substring(0, 9)))
+                .map(TodayScheduleResponseDto::new)
+                .collect(Collectors.toList());
+
         MyPageResponseDto myPageResponseDto = new MyPageResponseDto(
-                findedMember.getProfileImage(), findedMember.getNickname()
+                findedMember.getProfileImage(), findedMember.getNickname(),
+                simpleGBlist, simpleFGBlist, todaySchedules
         );
 
         return myPageResponseDto;
     }
+
     public List<GroupBuyingListResponseDto> showMyGroupBuying(){
         Member findedMember = loadCurrentMember();
 
