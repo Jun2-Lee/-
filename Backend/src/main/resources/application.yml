@@ -19,8 +19,6 @@ spring:
   redis:
     host: localhost
     port: 6379
-jwt:
-  secret: bmV2ZXJtaW5kaWxsZmluZHNvbWVvbmVsaWtleW91aXdpc2g=
 logging.level:
   org.hibernate.SQL: debug
   # org.hibernate.type: trace
