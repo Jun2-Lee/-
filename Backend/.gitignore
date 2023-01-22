@@ -39,4 +39,4 @@ out/
 .vscode/
 
 ### Properties Security
-**/application.yml
+**/application-secret.yml
