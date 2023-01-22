@@ -30,10 +30,9 @@ public class GroupBuyingListResponseDto {
         Member author = groupBuying.getUser();
         this.id = groupBuying.getId();
         this.image = groupBuying.getImage();
-        this.nickname = "Buddy";
+        this.nickname = author.getNickname();
         this.title = groupBuying.getTitle();
         this.postTime = groupBuying.getPostTime();
-        //this.address = author.getAddress();
         this.deadLine = groupBuying.getDeadLine();
         this.limit = groupBuying.getLimitMember();
         this.currParticipant = groupBuying.getMemberList().size();

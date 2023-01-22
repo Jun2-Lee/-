@@ -5,8 +5,13 @@ import bera31.Project.config.S3.S3Uploader;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
 import bera31.Project.domain.dto.responsedto.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.GroupBuyingResponseDto;
+import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
+import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
+import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
+import bera31.Project.repository.page.IntersectionRepository;
+import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +32,8 @@ public class GroupBuyingService {
     @Autowired
     private S3Uploader s3Uploader; // Field Injection 말고 다른 방법 생각해보기
     private final GroupBuyingRepository groupBuyingRepository;
+    private final MemberRepository memberRepository;
+    private final IntersectionRepository intersectionRepository;
 
     public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
         return groupBuyingRepository.findByKeyword(keyword)
@@ -42,14 +50,31 @@ public class GroupBuyingService {
     }
 
     public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
-        GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto);
+        Member findedMember = loadCurrentMember();
+
+        GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, findedMember);
         newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
 
+        findedMember.postGroupBuying(newGroupBuying);
         return groupBuyingRepository.save(newGroupBuying);
     }
 
-    public Long updateGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, Long postId) {
-        return groupBuyingRepository.findById(postId).update(groupBuyingRequestDto);
+    public Long participantGroupBuying(Long postId){
+        Member findedMember = loadCurrentMember();
+        GroupBuying findedPost = groupBuyingRepository.findById(postId);
+
+        GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(findedMember, findedPost);
+        findedMember.participantGroupBuying(newGroupBuyingIntersection);
+        findedPost.addMember(newGroupBuyingIntersection);
+
+        return intersectionRepository.save(newGroupBuyingIntersection);
+    }
+
+    public Long updateGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage, Long postId) throws IOException {
+        GroupBuying findedPost = groupBuyingRepository.findById(postId);
+        s3Uploader.deleteRemoteFile(findedPost.getImage().substring(52));
+
+        return findedPost.update(groupBuyingRequestDto, s3Uploader.upload(postImage, "groupBuying"));
     }
 
     public GroupBuyingResponseDto findGroupBuying(Long postId) {
@@ -66,5 +91,10 @@ public class GroupBuyingService {
 
     public void deleteGroupBuying(Long postId) {
         groupBuyingRepository.delete(groupBuyingRepository.findById(postId));
+    }
+
+    private Member loadCurrentMember(){
+        String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
+        return memberRepository.findByEmail(currentMemberEmail).get();
     }
 }
