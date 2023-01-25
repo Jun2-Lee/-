@@ -1,6 +1,5 @@
 package bera31.Project.domain.member;
 
-import bera31.Project.domain.Address;
 import bera31.Project.domain.message.Room;
 import bera31.Project.domain.schedule.Schedule;
 import bera31.Project.domain.page.dutchpay.DutchPay;
@@ -44,10 +43,10 @@ public class Member {
     @OneToMany(mappedBy = "user")
     private List<DutchPay> dutchPayList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "participant")
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
     private List<GroupBuyingIntersection> participantingGroupBuying = new ArrayList<>();
 
-    @OneToMany(mappedBy = "participant")
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
     private List<DutchPayIntersection> participantingDutchPay = new ArrayList<>();
 
     @OneToMany

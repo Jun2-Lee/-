@@ -36,11 +36,12 @@ public class MyPageController {
         return new ResponseEntity<>(myPageService.showMyDutchPay(), HttpStatus.OK);
     }
 
-    /* 참여는 Intersection인데 어떻게 해결할 지?
     @GetMapping("/participantingGroupBuying")
     public ResponseEntity<List<GroupBuyingListResponseDto>> showParticipantingGroupBuying(){
-        return new ResponseEntity<>(myPageService., HttpStatus.OK);
+        return new ResponseEntity<>(myPageService.showParticipantingGroupBuying(), HttpStatus.OK);
     }
+
+    /*
     @GetMapping("/participantingDutchPay")
     public ResponseEntity<List<DutchPayListResponseDto>> showParticipantingDutchPay(){
         return new ResponseEntity<>(myPageService.showMyDutchPay(), HttpStatus.OK);

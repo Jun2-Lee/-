@@ -27,7 +27,7 @@ public class GroupBuying extends Contents {
     String image;
     int limitMember;
 
-    @OneToMany(mappedBy = "groupBuying")
+    @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY)
     List<GroupBuyingIntersection> memberList = new ArrayList<>();
     boolean isFinish;
 
