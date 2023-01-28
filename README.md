@@ -1,26 +1,18 @@
-# 프로젝트명
+# Project Naong!
 > 간략한 프로젝트 소개 문구를 작성합니다.
 [![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Downloads Stats][npm-downloads]][npm-url]
 
-한 두 문단으로 프로젝트 소개 글을 작성합니다.
+자취생의, 자취생에 의한, 자취생을 위한
+Project 나눠주세옹(나옹)입니다!
 
 ![](../header.png)
 
-## 설치 방법
+## Team Member
 
-OS X & 리눅스:
-
-```sh
-npm install my-crazy-module --save
-```
-
-윈도우:
-
-```sh
-edit autoexec.bat
-```
+## Tech Stack
+![undefined (2)](https://user-images.githubusercontent.com/71700079/215279678-bc1c44a4-626e-4ec6-a2b0-e8b186c0c7b1.png)
 
 ## 사용 예제
 
