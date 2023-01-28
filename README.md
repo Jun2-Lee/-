@@ -12,7 +12,7 @@ Project 나눠주세옹(나옹)입니다!
 ## Team Member
 
 ## Tech Stack
-![undefined (2)](https://user-images.githubusercontent.com/71700079/215279678-bc1c44a4-626e-4ec6-a2b0-e8b186c0c7b1.png)
+![qw](https://user-images.githubusercontent.com/71700079/215279781-142c8086-e8e4-47b0-a604-5e200f705772.png)
 
 ## 사용 예제
 
