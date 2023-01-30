@@ -1,6 +1,6 @@
 package bera31.Project.domain.member;
 
-import bera31.Project.domain.Address;
+import bera31.Project.domain.message.Message;
 import bera31.Project.domain.message.Room;
 import bera31.Project.domain.schedule.Schedule;
 import bera31.Project.domain.page.dutchpay.DutchPay;
@@ -35,25 +35,26 @@ public class Member {
     private String gu;
     private double manner;
 
+    @OneToMany(mappedBy = "sender")
+    private List<Message> sendedMessages = new ArrayList<>();
+    @OneToMany(mappedBy = "receiver")
+    private List<Message> receivedMessages = new ArrayList<>();
+
     @OneToMany(mappedBy = "user")
     private List<Sharing> sharingList = new ArrayList<>();
-
     @OneToMany(mappedBy = "user")
     private List<GroupBuying> buyingList = new ArrayList<>();
-
     @OneToMany(mappedBy = "user")
     private List<DutchPay> dutchPayList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "participant")
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
     private List<GroupBuyingIntersection> participantingGroupBuying = new ArrayList<>();
-
-    @OneToMany(mappedBy = "participant")
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
     private List<DutchPayIntersection> participantingDutchPay = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
     private List<Sharing> favoriteSharing = new ArrayList<>();
-
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
     private List<GroupBuying> favoriteBuying = new ArrayList<>();
@@ -61,8 +62,10 @@ public class Member {
     @Transient
     private List<String> favoriteFood = new ArrayList<>();
 
+    /*
     @OneToMany(mappedBy = "member1")
     private List<Room> roomList = new ArrayList<>();
+    */
 
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")

@@ -1,9 +1,7 @@
 package bera31.Project.domain.page.intersection;
 
 import bera31.Project.domain.member.Member;
-import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

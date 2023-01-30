@@ -19,17 +19,17 @@ public class MessageRepository {
 
     public void delete(Message message) {
         em.remove(message);
-        return;
     }
 
-    public List<Message> findAll() {
-        return em.createQuery("select m from Message m", Message.class)
+    public List<Message> findByRoomNumber(Long roomNumber) {
+        return em.createQuery("select m from Message m where m.roomNumber =: roomNumber", Message.class)
+                .setParameter("roomNumber", roomNumber)
                 .getResultList();
     }
-
-    public Message findByMemberId(Long id) {
-        return em.createQuery("select m from Message m where m.id =:id", Message.class)
-                .setParameter("id", id)
-                .getSingleResult();
+    public List<Message> findMessageList(String email) {
+        return em.createQuery("select m.sender, m.receiver, m.content, MAX(m.sendTime) from Message m " +
+                        "group by m.roomNumber having m.sender =: email or m.receiver =: email ", Message.class)
+                .setParameter("email", email)
+                .getResultList();
     }
 }

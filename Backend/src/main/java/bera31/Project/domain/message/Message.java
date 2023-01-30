@@ -1,7 +1,9 @@
 package bera31.Project.domain.message;
 
 import bera31.Project.domain.member.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,24 +11,22 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Message {
     @Id
     @GeneratedValue
     @Column(name = "MESSAGE_ID")
-    Long id;
-    LocalDateTime sendTime;
+    private Long id;
+    private Long roomNumber;
+    private LocalDateTime sendTime;
 
     @ManyToOne
     @JoinColumn(name = "SENDER_MEMBER_ID")
-    Member sender;
-
+    private Member sender;
     @ManyToOne
     @JoinColumn(name = "RECEIVER_MEMBER_ID")
-    Member receiver;
-    String content;
+    private Member receiver;
 
-    @ManyToOne
-    @JoinColumn(name = "ROOM_ID")
-    Room room;
+    private String content;
 }

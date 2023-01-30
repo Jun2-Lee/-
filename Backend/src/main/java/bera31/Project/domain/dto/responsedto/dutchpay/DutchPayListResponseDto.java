@@ -1,27 +1,27 @@
-package bera31.Project.domain.dto.responsedto;
+package bera31.Project.domain.dto.responsedto.dutchpay;
 
-import bera31.Project.domain.page.dutchpay.Category;
 import bera31.Project.domain.page.dutchpay.DutchPay;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.swing.text.Style;
 import java.time.LocalDateTime;
 
 @Getter
-public class DutchPayResponseDto {
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class DutchPayListResponseDto {
     Long id;
     String store;
     String category;
     int deliveryCost;
-    int limitMember;
-    double x;
-    double y;
-    LocalDateTime deadLine;
-    String content;
     int currentMember;
+    int limitMember;
+    LocalDateTime deadLine;
 
-    public DutchPayResponseDto(DutchPay dutchPay) {
+    public DutchPayListResponseDto(DutchPay dutchPay) {
         this.id = dutchPay.getId();
         this.store = dutchPay.getStore();
         this.category = dutchPay.getCategory();
@@ -29,8 +29,5 @@ public class DutchPayResponseDto {
         this.limitMember = dutchPay.getLimitMember();
         this.currentMember = dutchPay.getMemberList().size();
         this.deadLine = dutchPay.getDeadLine();
-        this.x = dutchPay.getX();
-        this.y = dutchPay.getY();
-        this.content = dutchPay.getContent();
     }
 }

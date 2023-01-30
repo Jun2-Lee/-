@@ -18,7 +18,6 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "MEMBER1_ID")
     Member member1;
-
     @ManyToOne
     @JoinColumn(name = "MEMBER2_ID")
     Member member2;

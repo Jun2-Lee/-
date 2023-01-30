@@ -3,8 +3,8 @@ package bera31.Project.service.page;
 
 import bera31.Project.config.S3.S3Uploader;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
-import bera31.Project.domain.dto.responsedto.GroupBuyingListResponseDto;
-import bera31.Project.domain.dto.responsedto.GroupBuyingResponseDto;
+import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
+import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

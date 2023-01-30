@@ -1,9 +1,14 @@
 package bera31.Project.service.page;
 
 import bera31.Project.domain.dto.responsedto.*;
+import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayListResponseDto;
+import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
+import bera31.Project.domain.dto.responsedto.groupbuying.SimpleFavoriteGroupBuyingResponseDto;
+import bera31.Project.domain.dto.responsedto.groupbuying.SimpleGroupBuyingResponseDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
 import bera31.Project.repository.MemberRepository;
-import bera31.Project.repository.ScheduleRepository;
+import bera31.Project.repository.page.IntersectionRepository;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,11 +23,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class MyPageService {
     private final MemberRepository memberRepository;
+    private final IntersectionRepository intersectionRepository;
 
     public MyPageResponseDto showMyPage(){
         Member findedMember = loadCurrentMember();
 
-        // Refactoring 대상
+        // Refactoring 대상!!
         List<SimpleGroupBuyingResponseDto> simpleGBlist
                 = findedMember.getBuyingList().stream()
                     .limit(4)
@@ -65,15 +71,17 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    /*
     public List<GroupBuyingListResponseDto> showParticipantingGroupBuying(){
         Member findedMember = loadCurrentMember();
 
-        return findedMember.getParticipantingGroupBuying().stream()
+        return intersectionRepository.findByUserId(findedMember)
+                .stream()
+                .map(GroupBuyingIntersection::getGroupBuying)
                 .map(GroupBuyingListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
+    /*
     public List<DutchPayListResponseDto> showParticipantingDutchPay(){
         Member findedMember = loadCurrentMember();
 
