@@ -13,10 +13,10 @@ public class MessageResponseDto {
     String content;
     LocalDateTime sendTime;
 
-    public MessageResponseDto(Message message){
-        this.roomNumber = message.getRoomNumber();
-        this.other =
-        this.content = message.getContent();
-        this.sendTime = message.getSendTime();
+    public MessageResponseDto(Long roomNumber, String other, String content, LocalDateTime sendTime){
+        this.roomNumber = roomNumber;
+        this.other = other;
+        this.content = content;
+        this.sendTime = sendTime;
     }
 }

@@ -1,5 +1,6 @@
 package bera31.Project.domain.message;
 
+import bera31.Project.domain.dto.requestdto.MessageRequestDto;
 import bera31.Project.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,4 +30,12 @@ public class Message {
     private Member receiver;
 
     private String content;
+
+    public Message(MessageRequestDto messageRequestDto, Long roomNumber, Member sender, Member receiver){
+        this.receiver = receiver;
+        this.sender = sender;
+        this.roomNumber = roomNumber;
+        this.content = messageRequestDto.getContent();
+        this.sendTime = LocalDateTime.now();
+    }
 }

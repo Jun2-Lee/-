@@ -12,9 +12,9 @@ import java.util.List;
 public class MessageRepository {
     private final EntityManager em;
 
-    public Message save(Message message) {
+    public String save(Message message) {
         em.persist(message);
-        return message;
+        return message.getContent();
     }
 
     public void delete(Message message) {
@@ -22,14 +22,22 @@ public class MessageRepository {
     }
 
     public List<Message> findByRoomNumber(Long roomNumber) {
-        return em.createQuery("select m from Message m where m.roomNumber =: roomNumber", Message.class)
+        return em.createQuery("select m from Message m where m.roomNumber =: roomNumber " +
+                        "order by m.sendTime", Message.class)
                 .setParameter("roomNumber", roomNumber)
                 .getResultList();
     }
-    public List<Message> findMessageList(String email) {
-        return em.createQuery("select m.sender, m.receiver, m.content, MAX(m.sendTime) from Message m " +
-                        "group by m.roomNumber having m.sender =: email or m.receiver =: email ", Message.class)
-                .setParameter("email", email)
+
+    public List<Message> findMessageList(String nickname) {
+        return em.createQuery("select m from Message m " +
+                        "where m.id in (select max(m.id) from Message m group by m.roomNumber)" +
+                        "and m.sender.nickname =: nickname or m.receiver.nickname =: nickname", Message.class)
+                .setParameter("nickname", nickname)
                 .getResultList();
+    }
+
+    public Long findMaxRoomNumber(){
+        return em.createQuery("select MAX(m.roomNumber) from Message m", Long.class)
+                .getSingleResult();
     }
 }

@@ -12,6 +12,6 @@ public class EachRoomMessageResponseDto {
 
     public EachRoomMessageResponseDto(Message message){
         this.contents = message.getContent();
-        this.sendTime = getSendTime();
+        this.sendTime = message.getSendTime();
     }
 }

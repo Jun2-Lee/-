@@ -1,7 +1,6 @@
 package bera31.Project.domain.member;
 
 import bera31.Project.domain.message.Message;
-import bera31.Project.domain.message.Room;
 import bera31.Project.domain.schedule.Schedule;
 import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
@@ -35,11 +34,6 @@ public class Member {
     private String gu;
     private double manner;
 
-    @OneToMany(mappedBy = "sender")
-    private List<Message> sendedMessages = new ArrayList<>();
-    @OneToMany(mappedBy = "receiver")
-    private List<Message> receivedMessages = new ArrayList<>();
-
     @OneToMany(mappedBy = "user")
     private List<Sharing> sharingList = new ArrayList<>();
     @OneToMany(mappedBy = "user")
@@ -47,6 +41,12 @@ public class Member {
     @OneToMany(mappedBy = "user")
     private List<DutchPay> dutchPayList = new ArrayList<>();
 
+    /*
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
+    private List<Message> sendedMessages = new ArrayList<>();
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
+    private List<Message> receivedMessages = new ArrayList<>();
+     */
     @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
     private List<GroupBuyingIntersection> participantingGroupBuying = new ArrayList<>();
     @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
@@ -79,21 +79,29 @@ public class Member {
         this.gu = gu;
         this.authority = Authority.ROLE_USER;
     }
+    /*
+    public void sendMessage(Message message){
+        this.sendedMessages.add(message);
+    }
+    public void receiveMessage(Message message){
+        this.sendedMessages.add(message);
+    }
+     */
+
     public void postGroupBuying(GroupBuying groupBuying){
         buyingList.add(groupBuying);
     }
     public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection){
         participantingGroupBuying.add(groupBuyingIntersection);
     }
+
     public void changePassword(String password) {
         this.password = password;
     }
-
     public void changeAddress(String dong, String gu) {
         this.dong = dong;
         this.gu = gu;
     }
-
     public void changeImage(String image) {
         this.profileImage = image;
     }
@@ -115,5 +123,6 @@ public class Member {
     public void addFavoriteGroupBuying(GroupBuying groupBuying) {
         this.favoriteBuying.add(groupBuying);
     }
+
     public void cancelFavoriteGroupBuying(GroupBuying groupBuying) { this.favoriteBuying.remove(groupBuying); }
 }
