@@ -1,6 +1,5 @@
 package bera31.Project.service;
 
-import bera31.Project.domain.dto.requestdto.EachRoomMessageRequestDto;
 import bera31.Project.domain.dto.requestdto.MessageRequestDto;
 import bera31.Project.domain.dto.responsedto.message.EachRoomMessageResponseDto;
 import bera31.Project.domain.dto.responsedto.message.MessageResponseDto;
@@ -32,10 +31,11 @@ public class MessageService {
         List<MessageResponseDto> responseDtoList = new ArrayList<>();
 
         for(Message msg : messageList){
-            if(findedMember.getNickname().equals(msg.getSender().getNickname()))
+            if(findedMember.getNickname().equals(msg.getSender().getNickname())) {
                 otherName = msg.getReceiver().getNickname();
+            }
             else
-                otherName = findedMember.getNickname();
+                otherName = msg.getSender().getNickname();
 
             responseDtoList.add(
                     new MessageResponseDto(msg.getRoomNumber(), otherName, msg.getContent(), msg.getSendTime()));
@@ -60,8 +60,8 @@ public class MessageService {
 
         return messageRepository.save(newMessage);
     }
-    public Long sendMessage(EachRoomMessageRequestDto eachRoomMessageRequestDto, Long roomId){
-        Message newMessage = new Message(eachRoomMessageRequestDto, roomId, loadCurrentMember(), findReceiver(roomId));
+    public Long sendMessage(MessageRequestDto messageRequestDto, Long roomId){
+        Message newMessage = new Message(messageRequestDto, roomId, loadCurrentMember(), findReceiver(messageRequestDto));
         return messageRepository.save(newMessage);
     }
 
@@ -72,8 +72,5 @@ public class MessageService {
 
     private Member findReceiver(MessageRequestDto messageRequestDto){
         return memberRepository.findById(messageRequestDto.getId());
-    }
-    private Member findReceiver(Long roomId){
-        return memberRepository.findById(messageRepository.findByRoomNumber(roomId).get(0).getReceiver().getId());
     }
 }
