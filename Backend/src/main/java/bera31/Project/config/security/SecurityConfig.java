@@ -55,7 +55,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
-                .antMatchers("/api/auth/**", "/").permitAll()
+                .antMatchers("/api/auth/**", "/", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
