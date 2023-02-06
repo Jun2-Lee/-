@@ -12,9 +12,9 @@ import java.util.List;
 public class MessageRepository {
     private final EntityManager em;
 
-    public String save(Message message) {
+    public Long save(Message message) {
         em.persist(message);
-        return message.getContent();
+        return message.getId();
     }
 
     public void delete(Message message) {

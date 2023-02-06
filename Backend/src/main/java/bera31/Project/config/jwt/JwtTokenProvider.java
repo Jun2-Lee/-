@@ -5,7 +5,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -84,7 +83,7 @@ public class JwtTokenProvider {
         } catch (SecurityException | MalformedJwtException e){
             log.info("올바르지 않은 서명의 JWT Token 입니다.", e);
         } catch (ExpiredJwtException e){
-            log.info("만료된 JWT Token 입니다.", e);
+            log.info("만료된 JWT 입니다.", e);
         } catch (UnsupportedJwtException e){
             log.info("지원되지 않는 형식의 JWT Token 입니다.", e);
         } catch (IllegalArgumentException e){

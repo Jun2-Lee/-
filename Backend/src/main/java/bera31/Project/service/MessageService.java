@@ -1,5 +1,6 @@
 package bera31.Project.service;
 
+import bera31.Project.domain.dto.requestdto.EachRoomMessageRequestDto;
 import bera31.Project.domain.dto.requestdto.MessageRequestDto;
 import bera31.Project.domain.dto.responsedto.message.EachRoomMessageResponseDto;
 import bera31.Project.domain.dto.responsedto.message.MessageResponseDto;
@@ -32,12 +33,12 @@ public class MessageService {
 
         for(Message msg : messageList){
             if(findedMember.getNickname().equals(msg.getSender().getNickname()))
-                otherName = findedMember.getNickname();
-            else
                 otherName = msg.getReceiver().getNickname();
+            else
+                otherName = findedMember.getNickname();
 
             responseDtoList.add(
-                    new MessageResponseDto(msg.getRoomNumber(), msg.getContent(), otherName, msg.getSendTime()));
+                    new MessageResponseDto(msg.getRoomNumber(), otherName, msg.getContent(), msg.getSendTime()));
         }
 
         return responseDtoList;
@@ -49,7 +50,7 @@ public class MessageService {
                 .collect(Collectors.toList());
     }
 
-    public void sendMessage(MessageRequestDto messageRequestDto){
+    public Long sendMessage(MessageRequestDto messageRequestDto){
         Long maxRoomNumber = 0L;
         if(messageRepository.findMaxRoomNumber() != null)
             maxRoomNumber = messageRepository.findMaxRoomNumber();
@@ -57,12 +58,11 @@ public class MessageService {
         Message newMessage = new Message(messageRequestDto, maxRoomNumber + 1,
                                          loadCurrentMember(), findReceiver(messageRequestDto));
 
-        messageRepository.save(newMessage);
+        return messageRepository.save(newMessage);
     }
-
-    public void sendMessage(MessageRequestDto messageRequestDto, Long roomId){
-        Message newMessage = new Message(messageRequestDto, roomId, loadCurrentMember(), findReceiver(messageRequestDto));
-        messageRepository.save(newMessage);
+    public Long sendMessage(EachRoomMessageRequestDto eachRoomMessageRequestDto, Long roomId){
+        Message newMessage = new Message(eachRoomMessageRequestDto, roomId, loadCurrentMember(), findReceiver(roomId));
+        return messageRepository.save(newMessage);
     }
 
     private Member loadCurrentMember(){
@@ -71,6 +71,9 @@ public class MessageService {
     }
 
     private Member findReceiver(MessageRequestDto messageRequestDto){
-        return memberRepository.findByNickName(messageRequestDto.getNickname()).get();
+        return memberRepository.findById(messageRequestDto.getId());
+    }
+    private Member findReceiver(Long roomId){
+        return memberRepository.findById(messageRepository.findByRoomNumber(roomId).get(0).getReceiver().getId());
     }
 }

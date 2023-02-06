@@ -2,10 +2,11 @@ package bera31.Project.domain.dto.requestdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
 @AllArgsConstructor
-public class MessageRequestDto {
-    Long id;
+@NoArgsConstructor
+@Getter
+public class EachRoomMessageRequestDto {
     String content;
 }

@@ -1,5 +1,6 @@
 package bera31.Project.domain.message;
 
+import bera31.Project.domain.dto.requestdto.EachRoomMessageRequestDto;
 import bera31.Project.domain.dto.requestdto.MessageRequestDto;
 import bera31.Project.domain.member.Member;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,14 @@ public class Message {
         this.sender = sender;
         this.roomNumber = roomNumber;
         this.content = messageRequestDto.getContent();
+        this.sendTime = LocalDateTime.now();
+    }
+
+    public Message(EachRoomMessageRequestDto eachRoomMessageRequestDto, Long roomNumber, Member sender, Member receiver){
+        this.receiver = receiver;
+        this.sender = sender;
+        this.roomNumber = roomNumber;
+        this.content = eachRoomMessageRequestDto.getContent();
         this.sendTime = LocalDateTime.now();
     }
 }

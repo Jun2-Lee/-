@@ -1,5 +1,6 @@
 package bera31.Project.api.controller;
 
+import bera31.Project.domain.dto.requestdto.EachRoomMessageRequestDto;
 import bera31.Project.domain.dto.requestdto.MessageRequestDto;
 import bera31.Project.domain.dto.responsedto.message.EachRoomMessageResponseDto;
 import bera31.Project.domain.dto.responsedto.message.MessageResponseDto;
@@ -28,13 +29,13 @@ public class MessageController {
     }
 
     @PostMapping
-    public void sendMessage(@RequestBody MessageRequestDto messageRequestDto){
-        messageService.sendMessage(messageRequestDto);
+    public Long sendMessage(@RequestBody MessageRequestDto messageRequestDto){
+        return messageService.sendMessage(messageRequestDto);
     }
 
     @PostMapping("/{roomId}")
-    public void sendMessageToRoom(@PathVariable Long roomId,
-                                  @RequestBody MessageRequestDto messageRequestDto){
-        messageService.sendMessage(messageRequestDto, roomId);
+    public Long sendMessageToRoom(@PathVariable Long roomId,
+                                  @RequestBody EachRoomMessageRequestDto eachRoomMessageRequestDto){
+        return messageService.sendMessage(eachRoomMessageRequestDto, roomId);
     }
 }
