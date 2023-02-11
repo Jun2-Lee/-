@@ -1,14 +1,18 @@
 package bera31.Project.service.page;
 
+import bera31.Project.config.S3.S3Uploader;
 import bera31.Project.domain.dto.requestdto.SharingRequestDto;
 import bera31.Project.domain.dto.responsedto.SharingListResponseDto;
 import bera31.Project.domain.dto.responsedto.SharingResponseDto;
 import bera31.Project.domain.page.sharing.Sharing;
 import bera31.Project.repository.page.SharingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,10 +21,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class SharingService {
     private final SharingRepository sharingRepository;
+    @Autowired
+    private S3Uploader s3Uploader;
 
-    public void postSharing(SharingRequestDto sharingRequestDto){
-        Sharing sharing = new Sharing(sharingRequestDto);
-        sharingRepository.save(sharing);
+    public void postSharing(SharingRequestDto sharingRequestDto, MultipartFile postImage) throws IOException {
+        Sharing newSharing = new Sharing(sharingRequestDto);
+        newSharing.setImage(s3Uploader.upload(postImage,"sharing"));
+        sharingRepository.save(newSharing);
     }
 
     public void updateSharing(Long id, SharingRequestDto sharingRequestDto){

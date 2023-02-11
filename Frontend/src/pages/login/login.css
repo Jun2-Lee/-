@@ -1,0 +1,75 @@
+.getID, .getPW {
+  background-color: var(--sub_orange);
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 314px;
+  height: 41px;
+}
+
+#getID {
+  margin-top: 50px;
+}
+
+.userLogin {
+  margin-top: 34px;
+  width: 314px;
+  height: 41px;
+  background-color: var(--main_orange);
+  border-radius: 5px;
+  border: none;
+  color: white;
+}
+
+.UserHelp {
+  margin-top: 6px;
+  text-align: end;
+}
+
+#findPW, #userHelp, #userSignUp {
+  text-decoration: none;
+  color: #737373;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.naverLogin {
+  margin-top: 67px;
+  display: flex;
+  justify-content: center;
+}
+
+.kakaoLogin {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.googleLogin {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 128px;
+}
+
+.NAVER, .KAKAO, .GOOGLE {
+  width: 272px;
+  height: 35px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.NAVER {
+  background: #2DB400;
+}
+
+.KAKAO {
+  background: #F9E000;
+}
+
+.GOOGLE {
+  background: #8A8D92;
+}

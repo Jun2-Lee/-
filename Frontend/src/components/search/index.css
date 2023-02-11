@@ -1,0 +1,61 @@
+.searchArea {
+  display: grid;
+  grid-template-columns: auto 10.188rem 5.375rem;
+  grid-template-rows: 1.938rem;
+  column-gap: 0.625rem;
+}
+
+.searchBar {
+  grid-column: 2/3;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.searchIcon {
+  height: 1.3rem;
+}
+
+.searchIconBox {
+  width: 1.938rem;
+  height: 1.938rem;
+  background-color: var(--sub_orange);
+  border-radius: 0.313rem 0 0 0.313rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputBar {
+  height: 1.938rem;
+  width: 8.25rem;
+  border-radius: 0 0.313rem 0.313rem 0;
+  border: none;
+  background-color: var(--sub_orange);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.inputBar:focus {
+  outline: none;
+}
+
+.listSorting {
+  appearance: none;
+  background: url("../../assets/img/toggleIconOpen.png") no-repeat 10% 50%/0.938rem
+    auto;
+  background-size: 0.625rem;
+  background-color: var(--sub_orange);
+  width: 5.375rem;
+  height: 1.938rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: right;
+  padding-right: 1.375rem;
+  border: none;
+  border-radius: 0.313rem;
+}
+
+select:focus {
+  outline: none;
+}

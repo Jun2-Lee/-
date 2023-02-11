@@ -1,0 +1,57 @@
+/**
+* myWriting_title
+*/
+.myWriting_title {
+  width: 100%;
+  height: 6rem;
+  margin-bottom: 1.688rem;
+  font-size: 1.625rem;
+  display: flex;
+  align-items: center;
+  padding-left: 34%;
+}
+
+/**
+* list
+*/
+.myWritingList {
+  width: 43.625rem;
+  height: 42.5rem;
+  border-radius: 0.313rem;
+}
+
+.myWriting_body {
+  display: grid;
+  grid-template-columns: 9.25rem 43.625rem;
+  grid-template-rows: 4rem auto;
+  column-gap: 1.125rem;
+  row-gap: 1.5rem;
+  justify-content: center;
+}
+
+/**
+* shortcutBar
+*/
+.shortcutBar {
+  background-color: var(--sub_orange);
+  width: 9.25rem;
+  border-radius: 0.313rem;
+  grid-row: 1 / 3;
+}
+
+/**
+* nav
+*/
+.nav_myWriting {
+  border-bottom: solid #737373 0.063rem;
+  display: flex;
+  align-items: center;
+}
+
+.myWriting_link {
+  margin-left: 2.5rem;
+  font-size: 1.188rem;
+  font-weight: 700;
+  text-decoration-line: none;
+  color: black;
+}

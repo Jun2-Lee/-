@@ -1,7 +1,6 @@
 package bera31.Project.domain.member;
 
-import bera31.Project.domain.Address;
-import bera31.Project.domain.message.Room;
+import bera31.Project.domain.message.Message;
 import bera31.Project.domain.schedule.Schedule;
 import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
@@ -24,59 +23,91 @@ public class Member {
     @Id
     @GeneratedValue
     @Column(name = "MEMBER_ID")
-    Long id;
-
-    String email;
-    String nickname;
-    String password;
-    String profileImage;
-    @Embedded
-    Address address;
-    double manner;
-
-    @OneToMany(mappedBy = "user")
-    List<Sharing> sharingList = new ArrayList<>();
+    private Long id;
+    private String email;
+    private String nickname;
+    private String password;
+    private String profileImage;
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+    private String dong;
+    private String gu;
+    private double manner;
 
     @OneToMany(mappedBy = "user")
-    List<GroupBuying> buyingList = new ArrayList<>();
-
+    private List<Sharing> sharingList = new ArrayList<>();
     @OneToMany(mappedBy = "user")
-    List<DutchPay> dutchPayList = new ArrayList<>();
+    private List<GroupBuying> buyingList = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<DutchPay> dutchPayList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "participant")
-    List<GroupBuyingIntersection> participantingGroupBuying = new ArrayList<>();
-
-    @OneToMany(mappedBy = "participant")
-    List<DutchPayIntersection> participantingDutchPay = new ArrayList<>();
+    /*
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
+    private List<Message> sendedMessages = new ArrayList<>();
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
+    private List<Message> receivedMessages = new ArrayList<>();
+     */
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
+    private List<GroupBuyingIntersection> participantingGroupBuying = new ArrayList<>();
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
+    private List<DutchPayIntersection> participantingDutchPay = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
-    List<Sharing> favoriteSharing = new ArrayList<>();
-
+    private List<Sharing> favoriteSharing = new ArrayList<>();
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
-    List<GroupBuying> favoriteBuying = new ArrayList<>();
+    private List<GroupBuying> favoriteBuying = new ArrayList<>();
 
     @Transient
-    List<String> favoriteFood = new ArrayList<>();
+    private List<String> favoriteFood = new ArrayList<>();
 
+    /*
     @OneToMany(mappedBy = "member1")
-    List<Room> roomList = new ArrayList<>();
+    private List<Room> roomList = new ArrayList<>();
+    */
 
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
-    List<Schedule> memoList = new ArrayList<>();
+    private List<Schedule> memoList = new ArrayList<>();
+
+    public Member(String email, String password, String nickname, String dong, String gu){
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.dong = dong;
+        this.gu = gu;
+        this.authority = Authority.ROLE_USER;
+    }
+    /*
+    public void sendMessage(Message message){
+        this.sendedMessages.add(message);
+    }
+    public void receiveMessage(Message message){
+        this.sendedMessages.add(message);
+    }
+     */
+
+    public void postGroupBuying(GroupBuying groupBuying){
+        buyingList.add(groupBuying);
+    }
+    public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection){
+        participantingGroupBuying.add(groupBuyingIntersection);
+    }
 
     public void changePassword(String password) {
         this.password = password;
     }
-
-    public void changeAddress(Address address) {
-        this.address = address;
+    public void changeAddress(String dong, String gu) {
+        this.dong = dong;
+        this.gu = gu;
     }
-
     public void changeImage(String image) {
         this.profileImage = image;
+    }
+
+    public void changeFavIngredients(List<String> favIngredients){
+        this.favoriteFood = favIngredients;
     }
 
     public void addMemo(Schedule schedule) {
@@ -92,5 +123,6 @@ public class Member {
     public void addFavoriteGroupBuying(GroupBuying groupBuying) {
         this.favoriteBuying.add(groupBuying);
     }
+
     public void cancelFavoriteGroupBuying(GroupBuying groupBuying) { this.favoriteBuying.remove(groupBuying); }
 }

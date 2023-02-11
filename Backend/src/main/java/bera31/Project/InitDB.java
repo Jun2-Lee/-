@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 public class InitDB {
 
     private final InitService initService;
+
     @PostConstruct
     public void init() {
         initService.dbInit1();

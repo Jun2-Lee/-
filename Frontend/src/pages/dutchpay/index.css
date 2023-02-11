@@ -1,0 +1,255 @@
+.body {
+    margin-top: 15px;
+}
+
+.dutch {
+    display: flex;
+}
+
+/*section1*/
+.list_dutchpay, .detail_dutchpay {
+    width: 297px;
+    height: 603px;
+    background-color: var(--sub_orange);
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.category_dutchpay {
+    background-color: var(--background);
+    width: 86px;
+    height: 31px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 32px;
+    margin-left: 31px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.card_dutchpay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main_orange);
+    width: 248px;
+    height: 76px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+    border: none;
+    border-radius: 5px;
+    margin-top: 17px;
+    margin-left: 25px;
+}
+
+.card_sub2 {
+    display: flex;
+    margin-top: 10px;
+}
+
+.foodIcon {
+    width: 51px;
+    height: 51px;
+    background-color: white;
+    border-radius: 5px;
+    /*margin-top: 14px;
+    margin-left: 13px;*/
+}
+
+.f1 {
+    width: 44px;
+    height: 36.09px;
+    margin-left: 3px;
+}
+
+.f2 {
+    width: 38.51px;
+    height: 29px;
+    margin-left: 6px;
+    margin-top: 6px;
+}
+
+.f3 {
+    width: 45px;
+    height: 23.21px;
+    margin-left: 2px;
+    margin-top: 9px;
+}
+
+.f4 {
+    width: 48.62px;
+    height: 35px;
+    margin-top: 2px;
+}
+
+.f5 {
+    width: 40.01px;
+    height: 35px;
+    margin-left: 8px;
+}
+
+#foodName {
+    font-weight: 700;
+    font-size: 11px;
+    display: flex;
+    justify-content: center;
+}
+
+.title_dutchpay, .dong_dutchpay, .deadline_dutchpay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 11px;
+    margin-left: 10px;
+}
+
+.title_dutchpay {
+    width: 161px;
+    height: 21px;
+}
+
+.dong_dutchpay {
+    width: 65px;
+    height: 21px;
+}
+
+.deadline_dutchpay {
+    width: 86px;
+    height: 21px;
+}
+
+
+/*section2*/
+
+.detail_dutchpay {
+    margin-left: 8px;
+}
+
+.detail_sub1 {
+    display: flex;
+}
+
+.userInfo_dutchpay {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    margin-top: 17px;
+}
+
+.profile_dutchpay {
+    width: 46px;
+    height: 46px;
+}
+
+#nickName_dutchpay {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--main_orange);
+    margin-left: 15px;
+}
+
+.storeName_dutchpay, .foodImg_dutchpay, .recruits_dutchpay, .calcCost_dutchpay, .countdown_dutchpay, .address_dutchpay, .explanation_dutchpay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background);
+    border-radius: 5px;
+}
+
+.storeName_dutchpay {
+    width: 258px;
+    height: 36px;
+    margin-top: 17px;
+    margin-left: 20px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.foodImg_dutchpay {
+    width: 116px;
+    height: 116px;
+    margin-top: 17px;
+    margin-left: 20px;
+}
+
+.recruits_dutchpay {
+    width: 129px;
+    height: 27px;
+    margin-top: 17px;
+    margin-left: 13px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.calcCost_dutchpay {
+    width: 129px;
+    height: 35px;
+    margin-top: 13px;
+    margin-left: 13px;
+}
+
+.countdown_dutchpay {
+    width: 129px;
+    height: 27px;
+    margin-top: 13px;
+    margin-left: 13px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.address_dutchpay {
+    width: 258px;
+    height: 49px;
+    margin-left: 20px;
+    margin-top: 17px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.explanation_dutchpay {
+    width: 258px;
+    height: 180px;
+    margin-left: 20px;
+    margin-top: 17px;
+}
+
+.UserHelp_dutchpay {
+    text-align: end;
+    margin-right: 22px;
+}
+
+#modify_dutchpay, #userHelp_dutchpay, #delete_dutchpay {
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    font-size: 10px;
+}
+
+
+.signupDutchpay {
+    display: flex;
+    justify-content: center;
+    margin-top: 13px;
+}
+
+.signup_dutchpay {
+    width: 258px;
+    height: 36px;
+    background-color: var(--main_orange);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+}
+
+/*section3*/
+#map {
+    width: 638px;
+    height: 603px;
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}

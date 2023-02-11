@@ -1,0 +1,149 @@
+.detail_sharing{
+  margin-left: 150px;
+}
+
+
+
+.sharingdetail_Title {
+  background-color: var(--sub_orange);
+  font-size: 16px;
+  font-weight:bolder;
+  height: 42px;
+  width: 833px;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+#sharingdetail_title{
+  display: flex;
+  justify-content: center;
+  margin-top: -30px;
+  line-height: 47px;
+}
+
+
+
+.userhelp_sharedetail{
+  margin-top: 10px;
+  margin-left: 720px;
+
+}
+
+.component_sharing{
+
+  display: flex;
+}
+
+.items_sharing{
+  flex-direction: column;
+  margin-left: 50px;
+ 
+}
+
+.categorySharing, .itemSharing ,.expirySharing, .DeadlineSharing{
+  background-color: var(--sub_orange);
+  border: none;
+  width: 147px;
+  height: 42px;
+  margin-left: 13px;
+  border-radius: 5px;
+  margin-bottom: 50px;
+}
+
+.category_sharing, .item_sharing,.expiry_sharing,.deadline_sharing{
+  display: flex;
+
+}
+
+.detailform_sharing{
+  text-align: center;
+  width: 100px;
+  margin-top: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight:bolder;
+  margin-left: -25px;
+
+}
+
+
+
+
+.modify_sharing, .delete_sharing{
+     font-size:12px;
+     font-weight:bolder;
+     border:0;
+     outline:0; 
+     background-color: #FFFAF3;
+  }
+
+
+
+  .sharedetailImg{
+    background-color: white;
+    width: 312px;
+    height: 312px;
+    margin-left: 120px
+
+
+  }
+  
+  .profile {
+    margin-top: 100px;
+    margin-left: -408px;
+  }
+
+  
+  .Ingredient_sharing {
+    background-color: var(--sub_orange);
+    border: none;
+    border-radius: 5px;
+    height: 128px;
+    width: 597px;
+    display: flex;
+
+  }
+
+  #Ingredient_sharing{
+    margin-top: 50px;
+    font-size: 16px;
+    font-weight:bolder;
+    margin-top: 30px;
+    display: flex;
+    margin-left: 130px;
+  }
+
+  .Ingredient_sharing{
+    margin-left: 120px;
+   
+  }
+  
+  .LowerUserHelp_sharing{
+    margin-top: 60px;
+  }
+
+  .shareLike{
+    border:0;
+    outline:0; 
+    background-color: var(--sub_orange);
+    font-size: 16px;
+    font-weight:bolder;
+    margin-left: 0px;
+    width: 70px;
+    height: 50px;
+    border-radius: 5px;
+  }
+
+  .shareApplication{
+
+    border:0;
+    outline:0; 
+    background-color:  #FF8327;
+    font-size: 16px;
+    font-weight:bolder;
+    color: white;
+    margin-left: 670px;
+    width: 97px;
+    height: 50px;
+    border-radius: 5px;
+  }

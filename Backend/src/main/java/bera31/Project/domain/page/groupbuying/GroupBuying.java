@@ -1,6 +1,7 @@
 package bera31.Project.domain.page.groupbuying;
 
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
+import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.List;
 @Getter
 public class GroupBuying extends Contents {
     String link;
-    String category; //////////
+    String category;
     String product;
     LocalDateTime deadLine;
     String content;
@@ -26,23 +27,30 @@ public class GroupBuying extends Contents {
     String image;
     int limitMember;
 
-    @OneToMany(mappedBy = "groupBuying")
+    @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY)
     List<GroupBuyingIntersection> memberList = new ArrayList<>();
     boolean isFinish;
 
-    public Long update(GroupBuyingRequestDto groupBuyingRequestDto) {
+    public void setImage(String image){
+        this.image = image;
+    }
+    public void addMember(GroupBuyingIntersection groupBuyingIntersection){
+        memberList.add(groupBuyingIntersection);
+    }
+    public Long update(GroupBuyingRequestDto groupBuyingRequestDto, String image) {
         this.cost = groupBuyingRequestDto.getPrice();
         this.limitMember = groupBuyingRequestDto.getMemberLimit();
         this.content = groupBuyingRequestDto.getContent();
         this.product = groupBuyingRequestDto.getProduct();
         this.deadLine = groupBuyingRequestDto.getDeadLine();
         this.link = groupBuyingRequestDto.getLink();
-        this.image = groupBuyingRequestDto.getImage();
         this.title = groupBuyingRequestDto.getTitle();
+        this.image = image;
         return this.getId();
     }
 
-    public GroupBuying(GroupBuyingRequestDto groupBuyingRequestDto) {
+    public GroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, Member member) {
+        this.user = member;
         this.cost = groupBuyingRequestDto.getPrice();
         this.limitMember = groupBuyingRequestDto.getMemberLimit();
         this.content = groupBuyingRequestDto.getContent();
@@ -52,7 +60,6 @@ public class GroupBuying extends Contents {
         this.deadLine = groupBuyingRequestDto.getDeadLine();
         this.postTime = LocalDateTime.now();
         this.link = groupBuyingRequestDto.getLink();
-        this.image = groupBuyingRequestDto.getImage();
         this.title = groupBuyingRequestDto.getTitle();
     }
 }

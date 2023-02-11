@@ -19,5 +19,4 @@ public class SharingRequestDto {
     LocalDateTime deadLine;
     String gu;
     String dong;
-    String image;
 }

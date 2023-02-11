@@ -1,0 +1,67 @@
+.pictureArea {
+  width: 54rem;
+  height: 15.75rem;
+  background-color: var(--sub_orange);
+}
+
+.home_container {
+  padding-top: 2.875rem;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3, 16.875rem);
+  grid-template-rows: repeat(2, 16.875);
+  column-gap: 1.6875rem;
+  row-gap: 1.4375rem;
+  background-color: var(--background);
+}
+
+.pictureArea {
+  grid-column: 1 / 4;
+}
+
+.home_sharingBtn,
+.home_groupBuyingBtn,
+.home_dutchPayBtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 16.875rem;
+  height: 16.875rem;
+  background-color: var(--sub_orange);
+  border-radius: 0.3125rem;
+  border: 0rem;
+}
+
+.home_link {
+  text-decoration: none;
+}
+
+.home_pagemoving_head {
+  text-align: center;
+  font-size: 1.375rem;
+  font-weight: 800;
+  margin-bottom: 1.125rem;
+}
+
+.home_pagemoving_body {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 1.938rem;
+}
+
+#sharingPicture {
+  width: 8rem;
+  height: 8rem;
+}
+
+#dutchPayPicture {
+  width: 4.188rem;
+  height: 7.313rem;
+}
+
+#groupBuyingPicture {
+  width: 7.25rem;
+  height: 7.688rem;
+}

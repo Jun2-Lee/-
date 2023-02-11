@@ -42,7 +42,6 @@ public class Sharing extends Contents {
         this.deadLine = sharingRequestDto.getDeadLine();
         this.postTime = LocalDateTime.now();
         this.location = new Address(sharingRequestDto.getGu(), sharingRequestDto.getDong());
-        this.image = sharingRequestDto.getImage();
         this.content = sharingRequestDto.getContent();
 
     }
@@ -55,6 +54,8 @@ public class Sharing extends Contents {
         this.expiry = sharingRequestDto.getExpiry();
         this.location = new Address(sharingRequestDto.getGu(), sharingRequestDto.getDong());
         this.deadLine = sharingRequestDto.getDeadLine();
-        this.image = sharingRequestDto.getImage();
+    }
+    public void setImage(String image){
+        this.image = image;
     }
 }
