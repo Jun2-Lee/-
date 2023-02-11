@@ -1,5 +1,7 @@
 package bera31.Project.domain.dto.responsedto;
 
+import bera31.Project.domain.dto.responsedto.groupbuying.SimpleFavoriteGroupBuyingResponseDto;
+import bera31.Project.domain.dto.responsedto.groupbuying.SimpleGroupBuyingResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

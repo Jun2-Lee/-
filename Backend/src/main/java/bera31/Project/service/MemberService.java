@@ -1,9 +1,10 @@
 package bera31.Project.service;
 
 import bera31.Project.config.S3.S3Uploader;
-import bera31.Project.domain.Address;
 import bera31.Project.domain.dto.requestdto.EditInfoRequestDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.exception.ErrorResponse;
+import bera31.Project.exception.exceptions.UserNotFoundException;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class MemberService {
 
         String encodedPassword = passwordEncoder.encode(password);
         findedMember.changePassword(encodedPassword);
-        return "OK";
+        return "비밀번호가 변경되었습니다!";
     }
 
     public String changeMyInfo(EditInfoRequestDto editInfoRequestDto, MultipartFile profileImage) throws IOException {
@@ -39,7 +40,7 @@ public class MemberService {
 
         findedMember.changeAddress(editInfoRequestDto.getDong(), editInfoRequestDto.getGu());
         findedMember.changeFavIngredients(editInfoRequestDto.getFavIngredients());
-        return "OK";
+        return "정보가 수정되었습니다!";
     }
 
     @Transactional(readOnly = true)
@@ -57,7 +58,7 @@ public class MemberService {
         if (memberRepository.findByEmail(email).isPresent())
             return memberRepository.findByEmail(email).get().getPassword();
         else
-            throw new Exception("없는 이메일 입니다.");
+            throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
     }
 
     private Member loadCurrentMember(){

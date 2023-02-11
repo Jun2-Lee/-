@@ -1,6 +1,5 @@
 package bera31.Project.service;
 
-import antlr.Token;
 import bera31.Project.config.S3.S3Uploader;
 import bera31.Project.config.jwt.JwtTokenProvider;
 import bera31.Project.domain.dto.requestdto.LogInDto;
@@ -8,6 +7,8 @@ import bera31.Project.domain.dto.requestdto.SignUpDto;
 import bera31.Project.domain.dto.requestdto.TokenRequestDto;
 import bera31.Project.domain.dto.responsedto.AuthTokenDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.exception.*;
+import bera31.Project.exception.exceptions.*;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.utility.RedisUtility;
 import bera31.Project.utility.SecurityUtility;
@@ -37,13 +38,10 @@ public class AuthService {
     private static final long REFRESH_TOKEN_LIFETIME = 14 * 24 * 60 * 60 * 1000; // 14일
 
     public Long signUp(SignUpDto signUpDto, MultipartFile profileImage) throws Exception {
-        if (memberRepository.findByEmail(signUpDto.getEmail()).isPresent()) {
-            throw new Exception("이미 있는 회원입니다");
-        }
-
-        if (memberRepository.findByNickName(signUpDto.getNickname()).isPresent()) {
-            throw new Exception("이미 있는 닉네임입니다");
-        }
+        if (checkEmailDuplication(signUpDto))
+            throw new EmailDuplicateException(ErrorResponse.EMAIL_DUPLICATE);
+        if (checkNicknameDuplication(signUpDto))
+            throw new NicknameDuplicateException(ErrorResponse.NICKNAME_DUPLICATE);
 
         Member member = new Member(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword()),
                 signUpDto.getNickname(), signUpDto.getDong(), signUpDto.getGu());
@@ -55,9 +53,9 @@ public class AuthService {
         Optional<Member> findedMember = memberRepository.findByEmail(logInDto.getEmail());
 
         if(findedMember.isEmpty())
-            throw new IllegalArgumentException("존재하지 않는 유저입니다.");
+            throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
         if(!passwordEncoder.matches(logInDto.getPassword(), findedMember.get().getPassword()))
-            throw new IllegalArgumentException("Password가 일치하지 않습니다.");
+            throw new IncorrectPasswordException(ErrorResponse.INCORRECT_PASSWORD);
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(logInDto.getEmail(), logInDto.getPassword());
@@ -80,12 +78,19 @@ public class AuthService {
         String refreshToken = redisUtility.getValues(authentication.getName());
 
         if(refreshToken == null)
-            throw new RuntimeException("로그아웃 된 사용자 입니다.");
+            throw new LoggedOutUserException(ErrorResponse.LOGGED_OUT_USER);
         if(!refreshToken.equals(tokenRequestDto.getRefreshToken()))
-            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
+            throw new TokenMismatchException(ErrorResponse.TOKEN_MISMATCH);
 
         AuthTokenDto authTokenDto = tokenProvider.generateToken(authentication);
         redisUtility.setValues(authentication.getName(), refreshToken, REFRESH_TOKEN_LIFETIME);
         return authTokenDto;
+    }
+
+    private boolean checkEmailDuplication(SignUpDto signUpDto) {
+        return memberRepository.findByEmail(signUpDto.getEmail()).isPresent();
+    }
+    private boolean checkNicknameDuplication(SignUpDto signUpDto){
+        return memberRepository.findByNickName(signUpDto.getNickname()).isPresent();
     }
 }

@@ -1,8 +1,8 @@
 package bera31.Project.api.controller.page;
 
 import bera31.Project.domain.dto.requestdto.DutchPayRequestDto;
-import bera31.Project.domain.dto.responsedto.DutchPayListResponseDto;
-import bera31.Project.domain.dto.responsedto.DutchPayResponseDto;
+import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayListResponseDto;
+import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayResponseDto;
 import bera31.Project.service.page.DutchPayService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

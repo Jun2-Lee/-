@@ -1,20 +1,17 @@
 package bera31.Project.api.controller.page;
 
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
-import bera31.Project.domain.dto.responsedto.GroupBuyingListResponseDto;
-import bera31.Project.domain.dto.responsedto.GroupBuyingResponseDto;
+import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
+import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.service.page.GroupBuyingService;
-import com.amazonaws.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 

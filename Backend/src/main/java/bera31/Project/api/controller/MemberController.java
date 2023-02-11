@@ -1,5 +1,6 @@
 package bera31.Project.api.controller;
 
+import bera31.Project.domain.dto.requestdto.ChangePasswordDto;
 import bera31.Project.domain.dto.requestdto.EditInfoRequestDto;
 import bera31.Project.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class MemberController {
     }
 
     @PutMapping("/changePassword")
-    public String changePassword(@RequestBody String newPassword) {
-        return memberService.changePassword(newPassword);
+    public String changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+        return memberService.changePassword(changePasswordDto.getNewPassword());
     }
 
     @DeleteMapping
