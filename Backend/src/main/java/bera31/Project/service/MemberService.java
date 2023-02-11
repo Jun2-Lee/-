@@ -3,9 +3,11 @@ package bera31.Project.service;
 import bera31.Project.config.S3.S3Uploader;
 import bera31.Project.domain.dto.requestdto.EditInfoRequestDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.exception.ErrorResponse;
 import bera31.Project.exception.exceptions.UserNotFoundException;
 import bera31.Project.repository.MemberRepository;
+import bera31.Project.repository.page.GroupBuyingRepository;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final GroupBuyingRepository groupBuyingRepository;
+    // 과연 이렇게 결합도를 높인다고 좋을까?
     private final S3Uploader s3Uploader;
     private final PasswordEncoder passwordEncoder;
 
@@ -43,15 +48,18 @@ public class MemberService {
         return "정보가 수정되었습니다!";
     }
 
-    @Transactional(readOnly = true)
-    public void/*List<Memo>*/ findMyMemo() {
-        //멤버 찾기(로그인 구현 후에 할 예정)
-        //return member.getMemoList();
-    }
-
-    public void deleteMember() {
-        //멤버 찾기(로그인 구현 후에 할 예정)
-        //memberRepository.delete(member);
+    public String addFavoriteGroupBuying(Long postId){
+        Member findedMember = loadCurrentMember();
+        Optional<GroupBuying> findedGroupBuying = findedMember.getFavoriteBuying().stream()
+                                                    .filter(g -> g.getId().equals(postId)).findFirst();
+        if(findedGroupBuying.isEmpty()) {
+            findedMember.addFavoriteGroupBuying(groupBuyingRepository.findById(postId));
+            return "Added " + postId;
+        }
+        else {
+            findedMember.cancelFavoriteGroupBuying(groupBuyingRepository.findById(postId));
+            return "Removed " + postId;
+        }
     }
 
     public String findPassword(@RequestBody String email) throws Exception {

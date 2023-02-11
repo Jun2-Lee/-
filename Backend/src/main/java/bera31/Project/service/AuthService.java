@@ -54,7 +54,7 @@ public class AuthService {
 
         if(findedMember.isEmpty())
             throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
-        if(!passwordEncoder.matches(logInDto.getPassword(), findedMember.get().getPassword()))
+        if(!checkPasswordCorrectness(logInDto, findedMember))
             throw new IncorrectPasswordException(ErrorResponse.INCORRECT_PASSWORD);
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
@@ -92,5 +92,8 @@ public class AuthService {
     }
     private boolean checkNicknameDuplication(SignUpDto signUpDto){
         return memberRepository.findByNickName(signUpDto.getNickname()).isPresent();
+    }
+    private boolean checkPasswordCorrectness(LogInDto logInDto, Optional<Member> findedMember) {
+        return passwordEncoder.matches(logInDto.getPassword(), findedMember.get().getPassword());
     }
 }

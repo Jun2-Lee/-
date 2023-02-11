@@ -55,11 +55,6 @@ public class GroupBuyingController {
         return new ResponseEntity<>(groupBuyingService.searchGroupBuying(keyword), HttpStatus.OK);
     }
 
-    @PostMapping("/{postId}/heart") // 개발 예정
-    public void addFavoriteGroupBuying(@PathVariable Long postId){
-        groupBuyingService.updateFavoriteGroupBuying(postId);
-    }
-
     @DeleteMapping("/{postId}") // 단순 글 삭제
     public void deleteGroupBuying(@PathVariable Long postId){
         groupBuyingService.deleteGroupBuying(postId);

@@ -41,12 +41,6 @@ public class Member {
     @OneToMany(mappedBy = "user")
     private List<DutchPay> dutchPayList = new ArrayList<>();
 
-    /*
-    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
-    private List<Message> sendedMessages = new ArrayList<>();
-    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
-    private List<Message> receivedMessages = new ArrayList<>();
-     */
     @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
     private List<GroupBuyingIntersection> participantingGroupBuying = new ArrayList<>();
     @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
@@ -58,14 +52,12 @@ public class Member {
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
     private List<GroupBuying> favoriteBuying = new ArrayList<>();
+    // 배열이 동시에 동작하는데, 어떻게 처리해야 하는가?
 
     @Transient
     private List<String> favoriteFood = new ArrayList<>();
-
-    /*
-    @OneToMany(mappedBy = "member1")
-    private List<Room> roomList = new ArrayList<>();
-    */
+    // 얘는 영속적인 값이 아니게 되는데?
+    // 이걸 어떻게 처리를 할 것인가?
 
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
@@ -79,14 +71,6 @@ public class Member {
         this.gu = gu;
         this.authority = Authority.ROLE_USER;
     }
-    /*
-    public void sendMessage(Message message){
-        this.sendedMessages.add(message);
-    }
-    public void receiveMessage(Message message){
-        this.sendedMessages.add(message);
-    }
-     */
 
     public void postGroupBuying(GroupBuying groupBuying){
         buyingList.add(groupBuying);
@@ -123,6 +107,5 @@ public class Member {
     public void addFavoriteGroupBuying(GroupBuying groupBuying) {
         this.favoriteBuying.add(groupBuying);
     }
-
     public void cancelFavoriteGroupBuying(GroupBuying groupBuying) { this.favoriteBuying.remove(groupBuying); }
 }

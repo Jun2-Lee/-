@@ -1,9 +1,7 @@
 package bera31.Project.config.security;
 
-import bera31.Project.config.jwt.JwtAccessDeniedHandler;
-import bera31.Project.config.jwt.JwtAuthenticationEntryPoint;
-import bera31.Project.config.jwt.JwtSecurityConfig;
-import bera31.Project.config.jwt.JwtTokenProvider;
+import bera31.Project.config.jwt.*;
+import bera31.Project.utility.JsonUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -27,6 +25,7 @@ public class SecurityConfig {
     private final JwtTokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JsonUtility jsonUtility;
 
     // Spring Security의 버전이 올라가면서, Bean을 통해 추가하는 방식으로 변경되었다.
     // 원래는 WebSecurityConfigurerAdapter를 통해서 통합 관리를 했었다.
@@ -61,7 +60,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .apply(new JwtSecurityConfig(tokenProvider, jsonUtility));
         return http.build();
     }
 }
