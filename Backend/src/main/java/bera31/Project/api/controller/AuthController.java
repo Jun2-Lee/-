@@ -6,8 +6,6 @@ import bera31.Project.domain.dto.requestdto.TokenRequestDto;
 import bera31.Project.domain.dto.responsedto.AuthTokenDto;
 import bera31.Project.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
