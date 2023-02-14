@@ -41,28 +41,14 @@ public class MemberService {
         Member findedMember = loadCurrentMember();
 
         s3Uploader.deleteRemoteFile(findedMember.getProfileImage().substring(52));
-        findedMember.changeImage(s3Uploader.upload(profileImage, "profileImage"));
+        findedMember.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
 
         findedMember.changeAddress(editInfoRequestDto.getDong(), editInfoRequestDto.getGu());
         findedMember.changeFavIngredients(editInfoRequestDto.getFavIngredients());
         return "정보가 수정되었습니다!";
     }
 
-    public String addFavoriteGroupBuying(Long postId){
-        Member findedMember = loadCurrentMember();
-        Optional<GroupBuying> findedGroupBuying = findedMember.getFavoriteBuying().stream()
-                                                    .filter(g -> g.getId().equals(postId)).findFirst();
-        if(findedGroupBuying.isEmpty()) {
-            findedMember.addFavoriteGroupBuying(groupBuyingRepository.findById(postId));
-            return "Added " + postId;
-        }
-        else {
-            findedMember.cancelFavoriteGroupBuying(groupBuyingRepository.findById(postId));
-            return "Removed " + postId;
-        }
-    }
-
-    public String findPassword(@RequestBody String email) throws Exception {
+    public String findPassword(String email){
         if (memberRepository.findByEmail(email).isPresent())
             return memberRepository.findByEmail(email).get().getPassword();
         else

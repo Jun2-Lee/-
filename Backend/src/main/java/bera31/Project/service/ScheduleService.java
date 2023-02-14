@@ -48,8 +48,9 @@ public class ScheduleService {
     }
 
     @Transactional
-    public void deleteSchedule(Long postId) {
+    public String deleteSchedule(Long postId) {
         scheduleRepository.delete(scheduleRepository.findById(postId));
+        return "정상 삭제되었습니다!";
     }
 
     private Member loadCurrentMember(){

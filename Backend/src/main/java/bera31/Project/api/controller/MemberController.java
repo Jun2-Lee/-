@@ -27,14 +27,4 @@ public class MemberController {
     public String changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
         return memberService.changePassword(changePasswordDto.getNewPassword());
     }
-
-    @PostMapping("/groupBuying/heart/{postId}")
-    public ResponseEntity<String> addFavoriteGroupBuying(@PathVariable Long postId){
-        return new ResponseEntity<>(memberService.addFavoriteGroupBuying(postId), HttpStatus.OK);
-    }
-
-    @DeleteMapping
-    public String deleteMember() {
-        return "ok";
-    }
 }

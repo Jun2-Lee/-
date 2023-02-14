@@ -24,4 +24,9 @@ public class ScheduleController {
     public ResponseEntity<Long> postSchedule(@RequestBody ScheduleRequestDto scheduleRequestDto){
         return new ResponseEntity<>(scheduleService.postSchedule(scheduleRequestDto), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{memoId}")
+    public ResponseEntity<String> deleteSchedule(@PathVariable Long memoId){
+        return new ResponseEntity<>(scheduleService.deleteSchedule(memoId), HttpStatus.OK);
+    }
 }

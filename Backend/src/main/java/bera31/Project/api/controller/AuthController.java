@@ -14,8 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/auth")
 public class AuthController {
     private final AuthService authService;
-
-    @PostMapping (value = "/signup")
+    @PostMapping ("/signup")
     public Long signUp(@RequestPart SignUpDto signUpDto,
                        @RequestPart MultipartFile profileImage) throws Exception {
         return authService.signUp(signUpDto, profileImage);

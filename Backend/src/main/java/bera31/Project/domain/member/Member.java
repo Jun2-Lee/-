@@ -1,6 +1,7 @@
 package bera31.Project.domain.member;
 
 import bera31.Project.domain.message.Message;
+import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import bera31.Project.domain.schedule.Schedule;
 import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
@@ -48,11 +49,9 @@ public class Member {
 
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
-    private List<Sharing> favoriteSharing = new ArrayList<>();
-    @OneToMany
-    @JoinColumn(name = "MEMBER_ID")
-    private List<GroupBuying> favoriteBuying = new ArrayList<>();
-    // 배열이 동시에 동작하는데, 어떻게 처리해야 하는가?
+    private List<Sharing> likedSharing = new ArrayList<>();
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<LikedGroupBuying> likedGroupBuying = new ArrayList<>();
 
     @Transient
     private List<String> favoriteFood = new ArrayList<>();
@@ -86,26 +85,21 @@ public class Member {
         this.dong = dong;
         this.gu = gu;
     }
-    public void changeImage(String image) {
+    public void setProfileImage(String image) {
         this.profileImage = image;
     }
-
     public void changeFavIngredients(List<String> favIngredients){
         this.favoriteFood = favIngredients;
     }
-
-    public void addMemo(Schedule schedule) {
-        this.memoList.add(schedule);
-    }
-
     public void addSharing(Sharing sharing) {
         this.sharingList.add(sharing);
     }
-
-    public void addFavoriteSharing(Sharing sharing) { this.favoriteSharing.add(sharing); }
-    public void cancelFavoriteSharing(Sharing sharing) { this.favoriteSharing.remove(sharing); }
-    public void addFavoriteGroupBuying(GroupBuying groupBuying) {
-        this.favoriteBuying.add(groupBuying);
+    public void addFavoriteSharing(Sharing sharing) { this.likedSharing.add(sharing); }
+    public void cancelFavoriteSharing(Sharing sharing) { this.likedSharing.remove(sharing); }
+    public void pushLikeGroupBuying(LikedGroupBuying likedGroupBuying) {
+        this.likedGroupBuying.add(likedGroupBuying);
     }
-    public void cancelFavoriteGroupBuying(GroupBuying groupBuying) { this.favoriteBuying.remove(groupBuying); }
+    public void addMemo(Schedule schedule) {
+        this.memoList.add(schedule);
+    }
 }

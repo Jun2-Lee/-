@@ -50,6 +50,11 @@ public class GroupBuyingController {
         return new ResponseEntity<>(groupBuyingService.participantGroupBuying(postId), HttpStatus.OK);
     }
 
+    @PostMapping("/{postId}/like")
+    public ResponseEntity<Long> pushLikeGroupBuying(@PathVariable Long postId){
+        return new ResponseEntity<>(groupBuyingService.pushLikeGroupBuying(postId), HttpStatus.OK);
+    }
+
     @GetMapping("/search")
     public ResponseEntity<List<GroupBuyingListResponseDto>> searchGroupBuying(@RequestParam String keyword) {
         return new ResponseEntity<>(groupBuyingService.searchGroupBuying(keyword), HttpStatus.OK);

@@ -45,7 +45,12 @@ public class AuthService {
 
         Member member = new Member(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword()),
                 signUpDto.getNickname(), signUpDto.getDong(), signUpDto.getGu());
-        member.changeImage(s3Uploader.upload(profileImage, "profileImage"));
+
+        log.info("profileImage : " + profileImage);
+
+        if(!profileImage.isEmpty())
+            member.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
+
         return memberRepository.save(member).getId();
     }
 
@@ -68,7 +73,6 @@ public class AuthService {
     }
 
     public String logout(){
-        log.info(SecurityUtility.getCurrentMemberEmail());
         redisUtility.deleteValues(SecurityUtility.getCurrentMemberEmail());
         return "Logged out!";
     }

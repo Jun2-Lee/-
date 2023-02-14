@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 public class ScheduleListResponseDto {
     ScheduleCategory category;
     String title;
-    LocalDateTime postTime;
+    String time;
 
     public ScheduleListResponseDto(Schedule schedule){
         this.category = schedule.getCategory();
         this.title = schedule.getTitle();
-        this.postTime = schedule.getTime();
+        this.time = schedule.getTime();
     }
 }

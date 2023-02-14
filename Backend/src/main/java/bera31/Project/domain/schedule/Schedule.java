@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,26 +19,27 @@ public class Schedule {
     @Id
     @GeneratedValue
     long id;
+    LocalDate postDate;
     @Enumerated(EnumType.STRING)
     ScheduleCategory category;
     String title;
-    LocalDateTime time;
+    String time;
     String place;
     String content;
 
     public Schedule(ScheduleRequestDto scheduleRequestDto){
         this.category = scheduleRequestDto.getCategory();
         this.title = scheduleRequestDto.getTitle();
+        this.postDate = scheduleRequestDto.getPostDate();
         this.time = scheduleRequestDto.getTime();
         this.place = scheduleRequestDto.getPlace();
         this.content = scheduleRequestDto.getContent();
     }
-    public void updateSchedule(ScheduleRequestDto memo) {
-        this.title = memo.getTitle();
-        this.category = memo.getCategory();
-        this.time = memo.getTime();
-        this.place = memo.getPlace();
-        this.content = memo.getContent();
-
+    public void updateSchedule(ScheduleRequestDto scheduleRequestDto) {
+        this.title = scheduleRequestDto.getTitle();
+        this.category = scheduleRequestDto.getCategory();
+        this.time = scheduleRequestDto.getTime();
+        this.place = scheduleRequestDto.getPlace();
+        this.content = scheduleRequestDto.getContent();
     }
 }

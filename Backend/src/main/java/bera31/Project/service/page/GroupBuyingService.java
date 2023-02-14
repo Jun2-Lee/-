@@ -8,6 +8,8 @@ import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
+import bera31.Project.domain.page.intersection.LikedGroupBuying;
+import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
 import bera31.Project.repository.page.IntersectionRepository;
@@ -33,6 +35,7 @@ public class GroupBuyingService {
     private final GroupBuyingRepository groupBuyingRepository;
     private final MemberRepository memberRepository;
     private final IntersectionRepository intersectionRepository;
+    private final LikeRepository likeRepository;
 
     public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
         return groupBuyingRepository.findByKeyword(keyword)
@@ -82,6 +85,15 @@ public class GroupBuyingService {
 
     public void deleteGroupBuying(Long postId) {
         groupBuyingRepository.delete(groupBuyingRepository.findById(postId));
+    }
+
+    public Long pushLikeGroupBuying(Long postId){
+        Member currentMember = loadCurrentMember();
+        GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
+
+        LikedGroupBuying newLikedGroupBuying = new LikedGroupBuying(currentMember, currentGroupBuying);
+        currentMember.pushLikeGroupBuying(newLikedGroupBuying);
+        return likeRepository.save(newLikedGroupBuying);
     }
 
     private Member loadCurrentMember(){

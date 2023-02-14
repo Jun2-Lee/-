@@ -4,6 +4,7 @@ import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
+import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,8 @@ public class GroupBuying extends Contents {
 
     @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY)
     List<GroupBuyingIntersection> memberList = new ArrayList<>();
+    @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY)
+    List<LikedGroupBuying> likedMemberList = new ArrayList<>();
     boolean isFinish;
 
     public void setImage(String image){
