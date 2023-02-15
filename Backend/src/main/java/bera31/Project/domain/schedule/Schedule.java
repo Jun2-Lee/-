@@ -38,6 +38,5 @@ public class Schedule {
         this.time = memo.getTime();
         this.place = memo.getPlace();
         this.content = memo.getContent();
-
     }
 }
