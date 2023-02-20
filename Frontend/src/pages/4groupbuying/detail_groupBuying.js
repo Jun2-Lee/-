@@ -1,10 +1,10 @@
-import './detail_purchase.css';
+import './detail_groupBuying.css';
 import moment from 'moment';
 import 'moment/locale/ko';
 import React  from 'react';
 import {useState} from 'react';
 
-function DetailPurchase() {
+function DetailGroupBuying() {
     const nowTime = moment().format('YYYY-MM-DD');
 
     let [userName] = useState('');
@@ -159,4 +159,4 @@ function DetailPurchase() {
         )
 }
 
-export default DetailPurchase;
+export default DetailGroupBuying

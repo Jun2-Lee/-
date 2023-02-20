@@ -1,8 +1,8 @@
 import React from 'react';
-import './post_delivery.css'
+import './post_dutchpay.css'
 import axios from 'axios'
 
-function PostDelivery() {
+function PostDutchpay() {
   const headers = {
     'Content-Type': 'multipart/form-data'
   }
@@ -105,4 +105,4 @@ function PostDelivery() {
     );
 }
 
-export default PostDelivery;
+export default PostDutchpay;

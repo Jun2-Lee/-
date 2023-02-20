@@ -1,79 +1,56 @@
-import axios from 'axios'
-import {useEffect, useState} from 'react';
 import "./App.css";
-//import "./reset.css";
 import "bootstrap/dist/css/bootstrap.css";
 import * as React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
+//0(home)
 import Home from "./pages/home";
-import InitialInfo from "./pages/initial_info/initial_info";
-import Signup from "./pages/signup";
-import PostSharing from "./pages/post/post_sharing";
-import SharingPage from "./pages/sharing";
-import DutchPayPage from "./pages/dutchpay";
-import GroupBuyingPage from "./pages/groupbuying";
-import Login from "./pages/login/login";
-import DetailSharing from "./pages/detail/detail_sharing";
-import DetailPurchase from "./pages/grouppurchase/detail_purchase";
-import PostDelivery from "./pages/post/post_delivery";
-import PostgroupBuying from "./pages/post/post_groupBuying";
-import EditProfile from "./pages/profile_edit/profile_edit";
-import MyWriting from "./pages/myWriting";
-import MyPage from "./pages/mypage";
 import Layout from "./components/Layout";
-
-import Test from "./pages/test/test";
-
-//로그인 테스트
-import Auth from "./pages/test/Auth";
-import Profile from './pages/profile';
-
-//로그인 테스트
-//import OAuth2RedirectHandler from "./components/OAuth2RedirectHandeler/OAuth2RedirectHandeler";
+//1
+import Login from "./pages/1auth/login";
+import InitialInfo from "./pages/1auth/initial_info";
+import Signup from "./pages/1auth/signup";
+//2(나눔)
+import SharingPage from "./pages/2sharing";
+import DetailSharing from "./pages/2sharing/detail_sharing";
+import PostSharing from "./pages/2sharing/post_sharing";
+//3(n빵)
+import DutchPayPage from "./pages/3dutchpay";
+import PostDutchpay from "./pages/3dutchpay/post_dutchpay";
+//4(공동구매)
+import GroupBuyingPage from "./pages/4groupbuying";
+import DetailGroupBuying from "./pages/4groupbuying/detail_groupBuying.js";
+import PostgroupBuying from "./pages/4groupbuying/post_groupBuying";
+//5
+import MyPage from "./pages/5mypage";
+import EditProfile from "./pages/5mypage/edit_profile";
+import MyWriting from "./pages/5mypage/myWriting";
 
 function App() {
-
-  /*const fetchData = async () =>{
-    const response = await axios.get('http://3.36.144.128:8080/naong-api');
-  };
-
-  useEffect(()=>{
-    fetchData();
-  }, []);
-
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    const text = e.target.text.value;
-    const done = e.target.done.checked;
-    await axios.post(SERVER_URL,{text, done});
-    fetchData();
-  };*/
-
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/" element={<Layout />}>
+        
         <Route path="/login" element={<Login />} />
         <Route path="/initialInfo" element={<InitialInfo />} />
         <Route path="/signup" element={<Signup />} />
+
+        <Route path="/sharing" element={<SharingPage />} />
         <Route path="/detailSharing" element={<DetailSharing />} />
         <Route path="/postSharing" element={<PostSharing />} />
-        <Route path="/sharing" element={<SharingPage />} />
+        
         <Route path="/dutchPay" element={<DutchPayPage />} />
+        <Route path="/postDutchpay" element={<PostDutchpay />} />
+
         <Route path="/groupBuying" element={<GroupBuyingPage />} />
-        <Route path="/detailPurchase" element={<DetailPurchase />} />
-        <Route path="/postDelivery" element={<PostDelivery />} />
+        <Route path="/detailGroupBuying" element={<DetailGroupBuying />} />
         <Route path="/postGroupBuying" element={<PostgroupBuying />} />
+
+        <Route path="/myPage" element={<MyPage />} />
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/myWriting" element={<MyWriting />} />
-        <Route path="/myPage" element={<MyPage />} />
-
-        <Route path="/test" element={<Test />} />
-        <Route path="/oauth/kakao/callback" element={<Auth />} />
-        <Route path="/profile" element={<Profile />} />
-
         </Route>
       </Routes>
     </Router>
