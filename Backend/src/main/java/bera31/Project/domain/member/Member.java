@@ -95,7 +95,6 @@ public class Member {
         this.sharingList.add(sharing);
     }
     public void addFavoriteSharing(Sharing sharing) { this.likedSharing.add(sharing); }
-    public void cancelFavoriteSharing(Sharing sharing) { this.likedSharing.remove(sharing); }
     public void pushLikeGroupBuying(LikedGroupBuying likedGroupBuying) {
         this.likedGroupBuying.add(likedGroupBuying);
     }

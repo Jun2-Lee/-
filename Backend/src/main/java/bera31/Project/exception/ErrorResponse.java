@@ -15,6 +15,7 @@ public enum ErrorResponse {
     LOGGED_OUT_USER(HttpStatus.BAD_REQUEST, "이미 로그아웃 된 유저 입니다."),
     EMAIL_DUPLICATE(HttpStatus.BAD_REQUEST, "이미 존재하는 이메일입니다."),
     NICKNAME_DUPLICATE(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다."),
+    ALREADY_FULL(HttpStatus.OK, "신청 인원이 가득 찼습니다.")
     ;
 
     private final HttpStatus httpStatus;

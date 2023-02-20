@@ -36,4 +36,9 @@ public class CustomExceptionAdvice {
     public ResponseEntity<ErrorResponseEntity> handleNicknameDuplicateException(NicknameDuplicateException e){
         return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
     }
+
+    @ExceptionHandler(AlreadyFullException.class)
+    public ResponseEntity<ErrorResponseEntity> handleAlreadyFullException(AlreadyFullException e){
+        return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
+    }
 }
