@@ -1,4 +1,4 @@
-package bera31.Project.domain.dto.responsedto;
+package bera31.Project.domain.dto.responsedto.groupbuying;
 
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import lombok.Getter;
@@ -12,8 +12,8 @@ public class GroupBuyingResponseDto {
     String profileImage;
     String nickName;
     Double manner;
-    String category; //
-    String product;//
+    String category;
+    String product;
     LocalDateTime deadLine;
     int limitMember;
     int currentMember;

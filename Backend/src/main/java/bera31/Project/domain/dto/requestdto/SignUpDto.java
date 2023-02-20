@@ -11,5 +11,6 @@ public class SignUpDto {
     String email;
     String password;
     String nickname;
-    Address address;
+    String dong;
+    String gu;
 }
