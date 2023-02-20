@@ -1,21 +1,26 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import './index.css';
 
-export default function ImgUpload() {
-  const [fileImage, setFileImage] = useState("");
+const ImgUpload = () => {
+  const [profileImage, setProfileImage] = useState("");
+  //const [file,setFile] = useState();
 
   // 파일 저장
-  const saveFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
+  const onChangeImg = (e) => {
+    e.preventDefault();
+    setProfileImage(e.target.files[0])
+    //setProfileImage(URL.createObjectURL(e.target.files[0]));
   };
+
+  console.log(profileImage)
 
   return (
     <div>
       <div className="img_preview">
-        {fileImage && (
+        {profileImage && (
           <img
             alt="sample"
-            src={fileImage}
+            src={profileImage}
           />
         )}
       </div>
@@ -25,10 +30,13 @@ export default function ImgUpload() {
           name="imgUpload"
           type="file"
           accept="image/*"
-          onChange={saveFileImage}
+          onChange={onChangeImg}
         />
       </div>
 
     </div>
   );
 }
+
+export default ImgUpload;
+

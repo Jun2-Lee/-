@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {useEffect, useState} from 'react';
 import "./App.css";
-import "./reset.css";
+//import "./reset.css";
 import "bootstrap/dist/css/bootstrap.css";
 import * as React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
@@ -18,13 +18,19 @@ import DetailSharing from "./pages/detail/detail_sharing";
 import DetailPurchase from "./pages/grouppurchase/detail_purchase";
 import PostDelivery from "./pages/post/post_delivery";
 import PostgroupBuying from "./pages/post/post_groupBuying";
-import EditProfile from "./pages/profile/profile_edit";
+import EditProfile from "./pages/profile_edit/profile_edit";
 import MyWriting from "./pages/myWriting";
 import MyPage from "./pages/mypage";
 import Layout from "./components/Layout";
 
 import Test from "./pages/test/test";
-import AddressSelect from "./components/addressSelect";
+
+//로그인 테스트
+import Auth from "./pages/test/Auth";
+import Profile from './pages/profile';
+
+//로그인 테스트
+//import OAuth2RedirectHandler from "./components/OAuth2RedirectHandeler/OAuth2RedirectHandeler";
 
 function App() {
 
@@ -48,23 +54,25 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/initialInfo" element={<InitialInfo />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/detailSharing" element={<DetailSharing />} />
-          <Route path="/postSharing" element={<PostSharing />} />
-          <Route path="/sharing" element={<SharingPage />} />
-          <Route path="/dutchPay" element={<DutchPayPage />} />
-          <Route path="/groupBuying" element={<GroupBuyingPage />} />
-          <Route path="/detailPurchase" element={<DetailPurchase />} />
-          <Route path="/postDelivery" element={<PostDelivery />} />
-          <Route path="/postGroupBuying" element={<PostgroupBuying />} />
-          <Route path="/editProfile" element={<EditProfile />} />
-          <Route path="/myWriting" element={<MyWriting />} />
-          <Route path="/myPage" element={<MyPage />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/initialInfo" element={<InitialInfo />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/detailSharing" element={<DetailSharing />} />
+        <Route path="/postSharing" element={<PostSharing />} />
+        <Route path="/sharing" element={<SharingPage />} />
+        <Route path="/dutchPay" element={<DutchPayPage />} />
+        <Route path="/groupBuying" element={<GroupBuyingPage />} />
+        <Route path="/detailPurchase" element={<DetailPurchase />} />
+        <Route path="/postDelivery" element={<PostDelivery />} />
+        <Route path="/postGroupBuying" element={<PostgroupBuying />} />
+        <Route path="/editProfile" element={<EditProfile />} />
+        <Route path="/myWriting" element={<MyWriting />} />
+        <Route path="/myPage" element={<MyPage />} />
 
-          <Route path="/test" element={<Test />} />
+        <Route path="/test" element={<Test />} />
+        <Route path="/oauth/kakao/callback" element={<Auth />} />
+        <Route path="/profile" element={<Profile />} />
 
         </Route>
       </Routes>

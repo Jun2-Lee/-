@@ -1,27 +1,85 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './signup.css'
+import ImgUpload, { profileImage } from "../../components/imgUpload";
+import AddressSelect, {selectedGu} from "../../components/addressSelect";
+import axios from 'axios';
 
 function Signup() {
-  const [nickName, setNickName] = useState("");
-  
-  const handleChange = ({ target: { value } }) => setNickName(value);
+  const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState("");
+  const [imgsrc, setImgsrc] = useState("");
+  //const [file,setFile] = useState();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  // 파일 저장
+  const onChangeImg = (e) => {
+    e.preventDefault();
+    setImgsrc(URL.createObjectURL(e.target.files[0]));
+    setProfileImage(e.target.files[0]) //400 err
+    //setProfileImage(URL.createObjectURL(e.target.files[0])); //500 err
+    
   };
 
+  console.log(profileImage)
+
+  // 원래 코드 여기서부터 시작 (이미지 업로드 컴포넌트화 전)
+  const [selectedGu, setSelectedGu] = useState('');
+  const [selectedDong, setSelectedDong] = useState('');
+
+  const headers = {
+    'Content-Type': 'multipart/form-data'
+  }
+
+  const [signUpDto, setSignUpDto] = useState({
+    dong: '부곡동',
+    email: '',
+    gu: '금정구',
+    nickname: '',
+    password: '',
+
+  });
+
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setSignUpDto({
+      ...signUpDto,
+      [name]: value
+    })
+  };
+
+  const { dong, email, gu, nickname, password} = signUpDto;
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const form = new FormData()
+    form.append('profileImage', profileImage)
+    console.log(profileImage)
+    form.append('signUpDto', new Blob([JSON.stringify(signUpDto)], {
+      type: "application/json"
+    }))
+
+    axios.post("http://3.36.144.128:8080/api/auth/signup", form, {headers})
+      .then(function(response) {
+        console.log(response)
+        navigate('/login')
+      }) .catch(function(error) {
+        console.log(error)
+      })
+  }
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="signup_container">
+      <form onSubmit={onSubmit}>
         <div className="ID">
           <label className="form-label">아이디</label>
-          <input className="id"/>
+          <input name='email' onChange={onChange} value={email} className="id"/>
         </div>
         
         <div className="PASSWORD">
           <label className="form-label">비밀번호</label>
-          <input className="password"/>
+          <input name='password' onChange={onChange} value={password} className="password"/>
         </div>
 
         <div className="PASSWORD_CHECK">
@@ -31,44 +89,43 @@ function Signup() {
 
         <div className="nick_name">
           <label className="form-label">닉네임</label>
-          <input 
-            className="nickName"
-            value={nickName}
-            onChange={handleChange}
-            />
+          <input name='nickname' onChange={onChange} value={nickname} className="nickName"/>
           <button type="submit" className="overlap_check">중복 확인</button>
         </div>
 
         <div className="profile_upload">
           <label className="form-label">프로필 사진</label>
-          <input 
-            className="profileUpload"
-            />
-          {/*<input type="file" accept="image/*"></input>*/}
+          {/*<ImgUpload />*/}
+          <div>
+            <div className="img_preview">
+              {profileImage && (
+                <img
+                  alt="프로필 업로드에 실패했습니다."
+                  src={imgsrc}
+                />
+              )}
+            </div>
+
+            <div className="imgUpload_btn">
+              <input
+                name="imgUpload"
+                type="file"
+                accept="image/*"
+                onChange={onChangeImg}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="address">
           <label className="form-label">사는 동네</label>
-          <select className="gu">
-            <option value="">구</option>
-            <option value="금정">금정구</option>
-            <option value="해운대">해운대구</option>
-            <option value="동래">동래구</option>
-            <option value="연제">연제구</option>
-          </select>
-          <select className="dong">
-          <option value="">동</option>
-            <option value="금정">장전동</option>
-            <option value="해운대">부곡동</option>
-            <option value="동래">구서동</option>
-            <option value="연제">노포동</option>
-          </select>
+          <AddressSelect />
         </div>
-        
+
         <div className="submit">
           <input type="submit" className="submit_user_info" value="회원가입"></input>
         </div>
-      </form>
+      </form> 
     </div>
   )
 }
