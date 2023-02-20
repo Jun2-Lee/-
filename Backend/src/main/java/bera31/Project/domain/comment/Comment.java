@@ -20,17 +20,13 @@ public class Comment {
     @Id
     @GeneratedValue
     Long id;
-
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     Member user;
-
     LocalDateTime timeStamp;
     String content;
-
     @OneToMany(mappedBy = "parent")
     List<ChildComment> children = new ArrayList<>();
-
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")
     Contents contents;

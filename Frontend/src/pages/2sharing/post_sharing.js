@@ -1,5 +1,6 @@
 import React from 'react';
-import './post_sharing.css'
+import './post_sharing.css';
+import axios from "axios";
 
 function PostSharing() {
 
