@@ -71,7 +71,7 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private List<Schedule> memoList = new ArrayList<>();
 
-    public Member(String email, String password, String nickname, String dong, String gu){
+    public Member(String email, String password, String nickname, String dong, String gu) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
@@ -88,25 +88,36 @@ public class Member {
     }
      */
 
-    public void postGroupBuying(GroupBuying groupBuying){
+    public void postGroupBuying(GroupBuying groupBuying) {
         buyingList.add(groupBuying);
     }
-    public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection){
+
+    public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection) {
         participantingGroupBuying.add(groupBuyingIntersection);
+    }
+
+    public void postDutchPay(DutchPay dutchPay) {
+        dutchPayList.add(dutchPay);
+    }
+
+    public void participantDutchPay(DutchPayIntersection dutchPayIntersection){
+        participantingDutchPay.add(dutchPayIntersection);
     }
 
     public void changePassword(String password) {
         this.password = password;
     }
+
     public void changeAddress(String dong, String gu) {
         this.dong = dong;
         this.gu = gu;
     }
+
     public void changeImage(String image) {
         this.profileImage = image;
     }
 
-    public void changeFavIngredients(List<String> favIngredients){
+    public void changeFavIngredients(List<String> favIngredients) {
         this.favoriteFood = favIngredients;
     }
 
@@ -118,11 +129,19 @@ public class Member {
         this.sharingList.add(sharing);
     }
 
-    public void addFavoriteSharing(Sharing sharing) { this.favoriteSharing.add(sharing); }
-    public void cancelFavoriteSharing(Sharing sharing) { this.favoriteSharing.remove(sharing); }
+    public void addFavoriteSharing(Sharing sharing) {
+        this.favoriteSharing.add(sharing);
+    }
+
+    public void cancelFavoriteSharing(Sharing sharing) {
+        this.favoriteSharing.remove(sharing);
+    }
+
     public void addFavoriteGroupBuying(GroupBuying groupBuying) {
         this.favoriteBuying.add(groupBuying);
     }
 
-    public void cancelFavoriteGroupBuying(GroupBuying groupBuying) { this.favoriteBuying.remove(groupBuying); }
+    public void cancelFavoriteGroupBuying(GroupBuying groupBuying) {
+        this.favoriteBuying.remove(groupBuying);
+    }
 }

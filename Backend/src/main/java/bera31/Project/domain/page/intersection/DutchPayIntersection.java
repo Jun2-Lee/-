@@ -2,12 +2,16 @@ package bera31.Project.domain.page.intersection;
 
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.dutchpay.DutchPay;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@NoArgsConstructor
+@Getter
 public class DutchPayIntersection {
     @Id
     @GeneratedValue
@@ -20,4 +24,9 @@ public class DutchPayIntersection {
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")
     DutchPay dutchPay;
+
+    public DutchPayIntersection(Member participant, DutchPay dutchPay){
+        this.participant = participant;
+        this.dutchPay = dutchPay;
+    }
 }
