@@ -66,7 +66,7 @@ function Layout() {
           <Link className="profile_link" id="logoutLink" to='/' onClick={handleLogout}>
             로그아웃
           </Link>
-          <Link className="profile_link" to="/Note">
+          <Link className="profile_link" to="/chatting">
             쪽지
           </Link>
         </div>

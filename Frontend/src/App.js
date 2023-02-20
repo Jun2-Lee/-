@@ -25,6 +25,7 @@ import PostgroupBuying from "./pages/4groupbuying/post_groupBuying";
 import MyPage from "./pages/5mypage";
 import EditProfile from "./pages/5mypage/edit_profile";
 import MyWriting from "./pages/5mypage/myWriting";
+import Chatting from "./pages/5mypage/chatting"
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
         <Route path="/myPage" element={<MyPage />} />
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/myWriting" element={<MyWriting />} />
+        <Route path="/Chatting" element={<Chatting />} />
         </Route>
       </Routes>
     </Router>

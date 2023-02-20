@@ -1,9 +1,9 @@
-import './note.css';
+import './chatting.css';
 import React  from 'react';
 import {useState} from 'react';
 import Chatroom from "../../components/chatting";
 
-function Note() {
+function Chatting () {
 
 
     
@@ -34,4 +34,4 @@ function Note() {
     )
 }
 
-export default Note;
+export default Chatting;
