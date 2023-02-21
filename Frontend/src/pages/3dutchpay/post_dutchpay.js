@@ -1,11 +1,40 @@
 import React from 'react';
-import './post_delivery.css'
+import './post_dutchpay.css'
+import axios from 'axios'
 
-function PostDelivery() {
+function PostDutchpay() {
+  const headers = {
+    'Content-Type': 'multipart/form-data'
+  }
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    let form = new FormData()
+    //form.append()
+
+    axios.post("http://3.36.144.128:8080/api/auth/signup", 
+    {
+      "category": "string",
+      "content": "string",
+      "deadLine": "2023-02-19T17:07:23.293Z",
+      "deliveryCost": 0,
+      "limitMember": 0,
+      "store": "string",
+      "title": "string",
+      "x": 0,
+      "y": 0
+    }
+    , {headers})
+      .then(function(response) {
+        console.log(response)
+      }) .catch(function(error) {
+        console.log(error)
+      })
+  }
     return (
         <div>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="StoreName">
             <label className="form-label">매장 이름</label>
             <input className="storeName"/>
@@ -76,4 +105,4 @@ function PostDelivery() {
     );
 }
 
-export default PostDelivery;
+export default PostDutchpay;

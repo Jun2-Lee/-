@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import "./index.css";
+import "./myWriting.css";
 
 import MyWritingList from "../../components/myWritingList";
 import ShortcutBar from "../../components/shortcutBar";
@@ -14,9 +14,9 @@ function MyWriting() {
           <ShortcutBar />
         </section>
         <section className="nav_myWriting">
-          <Link className="myWriting_link">재료 나눔</Link>
+          {/*<Link className="myWriting_link">재료 나눔</Link>
           <Link className="myWriting_link">배달비 n빵</Link>
-          <Link className="myWriting_link">공동구매</Link>
+          <Link className="myWriting_link">공동구매</Link>*/}
         </section>
         <section className="myWritingList">
           <MyWritingList />

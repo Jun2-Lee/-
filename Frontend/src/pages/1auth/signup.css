@@ -1,15 +1,16 @@
-
-/*BODY*/
-.body {
+.signup_container {
   display: flex;
   justify-content: center;
-  margin-top: 63px;
 }
 
 .form-label {
   width: 100px;
   margin-right: 15px;
   text-align: right;
+}
+
+.signup_container .ID {
+  margin-top: 63px;
 }
 
 .id, .password, .password_check {
@@ -31,24 +32,14 @@
 }
 
 .overlap_check {
-  width: 63px;
+  width: 76px;
   height: 31px;
   border-radius: 5px;
   border: none;
   background: var(--main_orange);
   color: white;
-  font-size: 12px;
   font-weight: 800;
   margin-left: 17px;
-}
-
-.profileUpload {
-  background-color: var(--sub_orange);
-  width: 110px;
-  height: 110px;
-  border: none;
-  border-radius: 5px;
-  margin-bottom: 30px;
 }
 
 .gu, .dong {
@@ -60,7 +51,7 @@
   border: none;
 }
 
-.submit {
+.signup_container .submit {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,14 +59,13 @@
   margin-bottom: 60px;
 }
 
-.submit_user_info {
-  width: 297px;
+.signup_container .submit_user_info {
+  width: 309px;
   height: 31px;
   background: var(--main_orange);
   border-radius: 5px;
   border: none;
   color: white;
-  font-size: 12px;
   font-weight: 800;
   margin-top: 80px;
 }
