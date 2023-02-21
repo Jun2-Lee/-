@@ -31,8 +31,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Home />} />
         
         <Route path="/login" element={<Login />} />
         <Route path="/initialInfo" element={<InitialInfo />} />
