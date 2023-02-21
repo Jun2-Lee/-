@@ -19,18 +19,20 @@ const regions = {
     '사상구': ["감전동", "괘법동", "덕포동", "모라동", "삼락동", "엄궁동", "주례동", "학장동"],
     '기장군': ["기장읍", "장안읍", "정관읍", "일광읍", "철마면"]
 };
-        
-export function AddressSelect() {
+
+function AddressSelect({onSelectedGu, onSelectedDong}) {
     const [selectedGu, setSelectedGu] = useState('');
     const [selectedDong, setSelectedDong] = useState('');
 
-    const handleGuChange = (event) => {
+    function handleGuChange(event) {
         setSelectedGu(event.target.value);
         setSelectedDong('');
+        onSelectedGu(event.target.value);
     }
 
-    const handleDongChange = (event) => {
+    function handleDongChange(event) {
         setSelectedDong(event.target.value);
+        onSelectedDong(event.target.value);
     }
 
     return (

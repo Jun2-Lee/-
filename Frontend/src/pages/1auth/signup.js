@@ -2,8 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './signup.css'
-import ImgUpload, { profileImage } from "../../components/imgUpload";
-import AddressSelect, {selectedGu} from "../../components/addressSelect";
+import ImgUpload from "../../components/imgUpload";
+import AddressSelect from "../../components/addressSelect";
 import axios from 'axios';
 
 function Signup() {
@@ -17,7 +17,7 @@ function Signup() {
     e.preventDefault();
     setImgsrc(URL.createObjectURL(e.target.files[0]));
     setProfileImage(e.target.files[0]) //400 err
-    //setProfileImage(URL.createObjectURL(e.target.files[0])); //500 err
+    //setdleProfileImage(URL.createObjectURL(e.target.files[0])); //500 err
     
   };
 
@@ -27,18 +27,36 @@ function Signup() {
   const [selectedGu, setSelectedGu] = useState('');
   const [selectedDong, setSelectedDong] = useState('');
 
+  function handleSelectedGu(selectedGuValue) {
+    setSelectedGu(selectedGuValue)
+    setSignUpDto({
+      ...signUpDto,
+      gu: selectedGuValue
+    })
+  }
+
+  function handleSelectedDong(selectedDongValue) {
+    setSelectedDong(selectedDongValue)
+    setSignUpDto({
+      ...signUpDto,
+      dong: selectedDongValue
+    })
+  }
+
   const headers = {
     'Content-Type': 'multipart/form-data'
   }
 
   const [signUpDto, setSignUpDto] = useState({
-    dong: '부곡동',
+    dong: '',
     email: '',
-    gu: '금정구',
+    gu: '',
     nickname: '',
     password: '',
 
   });
+
+  const { dong, email, gu, nickname, password} = signUpDto;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -47,9 +65,7 @@ function Signup() {
       [name]: value
     })
   };
-
-  const { dong, email, gu, nickname, password} = signUpDto;
-
+  console.log(signUpDto)
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -95,8 +111,8 @@ function Signup() {
 
         <div className="profile_upload">
           <label className="form-label">프로필 사진</label>
-          {/*<ImgUpload />*/}
-          <div>
+          <ImgUpload />
+          {/*<div>
             <div className="img_preview">
               {profileImage && (
                 <img
@@ -114,12 +130,12 @@ function Signup() {
                 onChange={onChangeImg}
               />
             </div>
-          </div>
+          </div>*/}
         </div>
 
         <div className="address">
           <label className="form-label">사는 동네</label>
-          <AddressSelect />
+          <AddressSelect onSelectedGu={handleSelectedGu} onSelectedDong={handleSelectedDong}/>
         </div>
 
         <div className="submit">
