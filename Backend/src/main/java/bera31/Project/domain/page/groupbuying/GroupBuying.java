@@ -26,6 +26,8 @@ public class GroupBuying extends Contents {
     int cost;
     String image;
     int limitMember;
+    String gu;
+    String dong;
 
     @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY)
     List<GroupBuyingIntersection> memberList = new ArrayList<>();
@@ -45,6 +47,8 @@ public class GroupBuying extends Contents {
         this.deadLine = groupBuyingRequestDto.getDeadLine();
         this.link = groupBuyingRequestDto.getLink();
         this.title = groupBuyingRequestDto.getTitle();
+        this.gu = groupBuyingRequestDto.getGu();
+        this.dong = groupBuyingRequestDto.getDong();
         this.image = image;
         return this.getId();
     }
@@ -61,5 +65,7 @@ public class GroupBuying extends Contents {
         this.postTime = LocalDateTime.now();
         this.link = groupBuyingRequestDto.getLink();
         this.title = groupBuyingRequestDto.getTitle();
+        this.gu = groupBuyingRequestDto.getGu();
+        this.dong = groupBuyingRequestDto.getDong();
     }
 }

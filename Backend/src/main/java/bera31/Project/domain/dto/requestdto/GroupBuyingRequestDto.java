@@ -23,4 +23,6 @@ public class GroupBuyingRequestDto {
     int memberLimit;
     LocalDateTime deadLine;
     String content;
+    String gu;
+    String dong;
 }
