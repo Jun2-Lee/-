@@ -62,7 +62,7 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private List<Schedule> memoList = new ArrayList<>();
 
-    public Member(String email, String password, String nickname, String dong, String gu){
+    public Member(String email, String password, String nickname, String dong, String gu) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
@@ -71,16 +71,26 @@ public class Member {
         this.authority = Authority.ROLE_USER;
     }
 
-    public void postGroupBuying(GroupBuying groupBuying){
+    public void postGroupBuying(GroupBuying groupBuying) {
         buyingList.add(groupBuying);
     }
-    public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection){
+
+    public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection) {
         participantingGroupBuying.add(groupBuyingIntersection);
+    }
+
+    public void postDutchPay(DutchPay dutchPay) {
+        dutchPayList.add(dutchPay);
+    }
+
+    public void participantDutchPay(DutchPayIntersection dutchPayIntersection){
+        participantingDutchPay.add(dutchPayIntersection);
     }
 
     public void changePassword(String password) {
         this.password = password;
     }
+
     public void changeAddress(String dong, String gu) {
         this.dong = dong;
         this.gu = gu;
@@ -88,7 +98,8 @@ public class Member {
     public void setProfileImage(String image) {
         this.profileImage = image;
     }
-    public void changeFavIngredients(List<String> favIngredients){
+
+    public void changeFavIngredients(List<String> favIngredients) {
         this.favoriteFood = favIngredients;
     }
     public void addSharing(Sharing sharing) {

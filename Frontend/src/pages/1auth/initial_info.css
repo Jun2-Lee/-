@@ -1,59 +1,41 @@
-
-/*BODY*/
-.body {
+.initialInfo_container {
   display: flex;
   justify-content: center;
-  margin-top: 63px;
 }
 
 .form-label {
+  font-weight: 700;
   width: 100px;
   margin-right: 15px;
   text-align: right;
 }
 
-.nickName_linkage {
+.initialInfo_container .nick_name {
+  margin-top: 128px;
+}
+
+.initialInfo_container .nick_name, .profile_upload, .address {
+  display: flex;
+  margin-bottom: 28px;
+}
+
+.nickName {
   background-color: var(--sub_orange);
   width: 217px;
   height: 31px;
   border: none;
   border-radius: 5px;
-  margin-bottom: 30px;
-  margin-top: 70px;
 }
 
 .overlap_check {
-  width: 63px;
+  width: 76px;
   height: 31px;
   border-radius: 5px;
   border: none;
   background: var(--main_orange);
   color: white;
-  font-size: 12px;
   font-weight: 800;
   margin-left: 17px;
-}
-
-.profile_upload {
-  display: flex;
-}
-
-.profileUpload {
-  background-color: var(--sub_orange);
-  width: 110px;
-  height: 110px;
-  border: none;
-  border-radius: 5px;
-  margin-bottom: 30px;
-}
-
-.gu, .dong {
-  background-color: var(--sub_orange);
-  width: 134px;
-  height: 31px;
-  border-radius: 5px;
-  margin-right: 30px;
-  border: none;
 }
 
 .submit {
@@ -65,13 +47,12 @@
 }
 
 .submit_user_info {
-  width: 297px;
+  width: 309px;
   height: 31px;
   background: var(--main_orange);
   border-radius: 5px;
   border: none;
   color: white;
-  font-size: 12px;
   font-weight: 800;
   margin-top: 80px;
 }

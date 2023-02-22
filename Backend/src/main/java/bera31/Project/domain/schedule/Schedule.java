@@ -35,6 +35,7 @@ public class Schedule {
         this.place = scheduleRequestDto.getPlace();
         this.content = scheduleRequestDto.getContent();
     }
+
     public void updateSchedule(ScheduleRequestDto scheduleRequestDto) {
         this.title = scheduleRequestDto.getTitle();
         this.category = scheduleRequestDto.getCategory();

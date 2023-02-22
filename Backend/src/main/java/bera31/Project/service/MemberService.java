@@ -24,8 +24,6 @@ import java.util.Optional;
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final GroupBuyingRepository groupBuyingRepository;
-    // 과연 이렇게 결합도를 높인다고 좋을까?
     private final S3Uploader s3Uploader;
     private final PasswordEncoder passwordEncoder;
 
@@ -48,7 +46,12 @@ public class MemberService {
         return "정보가 수정되었습니다!";
     }
 
-    public String findPassword(String email){
+    public void deleteMember() {
+        Member currentMember = loadCurrentMember();
+        memberRepository.delete(currentMember);
+    }
+
+    public String findPassword(@RequestBody String email) throws Exception {
         if (memberRepository.findByEmail(email).isPresent())
             return memberRepository.findByEmail(email).get().getPassword();
         else
