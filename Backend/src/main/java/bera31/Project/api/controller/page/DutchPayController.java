@@ -6,6 +6,7 @@ import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayResponseDto;
 import bera31.Project.service.page.DutchPayService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,11 @@ public class DutchPayController {
     @GetMapping("/{dutchPayId}")
     public DutchPayResponseDto findDutchPay(@PathVariable Long dutchPayId) {
         return dutchPayService.findDutchPay(dutchPayId);
+    }
+    @Operation
+    @PostMapping("/{dutchPayId}")
+    public void participantDutchPay(@PathVariable Long dutchPayId){
+        dutchPayService.participantDutchPay(dutchPayId);
     }
 
 }

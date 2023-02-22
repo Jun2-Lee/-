@@ -43,12 +43,6 @@ public class MemberService {
         return "정보가 수정되었습니다!";
     }
 
-    @Transactional(readOnly = true)
-    public void/*List<Memo>*/ findMyMemo() {
-        //멤버 찾기(로그인 구현 후에 할 예정)
-        //return member.getMemoList();
-    }
-
     public void deleteMember() {
         //멤버 찾기(로그인 구현 후에 할 예정)
         //memberRepository.delete(member);
