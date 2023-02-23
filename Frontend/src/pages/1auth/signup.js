@@ -44,15 +44,14 @@ function Signup() {
   }
 
   const [signUpDto, setSignUpDto] = useState({
-    dong: '',
     email: '',
-    gu: '',
-    nickname: '',
     password: '',
-
+    nickname: '',
+    gu: '',
+    dong: '',
   });
 
-  const { dong, email, gu, nickname, password} = signUpDto;
+  const { email, password, nickname, gu, dong } = signUpDto;
 
   const onChange = (e) => {
     const { value, name } = e.target;
