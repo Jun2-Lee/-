@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ScheduleRequestDto {
     LocalDate postDate;
-    ScheduleCategory category;
     String title;
     String time;
     String place;

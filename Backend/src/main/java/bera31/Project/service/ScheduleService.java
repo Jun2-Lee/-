@@ -24,17 +24,17 @@ public class ScheduleService {
 
     @Transactional
     public Long postSchedule(ScheduleRequestDto scheduleRequestDto) {
-        Member findedMember = loadCurrentMember();
+        Member currentMember = loadCurrentMember();
 
         Schedule newMemo = new Schedule(scheduleRequestDto);
-        findedMember.addMemo(newMemo);
+        currentMember.addMemo(newMemo);
         return scheduleRepository.save(newMemo);
     }
 
     @Transactional
     public List<ScheduleListResponseDto> renderSchedule(){
-        Member findedMember = loadCurrentMember();
-        List<Schedule> memoList = findedMember.getMemoList();
+        Member currentMember = loadCurrentMember();
+        List<Schedule> memoList = currentMember.getMemoList();
 
         return memoList.stream()
                 .map(ScheduleListResponseDto::new)

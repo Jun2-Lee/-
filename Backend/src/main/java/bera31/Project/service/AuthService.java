@@ -40,18 +40,21 @@ public class AuthService {
     public Long signUp(SignUpDto signUpDto, MultipartFile profileImage) throws Exception {
         if (checkEmailDuplication(signUpDto))
             throw new EmailDuplicateException(ErrorResponse.EMAIL_DUPLICATE);
-        if (checkNicknameDuplication(signUpDto))
-            throw new NicknameDuplicateException(ErrorResponse.NICKNAME_DUPLICATE);
 
         Member member = new Member(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword()),
                 signUpDto.getNickname(), signUpDto.getDong(), signUpDto.getGu());
-
-        log.info("profileImage : " + profileImage);
 
         if(!profileImage.isEmpty())
             member.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
 
         return memberRepository.save(member).getId();
+    }
+
+    public String checkNickname(String nickname){
+        if(checkNicknameDuplication(nickname))
+            throw new NicknameDuplicateException(ErrorResponse.NICKNAME_DUPLICATE);
+
+        return "사용 가능한 닉네임 입니다.";
     }
 
     public AuthTokenDto signIn(LogInDto logInDto){
@@ -94,8 +97,8 @@ public class AuthService {
     private boolean checkEmailDuplication(SignUpDto signUpDto) {
         return memberRepository.findByEmail(signUpDto.getEmail()).isPresent();
     }
-    private boolean checkNicknameDuplication(SignUpDto signUpDto){
-        return memberRepository.findByNickName(signUpDto.getNickname()).isPresent();
+    private boolean checkNicknameDuplication(String nickname) {
+        return memberRepository.findByEmail(nickname).isPresent();
     }
     private boolean checkPasswordCorrectness(LogInDto logInDto, Optional<Member> findedMember) {
         return passwordEncoder.matches(logInDto.getPassword(), findedMember.get().getPassword());

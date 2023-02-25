@@ -13,12 +13,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleListResponseDto {
-    ScheduleCategory category;
     String title;
     String time;
 
     public ScheduleListResponseDto(Schedule schedule){
-        this.category = schedule.getCategory();
         this.title = schedule.getTitle();
         this.time = schedule.getTime();
     }

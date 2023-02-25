@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,7 +58,8 @@ public class GroupBuyingService {
     }
 
     public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
-        Member findedMember = loadCurrentMember();
+        //Member findedMember = loadCurrentMember();
+        Member findedMember = memberRepository.findById(1);
 
         GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, findedMember);
         newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
@@ -67,7 +69,8 @@ public class GroupBuyingService {
     }
 
     public Long participantGroupBuying(Long postId){
-        Member findedMember = loadCurrentMember();
+        //Member findedMember = loadCurrentMember();
+        Member findedMember = memberRepository.findById(1);
         GroupBuying findedPost = groupBuyingRepository.findById(postId);
 
         if(findedPost.getLimitMember() <= findedPost.getMemberList().size())
@@ -96,7 +99,8 @@ public class GroupBuyingService {
     }
 
     public Long pushLikeGroupBuying(Long postId){
-        Member currentMember = loadCurrentMember();
+        //Member currentMember = loadCurrentMember();
+        Member currentMember = memberRepository.findById(1);
         GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
 
         LikedGroupBuying newLikedGroupBuying = new LikedGroupBuying(currentMember, currentGroupBuying);

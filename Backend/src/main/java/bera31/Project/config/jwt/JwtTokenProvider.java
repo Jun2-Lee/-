@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -44,7 +45,13 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
+
         Date accessTokenValidTime = new Date(now + ACCESS_TOKEN_LIFETIME);
+
+        log.info("Now time is : " + new Date(now));
+        log.info("Deadline is : " + accessTokenValidTime);
+        log.info("Now time is : " + LocalDateTime.now());
+
         String accessToken = Jwts.builder() // Access Token 생성
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
