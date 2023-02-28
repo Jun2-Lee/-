@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
     const REST_API_KEY = "e14465c8dab22961a692f89cdcfb540b";
-    const REDIRECT_URI = "http://localhost:3000/oauth/kakao/callback";
+    const REDIRECT_URI = "https://naong-ca2e5.web.app/oauth/kakao/callback";
     const CLIENT_SECRET = "CuVZ4eSZHgGvhCjMlUzhFaYIycCnX4Xb";
 
   // calllback으로 받은 인가코드
@@ -14,6 +14,7 @@ const Auth = () => {
       
   const history = useNavigate();
 
+  /*
   const getToken = async () => {
     const payload = qs.stringify({
       grant_type: "authorization_code",
@@ -47,7 +48,7 @@ const Auth = () => {
     getToken();
   }, []);
 
-  return null;
+  return null; */
 };
 
 export default Auth;
