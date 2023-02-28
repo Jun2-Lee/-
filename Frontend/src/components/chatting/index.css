@@ -19,10 +19,11 @@
     height: 420px;
     background-color: var(--sub_orange);
     border-radius: 5px;
-    margin-left: 640px;
-    margin-top: 30px;
+    margin-left: 300px;
+    margin-top: -85px;
     display: flex;
     position: relative;
+
 }
 
 .noteImg{
@@ -54,20 +55,50 @@
 }
 .chattingBox{
     margin-top: -425px;
-    margin-left: 635px;
+    margin-left: 295px;
 }
 
-.ChatBubble{
-    position: relative;
+
+
+.chatBubble::after {
+    border-color: white transparent;
+    border-style: solid;
+    border-width: 15px 20px 0px 0px;
+    content: '';
+    display: block;
+    left: 100px;
+    position: absolute;
+    top: 7px;
+    width: 0;
+    z-index: 1;
+    
+  }
+
+.chatBubbleReturn{
+    margin-left: 25px;
 }
 
+.chatBubbleReturn:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 40%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-right-color: white;
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-left: -20px;
+}
 .outputChat{
     position: absolute;
-    margin-top: -27px;
+    margin-top: 0px;
 }
 
 .chatBubble{
-    margin-left: 380px;
+    margin-left: 480px;
 }
 
 .chattingContainer{
@@ -79,3 +110,5 @@
     margin-top: 30px;
     position: absolute;
 }
+
+

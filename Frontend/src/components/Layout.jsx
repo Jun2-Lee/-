@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import "./Layout.css";
+import ProfileGoogle from "./userInfo";
 import {Link, Outlet} from "react-router-dom";
 
 function Layout() {
@@ -32,14 +33,15 @@ function Layout() {
             마이페이지
           </Link>
         </nav>
-
+        
         <div className="header_profile">
           <img
             className="header_profileImg"
             src="/assets/img/default_profile.png"
           />
           <Link className="profile_nickName" to="/editProfile">
-            뭐먹지 님
+            이름
+
           </Link>
           <Link className="profile_link" id="mypageLink" to="/">
             마이페이지
@@ -51,6 +53,8 @@ function Layout() {
             쪽지
           </Link>
         </div>
+
+
       </header>
 
       <div
@@ -76,11 +80,11 @@ function Layout() {
               <Link to="/groupBuying">공동구매 목록</Link>
             </article>
             <article className="hover_myPage">
-              <Link to="/">내프로필</Link>
+              <Link to="/">내 프로필</Link>
               <Link to="/">쪽지함</Link>
               <Link to="/myWriting">내가 쓴 글</Link>
-              <Link to="/">참여목록</Link>
-              <Link to="/">찜목록</Link>
+              <Link to="/">참여 목록</Link>
+              <Link to="/">찜 목록</Link>
               <Link to="/">캘린더</Link>
             </article>
           </div>

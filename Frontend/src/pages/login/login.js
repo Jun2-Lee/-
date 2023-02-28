@@ -1,10 +1,9 @@
-
+import GoogleButton from '../../components/googlecmp';
 import './login.css';
-import {useState} from 'react';
-import {BrowserRouter as Router, Route,  Link} from "react-router-dom";
 
 
-function Login() {
+
+function Login(){
 
   return (
     <div>
@@ -38,11 +37,14 @@ function Login() {
         <button className="KAKAO">카카오로 로그인</button>
       </div>
 
-      <div className="googleLogin">
-        <button className="GOOGLE">구글로 로그인</button>
+      
+      <div className='googleLogin'>
+           <GoogleButton/>
       </div>
+     
     </div>
   );
-} 
+}
+
 
 export default Login;

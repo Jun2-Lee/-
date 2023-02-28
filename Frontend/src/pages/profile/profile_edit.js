@@ -1,8 +1,5 @@
 import './profile_edit.css';
 import {useState} from 'react';
-import {BrowserRouter as Router, Route,  Link} from "react-router-dom";
-
-
 
 
 
