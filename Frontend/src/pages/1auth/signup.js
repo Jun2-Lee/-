@@ -2,43 +2,56 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './signup.css'
-import ImgUpload, { profileImage } from "../../components/imgUpload";
-import AddressSelect, {selectedGu} from "../../components/addressSelect";
+import ImgUpload from "../../components/imgUpload";
+import AddressSelect from "../../components/addressSelect";
 import axios from 'axios';
 
 function Signup() {
   const navigate = useNavigate();
-  const [profileImage, setProfileImage] = useState("");
-  const [imgsrc, setImgsrc] = useState("");
-  //const [file,setFile] = useState();
 
-  // 파일 저장
-  const onChangeImg = (e) => {
-    e.preventDefault();
-    setImgsrc(URL.createObjectURL(e.target.files[0]));
-    setProfileImage(e.target.files[0]) //400 err
-    //setProfileImage(URL.createObjectURL(e.target.files[0])); //500 err
-    
-  };
-
-  console.log(profileImage)
-
-  // 원래 코드 여기서부터 시작 (이미지 업로드 컴포넌트화 전)
+  // 주소 선택
   const [selectedGu, setSelectedGu] = useState('');
   const [selectedDong, setSelectedDong] = useState('');
 
+  function handleSelectedGu(selectedGuValue) {
+    setSelectedGu(selectedGuValue)
+    setSignUpDto({
+      ...signUpDto,
+      gu: selectedGuValue
+    })
+  }
+
+  function handleSelectedDong(selectedDongValue) {
+    setSelectedDong(selectedDongValue)
+    setSignUpDto({
+      ...signUpDto,
+      dong: selectedDongValue
+    })
+  }
+
+  //이미지 업로드
+  const [profileImage, setProfileImage] = useState("");
+  const [imgsrc, setImgsrc] = useState("");
+
+  function handleImg(selectedImgValue) {
+    setProfileImage(selectedImgValue)
+    setImgsrc(URL.createObjectURL(selectedImgValue))
+  }
+
+  //axios header 선언
   const headers = {
     'Content-Type': 'multipart/form-data'
   }
 
   const [signUpDto, setSignUpDto] = useState({
-    dong: '부곡동',
     email: '',
-    gu: '금정구',
-    nickname: '',
     password: '',
-
+    nickname: '',
+    gu: '',
+    dong: '',
   });
+
+  const { email, password, nickname, gu, dong } = signUpDto;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -48,14 +61,11 @@ function Signup() {
     })
   };
 
-  const { dong, email, gu, nickname, password} = signUpDto;
-
   const onSubmit = (e) => {
     e.preventDefault();
 
     const form = new FormData()
     form.append('profileImage', profileImage)
-    console.log(profileImage)
     form.append('signUpDto', new Blob([JSON.stringify(signUpDto)], {
       type: "application/json"
     }))
@@ -95,31 +105,12 @@ function Signup() {
 
         <div className="profile_upload">
           <label className="form-label">프로필 사진</label>
-          {/*<ImgUpload />*/}
-          <div>
-            <div className="img_preview">
-              {profileImage && (
-                <img
-                  alt="프로필 업로드에 실패했습니다."
-                  src={imgsrc}
-                />
-              )}
-            </div>
-
-            <div className="imgUpload_btn">
-              <input
-                name="imgUpload"
-                type="file"
-                accept="image/*"
-                onChange={onChangeImg}
-              />
-            </div>
-          </div>
+          <ImgUpload onSelectedImg={handleImg} />
         </div>
 
         <div className="address">
           <label className="form-label">사는 동네</label>
-          <AddressSelect />
+          <AddressSelect onSelectedGu={handleSelectedGu} onSelectedDong={handleSelectedDong}/>
         </div>
 
         <div className="submit">
