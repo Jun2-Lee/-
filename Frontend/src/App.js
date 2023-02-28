@@ -32,6 +32,12 @@ import EditProfile from "./pages/5mypage/edit_profile";
 import MyWriting from "./pages/5mypage/myWriting";
 import Chatting from "./pages/5mypage/chatting"
 
+//로그인 테스트
+import Login2 from "./pages/test";
+import Auth from "./pages/test/Auth";
+import Profile from "./pages/test/profile";
+
+
 function App() {
   return (
     <Router>
@@ -63,7 +69,14 @@ function App() {
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/myWriting" element={<MyWriting />} />
         <Route path="/Chatting" element={<Chatting />} />
+
+
+        {/* 카카오 로그인 테스트 */}
+        <Route path="/login2" element={<Login2 />} />
+          <Route path="/oauth/kakao/callback" element={<Auth />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
+
       </Routes>
     </Router>
   );
