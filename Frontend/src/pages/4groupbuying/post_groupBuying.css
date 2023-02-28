@@ -1,70 +1,46 @@
-
-/*BODY*/
-.body {
+.groupBuying_container {
     display: flex;
     justify-content: center;
   }
   
-  .form-label {
-    width: 100px;
-    margin-right: 15px;
-    text-align: right;
-  }
+.groupBuying_container .form-label {
+  width: 100px;
+  margin-right: 15px;
+  text-align: right;
+}
 
-  .category_groupBuying, .productName, .link, .productImgUpload, .totalGroupBuying, .numPeople_groupBuying, .deadlineGroupBuying {
+.groupBuying_container .title, .category, .productName, .link, .totalGroupBuying, .numPeople_groupBuying, .deadlineGroupBuying {
     background-color: var(--sub_orange);
     border: none;
     border-radius: 5px;
     margin-bottom: 30px;
   }
 
-  .category_groupBuying {
+  .groupBuying_container .category {
     width: 363px;
     height: 31px;
+    appearance: none;
+    background: url("../../assets/img/toggleIconOpen.png") no-repeat 3% 50%/0.938rem auto;
+    background-size: 1rem;
+    background-color: var(--sub_orange);
+    padding-left: 2.1rem;
   }
 
-  .productName, .link {
+  .groupBuying_container .productName, .link {
     width: 363px;
     height: 63px;
   }
 
-  .productImgUpload {
-    width: 110px;
-    height: 110px;
+  .groupBuying_container .productImg_upload {
+    display: flex;
+    margin-bottom: 30px;
   }
 
-  .totalGroupBuying, .numPeople_groupBuying, .deadlineGroupBuying {
+  .groupBuying_container .totalGroupBuying, .numPeople_groupBuying {
     width: 178px;
     height: 31px;
   }
 
-/**/
-  .category_delivery, .detailedAddress {
-    width: 363px;
-    height: 31px;
-  }
-
-  .deliveryAddress {
-    width: 238px;
-    height: 31px;
-  }
-
-  .detailedAddress {
-    margin-left: 115px;
-    display: flex;
-    text-align: center;
-  }
-
-  .searchAddress {
-    margin-left: 24px;
-    width: 101px;
-    height: 31px;
-    border: none;
-    background: var(--main_orange);
-    color: white;
-    border-radius: 5px;
-  }
-  
   .totalDelivery, .numPeople, .deadlineDelivery {
     width: 158px;
     height: 31px;

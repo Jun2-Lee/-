@@ -69,8 +69,6 @@ function PostSharing() {
     setImgsrc(URL.createObjectURL(selectedImgValue))
   }
 
-  console.log(postImage)
-
   //axios header 선언
   const headers = {
     'Content-Type': 'multipart/form-data'
@@ -127,7 +125,7 @@ function PostSharing() {
           <div className="food_classification">
             <label className="form-label">카테고리</label>
             <select className='category' value={selectedFood} onChange={handleFoodChange}>
-              <option value=""></option>
+              <option value="">분류</option>
               {Object.keys(foodTypes).map((foodtype) => (
                   <option key={foodtype} value={foodtype}>{foodtype}</option>
               ))}
@@ -137,7 +135,7 @@ function PostSharing() {
           <div className='product_container'>
             <label className="form-label">품목</label>
               <select className='category2' value={selectedDetail} onChange={handleDetailChange} disabled={!selectedFood}>
-                <option value=""></option>
+                <option value="">상세 분류</option>
                 {foodTypes[selectedFood] && foodTypes[selectedFood].map((foodtype2) => (
                     <option key={foodtype2} value={foodtype2}>{foodtype2}</option>
                 ))}
