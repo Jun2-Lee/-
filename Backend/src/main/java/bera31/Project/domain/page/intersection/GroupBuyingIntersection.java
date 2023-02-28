@@ -1,24 +1,30 @@
 package bera31.Project.domain.page.intersection;
 
 import bera31.Project.domain.member.Member;
-import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @Data
 public class GroupBuyingIntersection {
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "PARTICIPANT_ID")
-    Member participant;
+    private Member participant;
 
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")
-    GroupBuying groupBuying;
+    private GroupBuying groupBuying;
+
+    public GroupBuyingIntersection(Member participant, GroupBuying groupBuying) {
+        this.participant = participant;
+        this.groupBuying = groupBuying;
+    }
 }

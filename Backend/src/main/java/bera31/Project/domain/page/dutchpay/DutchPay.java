@@ -1,5 +1,7 @@
 package bera31.Project.domain.page.dutchpay;
 
+import bera31.Project.domain.dto.requestdto.DutchPayRequestDto;
+import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.intersection.DutchPayIntersection;
 import lombok.AllArgsConstructor;
@@ -29,17 +31,21 @@ public class DutchPay extends Contents {
     LocalDateTime deadLine;
     String content;
 
-    public DutchPay(String title, String category, String store, int deliveryCost,
-                    int limitMember, String content, double x, double y, LocalDateTime deadLine) {
-        this.title = title;
-        this.category = category;
-        this.store = store;
-        this.deliveryCost = deliveryCost;
-        this.limitMember = limitMember;
-        this.x = x;
-        this.y = y;
-        this.deadLine = deadLine;
-        this.content = content;
+    public DutchPay(DutchPayRequestDto dutchPayRequestDto, Member member) {
+        this.user = member;
+        this.title = dutchPayRequestDto.getTitle();
+        this.category = dutchPayRequestDto.getCategory();
+        this.store = dutchPayRequestDto.getStore();
+        this.deliveryCost = dutchPayRequestDto.getDeliveryCost();
+        this.limitMember = dutchPayRequestDto.getLimitMember();
+        this.x = dutchPayRequestDto.getX();
+        this.y = dutchPayRequestDto.getY();
+        this.deadLine = dutchPayRequestDto.getDeadLine();
+        this.content = dutchPayRequestDto.getContent();
         this.postTime = LocalDateTime.now();
+    }
+
+    public void addParticipantMember(DutchPayIntersection dutchPayIntersection){
+        memberList.add(dutchPayIntersection);
     }
 }

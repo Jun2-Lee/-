@@ -1,10 +1,31 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./Layout.css";
+<<<<<<< HEAD
 import ProfileGoogle from "./userInfo";
 import {Link, Outlet} from "react-router-dom";
+=======
+import {Link, Outlet, useNavigate} from "react-router-dom";
+import axios from 'axios'
+
+//import { profileImage, nickName } from "./kakao_login/profile";
+>>>>>>> ef15415eb527d9dd0695d95a6396edc67df4b115
 
 function Layout() {
   const [hover, setHover] = useState(false);
+  
+  const navigate = useNavigate();
+  const handleLogout = (e) => {
+    e.preventDefault();
+    axios.post("http://3.36.144.128:8080/api/auth/logout", 
+            {
+            })
+    .then(function(response) {
+      console.log(response)
+      navigate('/')
+    }) .catch(function(error) {
+      console.log(error)
+    })
+  }
 
   return (
     <>
@@ -13,7 +34,7 @@ function Layout() {
         onMouseLeave={() => setHover(false)}
       >
         <Link to="/">
-          <img className="header_logoImg" src="assets/img/logo.png" />
+          <img className="header_logoImg" src="/assets/img/logo.png" />
         </Link>
 
         <nav>
@@ -29,7 +50,7 @@ function Layout() {
           <Link className="nav_link" to="/groupBuying">
             공동구매
           </Link>
-          <Link className="nav_link" to="/">
+          <Link className="nav_link" to="/myPage">
             마이페이지
           </Link>
         </nav>
@@ -37,19 +58,21 @@ function Layout() {
         <div className="header_profile">
           <img
             className="header_profileImg"
-            src="/assets/img/default_profile.png"
+            /*src="/assets/img/default_profile.png"*/
+            
           />
+
           <Link className="profile_nickName" to="/editProfile">
             이름
 
           </Link>
-          <Link className="profile_link" id="mypageLink" to="/">
+          <Link className="profile_link" id="mypageLink" to="/myPage">
             마이페이지
           </Link>
-          <Link className="profile_link" id="logoutLink" to="/">
+          <Link className="profile_link" id="logoutLink" to='/' onClick={handleLogout}>
             로그아웃
           </Link>
-          <Link className="profile_link" to="/Note">
+          <Link className="profile_link" to="/chatting">
             쪽지
           </Link>
         </div>
@@ -65,7 +88,7 @@ function Layout() {
         {hover === true && (
           <div className="hover">
             <article>
-              <Link>공지사항</Link>
+              <Link to="/">공지사항</Link>
             </article>
             <article className="hover_sharing">
               <Link to="/postSharing">나눔글 등록</Link>
