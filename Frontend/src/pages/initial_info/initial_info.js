@@ -5,7 +5,11 @@ import axios from 'axios';
 
 function InitialInfo() {
 
+<<<<<<< HEAD
   const getInfo = document.getElementById("getInfo");
+=======
+ const getInfo = document.getElementById("getInfo");
+>>>>>>> da709f71bf34f9492f8a62bd5cd91a312e35d739
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();

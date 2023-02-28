@@ -21,7 +21,11 @@ import EditProfile from "./pages/profile/profile_edit";
 import MyWriting from "./pages/myWriting";
 import MyPage from "./pages/mypage";
 import Layout from "./components/Layout";
+<<<<<<< HEAD
 import Calendar from "./pages/calendar";
+=======
+
+>>>>>>> da709f71bf34f9492f8a62bd5cd91a312e35d739
 import Note from "./pages/note/note";
 
 
@@ -43,6 +47,10 @@ function App() {
     fetchData();
   };*/
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> da709f71bf34f9492f8a62bd5cd91a312e35d739
   return (
     <Router>
       <Routes>
@@ -61,7 +69,11 @@ function App() {
           <Route path="/postGroupBuying" element={<PostgroupBuying />} />
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/myWriting" element={<MyWriting />} />
+<<<<<<< HEAD
           <Route path="/calendar" element={<Calendar />} />
+=======
+
+>>>>>>> da709f71bf34f9492f8a62bd5cd91a312e35d739
           <Route path="/note" element={<Note />} />
 
           <Route path="/myPage" element={<MyPage />} />
