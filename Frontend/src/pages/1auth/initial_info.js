@@ -5,16 +5,11 @@ import ImgUpload from "../../components/imgUpload";
 import AddressSelect from "../../components/addressSelect";
 
 function InitialInfo() {
-<<<<<<< HEAD:Frontend/src/pages/initial_info/initial_info.js
 
-<<<<<<< HEAD
-  const getInfo = document.getElementById("getInfo");
-=======
+
+/*
  const getInfo = document.getElementById("getInfo");
->>>>>>> da709f71bf34f9492f8a62bd5cd91a312e35d739
-=======
-  /*const getInfo = document.getElementById("getInfo");
->>>>>>> ef15415eb527d9dd0695d95a6396edc67df4b115:Frontend/src/pages/1auth/initial_info.js
+
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();

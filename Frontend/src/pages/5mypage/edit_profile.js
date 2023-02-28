@@ -1,11 +1,8 @@
 import './edit_profile.css';
 import {useState} from 'react';
-<<<<<<< HEAD:Frontend/src/pages/profile/profile_edit.js
 
-
-=======
 import {BrowserRouter as Router, Route,  Link} from "react-router-dom";
->>>>>>> ef15415eb527d9dd0695d95a6396edc67df4b115:Frontend/src/pages/5mypage/edit_profile.js
+
 
 function EditProfile() {
     const [adressFilter,setAdressFilter]= useState("")

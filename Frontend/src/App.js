@@ -1,16 +1,12 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import * as React from "react";
-import GoogleButton from "./pages/login/login";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 //0(home)
 import Home from "./pages/home";
 import Layout from "./components/Layout";
 import Calendar from "./pages/calendar";
-
-import Note from "./pages/note/note";
-
 //1
 import Login from "./pages/1auth/login";
 import InitialInfo from "./pages/1auth/initial_info";
@@ -52,7 +48,7 @@ function App() {
 
           <Route path="/calendar" element={<Calendar />} />
 
-          <Route path="/note" element={<Note />} />
+   
         <Route path="/sharing" element={<SharingPage />} />
         <Route path="/detailSharing" element={<DetailSharing />} />
         <Route path="/postSharing" element={<PostSharing />} />

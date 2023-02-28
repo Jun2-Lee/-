@@ -1,14 +1,11 @@
 import React, {useState, useEffect} from "react";
 import "./Layout.css";
-<<<<<<< HEAD
 import ProfileGoogle from "./userInfo";
-import {Link, Outlet} from "react-router-dom";
-=======
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import axios from 'axios'
 
 //import { profileImage, nickName } from "./kakao_login/profile";
->>>>>>> ef15415eb527d9dd0695d95a6396edc67df4b115
+
 
 function Layout() {
   const [hover, setHover] = useState(false);
