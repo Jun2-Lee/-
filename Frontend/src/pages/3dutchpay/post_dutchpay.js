@@ -1,37 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './post_dutchpay.css'
 import axios from 'axios'
 
 function PostDutchpay() {
-  const headers = {
-    'Content-Type': 'multipart/form-data'
+  //음식 카테고리 선택 (수정해야함)
+  const foodTypes = ['채소', '과일/견과/쌀', '수산물/건해산', '정육/계란', '우유/유제품', '면류/통조림', '샐러드/간편식', '양념', '생수/음료', '간식/과자/떡']
+  const [selectedFood, setSelectedFood] = useState('');
+
+  function handleFoodChange(e) {
+    setSelectedFood(e.target.value);
+    setGroupBuyingRequestDto({
+      ...groupBuyingRequestDto,
+      category: e.target.value
+    })
   }
 
+  //axios header 선언
+  const headers = {
+    'Content-Type': 'application/json'
+  }
+
+  const [groupBuyingRequestDto, setGroupBuyingRequestDto] = useState({
+    store: '',
+    category: '',
+    deliveryCost: '',
+    limitMember: '',
+    content: '',
+  });
+
+  const { title, category, product, link, price, memberLimit, deadLine, dong, gu, content } = groupBuyingRequestDto;
+
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setGroupBuyingRequestDto({
+      ...groupBuyingRequestDto,
+      [name]: value
+    })
+  };
+
+  const navigate = useNavigate();
   const onSubmit = (e) => {
     e.preventDefault();
 
     let form = new FormData()
-    //form.append()
+    //form.append 채우기
 
-    axios.post("http://3.36.144.128:8080/api/auth/signup", 
-    {
-      "category": "string",
-      "content": "string",
-      "deadLine": "2023-02-19T17:07:23.293Z",
-      "deliveryCost": 0,
-      "limitMember": 0,
-      "store": "string",
-      "title": "string",
-      "x": 0,
-      "y": 0
-    }
-    , {headers})
+    axios.post("http://3.36.144.128:8080/api/dutchPay", form, {headers})
       .then(function(response) {
         console.log(response)
+        navigate('/groupBuying')
       }) .catch(function(error) {
         console.log(error)
       })
-  }
+    }
+
     return (
         <div>
         <form onSubmit={onSubmit}>

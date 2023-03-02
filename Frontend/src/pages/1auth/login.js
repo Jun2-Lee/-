@@ -47,41 +47,43 @@ function Login() {
   }
 
   return (
-    <div>
-      <div className="GetID">
-      <label id="getID">아이디</label>
-      <br></br>
-      <input name='email' onChange={onChange} value={email} className="getID"/>
-      </div>
-
-      <div className="GetPW">
-        <label>비밀번호</label>
+    <div className='login_container'>
+      <div>
+        <div className="GetID">
+        <label id="getID">아이디</label>
         <br></br>
-        <input name='password' onChange={onChange} value={password} className="getPW"/>
-      </div>
+        <input name='email' onChange={onChange} value={email} className="getID"/>
+        </div>
 
-      <div className="UserLogin">
-        <button type="button" className="userLogin" onClick={handleLogin}>로그인</button>
-      </div>
+        <div className="GetPW">
+          <label>비밀번호</label>
+          <br></br>
+          <input name='password' onChange={onChange} value={password} className="getPW"/>
+        </div>
 
-      <div className="UserHelp">
-        <a href="#" id="findPW">비밀번호 찾기</a>
-        <a href="#" id="userHelp"> | </a>
-        <a href="/signup" id="userSignUp">회원가입</a>
-      </div>
+        <div className="UserLogin">
+          <button type="button" className="userLogin" onClick={handleLogin}>로그인</button>
+        </div>
 
-      <div className="naverLogin">
-        <button className="NAVER">네이버로 로그인</button>
-      </div>
+        <div className="UserHelp">
+          <a href="#" id="findPW">비밀번호 찾기</a>
+          <a href="#" id="userHelp"> | </a>
+          <a href="/signup" id="userSignUp">회원가입</a>
+        </div>
 
-      <div className="kakaoLogin">
-        <Link to = {KAKAO_AUTH_URL}>
-          <button className="KAKAO">카카오로 로그인</button>
-        </Link>
-      </div>
+        <div className="naverLogin">
+          <button className="NAVER">네이버로 로그인</button>
+        </div>
 
-      <div className="googleLogin">
-        <button className="GOOGLE">구글로 로그인</button>
+        <div className="kakaoLogin">
+          <Link to = {KAKAO_AUTH_URL}>
+            <button className="KAKAO">카카오로 로그인</button>
+          </Link>
+        </div>
+
+        <div className="googleLogin">
+          <button className="GOOGLE">구글로 로그인</button>
+        </div>
       </div>
     </div>
   );

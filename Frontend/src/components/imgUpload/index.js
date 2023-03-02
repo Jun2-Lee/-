@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import './index.css';
 
-const ImgUpload = () => {
+function ImgUpload({onSelectedImg}) {
   const [profileImage, setProfileImage] = useState("");
-  //const [file,setFile] = useState();
+  const [imgsrc, setImgsrc] = useState("");
 
-  // 파일 저장
-  const onChangeImg = (e) => {
-    e.preventDefault();
-    setProfileImage(e.target.files[0])
-    //setProfileImage(URL.createObjectURL(e.target.files[0]));
+  function onChangeImg(e) {
+    setProfileImage(e.target.files[0]) //프로필 이미지
+    setImgsrc(URL.createObjectURL(e.target.files[0])); //이미지 미리보기
+    onSelectedImg(e.target.files[0])
   };
-
-  console.log(profileImage)
 
   return (
     <div>
@@ -20,7 +17,7 @@ const ImgUpload = () => {
         {profileImage && (
           <img
             alt="sample"
-            src={profileImage}
+            src={imgsrc}
           />
         )}
       </div>
