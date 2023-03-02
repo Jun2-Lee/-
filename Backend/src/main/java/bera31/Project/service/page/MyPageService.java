@@ -46,7 +46,7 @@ public class MyPageService {
 
         List<TodayScheduleResponseDto> todaySchedules
                 = findedMember.getMemoList().stream()
-                .filter(s -> s.getPostDate().equals(LocalDate.now()))
+                .filter(s -> s.getTargetDate().equals(LocalDate.now()))
                 .map(TodayScheduleResponseDto::new)
                 .collect(Collectors.toList());
 

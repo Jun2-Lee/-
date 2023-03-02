@@ -34,6 +34,8 @@ public class Member {
     private String dong;
     private String gu;
     private double manner;
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
     @OneToMany(mappedBy = "user")
     private List<Sharing> sharingList = new ArrayList<>();
@@ -69,6 +71,7 @@ public class Member {
         this.dong = dong;
         this.gu = gu;
         this.authority = Authority.ROLE_USER;
+        this.provider = Provider.NAONG;
     }
 
     public void postGroupBuying(GroupBuying groupBuying) {
@@ -95,13 +98,17 @@ public class Member {
         this.dong = dong;
         this.gu = gu;
     }
-    public void setProfileImage(String image) {
+    public void setKakaoMemberInfo(String image) {
         this.profileImage = image;
+        this.provider = Provider.KAKAO;
     }
-
+    public void setKakaoMemberNickname(String nickname){
+        this.nickname = nickname;
+    }
     public void changeFavIngredients(List<String> favIngredients) {
         this.favoriteFood = favIngredients;
     }
+
     public void addSharing(Sharing sharing) {
         this.sharingList.add(sharing);
     }

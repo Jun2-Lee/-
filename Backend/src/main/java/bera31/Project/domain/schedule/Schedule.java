@@ -19,7 +19,7 @@ public class Schedule {
     @Id
     @GeneratedValue
     long id;
-    LocalDate postDate;
+    LocalDate targetDate;
     String title;
     String time;
     String place;
@@ -27,7 +27,7 @@ public class Schedule {
 
     public Schedule(ScheduleRequestDto scheduleRequestDto){
         this.title = scheduleRequestDto.getTitle();
-        this.postDate = scheduleRequestDto.getPostDate();
+        this.targetDate = scheduleRequestDto.getTargetDate();
         this.time = scheduleRequestDto.getTime();
         this.place = scheduleRequestDto.getPlace();
         this.content = scheduleRequestDto.getContent();

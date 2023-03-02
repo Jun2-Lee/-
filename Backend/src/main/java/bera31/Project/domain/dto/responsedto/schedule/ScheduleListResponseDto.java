@@ -1,23 +1,23 @@
-package bera31.Project.domain.dto.responsedto;
+package bera31.Project.domain.dto.responsedto.schedule;
 
-import bera31.Project.domain.dto.requestdto.ScheduleRequestDto;
 import bera31.Project.domain.schedule.Schedule;
-import bera31.Project.domain.schedule.ScheduleCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleListResponseDto {
+    Long id;
     String title;
-    String time;
+    LocalDate targetDate;
 
     public ScheduleListResponseDto(Schedule schedule){
+        this.id = schedule.getId();
         this.title = schedule.getTitle();
-        this.time = schedule.getTime();
+        this.targetDate = schedule.getTargetDate();
     }
 }

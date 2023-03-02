@@ -41,4 +41,9 @@ public class CustomExceptionAdvice {
     public ResponseEntity<ErrorResponseEntity> handleAlreadyFullException(AlreadyFullException e){
         return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
     }
+
+    @ExceptionHandler(KakaoUserAccessException.class)
+    public ResponseEntity<ErrorResponseEntity> handleKakaoUserAccessException(KakaoUserAccessException e) {
+        return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
+    }
 }

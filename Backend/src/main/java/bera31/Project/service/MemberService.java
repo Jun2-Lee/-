@@ -3,8 +3,10 @@ package bera31.Project.service;
 import bera31.Project.config.S3.S3Uploader;
 import bera31.Project.domain.dto.requestdto.EditInfoRequestDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.member.Provider;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.exception.ErrorResponse;
+import bera31.Project.exception.exceptions.KakaoUserAccessException;
 import bera31.Project.exception.exceptions.UserNotFoundException;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
@@ -29,6 +31,9 @@ public class MemberService {
 
     public String changePassword(String password) {
         Member findedMember = loadCurrentMember();
+
+        if(findedMember.getProvider().equals(Provider.KAKAO))
+            throw new KakaoUserAccessException(ErrorResponse.KAKAO_ACCESS_DENIED);
 
         String encodedPassword = passwordEncoder.encode(password);
         findedMember.changePassword(encodedPassword);

@@ -7,6 +7,7 @@ import bera31.Project.domain.dto.requestdto.SignUpDto;
 import bera31.Project.domain.dto.requestdto.TokenRequestDto;
 import bera31.Project.domain.dto.responsedto.AuthTokenDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.member.Provider;
 import bera31.Project.exception.*;
 import bera31.Project.exception.exceptions.*;
 import bera31.Project.repository.MemberRepository;
@@ -64,6 +65,8 @@ public class AuthService {
             throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
         if(!checkPasswordCorrectness(logInDto, findedMember))
             throw new IncorrectPasswordException(ErrorResponse.INCORRECT_PASSWORD);
+        if(findedMember.get().getProvider().equals(Provider.KAKAO))
+            throw new KakaoUserAccessException(ErrorResponse.KAKAO_ACCESS_DENIED);
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(logInDto.getEmail(), logInDto.getPassword());

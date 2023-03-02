@@ -48,10 +48,6 @@ public class JwtTokenProvider {
 
         Date accessTokenValidTime = new Date(now + ACCESS_TOKEN_LIFETIME);
 
-        log.info("Now time is : " + new Date(now));
-        log.info("Deadline is : " + accessTokenValidTime);
-        log.info("Now time is : " + LocalDateTime.now());
-
         String accessToken = Jwts.builder() // Access Token 생성
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -94,7 +90,7 @@ public class JwtTokenProvider {
         } catch (SecurityException | MalformedJwtException e){
             log.info("올바르지 않은 서명의 JWT Token 입니다.", e);
         } catch (ExpiredJwtException e){
-            throw new ExpiredTokenException(ErrorResponse.EXPIRED_TOKEN_EXCEPTION);
+            throw new ExpiredTokenException(ErrorResponse.EXPIRED_TOKEN);
         } catch (UnsupportedJwtException e){
             log.info("지원되지 않는 형식의 JWT Token 입니다.", e);
         } catch (IllegalArgumentException e){
