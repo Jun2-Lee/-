@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
@@ -24,6 +25,7 @@ public class GroupBuyingListResponseDto {
     LocalDateTime deadLine;
     int limit;
     int currParticipant;
+    boolean isFinish;
 
 
     public GroupBuyingListResponseDto(GroupBuying groupBuying) {
@@ -36,5 +38,6 @@ public class GroupBuyingListResponseDto {
         this.deadLine = groupBuying.getDeadLine();
         this.limit = groupBuying.getLimitMember();
         this.currParticipant = groupBuying.getMemberList().size();
+        this.isFinish = groupBuying.isFinish();
     }
 }

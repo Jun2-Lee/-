@@ -5,20 +5,22 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-public class JwtFilter extends GenericFilterBean {
+public class JwtFilter extends OncePerRequestFilter {
     private final JwtTokenProvider tokenProvider;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = resolveToken((HttpServletRequest) request);
 
         if(token != null && tokenProvider.validateToken(token)){
@@ -28,7 +30,7 @@ public class JwtFilter extends GenericFilterBean {
             // Security Context에 인증된 객체를 담는 동작
         }
 
-        chain.doFilter(request, response); // 다음 Filter 연속해서 실행
+        filterChain.doFilter(request, response); // 다음 Filter 연속해서 실행
     }
 
     // Request에서 Authorization : Bearer 부분을 따낸다.

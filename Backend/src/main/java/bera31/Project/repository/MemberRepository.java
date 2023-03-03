@@ -11,24 +11,19 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class MemberRepository {
-
     private final EntityManager em;
 
     public Member save(Member member) {
         em.persist(member);
         return member;
     }
-
     public void delete(Member member) {
         em.remove(member);
     }
-
-
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
     }
-
     public Member findById(long id) {
         return em.createQuery("select m from Member m where m.id =:id", Member.class)
                 .setParameter("id", id)

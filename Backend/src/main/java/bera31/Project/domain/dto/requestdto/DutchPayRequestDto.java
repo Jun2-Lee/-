@@ -21,5 +21,4 @@ public class DutchPayRequestDto {
     String content;
     double x;
     double y;
-
 }

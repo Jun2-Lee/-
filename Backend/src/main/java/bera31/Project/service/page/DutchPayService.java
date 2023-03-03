@@ -34,7 +34,8 @@ public class DutchPayService {
     }
 
     public Long postDutchPay(DutchPayRequestDto dutchPayRequestDto) {
-        Member currentMember = loadCurrentMember();
+        //Member currentMember = loadCurrentMember();
+        Member currentMember = memberRepository.findById(1);
         DutchPay dutchPay = new DutchPay(dutchPayRequestDto, currentMember);
 
         currentMember.postDutchPay(dutchPay);
@@ -43,7 +44,8 @@ public class DutchPayService {
     }
 
     public void participantDutchPay(Long id) {
-        Member currentMember = loadCurrentMember();
+        //Member currentMember = loadCurrentMember();
+        Member currentMember = memberRepository.findById(1);
         DutchPay curruntDutchPay = dutchPayRepository.findById(id);
 
         DutchPayIntersection dutchPayIntersection = new DutchPayIntersection(currentMember, curruntDutchPay);

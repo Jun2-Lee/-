@@ -1,6 +1,10 @@
 package bera31.Project.config.jwt;
 
 import bera31.Project.domain.dto.responsedto.AuthTokenDto;
+import bera31.Project.exception.ErrorResponse;
+import bera31.Project.exception.ErrorResponseEntity;
+import bera31.Project.exception.exceptions.ExpiredTokenException;
+import bera31.Project.exception.exceptions.UserNotFoundException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -40,7 +45,9 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
+
         Date accessTokenValidTime = new Date(now + ACCESS_TOKEN_LIFETIME);
+
         String accessToken = Jwts.builder() // Access Token 생성
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -83,7 +90,7 @@ public class JwtTokenProvider {
         } catch (SecurityException | MalformedJwtException e){
             log.info("올바르지 않은 서명의 JWT Token 입니다.", e);
         } catch (ExpiredJwtException e){
-            log.info("만료된 JWT 입니다.", e);
+            throw new ExpiredTokenException(ErrorResponse.EXPIRED_TOKEN);
         } catch (UnsupportedJwtException e){
             log.info("지원되지 않는 형식의 JWT Token 입니다.", e);
         } catch (IllegalArgumentException e){

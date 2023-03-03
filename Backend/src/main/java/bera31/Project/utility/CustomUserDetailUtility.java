@@ -29,7 +29,6 @@ public class CustomUserDetailUtility implements UserDetailsService {
 
     public UserDetails createUserDetails(Member member){
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getAuthority().toString());
-
         return User.builder()
                 .username(member.getEmail())
                 .password(member.getPassword())

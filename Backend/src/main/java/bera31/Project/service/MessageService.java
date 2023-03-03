@@ -23,6 +23,7 @@ public class MessageService {
     private final MessageRepository messageRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional(readOnly = true)
     public List<MessageResponseDto> showMyMessages(){
         Member findedMember = loadCurrentMember();
         String otherName = "";
@@ -46,6 +47,7 @@ public class MessageService {
         return responseDtoList;
     }
 
+    @Transactional(readOnly = true)
     public List<EachRoomMessageResponseDto> showEachRoomMessage(Long roomId){
         return messageRepository.findByRoomNumber(roomId).stream()
                 .map(EachRoomMessageResponseDto::new)

@@ -25,10 +25,4 @@ public class ScheduleRepository {
                 .setParameter("id", id)
                 .getSingleResult();
     }
-
-    public List<Schedule> findTodaySchedule(LocalDate today){
-        return em.createQuery("select s from Schedule s where s.time=:today", Schedule.class)
-                .setParameter("today", today)
-                .getResultList();
-    }
 }

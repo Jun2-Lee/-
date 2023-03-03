@@ -1,5 +1,11 @@
 package bera31.Project.config.jwt;
 
+import bera31.Project.exception.ErrorResponse;
+import bera31.Project.exception.ErrorResponseEntity;
+import bera31.Project.utility.JsonUtility;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -12,9 +18,14 @@ import java.io.IOException;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    private final JsonUtility jsonUtility;
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "로그인 후 이용해주시기 바랍니다.");
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write(jsonUtility.convertToJson(ErrorResponse.UNAUTHORIZED));
+        authException.printStackTrace();
     }
 }

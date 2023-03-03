@@ -4,11 +4,13 @@ import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
+import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,8 @@ public class GroupBuying extends Contents {
 
     @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY)
     List<GroupBuyingIntersection> memberList = new ArrayList<>();
+    @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY)
+    List<LikedGroupBuying> likedMemberList = new ArrayList<>();
     boolean isFinish;
 
     public void setImage(String image){
@@ -38,6 +42,9 @@ public class GroupBuying extends Contents {
     }
     public void addMember(GroupBuyingIntersection groupBuyingIntersection){
         memberList.add(groupBuyingIntersection);
+    }
+    public void expirePost(){
+        this.isFinish = true;
     }
     public Long update(GroupBuyingRequestDto groupBuyingRequestDto, String image) {
         this.cost = groupBuyingRequestDto.getPrice();

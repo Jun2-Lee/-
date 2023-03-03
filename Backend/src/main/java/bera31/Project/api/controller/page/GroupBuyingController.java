@@ -57,15 +57,16 @@ public class GroupBuyingController {
         return new ResponseEntity<>(groupBuyingService.participantGroupBuying(postId), HttpStatus.OK);
     }
 
+    @Operation(summary = "공동구매 찜 api", description = "공동구매 찜 요청을 눌렀을 때 요청 경로입니다.")
+    @PostMapping("/{postId}/like")
+    public ResponseEntity<Long> pushLikeGroupBuying(@PathVariable Long postId){
+        return new ResponseEntity<>(groupBuyingService.pushLikeGroupBuying(postId), HttpStatus.OK);
+    }
+
     @Operation(summary = "공동구매 글 찾기", description = "공동구매 글 검색 시 요청 경로입니다")
     @GetMapping("/search")
     public ResponseEntity<List<GroupBuyingListResponseDto>> searchGroupBuying(@RequestParam String keyword) {
         return new ResponseEntity<>(groupBuyingService.searchGroupBuying(keyword), HttpStatus.OK);
-    }
-
-    @PostMapping("/{postId}/heart") // 개발 예정
-    public void addFavoriteGroupBuying(@PathVariable Long postId) {
-        groupBuyingService.updateFavoriteGroupBuying(postId);
     }
 
     @Operation(summary = "공동구매 글 삭제", description = "공동구매 글 삭제시 요청 경로입니다")

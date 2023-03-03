@@ -1,9 +1,7 @@
 package bera31.Project.config.security;
 
-import bera31.Project.config.jwt.JwtAccessDeniedHandler;
-import bera31.Project.config.jwt.JwtAuthenticationEntryPoint;
-import bera31.Project.config.jwt.JwtSecurityConfig;
-import bera31.Project.config.jwt.JwtTokenProvider;
+import bera31.Project.config.jwt.*;
+import bera31.Project.utility.JsonUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -11,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,6 +26,7 @@ public class SecurityConfig {
     private final JwtTokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JsonUtility jsonUtility;
 
     // Spring Security의 버전이 올라가면서, Bean을 통해 추가하는 방식으로 변경되었다.
     // 원래는 WebSecurityConfigurerAdapter를 통해서 통합 관리를 했었다.
@@ -37,6 +37,13 @@ public class SecurityConfig {
 
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer(){
+        return (web) -> web.ignoring().antMatchers(
+                "/index.html", "/favicon.ico", "/css/**", "/fonts/**", "/img/**", "/js/**"
+        );
     }
 
     @Bean
@@ -57,11 +64,11 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                 .antMatchers("/api/auth/**", "/", "/swagger-ui/**",
                         "/v3/api-docs", "/swagger-resources/**", "/naong-api",
-                        "/swagger-ui.html").permitAll()
+                        "/swagger-ui.html", "/**/*").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .apply(new JwtSecurityConfig(tokenProvider, jsonUtility));
         return http.build();
     }
 }

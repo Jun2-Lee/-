@@ -8,6 +8,11 @@ import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
+import bera31.Project.domain.page.intersection.LikedGroupBuying;
+import bera31.Project.exception.ErrorResponse;
+import bera31.Project.exception.exceptions.AlreadyFullException;
+import bera31.Project.exception.exceptions.UserNotFoundException;
+import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
 import bera31.Project.repository.page.IntersectionRepository;
@@ -20,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,11 +35,11 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class GroupBuyingService {
-    @Autowired
-    private S3Uploader s3Uploader; // Field Injection 말고 다른 방법 생각해보기
+    private final S3Uploader s3Uploader;
     private final GroupBuyingRepository groupBuyingRepository;
     private final MemberRepository memberRepository;
     private final IntersectionRepository intersectionRepository;
+    private final LikeRepository likeRepository;
 
     public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
         return groupBuyingRepository.findByKeyword(keyword)
@@ -42,14 +49,17 @@ public class GroupBuyingService {
     }
 
     public List<GroupBuyingListResponseDto> findAllGroupBuying() {
-        return groupBuyingRepository.findAll()
-                .stream()
+        List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
+        checkExpiredPost(findedGroupBuyings);
+
+        return findedGroupBuyings.stream()
                 .map(GroupBuyingListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
-        Member findedMember = loadCurrentMember();
+        //Member findedMember = loadCurrentMember();
+        Member findedMember = memberRepository.findById(1);
 
         GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, findedMember);
         newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
@@ -59,8 +69,12 @@ public class GroupBuyingService {
     }
 
     public Long participantGroupBuying(Long postId){
-        Member findedMember = loadCurrentMember();
+        //Member findedMember = loadCurrentMember();
+        Member findedMember = memberRepository.findById(1);
         GroupBuying findedPost = groupBuyingRepository.findById(postId);
+
+        if(findedPost.getLimitMember() <= findedPost.getMemberList().size())
+            throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
 
         GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(findedMember, findedPost);
         findedMember.participantGroupBuying(newGroupBuyingIntersection);
@@ -80,20 +94,27 @@ public class GroupBuyingService {
         return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId));
     }
 
-    public void updateFavoriteGroupBuying(Long postId){
-        // 멤버 받아와서
-        // member.getFavoriteRepository().find();
-        // 이미 있는지 ? 없으면 ==> member.add 함수 실행
-        //            있으면 ==> member.remove 함수 실행
-        groupBuyingRepository.findById(postId);
-    }
-
     public void deleteGroupBuying(Long postId) {
         groupBuyingRepository.delete(groupBuyingRepository.findById(postId));
+    }
+
+    public Long pushLikeGroupBuying(Long postId){
+        //Member currentMember = loadCurrentMember();
+        Member currentMember = memberRepository.findById(1);
+        GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
+
+        LikedGroupBuying newLikedGroupBuying = new LikedGroupBuying(currentMember, currentGroupBuying);
+        currentMember.pushLikeGroupBuying(newLikedGroupBuying);
+        return likeRepository.save(newLikedGroupBuying);
     }
 
     private Member loadCurrentMember(){
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
         return memberRepository.findByEmail(currentMemberEmail).get();
+    }
+    private void checkExpiredPost(List<GroupBuying> findedGroupBuyings){
+        findedGroupBuyings.stream()
+                .filter(g -> g.getDeadLine().isBefore(LocalDateTime.now()))
+                .forEach(GroupBuying::expirePost);
     }
 }

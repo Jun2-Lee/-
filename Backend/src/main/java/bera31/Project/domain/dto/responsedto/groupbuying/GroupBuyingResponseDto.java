@@ -3,6 +3,7 @@ package bera31.Project.domain.dto.responsedto.groupbuying;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter

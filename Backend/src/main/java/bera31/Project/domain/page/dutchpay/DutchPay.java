@@ -30,6 +30,7 @@ public class DutchPay extends Contents {
     double y;
     LocalDateTime deadLine;
     String content;
+    String dong;
 
     public DutchPay(DutchPayRequestDto dutchPayRequestDto, Member member) {
         this.user = member;
@@ -43,6 +44,7 @@ public class DutchPay extends Contents {
         this.deadLine = dutchPayRequestDto.getDeadLine();
         this.content = dutchPayRequestDto.getContent();
         this.postTime = LocalDateTime.now();
+        this.dong = member.getDong();
     }
 
     public void addParticipantMember(DutchPayIntersection dutchPayIntersection){

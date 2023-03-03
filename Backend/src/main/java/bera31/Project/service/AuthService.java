@@ -7,6 +7,7 @@ import bera31.Project.domain.dto.requestdto.SignUpDto;
 import bera31.Project.domain.dto.requestdto.TokenRequestDto;
 import bera31.Project.domain.dto.responsedto.AuthTokenDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.member.Provider;
 import bera31.Project.exception.*;
 import bera31.Project.exception.exceptions.*;
 import bera31.Project.repository.MemberRepository;
@@ -40,13 +41,21 @@ public class AuthService {
     public Long signUp(SignUpDto signUpDto, MultipartFile profileImage) throws Exception {
         if (checkEmailDuplication(signUpDto))
             throw new EmailDuplicateException(ErrorResponse.EMAIL_DUPLICATE);
-        if (checkNicknameDuplication(signUpDto))
-            throw new NicknameDuplicateException(ErrorResponse.NICKNAME_DUPLICATE);
 
         Member member = new Member(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword()),
                 signUpDto.getNickname(), signUpDto.getDong(), signUpDto.getGu());
-        member.changeImage(s3Uploader.upload(profileImage, "profileImage"));
+
+        if(!profileImage.isEmpty())
+            member.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
+
         return memberRepository.save(member).getId();
+    }
+
+    public String checkNickname(String nickname){
+        if(checkNicknameDuplication(nickname))
+            throw new NicknameDuplicateException(ErrorResponse.NICKNAME_DUPLICATE);
+
+        return "사용 가능한 닉네임 입니다.";
     }
 
     public AuthTokenDto signIn(LogInDto logInDto){
@@ -54,8 +63,10 @@ public class AuthService {
 
         if(findedMember.isEmpty())
             throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
-        if(!passwordEncoder.matches(logInDto.getPassword(), findedMember.get().getPassword()))
+        if(!checkPasswordCorrectness(logInDto, findedMember))
             throw new IncorrectPasswordException(ErrorResponse.INCORRECT_PASSWORD);
+        if(findedMember.get().getProvider().equals(Provider.KAKAO))
+            throw new KakaoUserAccessException(ErrorResponse.KAKAO_ACCESS_DENIED);
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(logInDto.getEmail(), logInDto.getPassword());
@@ -68,7 +79,6 @@ public class AuthService {
     }
 
     public String logout(){
-        log.info(SecurityUtility.getCurrentMemberEmail());
         redisUtility.deleteValues(SecurityUtility.getCurrentMemberEmail());
         return "Logged out!";
     }
@@ -90,7 +100,10 @@ public class AuthService {
     private boolean checkEmailDuplication(SignUpDto signUpDto) {
         return memberRepository.findByEmail(signUpDto.getEmail()).isPresent();
     }
-    private boolean checkNicknameDuplication(SignUpDto signUpDto){
-        return memberRepository.findByNickName(signUpDto.getNickname()).isPresent();
+    private boolean checkNicknameDuplication(String nickname) {
+        return memberRepository.findByEmail(nickname).isPresent();
+    }
+    private boolean checkPasswordCorrectness(LogInDto logInDto, Optional<Member> findedMember) {
+        return passwordEncoder.matches(logInDto.getPassword(), findedMember.get().getPassword());
     }
 }
