@@ -19,20 +19,13 @@ public class Sharing extends Contents {
     String category;
     String product;
     LocalDateTime expiry;
-
-    @OneToOne
-    @JoinColumn
-    Member receiver;
-
     LocalDateTime deadLine;
 
-    @Embedded
-    Address location;
-
     boolean isFinish;
-
     String image;
     String content;
+    String gu;
+    String dong;
 
     public Sharing(SharingRequestDto sharingRequestDto){
         this.title = sharingRequestDto.getTitle();
@@ -41,9 +34,9 @@ public class Sharing extends Contents {
         this.expiry =  sharingRequestDto.getExpiry();
         this.deadLine = sharingRequestDto.getDeadLine();
         this.postTime = LocalDateTime.now();
-        this.location = new Address(sharingRequestDto.getGu(), sharingRequestDto.getDong());
+        this.gu = sharingRequestDto.getGu();
+        this.dong = sharingRequestDto.getDong();
         this.content = sharingRequestDto.getContent();
-
     }
 
     public void updateSharing(SharingRequestDto sharingRequestDto){
@@ -52,7 +45,8 @@ public class Sharing extends Contents {
         this.category = sharingRequestDto.getCategory();
         this.product = sharingRequestDto.getProduct();
         this.expiry = sharingRequestDto.getExpiry();
-        this.location = new Address(sharingRequestDto.getGu(), sharingRequestDto.getDong());
+        this.gu = sharingRequestDto.getGu();
+        this.dong = sharingRequestDto.getDong();
         this.deadLine = sharingRequestDto.getDeadLine();
     }
     public void setImage(String image){

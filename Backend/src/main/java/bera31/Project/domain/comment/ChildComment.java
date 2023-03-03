@@ -1,5 +1,6 @@
 package bera31.Project.domain.comment;
 
+import bera31.Project.domain.dto.requestdto.CommentRequestDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
 import lombok.AllArgsConstructor;
@@ -32,4 +33,12 @@ public class ChildComment {
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")
     Contents contents;
+
+    public ChildComment(CommentRequestDto commentRequestDto,Member currentMember,Comment parent){
+        this.user = currentMember;
+        this.contents = parent.getContents();
+        this.timeStamp = LocalDateTime.now();
+        this.parent = parent;
+        this.content = commentRequestDto.getContent();
+    }
 }

@@ -37,4 +37,12 @@ public abstract class Contents {
     List<ChildComment> childComments = new ArrayList<>();
 
     protected LocalDateTime postTime;
+
+    public void addComment(Comment comment){
+        comments.add(comment);
+    }
+
+    public void addChildComment(ChildComment comment){
+        childComments.add(comment);
+    }
 }

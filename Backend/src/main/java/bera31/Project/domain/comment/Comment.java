@@ -35,7 +35,12 @@ public class Comment {
         this.user = member;
         this.timeStamp = LocalDateTime.now();
         this.content = commentRequestDto.getContent();
+        System.out.println("commentRequestDto.getContent() = " + commentRequestDto.getContent());
         this.contents = contents;
+    }
+
+    public void addChild(ChildComment comment){
+        children.add(comment);
     }
 }
 

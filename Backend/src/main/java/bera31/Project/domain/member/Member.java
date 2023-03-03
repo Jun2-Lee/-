@@ -37,11 +37,11 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Sharing> sharingList = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<GroupBuying> buyingList = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<DutchPay> dutchPayList = new ArrayList<>();
 
     @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
@@ -109,9 +109,9 @@ public class Member {
         this.favoriteFood = favIngredients;
     }
 
-    public void addSharing(Sharing sharing) {
+/*    public void addSharing(Sharing sharing) {
         this.sharingList.add(sharing);
-    }
+    }*/
     public void addFavoriteSharing(Sharing sharing) { this.likedSharing.add(sharing); }
     public void pushLikeGroupBuying(LikedGroupBuying likedGroupBuying) {
         this.likedGroupBuying.add(likedGroupBuying);
