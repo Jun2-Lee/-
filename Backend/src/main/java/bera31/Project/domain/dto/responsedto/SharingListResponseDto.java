@@ -21,7 +21,7 @@ public class SharingListResponseDto {
     LocalDateTime deadLine;
     LocalDateTime postTime;
 
-    public SharingListResponseDto(Sharing sharing){
+    public SharingListResponseDto(Sharing sharing) {
         this.id = sharing.getId();
         this.image = sharing.getImage();
         this.nickname = sharing.getUser().getNickname();

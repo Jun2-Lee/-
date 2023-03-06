@@ -23,7 +23,7 @@ public class KakaoController {
             description = "해당 경로로 카카오 인가코드를 넘겨주시면 됩니다." +
                     "방식은 url/auth/kakao?code=XXX 와 같은 Request Parameter 형식입니다.")
     @GetMapping("/auth/kakao")
-    public ResponseEntity<AuthTokenDto> kakaoLogin(@RequestParam String code){
+    public ResponseEntity<AuthTokenDto> kakaoLogin(@RequestParam String code) {
         String accessToken = kakaoAuthService.getAccessToken(code);
         return new ResponseEntity<>(kakaoAuthService.kakaoSignIn(accessToken), HttpStatus.OK);
     }
@@ -32,7 +32,7 @@ public class KakaoController {
             description = "카카오 로그인 시, Naong에 가입되지 않아 새로 가입하는 경우 추가 정보를 입력 받는 페이지에서" +
                     "저장버튼을 누르게 될 시 이 쪽 경로로 요청을 보내시면 됩니다.")
     @PostMapping("/auth/kakao")
-    public ResponseEntity<String> kakaoAdditionalSignup(@RequestBody KakaoSignupDto kakaoSignupDto){
+    public ResponseEntity<String> kakaoAdditionalSignup(@RequestBody KakaoSignupDto kakaoSignupDto) {
         return new ResponseEntity<>(kakaoAuthService.additionalSignUp(kakaoSignupDto), HttpStatus.OK);
     }
 }

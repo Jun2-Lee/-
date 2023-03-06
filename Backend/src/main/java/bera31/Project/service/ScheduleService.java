@@ -34,7 +34,7 @@ public class ScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public List<ScheduleListResponseDto> renderSchedule(){
+    public List<ScheduleListResponseDto> renderSchedule() {
         //Member currentMember = loadCurrentMember();
         Member currentMember = memberRepository.findById(1);
         List<Schedule> memoList = currentMember.getMemoList();
@@ -45,7 +45,7 @@ public class ScheduleService {
                 .collect(Collectors.toList());
     }
 
-    public ScheduleResponseDto renderScheduleDetail(Long scheduleId){
+    public ScheduleResponseDto renderScheduleDetail(Long scheduleId) {
         return new ScheduleResponseDto(scheduleRepository.findById(scheduleId));
     }
 
@@ -62,7 +62,7 @@ public class ScheduleService {
         return "정상 삭제되었습니다!";
     }
 
-    private Member loadCurrentMember(){
+    private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
         return memberRepository.findByEmail(currentMemberEmail).get();
     }

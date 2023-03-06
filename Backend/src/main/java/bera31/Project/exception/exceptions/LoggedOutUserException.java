@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class LoggedOutUserException extends RuntimeException{
+public class LoggedOutUserException extends RuntimeException {
     ErrorResponse errorResponse;
 }

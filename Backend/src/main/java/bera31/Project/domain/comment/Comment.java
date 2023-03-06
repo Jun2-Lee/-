@@ -50,7 +50,7 @@ public class Comment {
         this.parent = parent;
     }
 
-    public void addChildComment(Comment comment){
+    public void addChildComment(Comment comment) {
         this.children.add(comment);
     }
 }

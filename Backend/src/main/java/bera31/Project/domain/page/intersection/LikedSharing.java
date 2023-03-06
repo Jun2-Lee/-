@@ -24,7 +24,7 @@ public class LikedSharing {
     @JoinColumn(name = "CONTENTS_ID")
     private Sharing sharing;
 
-    public LikedSharing(Member member, Sharing sharing){
+    public LikedSharing(Member member, Sharing sharing) {
         this.member = member;
         this.sharing = sharing;
     }

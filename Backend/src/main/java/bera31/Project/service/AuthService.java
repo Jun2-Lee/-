@@ -45,27 +45,27 @@ public class AuthService {
         Member member = new Member(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword()),
                 signUpDto.getNickname(), signUpDto.getDong(), signUpDto.getGu());
 
-        if(!profileImage.isEmpty())
+        if (!profileImage.isEmpty())
             member.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
 
         return memberRepository.save(member).getId();
     }
 
-    public String checkNickname(String nickname){
-        if(checkNicknameDuplication(nickname))
+    public String checkNickname(String nickname) {
+        if (checkNicknameDuplication(nickname))
             throw new NicknameDuplicateException(ErrorResponse.NICKNAME_DUPLICATE);
 
         return "사용 가능한 닉네임 입니다.";
     }
 
-    public AuthTokenDto signIn(LogInDto logInDto){
+    public AuthTokenDto signIn(LogInDto logInDto) {
         Optional<Member> findedMember = memberRepository.findByEmail(logInDto.getEmail());
 
-        if(findedMember.isEmpty())
+        if (findedMember.isEmpty())
             throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
-        if(!checkPasswordCorrectness(logInDto, findedMember))
+        if (!checkPasswordCorrectness(logInDto, findedMember))
             throw new IncorrectPasswordException(ErrorResponse.INCORRECT_PASSWORD);
-        if(findedMember.get().getProvider().equals(Provider.KAKAO))
+        if (findedMember.get().getProvider().equals(Provider.KAKAO))
             throw new KakaoUserAccessException(ErrorResponse.KAKAO_ACCESS_DENIED);
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
@@ -78,18 +78,18 @@ public class AuthService {
         return authTokenDto;
     }
 
-    public String logout(){
+    public String logout() {
         redisUtility.deleteValues(SecurityUtility.getCurrentMemberEmail());
         return "Logged out!";
     }
 
-    public AuthTokenDto reissue(TokenRequestDto tokenRequestDto){
+    public AuthTokenDto reissue(TokenRequestDto tokenRequestDto) {
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
         String refreshToken = redisUtility.getValues(authentication.getName());
 
-        if(refreshToken == null)
+        if (refreshToken == null)
             throw new LoggedOutUserException(ErrorResponse.LOGGED_OUT_USER);
-        if(!refreshToken.equals(tokenRequestDto.getRefreshToken()))
+        if (!refreshToken.equals(tokenRequestDto.getRefreshToken()))
             throw new TokenMismatchException(ErrorResponse.TOKEN_MISMATCH);
 
         AuthTokenDto authTokenDto = tokenProvider.generateToken(authentication);
@@ -100,9 +100,11 @@ public class AuthService {
     private boolean checkEmailDuplication(SignUpDto signUpDto) {
         return memberRepository.findByEmail(signUpDto.getEmail()).isPresent();
     }
+
     private boolean checkNicknameDuplication(String nickname) {
         return memberRepository.findByEmail(nickname).isPresent();
     }
+
     private boolean checkPasswordCorrectness(LogInDto logInDto, Optional<Member> findedMember) {
         return passwordEncoder.matches(logInDto.getPassword(), findedMember.get().getPassword());
     }

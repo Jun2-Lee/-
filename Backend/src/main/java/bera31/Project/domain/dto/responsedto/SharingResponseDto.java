@@ -30,7 +30,7 @@ public class SharingResponseDto {
     LocalDateTime postTime;
     String image;
 
-    public SharingResponseDto(Sharing sharing){
+    public SharingResponseDto(Sharing sharing) {
         this.id = sharing.getId();
         this.userId = sharing.getUser().getId();
         this.nickname = sharing.getUser().getNickname();

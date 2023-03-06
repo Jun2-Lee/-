@@ -29,11 +29,12 @@ import java.util.stream.Collectors;
 public class SharingService {
     private final MemberRepository memberRepository;
     private final SharingRepository sharingRepository;
+
     private final LikeRepository likeRepository;
     private final S3Uploader s3Uploader;
 
     @Transactional(readOnly = true)
-    public List<SharingListResponseDto> findAllSharing(){
+    public List<SharingListResponseDto> findAllSharing() {
         List<Sharing> findedSharings = sharingRepository.findAll();
         checkExpiredPost(findedSharings);
 
@@ -43,7 +44,7 @@ public class SharingService {
     }
 
     @Transactional(readOnly = true)
-    public SharingResponseDto findSharing(Long postId){
+    public SharingResponseDto findSharing(Long postId) {
         return new SharingResponseDto(sharingRepository.findById(postId));
     }
 
@@ -52,22 +53,22 @@ public class SharingService {
         Member currentMember = memberRepository.findById(1);
 
         Sharing newSharing = new Sharing(sharingRequestDto, currentMember);
-        newSharing.setImage(s3Uploader.upload(postImage,"sharing"));
+        newSharing.setImage(s3Uploader.upload(postImage, "sharing"));
 
         currentMember.postSharing(newSharing);
         sharingRepository.save(newSharing);
     }
 
-    public void updateSharing(Long postId, SharingRequestDto sharingRequestDto){
+    public void updateSharing(Long postId, SharingRequestDto sharingRequestDto) {
         Sharing findedSharing = sharingRepository.findById(postId);
         findedSharing.updateSharing(sharingRequestDto);
     }
 
-    public void deleteSharing(Long postId){
+    public void deleteSharing(Long postId) {
         sharingRepository.delete(sharingRepository.findById(postId));
     }
 
-    public void pushLikeSharing(Long postId){
+    public void pushLikeSharing(Long postId) {
         //Member currentMember = loadCurrentMember();
         Member currentMember = memberRepository.findById(1);
         Sharing currentSharing = sharingRepository.findById(postId);
@@ -77,12 +78,12 @@ public class SharingService {
         likeRepository.save(newLikeSharing);
     }
 
-    private Member loadCurrentMember(){
+    private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
         return memberRepository.findByEmail(currentMemberEmail).get();
     }
 
-    private void checkExpiredPost(List<Sharing> findedSharings){
+    private void checkExpiredPost(List<Sharing> findedSharings) {
         findedSharings.stream()
                 .filter(g -> g.getDeadLine().isBefore(LocalDateTime.now()))
                 .forEach(Sharing::expirePost);

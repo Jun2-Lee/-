@@ -10,7 +10,7 @@ public class EachRoomMessageResponseDto {
     String contents;
     LocalDateTime sendTime;
 
-    public EachRoomMessageResponseDto(Message message){
+    public EachRoomMessageResponseDto(Message message) {
         this.contents = message.getContent();
         this.sendTime = message.getSendTime();
     }

@@ -29,12 +29,14 @@ public class DutchPayController {
     public Long postDutchPay(@RequestBody DutchPayRequestDto dutchPayRequestDto) {
         return dutchPayService.postDutchPay(dutchPayRequestDto);
     }
+
     @Operation(summary = "N빵 글 삭제", description = "N빵 글 삭제 요청 시 요청하는 Api 입니다.")
     @DeleteMapping("/{dutchPayId}")
     public void deleteDutchPay(@PathVariable Long dutchPayId) {
         dutchPayService.deleteDutchPay(dutchPayId);
         return;
     }
+
     @Operation(summary = "N빵 글 상세 조회",
             description = "N빵 글 상세 페이지 조회시 요청하는 Api 입니다.\n" +
                     "글에는 작성자의 고유 id가 같이 넘어갑니다.\n" +
@@ -43,17 +45,11 @@ public class DutchPayController {
     public DutchPayResponseDto findDutchPay(@PathVariable Long dutchPayId) {
         return dutchPayService.findDutchPay(dutchPayId);
     }
-<<<<<<< HEAD
+
     @Operation(summary = "N빵 글 참여 API입니다.",
             description = "Request Parameter 형식으로 URL에 넘겨주시면 됩니다.")
     @PostMapping("/{dutchPayId}")
-    public void participantDutchPay(@PathVariable Long dutchPayId){
+    public void participantDutchPay(@PathVariable Long dutchPayId) {
         dutchPayService.participantDutchPay(dutchPayId);
-=======
-    @Operation
-    @PostMapping("/{postId}")
-    public void participantDutchPay(@PathVariable Long postId){
-        dutchPayService.participantDutchPay(postId);
->>>>>>> d3beef369c5872b273046df00e65e0be8f378d6c
     }
 }

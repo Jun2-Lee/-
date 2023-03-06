@@ -35,42 +35,43 @@ public class MyPageController {
                     "9. 오늘의 일정 목록\n" +
                     "각 용도에 맞게 렌더링 해주시면 될 것 같습니다.")
     @GetMapping
-    public ResponseEntity<MyPageResponseDto> showMyPage(){
+    public ResponseEntity<MyPageResponseDto> showMyPage() {
         return new ResponseEntity<>(myPageService.showMyPage(), HttpStatus.OK);
     }
 
     @Operation(summary = "내가 쓴 공동 구매 API입니다.")
     @GetMapping("/myGroupBuying")
-    public ResponseEntity<List<GroupBuyingListResponseDto>> showMyGroupBuying(){
+    public ResponseEntity<List<GroupBuyingListResponseDto>> showMyGroupBuying() {
         return new ResponseEntity<>(myPageService.showMyGroupBuying(), HttpStatus.OK);
     }
 
     @Operation(summary = "내가 쓴 N빵 API입니다.")
     @GetMapping("/myDutchPay")
-    public ResponseEntity<List<DutchPayListResponseDto>> showMyDutchPay(){
+    public ResponseEntity<List<DutchPayListResponseDto>> showMyDutchPay() {
         return new ResponseEntity<>(myPageService.showMyDutchPay(), HttpStatus.OK);
     }
 
     @Operation(summary = "내가 참여 중인 공동 구매 API입니다.")
     @GetMapping("/participantingGroupBuying")
-    public ResponseEntity<List<GroupBuyingListResponseDto>> showParticipantingGroupBuying(){
+    public ResponseEntity<List<GroupBuyingListResponseDto>> showParticipantingGroupBuying() {
         return new ResponseEntity<>(myPageService.showParticipantingGroupBuying(), HttpStatus.OK);
     }
+
     @Operation(summary = "내가 참여 중인 N빵 API입니다.")
     @GetMapping("/participantingDutchPay")
-    public ResponseEntity<List<DutchPayListResponseDto>> showParticipantingDutchPay(){
+    public ResponseEntity<List<DutchPayListResponseDto>> showParticipantingDutchPay() {
         return new ResponseEntity<>(myPageService.showParticipantingDutchPay(), HttpStatus.OK);
     }
 
     @Operation(summary = "내가 찜한 공동 구매 API입니다.")
     @GetMapping("/favoriteGroupBuying")
-    public ResponseEntity<List<GroupBuyingListResponseDto>> showFavoriteGroupBuying(){
+    public ResponseEntity<List<GroupBuyingListResponseDto>> showFavoriteGroupBuying() {
         return new ResponseEntity<>(myPageService.showFavoriteGroupBuying(), HttpStatus.OK);
     }
 
     @Operation(summary = "내가 찜한 나눔 API입니다.")
     @GetMapping("/favoriteSharing")
-    public ResponseEntity<List<SharingListResponseDto>> showFavoriteSharing(){
+    public ResponseEntity<List<SharingListResponseDto>> showFavoriteSharing() {
         return new ResponseEntity<>(myPageService.showFavoriteSharing(), HttpStatus.OK);
     }
 }

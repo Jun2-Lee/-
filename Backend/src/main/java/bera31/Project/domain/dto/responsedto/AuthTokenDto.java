@@ -3,6 +3,7 @@ package bera31.Project.domain.dto.responsedto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 import java.util.Date;
 
 @AllArgsConstructor

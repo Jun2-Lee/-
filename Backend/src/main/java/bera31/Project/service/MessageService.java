@@ -24,7 +24,7 @@ public class MessageService {
     private final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public List<MessageResponseDto> showMyMessages(){
+    public List<MessageResponseDto> showMyMessages() {
         Member findedMember = loadCurrentMember();
         String otherName = "";
         String nickname = findedMember.getNickname();
@@ -32,11 +32,10 @@ public class MessageService {
         List<Message> messageList = messageRepository.findMessageList(nickname);
         List<MessageResponseDto> responseDtoList = new ArrayList<>();
 
-        for(Message msg : messageList){
-            if(findedMember.getNickname().equals(msg.getSender().getNickname())) {
+        for (Message msg : messageList) {
+            if (findedMember.getNickname().equals(msg.getSender().getNickname())) {
                 otherName = msg.getReceiver().getNickname();
-            }
-            else
+            } else
                 otherName = msg.getSender().getNickname();
 
             responseDtoList.add(
@@ -47,34 +46,34 @@ public class MessageService {
     }
 
     @Transactional(readOnly = true)
-    public List<EachRoomMessageResponseDto> showEachRoomMessage(Long roomId){
+    public List<EachRoomMessageResponseDto> showEachRoomMessage(Long roomId) {
         return messageRepository.findByRoomNumber(roomId).stream()
                 .map(EachRoomMessageResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    public Long sendMessage(MessageRequestDto messageRequestDto){
+    public Long sendMessage(MessageRequestDto messageRequestDto) {
         Long maxRoomNumber = 0L;
-        if(messageRepository.findMaxRoomNumber() != null)
+        if (messageRepository.findMaxRoomNumber() != null)
             maxRoomNumber = messageRepository.findMaxRoomNumber();
 
         Message newMessage = new Message(messageRequestDto, maxRoomNumber + 1,
-                                         loadCurrentMember(), findReceiver(messageRequestDto));
+                loadCurrentMember(), findReceiver(messageRequestDto));
 
         return messageRepository.save(newMessage);
     }
 
-    public Long sendMessage(MessageRequestDto messageRequestDto, Long roomId){
+    public Long sendMessage(MessageRequestDto messageRequestDto, Long roomId) {
         Message newMessage = new Message(messageRequestDto, roomId, loadCurrentMember(), findReceiver(messageRequestDto));
         return messageRepository.save(newMessage);
     }
 
-    private Member loadCurrentMember(){
+    private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
         return memberRepository.findByEmail(currentMemberEmail).get();
     }
 
-    private Member findReceiver(MessageRequestDto messageRequestDto){
+    private Member findReceiver(MessageRequestDto messageRequestDto) {
         return memberRepository.findById(messageRequestDto.getId());
     }
 }

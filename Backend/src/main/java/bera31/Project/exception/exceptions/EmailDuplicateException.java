@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class EmailDuplicateException extends RuntimeException{
+public class EmailDuplicateException extends RuntimeException {
     ErrorResponse errorResponse;
 }
