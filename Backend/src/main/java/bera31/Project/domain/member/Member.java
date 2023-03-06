@@ -37,22 +37,21 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Sharing> sharingList = new ArrayList<>();
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<GroupBuying> buyingList = new ArrayList<>();
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DutchPay> dutchPayList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<GroupBuyingIntersection> participantingGroupBuying = new ArrayList<>();
-    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DutchPayIntersection> participantingDutchPay = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "MEMBER_ID")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<LikedSharing> likedSharings = new ArrayList<>();
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<LikedGroupBuying> likedGroupBuyings = new ArrayList<>();
 
     @Transient
