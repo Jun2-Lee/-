@@ -83,19 +83,13 @@ public class GroupBuyingController {
     }
 
     @PostMapping("/{postId}/{commentId}/childComment")
-    public void postChildComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId,
-                                 @PathVariable Long commentId){
+    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId, CommentRequestDto commentRequestDto) {
         commentService.saveChildComment(commentRequestDto, commentId);
     }
 
     @DeleteMapping("/{postId}/comment")
     public void deleteComment(@PathVariable Long postId){
         commentService.deleteComment(postId);
-    }
-
-    @DeleteMapping("/{postId}/childComment")
-    public void deleteChildComment(@PathVariable Long postId){
-        commentService.deleteChildComment(postId);
     }
 
 }

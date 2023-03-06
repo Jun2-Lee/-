@@ -1,6 +1,5 @@
 package bera31.Project.service;
 
-import bera31.Project.domain.comment.ChildComment;
 import bera31.Project.domain.comment.Comment;
 import bera31.Project.domain.dto.requestdto.CommentRequestDto;
 import bera31.Project.domain.member.Member;
@@ -44,9 +43,8 @@ public class CommentService {
     public void saveChildComment(CommentRequestDto commentRequestDto, Long commentId) {
         Member currentMember = loadCurrentMember();
         Comment parent = commentRepository.findCommentById(commentId);
-        ChildComment comment = new ChildComment(commentRequestDto, currentMember, parent);
-        parent.getContents().addChildComment(comment);
-        parent.addChild(comment);
+        Comment comment = new Comment(commentRequestDto, currentMember, parent);
+        parent.addChildComment(comment);
         commentRepository.save(comment);
     }
 
@@ -54,9 +52,6 @@ public class CommentService {
         commentRepository.delete(commentRepository.findCommentById(commentId));
     }
 
-    public void deleteChildComment(Long commentId) {
-        commentRepository.delete(commentRepository.findChildCommentById(commentId));
-    }
 
     private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();

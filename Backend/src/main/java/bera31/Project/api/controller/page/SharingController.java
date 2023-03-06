@@ -57,9 +57,9 @@ public class SharingController {
         commentService.saveSharingComment(commentRequestDto, postId);
     }
 
-    @PostMapping("/{postId}/childComment")
-    public void postChildComment(CommentRequestDto commentRequestDto, @PathVariable Long postId){
-        commentService.saveChildComment(commentRequestDto, postId);
+    @PostMapping("/{postId}/{commentId}/childComment")
+    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId, CommentRequestDto commentRequestDto) {
+        commentService.saveChildComment(commentRequestDto, commentId);
     }
 
     @DeleteMapping("/{postId}/comment")
@@ -67,8 +67,4 @@ public class SharingController {
         commentService.deleteComment(postId);
     }
 
-    @DeleteMapping("/{postId}/childComment")
-    public void deleteChildComment(@PathVariable Long postId){
-        commentService.deleteChildComment(postId);
-    }
 }

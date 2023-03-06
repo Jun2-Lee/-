@@ -25,22 +25,33 @@ public class Comment {
     Member user;
     LocalDateTime timeStamp;
     String content;
-    @OneToMany(mappedBy = "parent")
-    List<ChildComment> children = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    Comment parent;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = CascadeType.ALL)
+    List<Comment> children = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")
-    Contents contents;
+    Contents post;
 
-    public Comment(CommentRequestDto commentRequestDto, Member member, Contents contents) {
+    public Comment(CommentRequestDto commentRequestDto, Member member, Contents post) {
         this.user = member;
         this.timeStamp = LocalDateTime.now();
         this.content = commentRequestDto.getContent();
         System.out.println("commentRequestDto.getContent() = " + commentRequestDto.getContent());
-        this.contents = contents;
+        this.post = post;
     }
 
-    public void addChild(ChildComment comment){
-        children.add(comment);
+    public Comment(CommentRequestDto commentRequestDto, Member member, Comment parent) {
+        this.user = member;
+        this.timeStamp = LocalDateTime.now();
+        this.content = commentRequestDto.getContent();
+        this.post = parent.getPost();
+        this.parent = parent;
+    }
+
+    public void addChildComment(Comment comment){
+        this.children.add(comment);
     }
 }
 
