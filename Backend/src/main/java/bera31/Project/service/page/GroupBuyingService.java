@@ -11,7 +11,6 @@ import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
 import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import bera31.Project.exception.ErrorResponse;
 import bera31.Project.exception.exceptions.AlreadyFullException;
-import bera31.Project.exception.exceptions.UserNotFoundException;
 import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
@@ -19,13 +18,11 @@ import bera31.Project.repository.page.IntersectionRepository;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,13 +38,14 @@ public class GroupBuyingService {
     private final IntersectionRepository intersectionRepository;
     private final LikeRepository likeRepository;
 
-    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
+/*    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
         return groupBuyingRepository.findByKeyword(keyword)
                 .stream()
                 .map(GroupBuyingListResponseDto::new)
                 .collect(Collectors.toList());
-    }
+    }*/
 
+    @Transactional(readOnly = true)
     public List<GroupBuyingListResponseDto> findAllGroupBuying() {
         List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
         checkExpiredPost(findedGroupBuyings);
@@ -57,30 +55,20 @@ public class GroupBuyingService {
                 .collect(Collectors.toList());
     }
 
-    public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
-        //Member findedMember = loadCurrentMember();
-        Member findedMember = memberRepository.findById(1);
-
-        GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, findedMember);
-        newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
-
-        findedMember.postGroupBuying(newGroupBuying);
-        return groupBuyingRepository.save(newGroupBuying);
+    @Transactional(readOnly = true)
+    public GroupBuyingResponseDto findGroupBuying(Long postId) {
+        return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId));
     }
 
-    public Long participantGroupBuying(Long postId){
+    public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
         //Member findedMember = loadCurrentMember();
-        Member findedMember = memberRepository.findById(1);
-        GroupBuying findedPost = groupBuyingRepository.findById(postId);
+        Member currentMember = memberRepository.findById(1);
 
-        if(findedPost.getLimitMember() <= findedPost.getMemberList().size())
-            throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
+        GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, currentMember);
+        newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
 
-        GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(findedMember, findedPost);
-        findedMember.participantGroupBuying(newGroupBuyingIntersection);
-        findedPost.addMember(newGroupBuyingIntersection);
-
-        return intersectionRepository.save(newGroupBuyingIntersection);
+        currentMember.postGroupBuying(newGroupBuying);
+        return groupBuyingRepository.save(newGroupBuying);
     }
 
     public Long updateGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage, Long postId) throws IOException {
@@ -90,12 +78,23 @@ public class GroupBuyingService {
         return findedPost.update(groupBuyingRequestDto, s3Uploader.upload(postImage, "groupBuying"));
     }
 
-    public GroupBuyingResponseDto findGroupBuying(Long postId) {
-        return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId));
-    }
-
     public void deleteGroupBuying(Long postId) {
         groupBuyingRepository.delete(groupBuyingRepository.findById(postId));
+    }
+
+    public Long participantGroupBuying(Long postId){
+        //Member currentMember = loadCurrentMember();
+        Member currentMember = memberRepository.findById(1);
+        GroupBuying currentPost = groupBuyingRepository.findById(postId);
+
+        if(currentPost.getLimitMember() <= currentPost.getMemberList().size())
+            throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
+
+        GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(currentMember, currentPost);
+        currentMember.participantGroupBuying(newGroupBuyingIntersection);
+        currentPost.addMember(newGroupBuyingIntersection);
+
+        return intersectionRepository.save(newGroupBuyingIntersection);
     }
 
     public Long pushLikeGroupBuying(Long postId){

@@ -11,6 +11,7 @@ public class GroupBuyingResponseDto {
     Long id;
     String title;
     String profileImage;
+    Long userId;
     String nickName;
     Double manner;
     String category;
@@ -23,6 +24,7 @@ public class GroupBuyingResponseDto {
         this.id = groupBuying.getId();
         this.profileImage = groupBuying.getImage();
         this.title = groupBuying.getTitle();
+        this.userId = groupBuying.getUser().getId();
         this.nickName = groupBuying.getUser().getNickname();
         this.manner = groupBuying.getUser().getManner();
         this.category = groupBuying.getCategory();

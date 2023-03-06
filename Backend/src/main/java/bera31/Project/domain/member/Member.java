@@ -1,7 +1,7 @@
 package bera31.Project.domain.member;
 
-import bera31.Project.domain.message.Message;
 import bera31.Project.domain.page.intersection.LikedGroupBuying;
+import bera31.Project.domain.page.intersection.LikedSharing;
 import bera31.Project.domain.schedule.Schedule;
 import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
@@ -51,9 +51,9 @@ public class Member {
 
     @OneToMany
     @JoinColumn(name = "MEMBER_ID")
-    private List<Sharing> likedSharing = new ArrayList<>();
+    private List<LikedSharing> likedSharings = new ArrayList<>();
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<LikedGroupBuying> likedGroupBuying = new ArrayList<>();
+    private List<LikedGroupBuying> likedGroupBuyings = new ArrayList<>();
 
     @Transient
     private List<String> favoriteFood = new ArrayList<>();
@@ -75,20 +75,26 @@ public class Member {
     }
 
     public void postGroupBuying(GroupBuying groupBuying) {
-        buyingList.add(groupBuying);
+        this.buyingList.add(groupBuying);
     }
-
-    public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection) {
-        participantingGroupBuying.add(groupBuyingIntersection);
+    public void postSharing(Sharing sharing) {
+        this.sharingList.add(sharing);
     }
-
     public void postDutchPay(DutchPay dutchPay) {
-        dutchPayList.add(dutchPay);
+        this.dutchPayList.add(dutchPay);
+    }
+    public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection) {
+        this.participantingGroupBuying.add(groupBuyingIntersection);
+    }
+    public void participantDutchPay(DutchPayIntersection dutchPayIntersection){
+        this.participantingDutchPay.add(dutchPayIntersection);
     }
 
-    public void participantDutchPay(DutchPayIntersection dutchPayIntersection){
-        participantingDutchPay.add(dutchPayIntersection);
+    public void pushLikeGroupBuying(LikedGroupBuying likedGroupBuying) {
+        this.likedGroupBuyings.add(likedGroupBuying);
     }
+    public void pushLikeSharing(LikedSharing likedSharing) {
+        this.likedSharings.add(likedSharing); }
 
     public void changePassword(String password) {
         this.password = password;
@@ -105,18 +111,11 @@ public class Member {
     public void setKakaoMemberNickname(String nickname){
         this.nickname = nickname;
     }
+    public void addMemo(Schedule schedule) {
+        this.memoList.add(schedule);
+    }
     public void changeFavIngredients(List<String> favIngredients) {
         this.favoriteFood = favIngredients;
     }
 
-    public void addSharing(Sharing sharing) {
-        this.sharingList.add(sharing);
-    }
-    public void addFavoriteSharing(Sharing sharing) { this.likedSharing.add(sharing); }
-    public void pushLikeGroupBuying(LikedGroupBuying likedGroupBuying) {
-        this.likedGroupBuying.add(likedGroupBuying);
-    }
-    public void addMemo(Schedule schedule) {
-        this.memoList.add(schedule);
-    }
 }

@@ -19,43 +19,40 @@ public class Sharing extends Contents {
     String category;
     String product;
     LocalDateTime expiry;
-
-    @OneToOne
-    @JoinColumn
-    Member receiver;
-
     LocalDateTime deadLine;
-
-    @Embedded
-    Address location;
-
+    String gu;
+    String dong;
     boolean isFinish;
-
     String image;
     String content;
 
-    public Sharing(SharingRequestDto sharingRequestDto){
+    public Sharing(SharingRequestDto sharingRequestDto, Member member){
+        this.user = member;
         this.title = sharingRequestDto.getTitle();
         this.category = sharingRequestDto.getCategory();
         this.product = sharingRequestDto.getProduct();
         this.expiry =  sharingRequestDto.getExpiry();
         this.deadLine = sharingRequestDto.getDeadLine();
         this.postTime = LocalDateTime.now();
-        this.location = new Address(sharingRequestDto.getGu(), sharingRequestDto.getDong());
+        this.gu = sharingRequestDto.getGu();
+        this.dong = sharingRequestDto.getDong();
         this.content = sharingRequestDto.getContent();
-
+        this.isFinish = false;
     }
-
     public void updateSharing(SharingRequestDto sharingRequestDto){
         this.title = sharingRequestDto.getTitle();
         this.content = sharingRequestDto.getContent();
         this.category = sharingRequestDto.getCategory();
         this.product = sharingRequestDto.getProduct();
         this.expiry = sharingRequestDto.getExpiry();
-        this.location = new Address(sharingRequestDto.getGu(), sharingRequestDto.getDong());
+        this.gu = sharingRequestDto.getGu();
+        this.dong = sharingRequestDto.getDong();
         this.deadLine = sharingRequestDto.getDeadLine();
     }
     public void setImage(String image){
         this.image = image;
+    }
+    public void expirePost(){
+        this.isFinish = true;
     }
 }
