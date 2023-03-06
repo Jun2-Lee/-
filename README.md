@@ -1,47 +1,28 @@
-# 프로젝트명
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
+# Project Naong!
+[Github](https://github.com/Jun2-Lee/Toy_project) | [Naong!]()
+[대문 사진 자리]  
 
-> 한 두 문단으로 프로젝트 소개 글을 작성합니다.
+> :cat: Project 나옹!(나눠주세용)은 대한민국의 고생하는 :house: 자취생들과 함께하는 플랫폼입니다.  
 
-## Team Member
-멤버
+> 💸 부담스러운 음식 배달비를 함께 나누어 낼 수 있습니다.  
+
+> 🥔 너무 많은 재료를 사서 버리게 될 때, 따뜻한 마음으로 나눌 수 있습니다.  
+
+> 🥕 아니면, 애초에 살 때 부터 공동 구매로 따뜻한 마음을 함께 나눌 수 있습니다!  
+
+
+## :family: Team Member
+|심진섭|이준희|조예봄|이지수|김태영|
+|:-:|:-:|:-:|:-:|:-:|
+|<img src="https://user-images.githubusercontent.com/71700079/183434526-d6ff6eb5-512a-41b9-9965-c53f2dd2c31b.png" width="100" height="100">|<img src="https://user-images.githubusercontent.com/71700079/183434526-d6ff6eb5-512a-41b9-9965-c53f2dd2c31b.png" width="100" height="100">|<img src="https://user-images.githubusercontent.com/71700079/183434526-d6ff6eb5-512a-41b9-9965-c53f2dd2c31b.png" width="100" height="100">|<img src="https://user-images.githubusercontent.com/71700079/183434526-d6ff6eb5-512a-41b9-9965-c53f2dd2c31b.png" width="100" height="100">|<img src="https://user-images.githubusercontent.com/71700079/183434526-d6ff6eb5-512a-41b9-9965-c53f2dd2c31b.png" width="100" height="100">|
+|BE|BE|Design|FE|DE|
+|[Github](https://github.com/Jinseop-Sim)|[Github](https://github.com/Jinseop-Sim)|[Github](https://github.com/Jinseop-Sim)|[Github](https://github.com/Jinseop-Sim)|[Github](https://github.com/Jinseop-Sim)|
 
 ## Git Convention
+- ```Feat : XXX (00%)``` : 개발한 기능을 Commit 할 때 사용합니다.
+   - 진행률은 선택사항입니다.
+- ```Fix : XXX (00%)``` : 기능이나 타 요소에 대한 수정이 진행되었을 때 사용합니다.
+   - 진행률은 선택사항입니다.
 
-스크린 샷과 코드 예제를 통해 사용 방법을 자세히 설명합니다.
-
-_더 많은 예제와 사용법은 [Wiki][wiki]를 참고하세요._
-
-## 개발 환경 설정
-
-모든 개발 의존성 설치 방법과 자동 테스트 슈트 실행 방법을 운영체제 별로 작성합니다.
-
-```sh
-make install
-npm test
-```
-
-## 업데이트 내역
-
-* 0.2.1
-    * 수정: 문서 업데이트 (모듈 코드 동일)
-* 0.2.0
-    * 수정: `setDefaultXYZ()` 메서드 제거
-    * 추가: `init()` 메서드 추가
-* 0.1.1
-    * 버그 수정: `baz()` 메서드 호출 시 부팅되지 않는 현상 (@컨트리뷰터 감사합니다!)
-* 0.1.0
-    * 첫 출시
-    * 수정: `foo()` 메서드 네이밍을 `bar()`로 수정
-* 0.0.1
-    * 작업 진행 중
-
-## 정보
-
-이름 – [@트위터 주소](https://twitter.com/dbader_org) – 이메일주소@example.com
-
-XYZ 라이센스를 준수하며 ``LICENSE``에서 자세한 정보를 확인할 수 있습니다.
-
-[https://github.com/yourname/github-link](https://github.com/dbader/)
+## ERD
+## Tech stack
