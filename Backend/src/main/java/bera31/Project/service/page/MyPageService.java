@@ -4,6 +4,7 @@ import bera31.Project.domain.dto.responsedto.*;
 import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.SimpleContentsResponseDto;
+import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.intersection.DutchPayIntersection;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;

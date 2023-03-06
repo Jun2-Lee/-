@@ -2,8 +2,8 @@ package bera31.Project.api.controller.page;
 
 import bera31.Project.domain.dto.requestdto.CommentRequestDto;
 import bera31.Project.domain.dto.requestdto.SharingRequestDto;
-import bera31.Project.domain.dto.responsedto.SharingListResponseDto;
-import bera31.Project.domain.dto.responsedto.SharingResponseDto;
+import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
+import bera31.Project.domain.dto.responsedto.sharing.SharingResponseDto;
 import bera31.Project.service.CommentService;
 import bera31.Project.service.page.SharingService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -70,6 +70,13 @@ public class SharingController {
     @PostMapping("/{postId}/like")
     public void pushLikeSharing(@PathVariable Long postId) {
         sharingService.pushLikeSharing(postId);
+    }
+
+    @Operation(summary = "거래 완료(조기 마감) API",
+            description = "글 작성자가 버튼을 눌러 거래를 조기 마감시키는 API 입니다.")
+    @PostMapping("/{postId}/finish")
+    public ResponseEntity<String> closeSharing(@PathVariable Long postId){
+        return new ResponseEntity<>(sharingService.closeSharing(postId), HttpStatus.OK);
     }
 
     @PostMapping("/{postId}/comment")

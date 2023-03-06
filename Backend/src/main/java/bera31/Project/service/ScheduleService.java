@@ -40,7 +40,7 @@ public class ScheduleService {
         List<Schedule> memoList = currentMember.getMemoList();
 
         return memoList.stream()
-                //.filter(m -> m.getTargetDate().getMonth().equals(LocalDate.now().getMonth()))
+                .filter(m -> m.getTargetDate().getMonth().equals(LocalDate.now().getMonth()))
                 .map(ScheduleListResponseDto::new)
                 .collect(Collectors.toList());
     }

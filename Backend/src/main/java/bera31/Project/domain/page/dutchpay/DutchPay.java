@@ -22,29 +22,24 @@ public class DutchPay extends Contents {
     String store;
     int deliveryCost;
     int limitMember;
-
+    LocalDateTime deadLine;
+    String content;
+    String address;
+    String detailAddress;
     @OneToMany(mappedBy = "dutchPay")
     List<DutchPayIntersection> memberList = new ArrayList<>();
 
-    double x;
-    double y;
-    LocalDateTime deadLine;
-    String content;
-    String dong;
-
     public DutchPay(DutchPayRequestDto dutchPayRequestDto, Member member) {
         this.user = member;
-        this.title = dutchPayRequestDto.getTitle();
         this.category = dutchPayRequestDto.getCategory();
         this.store = dutchPayRequestDto.getStore();
         this.deliveryCost = dutchPayRequestDto.getDeliveryCost();
         this.limitMember = dutchPayRequestDto.getLimitMember();
-        this.x = dutchPayRequestDto.getX();
-        this.y = dutchPayRequestDto.getY();
+        this.address = dutchPayRequestDto.getAddress();
+        this.detailAddress = dutchPayRequestDto.getDetailAddress();
         this.deadLine = dutchPayRequestDto.getDeadLine();
         this.content = dutchPayRequestDto.getContent();
         this.postTime = LocalDateTime.now();
-        this.dong = member.getDong();
     }
 
     public void addParticipantMember(DutchPayIntersection dutchPayIntersection) {

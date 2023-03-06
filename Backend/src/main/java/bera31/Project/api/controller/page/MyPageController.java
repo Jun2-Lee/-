@@ -3,7 +3,7 @@ package bera31.Project.api.controller.page;
 import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.MyPageResponseDto;
-import bera31.Project.domain.dto.responsedto.SharingListResponseDto;
+import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
 import bera31.Project.service.page.MyPageService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

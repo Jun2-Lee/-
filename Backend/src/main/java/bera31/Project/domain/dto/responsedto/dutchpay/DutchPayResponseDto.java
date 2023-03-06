@@ -17,8 +17,8 @@ public class DutchPayResponseDto {
     String category;
     int deliveryCost;
     int limitMember;
-    double x;
-    double y;
+    String address;
+    String detailAddress;
     LocalDateTime deadLine;
     String content;
     int currentMember;
@@ -34,8 +34,8 @@ public class DutchPayResponseDto {
         this.limitMember = dutchPay.getLimitMember();
         this.currentMember = dutchPay.getMemberList().size();
         this.deadLine = dutchPay.getDeadLine();
-        this.x = dutchPay.getX();
-        this.y = dutchPay.getY();
+        this.address = dutchPay.getAddress();
+        this.detailAddress = dutchPay.getDetailAddress();
         this.content = dutchPay.getContent();
     }
 }

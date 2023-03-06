@@ -122,6 +122,11 @@ public class GroupBuyingService {
         return likeRepository.save(newLikedGroupBuying);
     }
 
+    public String closeGroupBuying(Long postId){
+        groupBuyingRepository.findById(postId).expirePost();
+        return "거래가 마감되었습니다.";
+    }
+
     private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
         return memberRepository.findByEmail(currentMemberEmail).get();
