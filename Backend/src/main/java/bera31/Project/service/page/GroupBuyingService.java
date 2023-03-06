@@ -3,6 +3,7 @@ package bera31.Project.service.page;
 
 import bera31.Project.config.S3.S3Uploader;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
+import bera31.Project.domain.dto.responsedto.CommentResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.member.Member;
@@ -11,7 +12,6 @@ import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
 import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import bera31.Project.exception.ErrorResponse;
 import bera31.Project.exception.exceptions.AlreadyFullException;
-import bera31.Project.exception.exceptions.UserNotFoundException;
 import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
@@ -19,13 +19,11 @@ import bera31.Project.repository.page.IntersectionRepository;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,8 +56,8 @@ public class GroupBuyingService {
     }
 
     public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
-        //Member findedMember = loadCurrentMember();
-        Member findedMember = memberRepository.findById(1);
+        Member findedMember = loadCurrentMember();
+        //Member findedMember = memberRepository.findById(1);
 
         GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, findedMember);
         newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
@@ -69,8 +67,8 @@ public class GroupBuyingService {
     }
 
     public Long participantGroupBuying(Long postId){
-        //Member findedMember = loadCurrentMember();
-        Member findedMember = memberRepository.findById(1);
+        Member findedMember = loadCurrentMember();
+        //Member findedMember = memberRepository.findById(1);
         GroupBuying findedPost = groupBuyingRepository.findById(postId);
 
         if(findedPost.getLimitMember() <= findedPost.getMemberList().size())
@@ -91,7 +89,13 @@ public class GroupBuyingService {
     }
 
     public GroupBuyingResponseDto findGroupBuying(Long postId) {
-        return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId));
+        List<CommentResponseDto> commentResponseDtoList = groupBuyingRepository.findById(postId)
+                .getComments()
+                .stream()
+                .map(CommentResponseDto::new)
+                .collect(Collectors.toList());
+
+        return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId), commentResponseDtoList);
     }
 
     public void deleteGroupBuying(Long postId) {
@@ -99,8 +103,8 @@ public class GroupBuyingService {
     }
 
     public Long pushLikeGroupBuying(Long postId){
-        //Member currentMember = loadCurrentMember();
-        Member currentMember = memberRepository.findById(1);
+        Member currentMember = loadCurrentMember();
+        //Member currentMember = memberRepository.findById(1);
         GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
 
         LikedGroupBuying newLikedGroupBuying = new LikedGroupBuying(currentMember, currentGroupBuying);

@@ -1,12 +1,13 @@
 package bera31.Project.api.controller.page;
 
+import bera31.Project.domain.dto.requestdto.CommentRequestDto;
 import bera31.Project.domain.dto.requestdto.DutchPayRequestDto;
 import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayListResponseDto;
 import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayResponseDto;
+import bera31.Project.service.CommentService;
 import bera31.Project.service.page.DutchPayService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,9 +41,8 @@ public class DutchPayController {
         return dutchPayService.findDutchPay(dutchPayId);
     }
     @Operation
-    @PostMapping("/{dutchPayId}")
-    public void participantDutchPay(@PathVariable Long dutchPayId){
-        dutchPayService.participantDutchPay(dutchPayId);
+    @PostMapping("/{postId}")
+    public void participantDutchPay(@PathVariable Long postId){
+        dutchPayService.participantDutchPay(postId);
     }
-
 }

@@ -27,7 +27,7 @@ public class SharingListResponseDto {
         this.image = sharing.getImage();
         this.nickname = "sharing.getUser().getNickname()";
         this.title = sharing.getTitle();
-        this.dong = sharing.getLocation().getDong();
+        this.dong = sharing.getDong();
         this.deadLine = sharing.getDeadLine();
         this.postTime = sharing.getPostTime();
     }

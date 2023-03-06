@@ -23,7 +23,8 @@ public class SharingResponseDto {
     String content;
     String category;
     String product;
-    Address location;
+    String gu;
+    String dong;
     LocalDateTime deadLine;
     LocalDateTime expiry;
     LocalDateTime postTime;
@@ -39,7 +40,8 @@ public class SharingResponseDto {
         this.content = sharing.getContent();
         this.category = sharing.getCategory();
         this.product = sharing.getProduct();
-        this.location = sharing.getLocation();
+        this.gu = sharing.getGu();
+        this.dong = sharing.getDong();
         this.deadLine = sharing.getDeadLine();
         this.postTime = sharing.getPostTime();
         this.expiry = sharing.getExpiry();
