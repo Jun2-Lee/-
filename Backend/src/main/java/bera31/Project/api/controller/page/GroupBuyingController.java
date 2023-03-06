@@ -1,8 +1,10 @@
 package bera31.Project.api.controller.page;
 
+import bera31.Project.domain.dto.requestdto.CommentRequestDto;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
+import bera31.Project.service.CommentService;
 import bera31.Project.service.page.GroupBuyingService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +24,16 @@ import java.util.List;
 @RequestMapping("/api/groupBuying")
 public class GroupBuyingController {
     private final GroupBuyingService groupBuyingService;
+<<<<<<< HEAD
 
     @Operation(summary = "공동 구매 전체 글 조회 API입니다.",
             description = "공동구매 창 처음 접속 시 보여지는 글 목록 요청 Api 입니다. \n" +
                     "전체 조회에도 각 게시글 마다 고유 id를 같이 보내놨습니다.\n" +
                     "해당 값은 글 내용 조회 시, 수정 시, 삭제 시, 참여 기능, 찜 기능에 사용됩니다.")
+=======
+    private final CommentService commentService;
+    @Operation(summary = "공동 구매 전체 글 조회", description = "공동구매 창 처음 접속 시 보여지는 글 목록 요청 Api 입니다")
+>>>>>>> d3beef369c5872b273046df00e65e0be8f378d6c
     @GetMapping
     public ResponseEntity<List<GroupBuyingListResponseDto>> findAllGroupBuying() {
         return new ResponseEntity<>(groupBuyingService.findAllGroupBuying(), HttpStatus.OK);
@@ -85,4 +92,20 @@ public class GroupBuyingController {
     public void deleteGroupBuying(@PathVariable Long postId) {
         groupBuyingService.deleteGroupBuying(postId);
     }
+
+    @PostMapping("/{postId}/comment")
+    public void postComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId){
+        commentService.saveGroupBuyingComment(commentRequestDto, postId);
+    }
+
+    @PostMapping("/{postId}/{commentId}/childComment")
+    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId, CommentRequestDto commentRequestDto) {
+        commentService.saveChildComment(commentRequestDto, commentId);
+    }
+
+    @DeleteMapping("/{postId}/comment")
+    public void deleteComment(@PathVariable Long postId){
+        commentService.deleteComment(postId);
+    }
+
 }

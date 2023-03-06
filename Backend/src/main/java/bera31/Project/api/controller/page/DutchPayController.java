@@ -1,12 +1,13 @@
 package bera31.Project.api.controller.page;
 
+import bera31.Project.domain.dto.requestdto.CommentRequestDto;
 import bera31.Project.domain.dto.requestdto.DutchPayRequestDto;
 import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayListResponseDto;
 import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayResponseDto;
+import bera31.Project.service.CommentService;
 import bera31.Project.service.page.DutchPayService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,11 +43,17 @@ public class DutchPayController {
     public DutchPayResponseDto findDutchPay(@PathVariable Long dutchPayId) {
         return dutchPayService.findDutchPay(dutchPayId);
     }
+<<<<<<< HEAD
     @Operation(summary = "N빵 글 참여 API입니다.",
             description = "Request Parameter 형식으로 URL에 넘겨주시면 됩니다.")
     @PostMapping("/{dutchPayId}")
     public void participantDutchPay(@PathVariable Long dutchPayId){
         dutchPayService.participantDutchPay(dutchPayId);
+=======
+    @Operation
+    @PostMapping("/{postId}")
+    public void participantDutchPay(@PathVariable Long postId){
+        dutchPayService.participantDutchPay(postId);
+>>>>>>> d3beef369c5872b273046df00e65e0be8f378d6c
     }
-
 }

@@ -37,11 +37,11 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Sharing> sharingList = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<GroupBuying> buyingList = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<DutchPay> dutchPayList = new ArrayList<>();
 
     @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
@@ -77,24 +77,30 @@ public class Member {
     public void postGroupBuying(GroupBuying groupBuying) {
         this.buyingList.add(groupBuying);
     }
+
     public void postSharing(Sharing sharing) {
         this.sharingList.add(sharing);
     }
+
     public void postDutchPay(DutchPay dutchPay) {
         this.dutchPayList.add(dutchPay);
     }
+
     public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection) {
         this.participantingGroupBuying.add(groupBuyingIntersection);
     }
-    public void participantDutchPay(DutchPayIntersection dutchPayIntersection){
+
+    public void participantDutchPay(DutchPayIntersection dutchPayIntersection) {
         this.participantingDutchPay.add(dutchPayIntersection);
     }
 
     public void pushLikeGroupBuying(LikedGroupBuying likedGroupBuying) {
         this.likedGroupBuyings.add(likedGroupBuying);
     }
+
     public void pushLikeSharing(LikedSharing likedSharing) {
-        this.likedSharings.add(likedSharing); }
+        this.likedSharings.add(likedSharing);
+    }
 
     public void changePassword(String password) {
         this.password = password;
@@ -104,18 +110,21 @@ public class Member {
         this.dong = dong;
         this.gu = gu;
     }
+
     public void setKakaoMemberInfo(String image) {
         this.profileImage = image;
         this.provider = Provider.KAKAO;
     }
-    public void setKakaoMemberNickname(String nickname){
+
+    public void setKakaoMemberNickname(String nickname) {
         this.nickname = nickname;
     }
+
     public void addMemo(Schedule schedule) {
         this.memoList.add(schedule);
     }
+
     public void changeFavIngredients(List<String> favIngredients) {
         this.favoriteFood = favIngredients;
     }
-
 }

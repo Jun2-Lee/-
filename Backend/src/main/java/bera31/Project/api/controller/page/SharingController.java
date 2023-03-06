@@ -1,8 +1,10 @@
 package bera31.Project.api.controller.page;
 
+import bera31.Project.domain.dto.requestdto.CommentRequestDto;
 import bera31.Project.domain.dto.requestdto.SharingRequestDto;
 import bera31.Project.domain.dto.responsedto.SharingListResponseDto;
 import bera31.Project.domain.dto.responsedto.SharingResponseDto;
+import bera31.Project.service.CommentService;
 import bera31.Project.service.page.SharingService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.List;
 public class SharingController {
 
     private final SharingService sharingService;
+    private final CommentService commentService;
 
     @Operation(summary = "나눔 글 전체 목록 조회 API입니다.",
             description = "전체 조회에도 각 게시글 마다 고유 id를 같이 넣어놨습니다.\n" +
@@ -63,4 +66,20 @@ public class SharingController {
     public void pushLikeSharing(@PathVariable Long postId){
         sharingService.pushLikeSharing(postId);
     }
+
+    @PostMapping("/{postId}/comment")
+    public void postComment(CommentRequestDto commentRequestDto, @PathVariable Long postId){
+        commentService.saveSharingComment(commentRequestDto, postId);
+    }
+
+    @PostMapping("/{postId}/{commentId}/childComment")
+    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId, CommentRequestDto commentRequestDto) {
+        commentService.saveChildComment(commentRequestDto, commentId);
+    }
+
+    @DeleteMapping("/{postId}/comment")
+    public void deleteComment(@PathVariable Long postId){
+        commentService.deleteComment(postId);
+    }
+
 }
