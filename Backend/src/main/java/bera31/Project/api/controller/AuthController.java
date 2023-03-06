@@ -20,15 +20,16 @@ public class AuthController {
 
     @Operation(summary = "회원가입 요청 API입니다.",
             description = "Multipart 형식으로 사진과 signUpDto를 넘겨주시면 됩니다.")
-    @PostMapping ("/signup")
+    @PostMapping("/signup")
     public ResponseEntity<Long> signUp(@RequestPart SignUpDto signUpDto,
-                       @RequestPart MultipartFile profileImage) throws Exception {
+                                       @RequestPart MultipartFile profileImage) throws Exception {
         return new ResponseEntity<>(authService.signUp(signUpDto, profileImage), HttpStatus.OK);
     }
+
     @Operation(summary = "닉네임 중복 확인 요청 API 입니다.",
             description = "Request Body가 아닌, url에 Request Parameter 형식으로 Nickname을 받습니다.")
     @PostMapping("/signup/{nickname}")
-    public ResponseEntity<String> checkDuplication(@RequestParam String nickname){
+    public ResponseEntity<String> checkDuplication(@RequestParam String nickname) {
         return new ResponseEntity<>(authService.checkNickname(nickname), HttpStatus.OK);
     }
 
@@ -38,7 +39,7 @@ public class AuthController {
                     "항상 모든 요청의 Authorization Header에 'Bearer AccessToken' 형식으로 함께 넘어와야 합니다." +
                     "AccessToken의 만료 기간은 15분, RefreshToken의 만료기간은 14일 입니다.")
     @PostMapping("/signin")
-    public ResponseEntity<AuthTokenDto> signIn(@RequestBody LogInDto logInDto){
+    public ResponseEntity<AuthTokenDto> signIn(@RequestBody LogInDto logInDto) {
         return new ResponseEntity<>(authService.signIn(logInDto), HttpStatus.OK);
     }
 
@@ -46,7 +47,7 @@ public class AuthController {
             description = "해당 API로 요청을 넣을 시, Refresh Token을 강제로 만료시킵니다." +
                     "따라서, 재발급이 아닌 새로 로그인을 해야합니다.")
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(){
+    public ResponseEntity<String> logout() {
         return new ResponseEntity<>(authService.logout(), HttpStatus.OK);
     }
 
@@ -55,7 +56,7 @@ public class AuthController {
                     "저장된 AccessToken과 RefreshToken을 함께 해당 경로로 요청해주셔야 합니다." +
                     "로그인 시 만료된 AccessToken이라는 오류가 반환되면, 자동으로 해당 경로로 재발급 요청이 들어와야 합니다.")
     @PostMapping("/reissue")
-    public ResponseEntity<AuthTokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto){
+    public ResponseEntity<AuthTokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return new ResponseEntity<>(authService.reissue(tokenRequestDto), HttpStatus.OK);
     }
 }

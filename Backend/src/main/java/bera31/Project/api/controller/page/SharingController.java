@@ -22,12 +22,12 @@ public class SharingController {
     private final CommentService commentService;
 
     @GetMapping
-    public List<SharingListResponseDto> findAllSharing(){
+    public List<SharingListResponseDto> findAllSharing() {
         return sharingService.findAllSharing();
     }
 
     @GetMapping("/{sharingId}")
-    public SharingResponseDto findSharing(@PathVariable Long sharingId){
+    public SharingResponseDto findSharing(@PathVariable Long sharingId) {
         return sharingService.findSharing(sharingId);
     }
 
@@ -53,7 +53,7 @@ public class SharingController {
     }
 
     @PostMapping("/{postId}/comment")
-    public void postComment(CommentRequestDto commentRequestDto, @PathVariable Long postId){
+    public void postComment(CommentRequestDto commentRequestDto, @PathVariable Long postId) {
         commentService.saveSharingComment(commentRequestDto, postId);
     }
 
@@ -63,7 +63,7 @@ public class SharingController {
     }
 
     @DeleteMapping("/{postId}/comment")
-    public void deleteComment(@PathVariable Long postId){
+    public void deleteComment(@PathVariable Long postId) {
         commentService.deleteComment(postId);
     }
 

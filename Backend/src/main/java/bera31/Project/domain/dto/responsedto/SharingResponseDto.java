@@ -31,7 +31,7 @@ public class SharingResponseDto {
     String image;
     List<Comment> comment;
 
-    public SharingResponseDto(Sharing sharing){
+    public SharingResponseDto(Sharing sharing) {
         this.id = sharing.getId();
         this.manner = 3.0;
         this.nickname = "심진섭";

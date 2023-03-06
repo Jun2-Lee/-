@@ -23,7 +23,7 @@ public class LikedGroupBuying {
     @JoinColumn(name = "CONTENTS_ID")
     private GroupBuying groupBuying;
 
-    public LikedGroupBuying(Member member, GroupBuying groupBuying){
+    public LikedGroupBuying(Member member, GroupBuying groupBuying) {
         this.member = member;
         this.groupBuying = groupBuying;
     }

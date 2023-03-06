@@ -21,25 +21,25 @@ public class MyPageController {
 
     @Operation(summary = "마이페이지 전체를 띄우는 경로입니다. (미완)")
     @GetMapping
-    public ResponseEntity<MyPageResponseDto> showMyPage(){
+    public ResponseEntity<MyPageResponseDto> showMyPage() {
         return new ResponseEntity<>(myPageService.showMyPage(), HttpStatus.OK);
     }
 
     @Operation(summary = "내가 쓴 공동 구매 글을 출력하는 경로입니다.")
     @GetMapping("/myGroupBuying")
-    public ResponseEntity<List<GroupBuyingListResponseDto>> showMyGroupBuying(){
+    public ResponseEntity<List<GroupBuyingListResponseDto>> showMyGroupBuying() {
         return new ResponseEntity<>(myPageService.showMyGroupBuying(), HttpStatus.OK);
     }
 
     @Operation(summary = "내가 쓴 N빵 글을 출력하는 경로입니다.")
     @GetMapping("/myDutchPay")
-    public ResponseEntity<List<DutchPayListResponseDto>> showMyDutchPay(){
+    public ResponseEntity<List<DutchPayListResponseDto>> showMyDutchPay() {
         return new ResponseEntity<>(myPageService.showMyDutchPay(), HttpStatus.OK);
     }
 
     @Operation(summary = "내가 참여 중인 공동 구매 글을 출력하는 경로입니다.")
     @GetMapping("/participantingGroupBuying")
-    public ResponseEntity<List<GroupBuyingListResponseDto>> showParticipantingGroupBuying(){
+    public ResponseEntity<List<GroupBuyingListResponseDto>> showParticipantingGroupBuying() {
         return new ResponseEntity<>(myPageService.showParticipantingGroupBuying(), HttpStatus.OK);
     }
 
@@ -56,13 +56,13 @@ public class MyPageController {
 
     @Operation(summary = "내가 찜한 공동 구매 글을 출력하는 경로입니다.")
     @GetMapping("/favoriteGroupBuying")
-    public ResponseEntity<List<GroupBuyingListResponseDto>> showFavoriteGroupBuying(){
+    public ResponseEntity<List<GroupBuyingListResponseDto>> showFavoriteGroupBuying() {
         return new ResponseEntity<>(myPageService.showFavoriteGroupBuying(), HttpStatus.OK);
     }
 
     @Operation(summary = "내가 찜한 나눔 글을 출력하는 경로입니다.")
     @GetMapping("/favoriteSharing")
-    public ResponseEntity<List<SharingListResponseDto>> showFavoriteSharing(){
+    public ResponseEntity<List<SharingListResponseDto>> showFavoriteSharing() {
         return new ResponseEntity<>(myPageService.showFavoriteSharing(), HttpStatus.OK);
     }
 }

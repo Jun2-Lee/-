@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class AlreadyFullException extends RuntimeException{
+public class AlreadyFullException extends RuntimeException {
     ErrorResponse errorResponse;
 }

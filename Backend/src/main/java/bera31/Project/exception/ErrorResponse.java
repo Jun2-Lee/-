@@ -16,8 +16,7 @@ public enum ErrorResponse {
     EMAIL_DUPLICATE(HttpStatus.BAD_REQUEST, "이미 존재하는 이메일입니다."),
     NICKNAME_DUPLICATE(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다."),
     KAKAO_ACCESS_DENIED(HttpStatus.BAD_REQUEST, "KAKAO 로그인 유저는 사용하실 수 없는 기능입니다."),
-    ALREADY_FULL(HttpStatus.OK, "신청 인원이 가득 찼습니다.")
-    ;
+    ALREADY_FULL(HttpStatus.OK, "신청 인원이 가득 찼습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

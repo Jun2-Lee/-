@@ -10,9 +10,10 @@ import java.util.TimeZone;
 @SpringBootApplication
 public class ProjectApplication {
     @PostConstruct
-    private void timezoneSet(){
+    private void timezoneSet() {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
     }
+
     public static void main(String[] args) {
         SpringApplication.run(ProjectApplication.class, args);
     }

@@ -2,6 +2,7 @@ package bera31.Project.service.page;
 
 
 import bera31.Project.config.S3.S3Uploader;
+import bera31.Project.domain.comment.Comment;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
 import bera31.Project.domain.dto.responsedto.CommentResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,19 +42,14 @@ public class GroupBuyingService {
     private final LikeRepository likeRepository;
 
     public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
-        return groupBuyingRepository.findByKeyword(keyword)
-                .stream()
-                .map(GroupBuyingListResponseDto::new)
-                .collect(Collectors.toList());
+        return groupBuyingRepository.findByKeyword(keyword).stream().map(GroupBuyingListResponseDto::new).collect(Collectors.toList());
     }
 
     public List<GroupBuyingListResponseDto> findAllGroupBuying() {
         List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
         checkExpiredPost(findedGroupBuyings);
 
-        return findedGroupBuyings.stream()
-                .map(GroupBuyingListResponseDto::new)
-                .collect(Collectors.toList());
+        return findedGroupBuyings.stream().map(GroupBuyingListResponseDto::new).collect(Collectors.toList());
     }
 
     public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
@@ -66,12 +63,12 @@ public class GroupBuyingService {
         return groupBuyingRepository.save(newGroupBuying);
     }
 
-    public Long participantGroupBuying(Long postId){
+    public Long participantGroupBuying(Long postId) {
         Member findedMember = loadCurrentMember();
         //Member findedMember = memberRepository.findById(1);
         GroupBuying findedPost = groupBuyingRepository.findById(postId);
 
-        if(findedPost.getLimitMember() <= findedPost.getMemberList().size())
+        if (findedPost.getLimitMember() <= findedPost.getMemberList().size())
             throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
 
         GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(findedMember, findedPost);
@@ -89,11 +86,18 @@ public class GroupBuyingService {
     }
 
     public GroupBuyingResponseDto findGroupBuying(Long postId) {
-        List<CommentResponseDto> commentResponseDtoList = groupBuyingRepository.findById(postId)
-                .getComments()
-                .stream()
-                .map(CommentResponseDto::new)
-                .collect(Collectors.toList());
+        List<Comment> commentList = groupBuyingRepository.findById(postId).getComments();
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        for (Comment comment : commentList) {
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+            if (comment.getChildren().size() != 0) {
+                for (Comment child : comment.getChildren()) {
+                    commentResponseDto.addChild(new CommentResponseDto(child));
+                }
+                commentResponseDtoList.add(commentResponseDto);
+            }
+
+        }
 
         return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId), commentResponseDtoList);
     }
@@ -102,7 +106,7 @@ public class GroupBuyingService {
         groupBuyingRepository.delete(groupBuyingRepository.findById(postId));
     }
 
-    public Long pushLikeGroupBuying(Long postId){
+    public Long pushLikeGroupBuying(Long postId) {
         Member currentMember = loadCurrentMember();
         //Member currentMember = memberRepository.findById(1);
         GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
@@ -112,13 +116,12 @@ public class GroupBuyingService {
         return likeRepository.save(newLikedGroupBuying);
     }
 
-    private Member loadCurrentMember(){
+    private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
         return memberRepository.findByEmail(currentMemberEmail).get();
     }
-    private void checkExpiredPost(List<GroupBuying> findedGroupBuyings){
-        findedGroupBuyings.stream()
-                .filter(g -> g.getDeadLine().isBefore(LocalDateTime.now()))
-                .forEach(GroupBuying::expirePost);
+
+    private void checkExpiredPost(List<GroupBuying> findedGroupBuyings) {
+        findedGroupBuyings.stream().filter(g -> g.getDeadLine().isBefore(LocalDateTime.now())).forEach(GroupBuying::expirePost);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public class LikeRepository {
     private final EntityManager em;
 
-    public Long save(LikedGroupBuying likedGroupBuying){
+    public Long save(LikedGroupBuying likedGroupBuying) {
         em.persist(likedGroupBuying);
         return likedGroupBuying.getId();
     }

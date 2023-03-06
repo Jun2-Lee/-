@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,11 +53,11 @@ public class KakaoAuthService {
     @Value("${kakao.password}")
     private String kakaoPassword;
 
-    public AuthTokenDto kakaoSignIn(String accessToken){
+    public AuthTokenDto kakaoSignIn(String accessToken) {
         KakaoProfileDto kakaoProfile = getKakaoProfile(accessToken);
         Optional<Member> findedKakaoMember = memberRepository.findByEmail(kakaoProfile.getKakao_account().getEmail());
 
-        if(findedKakaoMember.isEmpty()) {
+        if (findedKakaoMember.isEmpty()) {
             log.info("Naong 회원이 아닙니다. 자동 회원 가입을 진행합니다.");
             kakaoSignUp(kakaoProfile);
         }
@@ -64,7 +65,7 @@ public class KakaoAuthService {
         return authenticateKakaoMember(kakaoProfile);
     }
 
-    private Member kakaoSignUp(KakaoProfileDto kakaoProfileDto){
+    private Member kakaoSignUp(KakaoProfileDto kakaoProfileDto) {
         // 정적 팩토리 메서드 리팩토링 대상!!
         Member newKakaoMember = new Member(
                 kakaoProfileDto.getKakao_account().getEmail(), passwordEncoder.encode(kakaoPassword),
@@ -74,7 +75,7 @@ public class KakaoAuthService {
         return memberRepository.save(newKakaoMember);
     }
 
-    public String additionalSignUp(KakaoSignupDto kakaoSignupDto){
+    public String additionalSignUp(KakaoSignupDto kakaoSignupDto) {
         Member currentMember = memberRepository.findByEmail(SecurityUtility.getCurrentMemberEmail()).get();
         currentMember.changeAddress(kakaoSignupDto.getDong(), kakaoSignupDto.getGu());
         currentMember.setKakaoMemberNickname(kakaoSignupDto.getNickname());
@@ -82,7 +83,7 @@ public class KakaoAuthService {
         return "회원가입이 완료 되었습니다!";
     }
 
-    public String getAccessToken(String code){
+    public String getAccessToken(String code) {
         RestTemplate restTemplate = new RestTemplate();
 
         // 요청 보낼 Header 설정
@@ -111,7 +112,7 @@ public class KakaoAuthService {
         ObjectMapper objectMapper = new ObjectMapper();
         KakaoTokenDto kakaoTokenDto = null;
 
-        try{
+        try {
             kakaoTokenDto = objectMapper.readValue(kakaoTokenResponse.getBody(), KakaoTokenDto.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -120,7 +121,7 @@ public class KakaoAuthService {
         return kakaoTokenDto.getAccess_token();
     }
 
-    public KakaoProfileDto getKakaoProfile(String accessToken){
+    public KakaoProfileDto getKakaoProfile(String accessToken) {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -140,16 +141,16 @@ public class KakaoAuthService {
         ObjectMapper objectMapper = new ObjectMapper();
         KakaoProfileDto kakaoProfileDto = null;
 
-        try{
+        try {
             kakaoProfileDto = objectMapper.readValue(kakaoProfileResponse.getBody(), KakaoProfileDto.class);
-        } catch (JsonProcessingException e){
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
         return kakaoProfileDto;
     }
 
-    private AuthTokenDto authenticateKakaoMember(KakaoProfileDto kakaoProfile){
+    private AuthTokenDto authenticateKakaoMember(KakaoProfileDto kakaoProfile) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(kakaoProfile.getKakao_account().getEmail(), kakaoPassword);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(usernamePasswordAuthenticationToken);

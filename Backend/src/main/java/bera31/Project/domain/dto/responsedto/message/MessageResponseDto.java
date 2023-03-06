@@ -13,7 +13,7 @@ public class MessageResponseDto {
     String content;
     LocalDateTime sendTime;
 
-    public MessageResponseDto(Long roomNumber, String other, String content, LocalDateTime sendTime){
+    public MessageResponseDto(Long roomNumber, String other, String content, LocalDateTime sendTime) {
         this.roomNumber = roomNumber;
         this.other = other;
         this.content = content;

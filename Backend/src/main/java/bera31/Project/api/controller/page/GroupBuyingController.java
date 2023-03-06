@@ -25,6 +25,7 @@ import java.util.List;
 public class GroupBuyingController {
     private final GroupBuyingService groupBuyingService;
     private final CommentService commentService;
+
     @Operation(summary = "공동 구매 전체 글 조회", description = "공동구매 창 처음 접속 시 보여지는 글 목록 요청 Api 입니다")
     @GetMapping
     public ResponseEntity<List<GroupBuyingListResponseDto>> findAllGroupBuying() {
@@ -61,7 +62,7 @@ public class GroupBuyingController {
 
     @Operation(summary = "공동구매 찜 api", description = "공동구매 찜 요청을 눌렀을 때 요청 경로입니다.")
     @PostMapping("/{postId}/like")
-    public ResponseEntity<Long> pushLikeGroupBuying(@PathVariable Long postId){
+    public ResponseEntity<Long> pushLikeGroupBuying(@PathVariable Long postId) {
         return new ResponseEntity<>(groupBuyingService.pushLikeGroupBuying(postId), HttpStatus.OK);
     }
 
@@ -78,17 +79,17 @@ public class GroupBuyingController {
     }
 
     @PostMapping("/{postId}/comment")
-    public void postComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId){
+    public void postComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId) {
         commentService.saveGroupBuyingComment(commentRequestDto, postId);
     }
 
     @PostMapping("/{postId}/{commentId}/childComment")
-    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId, CommentRequestDto commentRequestDto) {
+    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto) {
         commentService.saveChildComment(commentRequestDto, commentId);
     }
 
     @DeleteMapping("/{postId}/comment")
-    public void deleteComment(@PathVariable Long postId){
+    public void deleteComment(@PathVariable Long postId) {
         commentService.deleteComment(postId);
     }
 

@@ -25,7 +25,7 @@ public class DutchPayIntersection {
     @JoinColumn(name = "CONTENTS_ID")
     DutchPay dutchPay;
 
-    public DutchPayIntersection(Member participant, DutchPay dutchPay){
+    public DutchPayIntersection(Member participant, DutchPay dutchPay) {
         this.participant = participant;
         this.dutchPay = dutchPay;
     }

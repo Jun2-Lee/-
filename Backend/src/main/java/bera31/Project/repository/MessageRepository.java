@@ -36,7 +36,7 @@ public class MessageRepository {
                 .getResultList();
     }
 
-    public Long findMaxRoomNumber(){
+    public Long findMaxRoomNumber() {
         return em.createQuery("select MAX(m.roomNumber) from Message m", Long.class)
                 .getSingleResult();
     }

@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class KakaoUserAccessException extends RuntimeException{
+public class KakaoUserAccessException extends RuntimeException {
     ErrorResponse errorResponse;
 }

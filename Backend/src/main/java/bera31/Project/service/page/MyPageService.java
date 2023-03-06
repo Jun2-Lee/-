@@ -26,15 +26,15 @@ public class MyPageService {
     private final MemberRepository memberRepository;
     private final IntersectionRepository intersectionRepository;
 
-    public MyPageResponseDto showMyPage(){
+    public MyPageResponseDto showMyPage() {
         Member findedMember = loadCurrentMember();
 
         // Refactoring 대상!!
         List<SimpleGroupBuyingResponseDto> simpleGroupBuyinglist
                 = findedMember.getBuyingList().stream()
-                    .limit(4)
-                    .map(SimpleGroupBuyingResponseDto::new)
-                    .collect(Collectors.toList());
+                .limit(4)
+                .map(SimpleGroupBuyingResponseDto::new)
+                .collect(Collectors.toList());
 
         List<SimpleGroupBuyingResponseDto> simpleLikedGroupBuyinglist
                 = findedMember.getLikedGroupBuying()
@@ -55,7 +55,7 @@ public class MyPageService {
                 simpleGroupBuyinglist, simpleLikedGroupBuyinglist, todaySchedules);
     }
 
-    public List<GroupBuyingListResponseDto> showMyGroupBuying(){
+    public List<GroupBuyingListResponseDto> showMyGroupBuying() {
         Member findedMember = loadCurrentMember();
 
         return findedMember.getBuyingList().stream()
@@ -63,7 +63,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    public List<DutchPayListResponseDto> showMyDutchPay(){
+    public List<DutchPayListResponseDto> showMyDutchPay() {
         Member currentMember = loadCurrentMember();
 
         return currentMember.getDutchPayList().stream()
@@ -71,7 +71,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    public List<GroupBuyingListResponseDto> showParticipantingGroupBuying(){
+    public List<GroupBuyingListResponseDto> showParticipantingGroupBuying() {
         Member currentMember = loadCurrentMember();
 
         return currentMember.getParticipantingGroupBuying()
@@ -91,7 +91,7 @@ public class MyPageService {
     }
     */
 
-    public List<GroupBuyingListResponseDto> showFavoriteGroupBuying(){
+    public List<GroupBuyingListResponseDto> showFavoriteGroupBuying() {
         Member currentMember = loadCurrentMember();
 
         return currentMember.getLikedGroupBuying()
@@ -101,7 +101,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    public List<SharingListResponseDto> showFavoriteSharing(){
+    public List<SharingListResponseDto> showFavoriteSharing() {
         Member currentMember = loadCurrentMember();
 
         return currentMember.getLikedSharing().stream()
@@ -109,7 +109,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    private Member loadCurrentMember(){
+    private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
         return memberRepository.findByEmail(currentMemberEmail).get();
     }

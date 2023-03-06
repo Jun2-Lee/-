@@ -8,37 +8,37 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class CustomExceptionAdvice {
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponseEntity> handleUserNotFoundException(UserNotFoundException e){
+    public ResponseEntity<ErrorResponseEntity> handleUserNotFoundException(UserNotFoundException e) {
         return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ErrorResponseEntity> handleUnauthroizedException(UnauthorizedException e){
+    public ResponseEntity<ErrorResponseEntity> handleUnauthroizedException(UnauthorizedException e) {
         return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
     }
 
     @ExceptionHandler(ExpiredTokenException.class)
-    public ResponseEntity<ErrorResponseEntity> handleTokenException(ExpiredTokenException e){
+    public ResponseEntity<ErrorResponseEntity> handleTokenException(ExpiredTokenException e) {
         return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
     }
 
     @ExceptionHandler(IncorrectPasswordException.class)
-    public ResponseEntity<ErrorResponseEntity> handleIncorrectPasswordException(IncorrectPasswordException e){
+    public ResponseEntity<ErrorResponseEntity> handleIncorrectPasswordException(IncorrectPasswordException e) {
         return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
     }
 
     @ExceptionHandler(EmailDuplicateException.class)
-    public ResponseEntity<ErrorResponseEntity> handleEmailDuplicateException(EmailDuplicateException e){
+    public ResponseEntity<ErrorResponseEntity> handleEmailDuplicateException(EmailDuplicateException e) {
         return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
     }
 
     @ExceptionHandler(NicknameDuplicateException.class)
-    public ResponseEntity<ErrorResponseEntity> handleNicknameDuplicateException(NicknameDuplicateException e){
+    public ResponseEntity<ErrorResponseEntity> handleNicknameDuplicateException(NicknameDuplicateException e) {
         return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
     }
 
     @ExceptionHandler(AlreadyFullException.class)
-    public ResponseEntity<ErrorResponseEntity> handleAlreadyFullException(AlreadyFullException e){
+    public ResponseEntity<ErrorResponseEntity> handleAlreadyFullException(AlreadyFullException e) {
         return ErrorResponseEntity.createResponseEntity(e.getErrorResponse());
     }
 

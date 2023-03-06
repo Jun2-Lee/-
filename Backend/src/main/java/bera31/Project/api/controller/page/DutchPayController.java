@@ -29,20 +29,23 @@ public class DutchPayController {
     public Long postDutchPay(@RequestBody DutchPayRequestDto dutchPayRequestDto) {
         return dutchPayService.postDutchPay(dutchPayRequestDto);
     }
+
     @Operation(summary = "N빵 글 삭제", description = "N빵 글 삭제 요청 시 요청하는 Api 입니다.")
     @DeleteMapping("/{dutchPayId}")
     public void deleteDutchPay(@PathVariable Long dutchPayId) {
         dutchPayService.deleteDutchPay(dutchPayId);
         return;
     }
+
     @Operation(summary = "N빵 글 상세 조회", description = "N빵 글 상세 페이지 조회시 요청하는 Api 입니다.")
     @GetMapping("/{dutchPayId}")
     public DutchPayResponseDto findDutchPay(@PathVariable Long dutchPayId) {
         return dutchPayService.findDutchPay(dutchPayId);
     }
+
     @Operation
     @PostMapping("/{postId}")
-    public void participantDutchPay(@PathVariable Long postId){
+    public void participantDutchPay(@PathVariable Long postId) {
         dutchPayService.participantDutchPay(postId);
     }
 }

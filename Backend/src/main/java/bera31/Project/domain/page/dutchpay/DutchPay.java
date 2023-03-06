@@ -47,7 +47,7 @@ public class DutchPay extends Contents {
         this.dong = member.getDong();
     }
 
-    public void addParticipantMember(DutchPayIntersection dutchPayIntersection){
+    public void addParticipantMember(DutchPayIntersection dutchPayIntersection) {
         memberList.add(dutchPayIntersection);
     }
 }

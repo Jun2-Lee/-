@@ -19,7 +19,7 @@ public class RedisConfig {
     private String redisPassword;
 
     @Bean
-    public RedisConnectionFactory redisConnectionFactory(){
+    public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(redisHost);
         redisStandaloneConfiguration.setPort(redisPort);
@@ -28,7 +28,7 @@ public class RedisConfig {
     } // Redis In-memroy 저장소의 생성
 
     @Bean
-    public RedisTemplate<String, String> redisTemplate(){
+    public RedisTemplate<String, String> redisTemplate() {
         RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());

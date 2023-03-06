@@ -27,11 +27,11 @@ public class Sharing extends Contents {
     String gu;
     String dong;
 
-    public Sharing(SharingRequestDto sharingRequestDto){
+    public Sharing(SharingRequestDto sharingRequestDto) {
         this.title = sharingRequestDto.getTitle();
         this.category = sharingRequestDto.getCategory();
         this.product = sharingRequestDto.getProduct();
-        this.expiry =  sharingRequestDto.getExpiry();
+        this.expiry = sharingRequestDto.getExpiry();
         this.deadLine = sharingRequestDto.getDeadLine();
         this.postTime = LocalDateTime.now();
         this.gu = sharingRequestDto.getGu();
@@ -39,7 +39,7 @@ public class Sharing extends Contents {
         this.content = sharingRequestDto.getContent();
     }
 
-    public void updateSharing(SharingRequestDto sharingRequestDto){
+    public void updateSharing(SharingRequestDto sharingRequestDto) {
         this.title = sharingRequestDto.getTitle();
         this.content = sharingRequestDto.getContent();
         this.category = sharingRequestDto.getCategory();
@@ -49,7 +49,8 @@ public class Sharing extends Contents {
         this.dong = sharingRequestDto.getDong();
         this.deadLine = sharingRequestDto.getDeadLine();
     }
-    public void setImage(String image){
+
+    public void setImage(String image) {
         this.image = image;
     }
 }

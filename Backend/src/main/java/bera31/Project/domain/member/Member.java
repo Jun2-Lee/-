@@ -86,7 +86,7 @@ public class Member {
         dutchPayList.add(dutchPay);
     }
 
-    public void participantDutchPay(DutchPayIntersection dutchPayIntersection){
+    public void participantDutchPay(DutchPayIntersection dutchPayIntersection) {
         participantingDutchPay.add(dutchPayIntersection);
     }
 
@@ -98,24 +98,31 @@ public class Member {
         this.dong = dong;
         this.gu = gu;
     }
+
     public void setKakaoMemberInfo(String image) {
         this.profileImage = image;
         this.provider = Provider.KAKAO;
     }
-    public void setKakaoMemberNickname(String nickname){
+
+    public void setKakaoMemberNickname(String nickname) {
         this.nickname = nickname;
     }
+
     public void changeFavIngredients(List<String> favIngredients) {
         this.favoriteFood = favIngredients;
     }
 
-/*    public void addSharing(Sharing sharing) {
-        this.sharingList.add(sharing);
-    }*/
-    public void addFavoriteSharing(Sharing sharing) { this.likedSharing.add(sharing); }
+    /*    public void addSharing(Sharing sharing) {
+            this.sharingList.add(sharing);
+        }*/
+    public void addFavoriteSharing(Sharing sharing) {
+        this.likedSharing.add(sharing);
+    }
+
     public void pushLikeGroupBuying(LikedGroupBuying likedGroupBuying) {
         this.likedGroupBuying.add(likedGroupBuying);
     }
+
     public void addMemo(Schedule schedule) {
         this.memoList.add(schedule);
     }

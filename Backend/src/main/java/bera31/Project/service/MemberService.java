@@ -32,7 +32,7 @@ public class MemberService {
     public String changePassword(String password) {
         Member findedMember = loadCurrentMember();
 
-        if(findedMember.getProvider().equals(Provider.KAKAO))
+        if (findedMember.getProvider().equals(Provider.KAKAO))
             throw new KakaoUserAccessException(ErrorResponse.KAKAO_ACCESS_DENIED);
 
         String encodedPassword = passwordEncoder.encode(password);
@@ -63,7 +63,7 @@ public class MemberService {
             throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
     }
 
-    private Member loadCurrentMember(){
+    private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
         return memberRepository.findByEmail(currentMemberEmail).get();
     }

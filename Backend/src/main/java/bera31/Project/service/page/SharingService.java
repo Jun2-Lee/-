@@ -26,28 +26,28 @@ public class SharingService {
 
     public void postSharing(SharingRequestDto sharingRequestDto, MultipartFile postImage) throws IOException {
         Sharing newSharing = new Sharing(sharingRequestDto);
-        newSharing.setImage(s3Uploader.upload(postImage,"sharing"));
+        newSharing.setImage(s3Uploader.upload(postImage, "sharing"));
         sharingRepository.save(newSharing);
     }
 
-    public void updateSharing(Long id, SharingRequestDto sharingRequestDto){
+    public void updateSharing(Long id, SharingRequestDto sharingRequestDto) {
         Sharing findSharing = sharingRepository.findById(id);
         findSharing.updateSharing(sharingRequestDto);
     }
 
-    public void deleteSharing(Long id){
+    public void deleteSharing(Long id) {
         sharingRepository.delete(sharingRepository.findById(id));
     }
 
     @Transactional(readOnly = true)
-    public List<SharingListResponseDto> findAllSharing(){
+    public List<SharingListResponseDto> findAllSharing() {
         return sharingRepository.findAll().stream()
                 .map(SharingListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public SharingResponseDto findSharing(Long id){
+    public SharingResponseDto findSharing(Long id) {
         return new SharingResponseDto(sharingRepository.findById(id));
     }
 
