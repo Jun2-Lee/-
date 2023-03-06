@@ -1,6 +1,15 @@
 # Project Naong!
 [대문 사진 자리]  
-[Github](https://github.com/Jun2-Lee/Toy_project) | [Naong!]()
+
+<div align ="center">
+  <a href = "https://github.com/Jun2-Lee/Toy_project">
+   <img src="https://img.shields.io/badge/GitRepo-181717?style=flat&logo=GitHub&logoColor=white&link=https://jinseop-sim.github.io/">
+   </a>
+  <a href = "http://3.36.144.128:8080/naong-api">
+   <img src="https://img.shields.io/badge/Naong!-E4405F?style=flat&logo=Instagram&logoColor=white&link=https://www.instagram.com/_35yed">
+   </a>
+</div>  
+</br>
 
 > :cat: Project 나옹!(나눠주세옹)은 대한민국의 고생하는 :house: 자취생들과 함께하는 플랫폼입니다.  
 
