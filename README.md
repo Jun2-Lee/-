@@ -1,18 +1,17 @@
-# 프로젝트명
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
+# Project Naong!
 
-> 한 두 문단으로 프로젝트 소개 글을 작성합니다.
+> :cat: Project 나옹! (나눠주세용)
+> :house: 대한민국의 외로운 자취생들을 위로하는 플랫폼입니다.  
 
-## Team Member
-멤버
+## :family: Team Member
+|심진섭|이준희|조예봄|이지수|김태영|
+|:-:|:-:|:-:|:-:|:-:|
+|<img src="https://user-images.githubusercontent.com/71700079/183434526-d6ff6eb5-512a-41b9-9965-c53f2dd2c31b.png" width="100" height="100">|<img src="https://user-images.githubusercontent.com/71700079/183434526-d6ff6eb5-512a-41b9-9965-c53f2dd2c31b.png" width="100" height="100">|<img src="https://user-images.githubusercontent.com/71700079/183434526-d6ff6eb5-512a-41b9-9965-c53f2dd2c31b.png" width="100" height="100">|<img src="https://user-images.githubusercontent.com/71700079/183434526-d6ff6eb5-512a-41b9-9965-c53f2dd2c31b.png" width="100" height="100">|<img src="https://user-images.githubusercontent.com/71700079/183434526-d6ff6eb5-512a-41b9-9965-c53f2dd2c31b.png" width="100" height="100">|
+|BE|BE|Design|FE|DE|
+|[Github](https://github.com/Jinseop-Sim)|[Github](https://github.com/Jinseop-Sim)|[Github](https://github.com/Jinseop-Sim)|[Github](https://github.com/Jinseop-Sim)|[Github](https://github.com/Jinseop-Sim)|
 
 ## Git Convention
-
-스크린 샷과 코드 예제를 통해 사용 방법을 자세히 설명합니다.
-
-_더 많은 예제와 사용법은 [Wiki][wiki]를 참고하세요._
+- ```Feat``` : 개발한 기능을 Commit 할 때 사용합니다.
 
 ## 개발 환경 설정
 
