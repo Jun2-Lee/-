@@ -36,15 +36,18 @@ public class GroupBuying extends Contents {
     List<LikedGroupBuying> likedMemberList = new ArrayList<>();
     boolean isFinish;
 
-    public void setImage(String image){
+    public void setImage(String image) {
         this.image = image;
     }
-    public void addMember(GroupBuyingIntersection groupBuyingIntersection){
+
+    public void addMember(GroupBuyingIntersection groupBuyingIntersection) {
         memberList.add(groupBuyingIntersection);
     }
-    public void expirePost(){
+
+    public void expirePost() {
         this.isFinish = true;
     }
+
     public Long update(GroupBuyingRequestDto groupBuyingRequestDto, String image) {
         this.cost = groupBuyingRequestDto.getPrice();
         this.limitMember = groupBuyingRequestDto.getMemberLimit();

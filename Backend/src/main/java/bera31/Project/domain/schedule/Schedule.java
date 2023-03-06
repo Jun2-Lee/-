@@ -25,7 +25,7 @@ public class Schedule {
     String place;
     String content;
 
-    public Schedule(ScheduleRequestDto scheduleRequestDto){
+    public Schedule(ScheduleRequestDto scheduleRequestDto) {
         this.title = scheduleRequestDto.getTitle();
         this.targetDate = scheduleRequestDto.getTargetDate();
         this.time = scheduleRequestDto.getTime();

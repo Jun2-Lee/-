@@ -15,7 +15,7 @@ public class ScheduleListResponseDto {
     String title;
     LocalDate targetDate;
 
-    public ScheduleListResponseDto(Schedule schedule){
+    public ScheduleListResponseDto(Schedule schedule) {
         this.id = schedule.getId();
         this.title = schedule.getTitle();
         this.targetDate = schedule.getTargetDate();

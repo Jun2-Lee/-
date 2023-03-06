@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class IncorrectPasswordException extends RuntimeException{
+public class IncorrectPasswordException extends RuntimeException {
     ErrorResponse errorResponse;
 }

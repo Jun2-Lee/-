@@ -24,10 +24,10 @@ public class CustomUserDetailUtility implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return memberRepository.findByEmail(email)
                 .map(this::createUserDetails)
-                .orElseThrow(()->new UsernameNotFoundException("없는 회원 입니다."));
+                .orElseThrow(() -> new UsernameNotFoundException("없는 회원 입니다."));
     }
 
-    public UserDetails createUserDetails(Member member){
+    public UserDetails createUserDetails(Member member) {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getAuthority().toString());
         return User.builder()
                 .username(member.getEmail())

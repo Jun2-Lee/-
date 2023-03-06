@@ -31,23 +31,23 @@ public class SecurityConfig {
     // Spring Security의 버전이 올라가면서, Bean을 통해 추가하는 방식으로 변경되었다.
     // 원래는 WebSecurityConfigurerAdapter를 통해서 통합 관리를 했었다.
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
+    public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().antMatchers(
                 "/index.html", "/favicon.ico", "/css/**", "/fonts/**", "/img/**", "/js/**"
         );
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable() // JWT를 써야하므로, CSRF Token 비활성화
 
                 .exceptionHandling()

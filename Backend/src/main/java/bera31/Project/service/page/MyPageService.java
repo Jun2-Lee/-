@@ -27,16 +27,16 @@ public class MyPageService {
     private final MemberRepository memberRepository;
     private final IntersectionRepository intersectionRepository;
 
-    public MyPageResponseDto showMyPage(){
+    public MyPageResponseDto showMyPage() {
         Member findedMember = loadCurrentMember();
 
         // Refactoring 대상!!
         List<SimpleContentsResponseDto> simpleGroupBuyinglist
                 = findedMember.getBuyingList()
-                    .stream()
-                    .limit(4)
-                    .map(SimpleContentsResponseDto::new)
-                    .collect(Collectors.toList());
+                .stream()
+                .limit(4)
+                .map(SimpleContentsResponseDto::new)
+                .collect(Collectors.toList());
 
         List<SimpleContentsResponseDto> simpleLikedGroupBuyinglist
                 = findedMember.getLikedGroupBuyings()
@@ -96,7 +96,7 @@ public class MyPageService {
                 todaySchedules);
     }
 
-    public List<GroupBuyingListResponseDto> showMyGroupBuying(){
+    public List<GroupBuyingListResponseDto> showMyGroupBuying() {
         Member findedMember = loadCurrentMember();
 
         return findedMember.getBuyingList().stream()
@@ -104,7 +104,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    public List<DutchPayListResponseDto> showMyDutchPay(){
+    public List<DutchPayListResponseDto> showMyDutchPay() {
         Member currentMember = loadCurrentMember();
 
         return currentMember.getDutchPayList().stream()
@@ -112,7 +112,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    public List<GroupBuyingListResponseDto> showParticipantingGroupBuying(){
+    public List<GroupBuyingListResponseDto> showParticipantingGroupBuying() {
         Member currentMember = loadCurrentMember();
 
         return currentMember.getParticipantingGroupBuying()
@@ -122,7 +122,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    public List<DutchPayListResponseDto> showParticipantingDutchPay(){
+    public List<DutchPayListResponseDto> showParticipantingDutchPay() {
         Member findedMember = loadCurrentMember();
 
         return findedMember.getParticipantingDutchPay().stream()
@@ -131,7 +131,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    public List<GroupBuyingListResponseDto> showFavoriteGroupBuying(){
+    public List<GroupBuyingListResponseDto> showFavoriteGroupBuying() {
         Member currentMember = loadCurrentMember();
 
         return currentMember.getLikedGroupBuyings()
@@ -141,7 +141,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    public List<SharingListResponseDto> showFavoriteSharing(){
+    public List<SharingListResponseDto> showFavoriteSharing() {
         Member currentMember = loadCurrentMember();
 
         return currentMember.getLikedSharings()
@@ -151,7 +151,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    private Member loadCurrentMember(){
+    private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
         return memberRepository.findByEmail(currentMemberEmail).get();
     }

@@ -12,12 +12,12 @@ import javax.persistence.EntityManager;
 public class LikeRepository {
     private final EntityManager em;
 
-    public Long save(LikedGroupBuying likedGroupBuying){
+    public Long save(LikedGroupBuying likedGroupBuying) {
         em.persist(likedGroupBuying);
         return likedGroupBuying.getId();
     }
 
-    public Long save(LikedSharing likedSharing){
+    public Long save(LikedSharing likedSharing) {
         em.persist(likedSharing);
         return likedSharing.getId();
     }

@@ -23,7 +23,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = resolveToken((HttpServletRequest) request);
 
-        if(token != null && tokenProvider.validateToken(token)){
+        if (token != null && tokenProvider.validateToken(token)) {
             // Token이 유효한 형태일 경우, Authentication 객체를 반환받아 온다.
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -34,9 +34,9 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     // Request에서 Authorization : Bearer 부분을 따낸다.
-    private String resolveToken(HttpServletRequest request){
+    private String resolveToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        if(StringUtils.hasText(token) && token.startsWith("Bearer")){
+        if (StringUtils.hasText(token) && token.startsWith("Bearer")) {
             return token.substring(7);
         }
 

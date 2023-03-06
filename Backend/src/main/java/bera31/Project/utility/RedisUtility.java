@@ -12,16 +12,16 @@ import java.time.Duration;
 public class RedisUtility {
     private final RedisTemplate<String, String> redisTemplate;
 
-    public void setValues(String key, String value){
+    public void setValues(String key, String value) {
         redisTemplate.opsForValue().set(key, value);
     }
 
-    public void setValues(String key, String value, long lifetime){
+    public void setValues(String key, String value, long lifetime) {
         Duration duration = Duration.ofSeconds(lifetime);
         redisTemplate.opsForValue().set(key, value, duration);
     }
 
-    public String getValues(String key){
+    public String getValues(String key) {
         return redisTemplate.opsForValue().get(key);
     }
 

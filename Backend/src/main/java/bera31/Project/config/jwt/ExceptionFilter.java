@@ -20,14 +20,14 @@ import java.io.PrintStream;
 
 @RequiredArgsConstructor
 @Component
-public class ExceptionFilter extends OncePerRequestFilter{
+public class ExceptionFilter extends OncePerRequestFilter {
     private final JsonUtility jsonUtility;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try{
+        try {
             filterChain.doFilter(request, response);
-        } catch (ExpiredTokenException e){
+        } catch (ExpiredTokenException e) {
             setErrorResponse(HttpStatus.UNAUTHORIZED, response, e);
         }
     }

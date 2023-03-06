@@ -35,6 +35,7 @@ public class DutchPayService {
                 .map(DutchPayListResponseDto::new)
                 .collect(Collectors.toList());
     }
+
     @Transactional(readOnly = true)
     public DutchPayResponseDto findDutchPay(Long id) {
         return new DutchPayResponseDto(dutchPayRepository.findById(id));
@@ -55,7 +56,7 @@ public class DutchPayService {
         Member currentMember = memberRepository.findById(1);
         DutchPay currentPost = dutchPayRepository.findById(id);
 
-        if(currentPost.getLimitMember() <= currentPost.getMemberList().size())
+        if (currentPost.getLimitMember() <= currentPost.getMemberList().size())
             throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
 
         DutchPayIntersection dutchPayIntersection = new DutchPayIntersection(currentMember, currentPost);

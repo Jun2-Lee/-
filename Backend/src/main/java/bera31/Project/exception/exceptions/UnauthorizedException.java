@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class UnauthorizedException extends RuntimeException{
+public class UnauthorizedException extends RuntimeException {
     ErrorResponse errorResponse;
 }

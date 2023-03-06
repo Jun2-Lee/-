@@ -12,7 +12,7 @@ public class ScheduleResponseDto {
     String place;
     String content;
 
-    public ScheduleResponseDto(Schedule schedule){
+    public ScheduleResponseDto(Schedule schedule) {
         this.title = schedule.getTitle();
         this.time = schedule.getTime();
         this.place = schedule.getPlace();

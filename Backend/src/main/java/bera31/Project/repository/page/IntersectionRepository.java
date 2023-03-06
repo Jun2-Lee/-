@@ -15,18 +15,18 @@ import java.util.List;
 public class IntersectionRepository {
     private final EntityManager em;
 
-    public Long save(GroupBuyingIntersection groupBuyingIntersection){
+    public Long save(GroupBuyingIntersection groupBuyingIntersection) {
         em.persist(groupBuyingIntersection);
         return groupBuyingIntersection.getId();
     }
 
     // Overloading
-    public Long save(DutchPayIntersection dutchPayIntersection){
+    public Long save(DutchPayIntersection dutchPayIntersection) {
         em.persist(dutchPayIntersection);
         return dutchPayIntersection.getId();
     }
 
-    public List<GroupBuyingIntersection> findByUserId(Member participant){
+    public List<GroupBuyingIntersection> findByUserId(Member participant) {
         return em.createQuery("select gbi from GroupBuyingIntersection gbi join fetch gbi.groupBuying " +
                         "where gbi.participant =: participant", GroupBuyingIntersection.class)
                 .setParameter("participant", participant)
