@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SharingListResponseDto {
-
     Long id;
     String image;
     String nickname;
@@ -25,7 +24,7 @@ public class SharingListResponseDto {
     public SharingListResponseDto(Sharing sharing) {
         this.id = sharing.getId();
         this.image = sharing.getImage();
-        this.nickname = "sharing.getUser().getNickname()";
+        this.nickname = sharing.getUser().getNickname();
         this.title = sharing.getTitle();
         this.dong = sharing.getDong();
         this.deadLine = sharing.getDeadLine();

@@ -2,30 +2,30 @@ package bera31.Project.domain.page.intersection;
 
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
-import lombok.Data;
+import bera31.Project.domain.page.sharing.Sharing;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
 @Getter
-public class GroupBuyingIntersection {
+@NoArgsConstructor
+public class LikedSharing {
     @Id
     @GeneratedValue
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "PARTICIPANT_ID")
-    private Member participant;
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")
-    private GroupBuying groupBuying;
+    private Sharing sharing;
 
-    public GroupBuyingIntersection(Member participant, GroupBuying groupBuying) {
-        this.participant = participant;
-        this.groupBuying = groupBuying;
+    public LikedSharing(Member member, Sharing sharing) {
+        this.member = member;
+        this.sharing = sharing;
     }
 }

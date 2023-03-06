@@ -27,7 +27,6 @@ public class MessageService {
     public List<MessageResponseDto> showMyMessages() {
         Member findedMember = loadCurrentMember();
         String otherName = "";
-
         String nickname = findedMember.getNickname();
 
         List<Message> messageList = messageRepository.findMessageList(nickname);

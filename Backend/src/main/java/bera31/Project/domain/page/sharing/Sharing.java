@@ -20,14 +20,14 @@ public class Sharing extends Contents {
     String product;
     LocalDateTime expiry;
     LocalDateTime deadLine;
-
     boolean isFinish;
     String image;
     String content;
     String gu;
     String dong;
 
-    public Sharing(SharingRequestDto sharingRequestDto) {
+    public Sharing(SharingRequestDto sharingRequestDto, Member member) {
+        this.user = member;
         this.title = sharingRequestDto.getTitle();
         this.category = sharingRequestDto.getCategory();
         this.product = sharingRequestDto.getProduct();
@@ -37,6 +37,7 @@ public class Sharing extends Contents {
         this.gu = sharingRequestDto.getGu();
         this.dong = sharingRequestDto.getDong();
         this.content = sharingRequestDto.getContent();
+        this.isFinish = false;
     }
 
     public void updateSharing(SharingRequestDto sharingRequestDto) {
@@ -52,5 +53,9 @@ public class Sharing extends Contents {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void expirePost() {
+        this.isFinish = true;
     }
 }
