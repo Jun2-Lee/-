@@ -1,5 +1,10 @@
 # <p align="center"> Project Naong! </p>
-[대문 사진 자리]  
+
+<div align="center>
+            
+[대문 사진 자리]
+
+</div>
 
 <div align ="center">
   <a href = "https://github.com/Jun2-Lee/Toy_project">
