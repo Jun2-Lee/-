@@ -31,7 +31,7 @@
 ## WIKI Link
 <div align="center">
 
-|[Wiki Main](https://github.com/Jun2-Lee/Toy_project/wiki)|[:framed_picture:Wireframe](https://www.figma.com/file/My0DWWYkyrb8Wlx4JANGQC/%ED%86%A0%EC%9D%B4%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83?node-id=151%3A5&t=RfP7pyKj0xQll2YN-0)|[:wrench_and_hammer:Tech Stack](https://github.com/Jun2-Lee/Toy_project/wiki/%F0%9F%9B%A0%EF%B8%8F-Tech-Stack)|[:books:Requirements](https://github.com/Jun2-Lee/Toy_project/wiki/Requirement)|[:chart:Diagram](https://github.com/Jun2-Lee/Toy_project/wiki/%F0%9F%93%88-Diagram)|
+|[Wiki Main](https://github.com/Jun2-Lee/Toy_project/wiki)|[:framed_picture:Wireframe](https://www.figma.com/file/My0DWWYkyrb8Wlx4JANGQC/%ED%86%A0%EC%9D%B4%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83?node-id=151%3A5&t=RfP7pyKj0xQll2YN-0)|[:hammer_and_wrench:Tech Stack](https://github.com/Jun2-Lee/Toy_project/wiki/%F0%9F%9B%A0%EF%B8%8F-Tech-Stack)|[:books:Requirements](https://github.com/Jun2-Lee/Toy_project/wiki/Requirement)|[:chart_with_upward_trends:Diagram](https://github.com/Jun2-Lee/Toy_project/wiki/%F0%9F%93%88-Diagram)|
 |:-:|:-:|:-:|:-:|:-:|
 
 </div>
