@@ -39,13 +39,14 @@ public class GroupBuyingService {
     private final IntersectionRepository intersectionRepository;
     private final LikeRepository likeRepository;
 
-    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
+/*    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
         return groupBuyingRepository.findByKeyword(keyword)
                 .stream()
                 .map(GroupBuyingListResponseDto::new)
                 .collect(Collectors.toList());
-    }
+    }*/
 
+    @Transactional(readOnly = true)
     public List<GroupBuyingListResponseDto> findAllGroupBuying() {
         List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
         checkExpiredPost(findedGroupBuyings);
@@ -55,39 +56,7 @@ public class GroupBuyingService {
                 .collect(Collectors.toList());
     }
 
-    public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
-        Member findedMember = loadCurrentMember();
-        //Member findedMember = memberRepository.findById(1);
-
-        GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, findedMember);
-        newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
-
-        findedMember.postGroupBuying(newGroupBuying);
-        return groupBuyingRepository.save(newGroupBuying);
-    }
-
-    public Long participantGroupBuying(Long postId){
-        Member findedMember = loadCurrentMember();
-        //Member findedMember = memberRepository.findById(1);
-        GroupBuying findedPost = groupBuyingRepository.findById(postId);
-
-        if(findedPost.getLimitMember() <= findedPost.getMemberList().size())
-            throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
-
-        GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(findedMember, findedPost);
-        findedMember.participantGroupBuying(newGroupBuyingIntersection);
-        findedPost.addMember(newGroupBuyingIntersection);
-
-        return intersectionRepository.save(newGroupBuyingIntersection);
-    }
-
-    public Long updateGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage, Long postId) throws IOException {
-        GroupBuying findedPost = groupBuyingRepository.findById(postId);
-        s3Uploader.deleteRemoteFile(findedPost.getImage().substring(52));
-
-        return findedPost.update(groupBuyingRequestDto, s3Uploader.upload(postImage, "groupBuying"));
-    }
-
+    @Transactional(readOnly = true)
     public GroupBuyingResponseDto findGroupBuying(Long postId) {
         List<CommentResponseDto> commentResponseDtoList = groupBuyingRepository.findById(postId)
                 .getComments()
@@ -98,8 +67,41 @@ public class GroupBuyingService {
         return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId), commentResponseDtoList);
     }
 
+    public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
+        //Member findedMember = loadCurrentMember();
+        Member currentMember = memberRepository.findById(1);
+
+        GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, currentMember);
+        newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
+
+        currentMember.postGroupBuying(newGroupBuying);
+        return groupBuyingRepository.save(newGroupBuying);
+    }
+
+    public Long updateGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage, Long postId) throws IOException {
+        GroupBuying findedPost = groupBuyingRepository.findById(postId);
+        s3Uploader.deleteRemoteFile(findedPost.getImage().substring(52));
+
+        return findedPost.update(groupBuyingRequestDto, s3Uploader.upload(postImage, "groupBuying"));
+    }
+
     public void deleteGroupBuying(Long postId) {
         groupBuyingRepository.delete(groupBuyingRepository.findById(postId));
+    }
+
+    public Long participantGroupBuying(Long postId){
+        //Member currentMember = loadCurrentMember();
+        Member currentMember = memberRepository.findById(1);
+        GroupBuying currentPost = groupBuyingRepository.findById(postId);
+
+        if(currentPost.getLimitMember() <= currentPost.getMemberList().size())
+            throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
+
+        GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(currentMember, currentPost);
+        currentMember.participantGroupBuying(newGroupBuyingIntersection);
+        currentPost.addMember(newGroupBuyingIntersection);
+
+        return intersectionRepository.save(newGroupBuyingIntersection);
     }
 
     public Long pushLikeGroupBuying(Long postId){

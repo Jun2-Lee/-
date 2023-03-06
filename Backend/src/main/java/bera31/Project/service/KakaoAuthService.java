@@ -56,10 +56,8 @@ public class KakaoAuthService {
         KakaoProfileDto kakaoProfile = getKakaoProfile(accessToken);
         Optional<Member> findedKakaoMember = memberRepository.findByEmail(kakaoProfile.getKakao_account().getEmail());
 
-        if(findedKakaoMember.isEmpty()) {
-            log.info("Naong 회원이 아닙니다. 자동 회원 가입을 진행합니다.");
+        if(findedKakaoMember.isEmpty())
             kakaoSignUp(kakaoProfile);
-        }
 
         return authenticateKakaoMember(kakaoProfile);
     }

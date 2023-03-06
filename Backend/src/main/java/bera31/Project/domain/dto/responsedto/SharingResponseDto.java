@@ -16,7 +16,7 @@ import java.util.List;
 public class SharingResponseDto {
 
     Long id;
-    Double manner;
+    Long userId;
     String nickname;
     String profileImage;
     String title;
@@ -29,13 +29,12 @@ public class SharingResponseDto {
     LocalDateTime expiry;
     LocalDateTime postTime;
     String image;
-    List<Comment> comment;
 
     public SharingResponseDto(Sharing sharing){
         this.id = sharing.getId();
-        this.manner = 3.0;
-        this.nickname = "심진섭";
-        this.profileImage = "sharing.getUser().getProfileImage()";
+        this.userId = sharing.getUser().getId();
+        this.nickname = sharing.getUser().getNickname();
+        this.profileImage = sharing.getUser().getProfileImage();
         this.title = sharing.getTitle();
         this.content = sharing.getContent();
         this.category = sharing.getCategory();
@@ -46,6 +45,5 @@ public class SharingResponseDto {
         this.postTime = sharing.getPostTime();
         this.expiry = sharing.getExpiry();
         this.image = sharing.getImage();
-        this.comment = sharing.getComments();
     }
 }

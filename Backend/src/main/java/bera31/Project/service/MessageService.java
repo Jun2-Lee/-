@@ -27,7 +27,6 @@ public class MessageService {
     public List<MessageResponseDto> showMyMessages(){
         Member findedMember = loadCurrentMember();
         String otherName = "";
-
         String nickname = findedMember.getNickname();
 
         List<Message> messageList = messageRepository.findMessageList(nickname);
@@ -64,6 +63,7 @@ public class MessageService {
 
         return messageRepository.save(newMessage);
     }
+
     public Long sendMessage(MessageRequestDto messageRequestDto, Long roomId){
         Message newMessage = new Message(messageRequestDto, roomId, loadCurrentMember(), findReceiver(messageRequestDto));
         return messageRepository.save(newMessage);
