@@ -1,8 +1,8 @@
 # Project Naong!
-[Github](https://github.com/Jun2-Lee/Toy_project) | [Naong!]()
 [대문 사진 자리]  
+[Github](https://github.com/Jun2-Lee/Toy_project) | [Naong!]()
 
-> :cat: Project 나옹!(나눠주세용)은 대한민국의 고생하는 :house: 자취생들과 함께하는 플랫폼입니다.  
+> :cat: Project 나옹!(나눠주세옹)은 대한민국의 고생하는 :house: 자취생들과 함께하는 플랫폼입니다.  
 
 > 💸 부담스러운 음식 배달비를 함께 나누어 낼 수 있습니다.  
 
@@ -23,6 +23,5 @@
    - 진행률은 선택사항입니다.
 - ```Fix : XXX (00%)``` : 기능이나 타 요소에 대한 수정이 진행되었을 때 사용합니다.
    - 진행률은 선택사항입니다.
-
-## ERD
-## Tech stack
+   
+## WIKI Link
