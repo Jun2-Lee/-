@@ -6,7 +6,7 @@
    <img src="https://img.shields.io/badge/GitRepo-181717?style=flat&logo=GitHub&logoColor=white&link=https://jinseop-sim.github.io/">
    </a>
   <a href = "http://3.36.144.128:8080/naong-api">
-   <img src="https://img.shields.io/badge/Naong!-E4405F?style=flat&logo=Instagram&logoColor=white&link=https://www.instagram.com/_35yed">
+   <img src="https://img.shields.io/badge/Naong!-FF9E0F?style=flat&logo=Apache Tomcat&logoColor=white&link=https://www.instagram.com/_35yed">
    </a>
 </div>  
 </br>
