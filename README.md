@@ -1,4 +1,4 @@
-# Project Naong!
+#<p align="center"> Project Naong! </p>
 [대문 사진 자리]  
 
 <div align ="center">
