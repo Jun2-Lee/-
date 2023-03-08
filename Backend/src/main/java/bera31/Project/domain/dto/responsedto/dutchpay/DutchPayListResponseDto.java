@@ -16,7 +16,7 @@ public class DutchPayListResponseDto {
     Long id;
     String store;
     String category;
-    String dong;
+    String address;
     int deliveryCost;
     int currentMember;
     int limitMember;
@@ -26,7 +26,7 @@ public class DutchPayListResponseDto {
         this.id = dutchPay.getId();
         this.store = dutchPay.getStore();
         this.category = dutchPay.getCategory();
-        this.dong = dutchPay.getDong();
+        this.address = dutchPay.getAddress();
         this.deliveryCost = dutchPay.getDeliveryCost();
         this.limitMember = dutchPay.getLimitMember();
         this.currentMember = dutchPay.getMemberList().size();

@@ -2,11 +2,9 @@ package bera31.Project.service.page;
 
 import bera31.Project.config.S3.S3Uploader;
 import bera31.Project.domain.dto.requestdto.SharingRequestDto;
-import bera31.Project.domain.dto.responsedto.SharingListResponseDto;
-import bera31.Project.domain.dto.responsedto.SharingResponseDto;
+import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
+import bera31.Project.domain.dto.responsedto.sharing.SharingResponseDto;
 import bera31.Project.domain.member.Member;
-import bera31.Project.domain.page.groupbuying.GroupBuying;
-import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import bera31.Project.domain.page.intersection.LikedSharing;
 import bera31.Project.domain.page.sharing.Sharing;
 import bera31.Project.repository.LikeRepository;
@@ -76,6 +74,11 @@ public class SharingService {
         LikedSharing newLikeSharing = new LikedSharing(currentMember, currentSharing);
         currentMember.pushLikeSharing(newLikeSharing);
         likeRepository.save(newLikeSharing);
+    }
+
+    public String closeSharing(Long postId){
+        sharingRepository.findById(postId).expirePost();
+        return "거래가 마감되었습니다.";
     }
 
     private Member loadCurrentMember() {

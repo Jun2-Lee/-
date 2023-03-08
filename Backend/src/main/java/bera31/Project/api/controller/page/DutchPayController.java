@@ -24,7 +24,8 @@ public class DutchPayController {
         return dutchPayService.findAllDutchPay();
     }
 
-    @Operation(summary = "N빵 글 작성", description = "N빵 글 작성 시 요청하는 Api 입니다.")
+    @Operation(summary = "N빵 글 작성", description = "N빵 글 작성 시 요청하는 Api 입니다.\n" +
+            "주소와 상세주소를 각각 Address, DetailAddress로 따로 받습니다.")
     @PostMapping
     public Long postDutchPay(@RequestBody DutchPayRequestDto dutchPayRequestDto) {
         return dutchPayService.postDutchPay(dutchPayRequestDto);

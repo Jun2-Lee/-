@@ -12,13 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DutchPayRequestDto {
-    String title;
-    String category;
     String store;
+    String category;
+    String address;
+    String detailAddress;
     int deliveryCost;
     int limitMember;
     LocalDateTime deadLine;
     String content;
-    double x;
-    double y;
 }

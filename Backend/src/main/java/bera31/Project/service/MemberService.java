@@ -10,6 +10,7 @@ import bera31.Project.exception.exceptions.KakaoUserAccessException;
 import bera31.Project.exception.exceptions.UserNotFoundException;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
+import bera31.Project.utility.RedisUtility;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +29,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final S3Uploader s3Uploader;
     private final PasswordEncoder passwordEncoder;
+    private final RedisUtility redisUtility;
 
     public String changePassword(String password) {
         Member findedMember = loadCurrentMember();
@@ -51,9 +53,13 @@ public class MemberService {
         return "정보가 수정되었습니다!";
     }
 
-    public void deleteMember() {
+    public String deleteMember() {
         Member currentMember = loadCurrentMember();
+        redisUtility.deleteValues(currentMember.getEmail());
         memberRepository.delete(currentMember);
+
+        // 연관된 객체들은 어떻게 처리할 것인가?
+        return "성공적으로 탈퇴 되었습니다.";
     }
 
     public String findPassword(@RequestBody String email) throws Exception {

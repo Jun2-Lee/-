@@ -1,4 +1,4 @@
-package bera31.Project.domain.dto.responsedto;
+package bera31.Project.domain.dto.responsedto.sharing;
 
 import bera31.Project.domain.Address;
 import bera31.Project.domain.member.Member;

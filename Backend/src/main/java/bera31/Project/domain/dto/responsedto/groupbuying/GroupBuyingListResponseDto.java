@@ -20,6 +20,7 @@ public class GroupBuyingListResponseDto {
     String image;
     String nickname;
     String title;
+    String category;
     LocalDateTime postTime;
     Address address;
     LocalDateTime deadLine;
@@ -27,13 +28,13 @@ public class GroupBuyingListResponseDto {
     int currParticipant;
     boolean isFinish;
 
-
     public GroupBuyingListResponseDto(GroupBuying groupBuying) {
         Member author = groupBuying.getUser();
         this.id = groupBuying.getId();
         this.image = groupBuying.getImage();
         this.nickname = author.getNickname();
         this.title = groupBuying.getTitle();
+        this.category = groupBuying.getCategory();
         this.postTime = groupBuying.getPostTime();
         this.deadLine = groupBuying.getDeadLine();
         this.limit = groupBuying.getLimitMember();

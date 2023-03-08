@@ -69,6 +69,13 @@ public class GroupBuyingController {
         return new ResponseEntity<>(groupBuyingService.participantGroupBuying(postId), HttpStatus.OK);
     }
 
+    @Operation(summary = "거래 완료(조기 마감) API",
+            description = "글 작성자가 버튼을 눌러 거래를 조기 마감시키는 API입니다.")
+    @PostMapping("/{postId}/finish")
+    public ResponseEntity<String> closeGroupBuying(@PathVariable Long postId){
+        return new ResponseEntity<>(groupBuyingService.closeGroupBuying(postId), HttpStatus.OK);
+    }
+
     @Operation(summary = "공동구매 찜 api",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @PostMapping("/{postId}/like")
