@@ -17,6 +17,7 @@ import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
 import bera31.Project.repository.page.IntersectionRepository;
+import bera31.Project.service.CommentService;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,7 @@ public class GroupBuyingService {
     private final MemberRepository memberRepository;
     private final IntersectionRepository intersectionRepository;
     private final LikeRepository likeRepository;
+    private final CommentService commentService;
 
 /*    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
         return groupBuyingRepository.findByKeyword(keyword)
@@ -59,19 +61,8 @@ public class GroupBuyingService {
 
     @Transactional(readOnly = true)
     public GroupBuyingResponseDto findGroupBuying(Long postId) {
-        List<Comment> commentList = groupBuyingRepository.findById(postId).getComments();
-        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
-        for (Comment comment : commentList) {
-            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
-            if (comment.getChildren().size() != 0) {
-                for (Comment child : comment.getChildren()) {
-                    commentResponseDto.addChild(new CommentResponseDto(child));
-                }
-                commentResponseDtoList.add(commentResponseDto);
-            }
-
-        }
-
+        List<CommentResponseDto> commentResponseDtoList =
+                makeCommentList(groupBuyingRepository.findById(postId).getComments());
         return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId), commentResponseDtoList);
     }
 
@@ -122,7 +113,7 @@ public class GroupBuyingService {
         return likeRepository.save(newLikedGroupBuying);
     }
 
-    public String closeGroupBuying(Long postId){
+    public String closeGroupBuying(Long postId) {
         groupBuyingRepository.findById(postId).expirePost();
         return "거래가 마감되었습니다.";
     }
@@ -134,5 +125,22 @@ public class GroupBuyingService {
 
     private void checkExpiredPost(List<GroupBuying> findedGroupBuyings) {
         findedGroupBuyings.stream().filter(g -> g.getDeadLine().isBefore(LocalDateTime.now())).forEach(GroupBuying::expirePost);
+    }
+
+    public List<CommentResponseDto> makeCommentList(List<Comment> commentList) {
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        for (Comment comment : commentList) {
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+            if (comment.getChildren().size() != 0) {
+                for (Comment child : comment.getChildren()) {
+                    commentResponseDto.addChild(new CommentResponseDto(child));
+                }
+                commentResponseDtoList.add(commentResponseDto);
+            }
+            else if(comment.getParent() == null){
+                commentResponseDtoList.add(commentResponseDto);
+            }
+        }
+        return commentResponseDtoList;
     }
 }
