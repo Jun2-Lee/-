@@ -2,6 +2,7 @@ package bera31.Project.domain.dto.responsedto.sharing;
 
 import bera31.Project.domain.Address;
 import bera31.Project.domain.comment.Comment;
+import bera31.Project.domain.dto.responsedto.CommentResponseDto;
 import bera31.Project.domain.page.sharing.Sharing;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,8 +30,9 @@ public class SharingResponseDto {
     LocalDateTime expiry;
     LocalDateTime postTime;
     String image;
+    List<CommentResponseDto> commentResponseDtoList;
 
-    public SharingResponseDto(Sharing sharing) {
+    public SharingResponseDto(Sharing sharing, List<CommentResponseDto> commentResponseDtoList) {
         this.id = sharing.getId();
         this.userId = sharing.getUser().getId();
         this.nickname = sharing.getUser().getNickname();
@@ -45,5 +47,6 @@ public class SharingResponseDto {
         this.postTime = sharing.getPostTime();
         this.expiry = sharing.getExpiry();
         this.image = sharing.getImage();
+        this.commentResponseDtoList = commentResponseDtoList;
     }
 }

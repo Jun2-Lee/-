@@ -1,7 +1,10 @@
 package bera31.Project.service.page;
 
 import bera31.Project.config.S3.S3Uploader;
+import bera31.Project.domain.comment.Comment;
 import bera31.Project.domain.dto.requestdto.SharingRequestDto;
+import bera31.Project.domain.dto.responsedto.CommentResponseDto;
+import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingResponseDto;
 import bera31.Project.domain.member.Member;
@@ -10,6 +13,7 @@ import bera31.Project.domain.page.sharing.Sharing;
 import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.SharingRepository;
+import bera31.Project.service.CommentService;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +32,7 @@ import java.util.stream.Collectors;
 public class SharingService {
     private final MemberRepository memberRepository;
     private final SharingRepository sharingRepository;
-
+    private final CommentService commentService;
     private final LikeRepository likeRepository;
     private final S3Uploader s3Uploader;
 
@@ -43,7 +48,9 @@ public class SharingService {
 
     @Transactional(readOnly = true)
     public SharingResponseDto findSharing(Long postId) {
-        return new SharingResponseDto(sharingRepository.findById(postId));
+        List<CommentResponseDto> commentResponseDtoList =
+                makeCommentList(sharingRepository.findById(postId).getComments());
+        return new SharingResponseDto(sharingRepository.findById(postId), commentResponseDtoList);
     }
 
     public void postSharing(SharingRequestDto sharingRequestDto, MultipartFile postImage) throws IOException {
@@ -90,5 +97,22 @@ public class SharingService {
         findedSharings.stream()
                 .filter(g -> g.getDeadLine().isBefore(LocalDateTime.now()))
                 .forEach(Sharing::expirePost);
+    }
+
+    public List<CommentResponseDto> makeCommentList(List<Comment> commentList) {
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        for (Comment comment : commentList) {
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+            if (comment.getChildren().size() != 0) {
+                for (Comment child : comment.getChildren()) {
+                    commentResponseDto.addChild(new CommentResponseDto(child));
+                }
+                commentResponseDtoList.add(commentResponseDto);
+            }
+            else if(comment.getParent() == null){
+                commentResponseDtoList.add(commentResponseDto);
+            }
+        }
+        return commentResponseDtoList;
     }
 }
