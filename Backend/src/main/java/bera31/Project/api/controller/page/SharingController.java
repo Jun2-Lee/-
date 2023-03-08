@@ -79,19 +79,26 @@ public class SharingController {
         return new ResponseEntity<>(sharingService.closeSharing(postId), HttpStatus.OK);
     }
 
+    @Operation(summary = "재료 나눔 댓글 작성 API",
+            description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시고, 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
     @PostMapping("/{postId}/comment")
-    public void postComment(CommentRequestDto commentRequestDto, @PathVariable Long postId) {
+    public void postComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId) {
         commentService.saveSharingComment(commentRequestDto, postId);
     }
 
+    @Operation(summary = "재료 나눔 답글 작성 API",
+            description = "글의 고유 id 뒤에 댓글 id를 붙여서 Request Parameter 형식으로 URL에 보내주시고,\n" +
+                    " 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
     @PostMapping("/{postId}/{commentId}/childComment")
-    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId, CommentRequestDto commentRequestDto) {
+    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId,@RequestBody CommentRequestDto commentRequestDto) {
         commentService.saveChildComment(commentRequestDto, commentId);
     }
-
-    @DeleteMapping("/{postId}/comment")
-    public void deleteComment(@PathVariable Long postId) {
-        commentService.deleteComment(postId);
+    @Operation(summary = "재료 나눔 댓글 삭제 API",
+            description = "글의 고유 id 뒤에 댓글 id를 붙여서 Request Parameter 형식으로 URL에 보내주시면 됩니다.\n" +
+                    "(답글도 동일합니다)")
+    @DeleteMapping("/{postId}/{commentId}")
+    public void deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
+        commentService.deleteComment(commentId);
     }
 
 }

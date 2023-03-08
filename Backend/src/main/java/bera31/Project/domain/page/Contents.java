@@ -30,7 +30,7 @@ public abstract class Contents {
     @JoinColumn(name = "MEMBER_ID")
     protected Member user;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     List<Comment> comments = new ArrayList<>();
 
     protected LocalDateTime postTime;

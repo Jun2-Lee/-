@@ -72,7 +72,7 @@ public class GroupBuyingController {
     @Operation(summary = "거래 완료(조기 마감) API",
             description = "글 작성자가 버튼을 눌러 거래를 조기 마감시키는 API입니다.")
     @PostMapping("/{postId}/finish")
-    public ResponseEntity<String> closeGroupBuying(@PathVariable Long postId){
+    public ResponseEntity<String> closeGroupBuying(@PathVariable Long postId) {
         return new ResponseEntity<>(groupBuyingService.closeGroupBuying(postId), HttpStatus.OK);
     }
 
@@ -96,19 +96,28 @@ public class GroupBuyingController {
         groupBuyingService.deleteGroupBuying(postId);
     }
 
+    @Operation(summary = "공동 구매 댓글 작성 API",
+            description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시고,\n" +
+                    " 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
     @PostMapping("/{postId}/comment")
     public void postComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId) {
         commentService.saveGroupBuyingComment(commentRequestDto, postId);
     }
 
+    @Operation(summary = "공동 구매 답글 작성 API",
+            description = "글의 고유 id 뒤에 댓글 id를 붙여서 Request Parameter 형식으로 URL에 보내주시고,\n" +
+                    " 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
     @PostMapping("/{postId}/{commentId}/childComment")
     public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto) {
         commentService.saveChildComment(commentRequestDto, commentId);
     }
 
-    @DeleteMapping("/{postId}/comment")
-    public void deleteComment(@PathVariable Long postId) {
-        commentService.deleteComment(postId);
+    @Operation(summary = "재료 나눔 답글 작성 API",
+            description = "글의 고유 id 뒤에 댓글 id를 붙여서 Request Parameter 형식으로 URL에 보내주시고,\n" +
+                    " 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
+    @DeleteMapping("/{postId}/{commentId}")
+    public void deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
+        commentService.deleteComment(commentId);
     }
 
 }
