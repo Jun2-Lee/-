@@ -35,8 +35,9 @@ public class MessageService {
         for (Message msg : messageList) {
             if (findedMember.getNickname().equals(msg.getSender().getNickname())) {
                 otherName = msg.getReceiver().getNickname();
-            } else
+            } else {
                 otherName = msg.getSender().getNickname();
+            }
 
             responseDtoList.add(
                     new MessageResponseDto(msg.getRoomNumber(), otherName, msg.getContent(), msg.getSendTime()));

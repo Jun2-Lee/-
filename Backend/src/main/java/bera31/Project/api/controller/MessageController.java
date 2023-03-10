@@ -34,8 +34,8 @@ public class MessageController {
     }
 
     @Operation(summary = "최초로 쪽지를 작성하는 API입니다.",
-            description = "처음엔 방이 생성이 되어있지 않으니, 방을 생성하며 쪽지를 보내는 API입니다." +
-                    "쪽지의 내용과 받을 상대의 고유 id 값을 보내주시면 됩니다." +
+            description = "처음엔 방이 생성이 되어있지 않으니, 방을 생성하며 쪽지를 보내는 API입니다.\n\n" +
+                    "쪽지의 내용과 받을 상대의 고유 id 값을 보내주시면 됩니다.\n\n" +
                     "해당 부분은 안되면 말씀해주시기 바랍니다.")
     @PostMapping
     public Long sendMessage(@RequestBody MessageRequestDto messageRequestDto) {
@@ -43,8 +43,8 @@ public class MessageController {
     }
 
     @Operation(summary = "방이 이미 생성되었을 때, 각 방에 쪽지를 보내는 API입니다.",
-            description = "해당 방의 번호를 URL에 Request Parameter 형식으로 보내주시면 됩니다." +
-                    "위의 Controller와 마찬가지로 상대의 고유 id 값과 메시지 내용을 보내주시면 됩니다." +
+            description = "해당 방의 번호를 URL에 Request Parameter 형식으로 보내주시면 됩니다.\n\n" +
+                    "위의 Controller와 마찬가지로 상대의 고유 id 값과 메시지 내용을 보내주시면 됩니다.\n\n" +
                     "이 부분도 제한 시 말씀해주시기 바랍니다.")
     @PostMapping("/{roomNumber}")
     public Long sendMessageToRoom(@PathVariable Long roomNumber,
