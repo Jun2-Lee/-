@@ -20,7 +20,7 @@ public class KakaoController {
     private final KakaoAuthService kakaoAuthService;
 
     @Operation(summary = "카카오 인가코드 전달 API",
-            description = "해당 경로로 카카오 인가코드를 넘겨주시면 됩니다.\n" +
+            description = "해당 경로로 카카오 인가코드를 넘겨주시면 됩니다.\n\n" +
                     "방식은 url/auth/kakao?code=XXX 와 같은 Request Parameter 형식입니다.")
     @GetMapping("/auth/kakao")
     public ResponseEntity<AuthTokenDto> kakaoLogin(@RequestParam String code) {
@@ -29,7 +29,7 @@ public class KakaoController {
     }
 
     @Operation(summary = "카카오 로그인 시, Naong에 가입되지 않은 경우 추가 정보 입력 요청 경로입니다.",
-            description = "카카오 로그인 시, Naong에 가입되지 않아 새로 가입하는 경우 추가 정보를 입력 받는 페이지에서\n" +
+            description = "카카오 로그인 시, Naong에 가입되지 않아 새로 가입하는 경우 추가 정보를 입력 받는 페이지에서\n\n" +
                     "저장버튼을 누르게 될 시 이 쪽 경로로 요청을 보내시면 됩니다.")
     @PostMapping("/auth/kakao")
     public ResponseEntity<String> kakaoAdditionalSignup(@RequestBody KakaoSignupDto kakaoSignupDto) {

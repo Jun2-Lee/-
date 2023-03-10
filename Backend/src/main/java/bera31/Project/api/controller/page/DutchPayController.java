@@ -39,8 +39,8 @@ public class DutchPayController {
     }
 
     @Operation(summary = "N빵 글 상세 조회",
-            description = "N빵 글 상세 페이지 조회시 요청하는 Api 입니다.\n" +
-                    "글에는 작성자의 고유 id가 같이 넘어갑니다.\n" +
+            description = "N빵 글 상세 페이지 조회시 요청하는 Api 입니다.\n\n" +
+                    "글에는 작성자의 고유 id가 같이 넘어갑니다.\n\n" +
                     "쪽지 보내기 기능이 사용될 경우, 해당 작성자의 id로 보내면 됩니다.")
     @GetMapping("/{dutchPayId}")
     public DutchPayResponseDto findDutchPay(@PathVariable Long dutchPayId) {

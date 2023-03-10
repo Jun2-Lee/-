@@ -19,7 +19,7 @@ public class MessageController {
     private final MessageService messageService;
 
     @Operation(summary = "메시지 전체 목록을 띄워주는 API입니다.",
-            description = "로그인 한 사용자와 대화한 적이 있는 모든 메시지를 응답에 반환합니다." +
+            description = "로그인 한 사용자와 대화한 적이 있는 모든 메시지를 응답에 반환합니다.\n\n" +
                     "가장 최근 메시지가 아래로 내려가는 문제를 해결해야 합니다.")
     @GetMapping
     public ResponseEntity<List<MessageResponseDto>> showMessages() {
@@ -49,6 +49,6 @@ public class MessageController {
     @PostMapping("/{roomNumber}")
     public Long sendMessageToRoom(@PathVariable Long roomNumber,
                                   @RequestBody MessageRequestDto messageRequestDto) {
-        return messageService.sendMessage(messageRequestDto, roomNumber);
+        return messageService.sendMessageToEachRoom(messageRequestDto, roomNumber);
     }
 }
