@@ -89,7 +89,7 @@ export default function Login() {
         </div>
 
         <div className="GetPW">
-          <label>비밀번호</label>
+          <label id="getPW">비밀번호</label>
           <br></br>
           <input name='password' onChange={onChange} value={password} className="getPW"/>
         </div>
@@ -99,13 +99,7 @@ export default function Login() {
         </div>
 
         <div className="UserHelp">
-          <a href="#" id="findPW">비밀번호 찾기</a>
-          <a href="#" id="userHelp"> | </a>
           <a href="/signup" id="userSignUp">회원가입</a>
-        </div>
-
-        <div className="naverLogin">
-          <button className="NAVER">네이버로 로그인</button>
         </div>
 
         <div className="kakaoLogin">
@@ -114,9 +108,6 @@ export default function Login() {
           </Link>
         </div>
 
-        <div className="googleLogin">
-          <button className="GOOGLE">구글로 로그인</button>
-        </div>
       </div>
     </div>
   );

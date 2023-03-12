@@ -13,7 +13,12 @@
 }
 
 #getID {
-  margin-top: 50px;
+  margin-top: 86px;
+  font-weight: 700;
+}
+
+#getPW {
+  font-weight: 700;
 }
 
 .userLogin {
@@ -24,6 +29,7 @@
   border-radius: 5px;
   border: none;
   color: white;
+  font-weight: 800;
 }
 
 .UserHelp {
@@ -38,43 +44,18 @@
   font-size: 12px;
 }
 
-.naverLogin {
+.kakaoLogin {
   margin-top: 67px;
   display: flex;
   justify-content: center;
 }
 
-.kakaoLogin {
-  margin-top: 8px;
-  display: flex;
-  justify-content: center;
-}
-
-.googleLogin {
-  margin-top: 8px;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 128px;
-}
-
-.NAVER, .KAKAO, .GOOGLE {
+.KAKAO {
   width: 272px;
   height: 35px;
   border-radius: 5px;
   border: none;
-  color: white;
   font-weight: 800;
   font-size: 14px;
-}
-
-.NAVER {
-  background: #2DB400;
-}
-
-.KAKAO {
   background: #F9E000;
-}
-
-.GOOGLE {
-  background: #8A8D92;
 }
