@@ -11,10 +11,8 @@ const Auth = () => {
   // calllback으로 받은 인가코드
   const code = new URL(window.location.href).searchParams.get("code");
   console.log(code)
-      
-  const history = useNavigate();
-
-  /*
+  
+  const navigate = useNavigate();
   const getToken = async () => {
     const payload = qs.stringify({
       grant_type: "authorization_code",
@@ -38,7 +36,7 @@ const Auth = () => {
       
       // access token 설정
       window.Kakao.Auth.setAccessToken(res.data.access_token);
-      history("/profile");
+      navigate("/profile");
     } catch (err) {
       console.log(err);
     }
@@ -48,7 +46,7 @@ const Auth = () => {
     getToken();
   }, []);
 
-  return null; */
+  return null; 
 };
 
 export default Auth;
