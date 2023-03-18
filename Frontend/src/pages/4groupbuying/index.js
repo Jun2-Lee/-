@@ -1,7 +1,7 @@
 import React from "react";
 import Search from "../../components/search";
 import CategoryBar from "../../components/categoryBar";
-import GroupbuyingList from "../../components/groupbuyingList";
+
 import "./index.css";
 
 function Groupbuying() {
@@ -14,7 +14,7 @@ function Groupbuying() {
         <CategoryBar />
       </section>
       <section className="groupbuyingList">
-        <GroupbuyingList />
+        
       </section>
     </div>
   );

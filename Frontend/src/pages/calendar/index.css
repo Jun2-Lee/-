@@ -1,0 +1,90 @@
+
+.calendar {
+    font-family: Arial, sans-serif;
+    position: relative;
+    width: 1200px;
+    height: 1200px;
+  }
+
+.calendarHead {
+    margin-left: 300px;
+    height: 100px;
+}
+
+
+.selected {
+    background-color: #F0E68C;
+}
+
+.nonSelected {
+  background-color: white;
+}
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--sub_orange);
+    width: 1547px;
+    height: 120px;
+  }
+
+  .text{
+    font-size: 26px;
+    font-weight: 700;
+    margin-left: 0px;
+  }
+
+  
+  .days {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: right;
+  }
+  
+  .days .col {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 500px;
+  }
+  
+  .body .row {
+    display: flex;
+    flex: 1;
+    margin-bottom: 10px;
+  }
+
+  .body .col {
+    margin-left: 10px;
+  }
+  
+  .body .row .col {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid  rgba(255, 131, 39, 0.75);
+  }
+  
+
+  .body .row .col.disabled {
+    color: #ccc;
+  }
+  
+  .body .row .col.not-valid {
+    color: #bbb;
+  }
+
+  .cell {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+

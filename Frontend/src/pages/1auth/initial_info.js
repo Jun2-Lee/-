@@ -5,7 +5,11 @@ import ImgUpload from "../../components/imgUpload";
 import AddressSelect from "../../components/addressSelect";
 
 function InitialInfo() {
-  /*const getInfo = document.getElementById("getInfo");
+
+
+/*
+ const getInfo = document.getElementById("getInfo");
+
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
