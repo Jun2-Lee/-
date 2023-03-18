@@ -20,7 +20,8 @@
   column-gap: 0.415rem;
   padding: 0.938rem;
   font-size: 0.688rem;
-  box-shadow: 0 0.125rem 0.188rem 0 rgba(0, 0, 0, 0.25)
+  box-shadow: 0 0.125rem 0.188rem 0 rgba(0, 0, 0, 0.25);
+  border-radius: 0.625rem;
 }
 
 .sharing_list .item_image, .sharing_list .item_title, .sharing_list .item_area, .sharing_list .item_deadline {
@@ -32,8 +33,18 @@
   justify-content: center;
 }
 
+.sharing_list .item_image img {
+  width: 160px;
+  height: 160px;
+  border-radius: 5.53691px;
+}
+
 .sharing_list .item_image, .sharing_list .item_title {
   grid-column: 1 / 3;
+}
+
+.sharing_list .item_nickname, .item_date {
+  margin-top: 0.313rem;
 }
 
 .sharing_list .item_date {
