@@ -79,7 +79,7 @@ public class GroupBuyingController {
     @Operation(summary = "공동구매 찜 api",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @PostMapping("/{postId}/like")
-    public ResponseEntity<Long> pushLikeGroupBuying(@PathVariable Long postId) {
+    public ResponseEntity<String> pushLikeGroupBuying(@PathVariable Long postId) {
         return new ResponseEntity<>(groupBuyingService.pushLikeGroupBuying(postId), HttpStatus.OK);
     }
 

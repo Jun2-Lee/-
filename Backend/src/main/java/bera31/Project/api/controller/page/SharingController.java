@@ -68,8 +68,8 @@ public class SharingController {
     @Operation(summary = "나눔 글 내용 조회 API입니다.",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @PostMapping("/{postId}/like")
-    public void pushLikeSharing(@PathVariable Long postId) {
-        sharingService.pushLikeSharing(postId);
+    public ResponseEntity<String> pushLikeSharing(@PathVariable Long postId) {
+        return new ResponseEntity<>(sharingService.pushLikeSharing(postId), HttpStatus.OK);
     }
 
     @Operation(summary = "거래 완료(조기 마감) API",

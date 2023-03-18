@@ -19,7 +19,6 @@ public class LikedGroupBuying {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
-
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")
     private GroupBuying groupBuying;

@@ -18,7 +18,6 @@ public class DutchPayIntersection {
     @ManyToOne
     @JoinColumn(name = "PARTICIPANT_ID")
     private Member participant;
-
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")
     private DutchPay dutchPay;

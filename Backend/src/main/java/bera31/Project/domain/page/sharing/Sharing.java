@@ -4,12 +4,16 @@ import bera31.Project.domain.Address;
 import bera31.Project.domain.dto.requestdto.SharingRequestDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
+import bera31.Project.domain.page.intersection.LikedGroupBuying;
+import bera31.Project.domain.page.intersection.LikedSharing;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -25,6 +29,9 @@ public class Sharing extends Contents {
     String content;
     String gu;
     String dong;
+
+    @OneToMany(mappedBy = "sharing", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    List<LikedSharing> likedMemberList = new ArrayList<>();
 
     public Sharing(SharingRequestDto sharingRequestDto, Member member) {
         this.user = member;

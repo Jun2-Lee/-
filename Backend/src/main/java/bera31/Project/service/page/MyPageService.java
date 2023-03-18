@@ -48,20 +48,23 @@ public class MyPageService {
                 .collect(Collectors.toList());
 
         List<SimpleContentsResponseDto> simpleParticipantingGroupBuyingList
-                = findedMember.getParticipantingGroupBuying().stream()
+                = findedMember.getParticipantingGroupBuying()
+                .stream()
                 .limit(4)
                 .map(GroupBuyingIntersection::getGroupBuying)
                 .map(SimpleContentsResponseDto::new)
                 .collect(Collectors.toList());
 
         List<SimpleContentsResponseDto> simpleSharingList
-                = findedMember.getSharingList().stream()
+                = findedMember.getSharingList()
+                .stream()
                 .limit(4)
                 .map(SimpleContentsResponseDto::new)
                 .collect(Collectors.toList());
 
         List<SimpleContentsResponseDto> simpleLikedSharingList
-                = findedMember.getLikedSharings().stream()
+                = findedMember.getLikedSharings()
+                .stream()
                 .limit(4)
                 .map(LikedSharing::getSharing)
                 .map(SimpleContentsResponseDto::new)
@@ -83,7 +86,8 @@ public class MyPageService {
                 .collect(Collectors.toList());
 
         List<TodayScheduleResponseDto> todaySchedules
-                = findedMember.getMemoList().stream()
+                = findedMember.getMemoList()
+                .stream()
                 .limit(4)
                 .filter(s -> s.getTargetDate().equals(LocalDate.now()))
                 .map(TodayScheduleResponseDto::new)
