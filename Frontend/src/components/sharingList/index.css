@@ -22,6 +22,7 @@
   font-size: 0.688rem;
   box-shadow: 0 0.125rem 0.188rem 0 rgba(0, 0, 0, 0.25);
   border-radius: 0.625rem;
+  color: black;
 }
 
 .sharing_list .item_image, .sharing_list .item_title, .sharing_list .item_area, .sharing_list .item_deadline {
@@ -52,10 +53,10 @@
 }
 
 .sharing_pagination {
+  margin-top: 0.938rem;
   grid-column: 2 / 3;
   display: grid;
   text-align: center;
-  align-content: center;
 } 
 
 .writing {

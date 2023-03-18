@@ -23,28 +23,20 @@ function SharingList() {
   return (
     <div className='sharing_list'>
       {items.map((item, index) => (
-        <div key={index} className='item'>
-          <div className='item_image'>
-            <img src={item.image} alt='이미지 불러오기 실패' />
+        <Link to={`/sharing/${item.id}`} style={{ textDecoration: 'none' }}>
+          <div key={index} className='item'>
+            <div className='item_image'>
+              <img src={item.image} alt='이미지 불러오기 실패' />
+            </div>
+            <div className='item_nickname'>{item.nickname}</div>
+            <div className='item_date'>{item.postTime}</div>
+            <div className='item_title'>{item.title}</div>
+            <div className='item_area'>{item.dong}</div>
+            <div className='item_deadline'>0일 후 마감</div>
           </div>
-          <div className='item_nickname'>{item.nickname}</div>
-          <div className='item_date'>{item.postTime}</div>
-          <div className='item_title'>{item.title}</div>
-          <div className='item_area'>{item.dong}</div>
-          <div className='item_deadline'>0일 후 마감</div>
-        </div>
+        </Link>
       ))}
-
-      {/*<div className='item'>
-        <div className='item_image'>rr</div>
-        <div className='item_nickname'>{nickname}</div>
-        <div className='item_date'>{postTime}</div>
-        <div className='item_title'>{title}</div>
-        <div className='item_area'>{dong}</div>
-        <div className='item_deadline'>3일 후 마감</div>
-      </div>*/}
       
-      <div className='sharing_pagination'> <Pagination /> </div>
       <div className='writing'>
         <Link to="/postSharing" className='postsharing_link'>
           <img src='assets/img/writingIcon.png' className='writingIcon' />

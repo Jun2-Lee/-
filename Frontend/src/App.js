@@ -45,7 +45,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
 
         <Route path="/sharing" element={<SharingPage />} />
-        <Route path="/detailSharing" element={<DetailSharing />} />
+        <Route path="/sharing/:postId" element={<DetailSharing />} />
         <Route path="/postSharing" element={<PostSharing />} />
         
         <Route path="/dutchPay" element={<DutchPayPage />} />
