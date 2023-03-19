@@ -52,7 +52,7 @@ function App() {
         <Route path="/postDutchpay" element={<PostDutchpay />} />
 
         <Route path="/groupBuying" element={<GroupBuyingPage />} />
-        <Route path="/detailGroupBuying" element={<DetailGroupBuying />} />
+        <Route path="/groupBuying/:postId" element={<DetailGroupBuying />} />
         <Route path="/postGroupBuying" element={<PostgroupBuying />} />
 
         <Route path="/myPage" element={<MyPage />} />
