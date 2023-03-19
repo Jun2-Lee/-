@@ -30,11 +30,12 @@ function DetailSharing() {
     axios.delete(`http://3.36.144.128:8080/api/sharing/${postId}`)
       .then(response => {
         console.log(response)
+        alert("삭제되었습니다")
+        navigate("/sharing")
       })
       .catch(error => {
         console.log(error)
       });
-    navigate("/sharing")
   }
 
   return(

@@ -134,6 +134,7 @@ function PostSharing() {
       axios.post("http://3.36.144.128:8080/api/sharing", form, {headers})
         .then(function(response) {
           console.log(response)
+          alert("등록되었습니다")
           navigate('/sharing')
         }) .catch(function(error) {
           console.log(error)

@@ -125,6 +125,7 @@ function PostgroupBuying() {
       axios.post("http://3.36.144.128:8080/api/groupBuying", form, {headers})
         .then(function(response) {
           console.log(response)
+          alert("등록되었습니다")
           navigate('/groupBuying')
         }) .catch(function(error) {
           console.log(error)
