@@ -20,10 +20,12 @@
   column-gap: 0.415rem;
   padding: 0.938rem;
   font-size: 0.688rem;
-  box-shadow: 0 0.125rem 0.188rem 0 rgba(0, 0, 0, 0.25)
+  box-shadow: 0 0.125rem 0.188rem 0 rgba(0, 0, 0, 0.25);
+  border-radius: 0.625rem;
+  color: black;
 }
 
-.groupbuying_list .item_image,.groupbuying_list .item_title, .groupbuying_list .item_area, .groupbuying_list .item_deadline {
+.groupbuying_list .item_image, .groupbuying_list .item_title, .groupbuying_list .item_area, .groupbuying_list .item_deadline {
   background-color: white;
   border-radius: 0.346rem;
   text-align: center;
@@ -32,19 +34,29 @@
   justify-content: center;
 }
 
+.groupbuying_list .item_image img {
+  width: 160px;
+  height: 160px;
+  border-radius: 5.53691px;
+}
+
 .groupbuying_list .item_image, .groupbuying_list .item_title {
   grid-column: 1 / 3;
+}
+
+.groupbuying_list .item_nickname, .item_date {
+  margin-top: 0.313rem;
 }
 
 .groupbuying_list .item_date {
   text-align: right;
 }
 
-.groupBuying_pagination {
+.sharing_pagination {
+  margin-top: 0.938rem;
   grid-column: 2 / 3;
   display: grid;
   text-align: center;
-  align-content: center;
 } 
 
 .writing {
