@@ -87,7 +87,7 @@ function Layout() {
               <Link to="/sharing">나눔글 목록</Link>
             </article>
             <article className="hover_dutchPay">
-              <Link to="/postDelivery">n빵 등록</Link>
+              <Link to="/postDutchpay">n빵 등록</Link>
               <Link to="/dutchPay">n빵 목록</Link>
             </article>
             <article className="hover_groupBuying">
