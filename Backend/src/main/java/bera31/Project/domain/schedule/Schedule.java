@@ -1,6 +1,7 @@
 package bera31.Project.domain.schedule;
 
 import bera31.Project.domain.dto.requestdto.ScheduleRequestDto;
+import bera31.Project.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,11 +20,15 @@ public class Schedule {
     @Id
     @GeneratedValue
     long id;
-    LocalDate targetDate;
-    String title;
-    String time;
-    String place;
-    String content;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member author;
+    private LocalDate targetDate;
+    private String title;
+    private String time;
+    private String place;
+    private String content;
 
     public Schedule(ScheduleRequestDto scheduleRequestDto) {
         this.title = scheduleRequestDto.getTitle();

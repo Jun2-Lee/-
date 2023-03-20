@@ -22,7 +22,6 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class CommentService {
-
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
     private final GroupBuyingRepository groupBuyingRepository;

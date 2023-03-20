@@ -30,9 +30,9 @@ public class GroupBuying extends Contents {
     String gu;
     String dong;
 
-    @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     List<GroupBuyingIntersection> memberList = new ArrayList<>();
-    @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "groupBuying", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     List<LikedGroupBuying> likedMemberList = new ArrayList<>();
     boolean isFinish;
 

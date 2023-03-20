@@ -5,6 +5,8 @@ import bera31.Project.domain.dto.responsedto.message.EachRoomMessageResponseDto;
 import bera31.Project.domain.dto.responsedto.message.MessageResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.message.Message;
+import bera31.Project.exception.ErrorResponse;
+import bera31.Project.exception.exceptions.UserNotFoundException;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.MessageRepository;
 import bera31.Project.utility.SecurityUtility;
@@ -35,8 +37,9 @@ public class MessageService {
         for (Message msg : messageList) {
             if (findedMember.getNickname().equals(msg.getSender().getNickname())) {
                 otherName = msg.getReceiver().getNickname();
-            } else
+            } else {
                 otherName = msg.getSender().getNickname();
+            }
 
             responseDtoList.add(
                     new MessageResponseDto(msg.getRoomNumber(), otherName, msg.getContent(), msg.getSendTime()));
@@ -53,18 +56,25 @@ public class MessageService {
     }
 
     public Long sendMessage(MessageRequestDto messageRequestDto) {
-        Long maxRoomNumber = 0L;
-        if (messageRepository.findMaxRoomNumber() != null)
-            maxRoomNumber = messageRepository.findMaxRoomNumber();
+        Member receiver = findReceiver(messageRequestDto);
 
+        if(receiver == null)
+            throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
+
+        Long maxRoomNumber = getMaxRoomNumber();
         Message newMessage = new Message(messageRequestDto, maxRoomNumber + 1,
                 loadCurrentMember(), findReceiver(messageRequestDto));
 
         return messageRepository.save(newMessage);
     }
 
-    public Long sendMessage(MessageRequestDto messageRequestDto, Long roomId) {
-        Message newMessage = new Message(messageRequestDto, roomId, loadCurrentMember(), findReceiver(messageRequestDto));
+    public Long sendMessageToEachRoom(MessageRequestDto messageRequestDto, Long roomId) {
+        Member receiver = findReceiver(messageRequestDto);
+
+        if(receiver == null)
+            throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
+
+        Message newMessage = new Message(messageRequestDto, roomId, loadCurrentMember(), receiver);
         return messageRepository.save(newMessage);
     }
 
@@ -75,5 +85,15 @@ public class MessageService {
 
     private Member findReceiver(MessageRequestDto messageRequestDto) {
         return memberRepository.findById(messageRequestDto.getId());
+    }
+
+    private Long getMaxRoomNumber() {
+        Long maxRoomNumber = 0L;
+        Long currentMaxRoomNumber = messageRepository.findMaxRoomNumber();
+
+        if (currentMaxRoomNumber != null)
+            return currentMaxRoomNumber;
+
+        return maxRoomNumber;
     }
 }

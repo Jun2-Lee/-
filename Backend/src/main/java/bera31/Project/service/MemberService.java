@@ -8,6 +8,7 @@ import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.exception.ErrorResponse;
 import bera31.Project.exception.exceptions.KakaoUserAccessException;
 import bera31.Project.exception.exceptions.UserNotFoundException;
+import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
 import bera31.Project.utility.RedisUtility;
@@ -26,6 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class MemberService {
+    private final LikeRepository likeRepository;
     private final MemberRepository memberRepository;
     private final S3Uploader s3Uploader;
     private final PasswordEncoder passwordEncoder;
@@ -49,7 +51,7 @@ public class MemberService {
         findedMember.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
 
         findedMember.changeAddress(editInfoRequestDto.getDong(), editInfoRequestDto.getGu());
-        findedMember.changeFavIngredients(editInfoRequestDto.getFavIngredients());
+        //findedMember.changeFavIngredients(editInfoRequestDto.getFavIngredients());
         return "정보가 수정되었습니다!";
     }
 
@@ -57,8 +59,6 @@ public class MemberService {
         Member currentMember = loadCurrentMember();
         redisUtility.deleteValues(currentMember.getEmail());
         memberRepository.delete(currentMember);
-
-        // 연관된 객체들은 어떻게 처리할 것인가?
         return "성공적으로 탈퇴 되었습니다.";
     }
 

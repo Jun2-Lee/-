@@ -31,7 +31,8 @@ public class MessageRepository {
     public List<Message> findMessageList(String nickname) {
         return em.createQuery("select m from Message m " +
                         "where m.id in (select max(m.id) from Message m group by m.roomNumber)" +
-                        "and (m.sender.nickname =: nickname or m.receiver.nickname =: nickname)", Message.class)
+                        "and (m.sender.nickname =: nickname or m.receiver.nickname =: nickname)" +
+                        "order by m.sendTime desc ", Message.class)
                 .setParameter("nickname", nickname)
                 .getResultList();
     }

@@ -26,7 +26,7 @@ public class DutchPay extends Contents {
     String content;
     String address;
     String detailAddress;
-    @OneToMany(mappedBy = "dutchPay")
+    @OneToMany(mappedBy = "dutchPay", cascade = CascadeType.ALL, orphanRemoval = true)
     List<DutchPayIntersection> memberList = new ArrayList<>();
 
     public DutchPay(DutchPayRequestDto dutchPayRequestDto, Member member) {

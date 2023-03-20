@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,8 +73,8 @@ public class GroupBuyingService {
 
         GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, currentMember);
         newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
-
         currentMember.postGroupBuying(newGroupBuying);
+
         return groupBuyingRepository.save(newGroupBuying);
     }
 
@@ -103,10 +104,16 @@ public class GroupBuyingService {
         return intersectionRepository.save(newGroupBuyingIntersection);
     }
 
-    public Long pushLikeGroupBuying(Long postId) {
+    public String pushLikeGroupBuying(Long postId) {
         Member currentMember = loadCurrentMember();
         //Member currentMember = memberRepository.findById(1);
         GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
+        Optional<LikedGroupBuying> existsLike = likeRepository.findByPostIdAndUserId(currentGroupBuying, currentMember);
+
+        if(existsLike.isPresent()){
+            currentMember.getLikedGroupBuyings().remove(existsLike.get());
+            return likeRepository.delete(existsLike.get());
+        }
 
         LikedGroupBuying newLikedGroupBuying = new LikedGroupBuying(currentMember, currentGroupBuying);
         currentMember.pushLikeGroupBuying(newLikedGroupBuying);
@@ -124,7 +131,9 @@ public class GroupBuyingService {
     }
 
     private void checkExpiredPost(List<GroupBuying> findedGroupBuyings) {
-        findedGroupBuyings.stream().filter(g -> g.getDeadLine().isBefore(LocalDateTime.now())).forEach(GroupBuying::expirePost);
+        findedGroupBuyings.stream()
+                .filter(g -> g.getDeadLine().isBefore(LocalDateTime.now()))
+                .forEach(GroupBuying::expirePost);
     }
 
     public List<CommentResponseDto> makeCommentList(List<Comment> commentList) {

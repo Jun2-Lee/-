@@ -19,7 +19,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @Operation(summary = "달력 전체에 뿌릴 Data를 요청하는 API입니다.",
-            description = "현재 달의 일정만 모두 가져옵니다.\n" +
+            description = "현재 달의 일정만 모두 가져옵니다.\n\n" +
                     "targetDate를 기준으로 각 날짜에 배치하시면 됩니다.")
     @GetMapping
     public ResponseEntity<List<ScheduleListResponseDto>> showSchedule() {

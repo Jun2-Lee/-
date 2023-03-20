@@ -27,7 +27,7 @@ public class MemberController {
     }
 
     @Operation(summary = "비밀번호 변경 API입니다.",
-            description = "변경할 비밀번호를 넘겨주시면 됩니다.\n" +
+            description = "변경할 비밀번호를 넘겨주시면 됩니다.\n\n" +
                     "다만, Kakao 로그인 유저가 비밀번호 변경 시도 시 KAKAO_USER_ACCESS_DENIED 에러가 발생합니다.")
     @PutMapping("/mypage/changePassword")
     public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
@@ -35,7 +35,7 @@ public class MemberController {
     }
 
     @Operation(summary = "회원 탈퇴 API입니다.",
-            description = "요청을 보내주시면 DB에서 해당 회원을 제거합니다. \n" +
+            description = "요청을 보내주시면 DB에서 해당 회원을 제거합니다. \n\n" +
                     "이후, Refresh Token 또한 제거됩니다.")
     @DeleteMapping("/mypage/withdraw")
     public ResponseEntity<String> withdraw(){

@@ -19,7 +19,6 @@ public class GroupBuyingIntersection {
     @ManyToOne
     @JoinColumn(name = "PARTICIPANT_ID")
     private Member participant;
-
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")
     private GroupBuying groupBuying;

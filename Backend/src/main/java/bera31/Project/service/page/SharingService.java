@@ -8,6 +8,7 @@ import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingResponseDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import bera31.Project.domain.page.intersection.LikedSharing;
 import bera31.Project.domain.page.sharing.Sharing;
 import bera31.Project.repository.LikeRepository;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,14 +75,20 @@ public class SharingService {
         sharingRepository.delete(sharingRepository.findById(postId));
     }
 
-    public void pushLikeSharing(Long postId) {
-        //Member currentMember = loadCurrentMember();
-        Member currentMember = memberRepository.findById(1);
+    public String pushLikeSharing(Long postId) {
+        Member currentMember = loadCurrentMember();
+        //Member currentMember = memberRepository.findById(1);
         Sharing currentSharing = sharingRepository.findById(postId);
+        Optional<LikedSharing> existsLike = likeRepository.findByPostIdAndUserId(currentSharing, currentMember);
+
+        if(existsLike.isPresent()){
+            currentMember.getLikedSharings().remove(existsLike.get());
+            return likeRepository.delete(existsLike.get());
+        }
 
         LikedSharing newLikeSharing = new LikedSharing(currentMember, currentSharing);
         currentMember.pushLikeSharing(newLikeSharing);
-        likeRepository.save(newLikeSharing);
+        return likeRepository.save(newLikeSharing);
     }
 
     public String closeSharing(Long postId){
