@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import Pagination from '../pagination'
+import Paging from '../pagination'
 import './index.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react'

@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 //0(home)
 import Home from "./pages/home";
 import Layout from "./components/Layout";
+import Calendar from "./pages/calendar";
 //1
 import Login from "./pages/1auth/login";
 import InitialInfo from "./pages/1auth/initial_info";
@@ -44,12 +45,17 @@ function App() {
         <Route path="/initialInfo" element={<InitialInfo />} />
         <Route path="/signup" element={<Signup />} />
 
+
+          <Route path="/calendar" element={<Calendar />} />
+
+   
         <Route path="/sharing" element={<SharingPage />} />
         <Route path="/sharing/:postId" element={<DetailSharing />} />
         <Route path="/postSharing" element={<PostSharing />} />
         
         <Route path="/dutchPay" element={<DutchPayPage />} />
         <Route path="/postDutchpay" element={<PostDutchpay />} />
+
 
         <Route path="/groupBuying" element={<GroupBuyingPage />} />
         <Route path="/groupBuying/:postId" element={<DetailGroupBuying />} />

@@ -19,7 +19,7 @@ public class S3Config {
 
     // Application.yml 에서 작성한 값들을 불러와서 Bean에 등로한다.
     @Bean
-    public AmazonS3 amazonS3Client(){
+    public AmazonS3 amazonS3Client() {
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 
         return AmazonS3ClientBuilder

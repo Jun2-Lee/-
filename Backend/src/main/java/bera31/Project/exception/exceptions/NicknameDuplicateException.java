@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class NicknameDuplicateException extends RuntimeException{
+public class NicknameDuplicateException extends RuntimeException {
     ErrorResponse errorResponse;
 }

@@ -2,25 +2,34 @@ package bera31.Project.service.page;
 
 
 import bera31.Project.config.S3.S3Uploader;
+import bera31.Project.domain.comment.Comment;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
+import bera31.Project.domain.dto.responsedto.CommentResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
+import bera31.Project.domain.page.intersection.LikedGroupBuying;
+import bera31.Project.exception.ErrorResponse;
+import bera31.Project.exception.exceptions.AlreadyFullException;
+import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
 import bera31.Project.repository.page.IntersectionRepository;
+import bera31.Project.service.CommentService;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,45 +37,45 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class GroupBuyingService {
-    @Autowired
-    private S3Uploader s3Uploader; // Field Injection 말고 다른 방법 생각해보기
+    private final S3Uploader s3Uploader;
     private final GroupBuyingRepository groupBuyingRepository;
     private final MemberRepository memberRepository;
     private final IntersectionRepository intersectionRepository;
+    private final LikeRepository likeRepository;
+    private final CommentService commentService;
 
-    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
+/*    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
         return groupBuyingRepository.findByKeyword(keyword)
                 .stream()
                 .map(GroupBuyingListResponseDto::new)
                 .collect(Collectors.toList());
+    }*/
+
+    @Transactional(readOnly = true)
+    public List<GroupBuyingListResponseDto> findAllGroupBuying() {
+        List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
+        checkExpiredPost(findedGroupBuyings);
+
+        return findedGroupBuyings.stream().map(GroupBuyingListResponseDto::new).collect(Collectors.toList());
     }
 
-    public List<GroupBuyingListResponseDto> findAllGroupBuying() {
-        return groupBuyingRepository.findAll()
-                .stream()
-                .map(GroupBuyingListResponseDto::new)
-                .collect(Collectors.toList());
+
+    @Transactional(readOnly = true)
+    public GroupBuyingResponseDto findGroupBuying(Long postId) {
+        List<CommentResponseDto> commentResponseDtoList =
+                makeCommentList(groupBuyingRepository.findById(postId).getComments());
+        return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId), commentResponseDtoList);
     }
 
     public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
-        Member findedMember = loadCurrentMember();
+        //Member findedMember = loadCurrentMember();
+        Member currentMember = memberRepository.findById(1);
 
-        GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, findedMember);
+        GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, currentMember);
         newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
+        currentMember.postGroupBuying(newGroupBuying);
 
-        findedMember.postGroupBuying(newGroupBuying);
         return groupBuyingRepository.save(newGroupBuying);
-    }
-
-    public Long participantGroupBuying(Long postId){
-        Member findedMember = loadCurrentMember();
-        GroupBuying findedPost = groupBuyingRepository.findById(postId);
-
-        GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(findedMember, findedPost);
-        findedMember.participantGroupBuying(newGroupBuyingIntersection);
-        findedPost.addMember(newGroupBuyingIntersection);
-
-        return intersectionRepository.save(newGroupBuyingIntersection);
     }
 
     public Long updateGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage, Long postId) throws IOException {
@@ -76,24 +85,71 @@ public class GroupBuyingService {
         return findedPost.update(groupBuyingRequestDto, s3Uploader.upload(postImage, "groupBuying"));
     }
 
-    public GroupBuyingResponseDto findGroupBuying(Long postId) {
-        return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId));
-    }
-
-    public void updateFavoriteGroupBuying(Long postId){
-        // 멤버 받아와서
-        // member.getFavoriteRepository().find();
-        // 이미 있는지 ? 없으면 ==> member.add 함수 실행
-        //            있으면 ==> member.remove 함수 실행
-        groupBuyingRepository.findById(postId);
-    }
-
     public void deleteGroupBuying(Long postId) {
         groupBuyingRepository.delete(groupBuyingRepository.findById(postId));
     }
 
-    private Member loadCurrentMember(){
+    public Long participantGroupBuying(Long postId) {
+        //Member currentMember = loadCurrentMember();
+        Member currentMember = memberRepository.findById(1);
+        GroupBuying currentPost = groupBuyingRepository.findById(postId);
+
+        if (currentPost.getLimitMember() <= currentPost.getMemberList().size())
+            throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
+
+        GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(currentMember, currentPost);
+        currentMember.participantGroupBuying(newGroupBuyingIntersection);
+        currentPost.addMember(newGroupBuyingIntersection);
+
+        return intersectionRepository.save(newGroupBuyingIntersection);
+    }
+
+    public String pushLikeGroupBuying(Long postId) {
+        Member currentMember = loadCurrentMember();
+        //Member currentMember = memberRepository.findById(1);
+        GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
+        Optional<LikedGroupBuying> existsLike = likeRepository.findByPostIdAndUserId(currentGroupBuying, currentMember);
+
+        if(existsLike.isPresent()){
+            currentMember.getLikedGroupBuyings().remove(existsLike.get());
+            return likeRepository.delete(existsLike.get());
+        }
+
+        LikedGroupBuying newLikedGroupBuying = new LikedGroupBuying(currentMember, currentGroupBuying);
+        currentMember.pushLikeGroupBuying(newLikedGroupBuying);
+        return likeRepository.save(newLikedGroupBuying);
+    }
+
+    public String closeGroupBuying(Long postId) {
+        groupBuyingRepository.findById(postId).expirePost();
+        return "거래가 마감되었습니다.";
+    }
+
+    private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();
         return memberRepository.findByEmail(currentMemberEmail).get();
+    }
+
+    private void checkExpiredPost(List<GroupBuying> findedGroupBuyings) {
+        findedGroupBuyings.stream()
+                .filter(g -> g.getDeadLine().isBefore(LocalDateTime.now()))
+                .forEach(GroupBuying::expirePost);
+    }
+
+    public List<CommentResponseDto> makeCommentList(List<Comment> commentList) {
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        for (Comment comment : commentList) {
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+            if (comment.getChildren().size() != 0) {
+                for (Comment child : comment.getChildren()) {
+                    commentResponseDto.addChild(new CommentResponseDto(child));
+                }
+                commentResponseDtoList.add(commentResponseDto);
+            }
+            else if(comment.getParent() == null){
+                commentResponseDtoList.add(commentResponseDto);
+            }
+        }
+        return commentResponseDtoList;
     }
 }

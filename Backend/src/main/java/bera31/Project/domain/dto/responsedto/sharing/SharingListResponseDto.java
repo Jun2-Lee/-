@@ -1,4 +1,4 @@
-package bera31.Project.domain.dto.responsedto;
+package bera31.Project.domain.dto.responsedto.sharing;
 
 import bera31.Project.domain.Address;
 import bera31.Project.domain.member.Member;
@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SharingListResponseDto {
-
     Long id;
     String image;
     String nickname;
@@ -22,12 +21,12 @@ public class SharingListResponseDto {
     LocalDateTime deadLine;
     LocalDateTime postTime;
 
-    public SharingListResponseDto(Sharing sharing){
+    public SharingListResponseDto(Sharing sharing) {
         this.id = sharing.getId();
         this.image = sharing.getImage();
-        this.nickname = "sharing.getUser().getNickname()";
+        this.nickname = sharing.getUser().getNickname();
         this.title = sharing.getTitle();
-        this.dong = sharing.getLocation().getDong();
+        this.dong = sharing.getDong();
         this.deadLine = sharing.getDeadLine();
         this.postTime = sharing.getPostTime();
     }

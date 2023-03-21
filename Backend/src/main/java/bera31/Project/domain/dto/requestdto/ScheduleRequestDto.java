@@ -1,17 +1,16 @@
 package bera31.Project.domain.dto.requestdto;
 
-import bera31.Project.domain.schedule.ScheduleCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
 public class ScheduleRequestDto {
-    ScheduleCategory category;
+    LocalDate targetDate;
     String title;
-    LocalDateTime time;
+    String time;
     String place;
     String content;
 }

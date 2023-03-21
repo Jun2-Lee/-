@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class TokenMismatchException extends RuntimeException{
+public class TokenMismatchException extends RuntimeException {
     ErrorResponse errorResponse;
 }

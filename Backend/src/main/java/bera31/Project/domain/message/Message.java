@@ -30,7 +30,7 @@ public class Message {
 
     private String content;
 
-    public Message(MessageRequestDto messageRequestDto, Long roomNumber, Member sender, Member receiver){
+    public Message(MessageRequestDto messageRequestDto, Long roomNumber, Member sender, Member receiver) {
         this.receiver = receiver;
         this.sender = sender;
         this.roomNumber = roomNumber;

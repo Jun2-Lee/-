@@ -12,18 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DutchPayRequestDto {
-    String title;
-    String category;
     String store;
+    String category;
+    String address;
+    String detailAddress;
     int deliveryCost;
     int limitMember;
     LocalDateTime deadLine;
     String content;
-    double x;
-    double y;
-
-    public DutchPay toDutchPay() {
-        return new DutchPay(this.title, this.category, this.store, this.deliveryCost,
-                this.limitMember, this.content, this.x, this.y, this.deadLine);
-    }
 }
