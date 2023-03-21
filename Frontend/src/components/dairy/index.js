@@ -3,58 +3,77 @@ import './index.css';
 import axios from "axios";
 
 
-function Diary() {
-  const [showSchedule, setShowSchedule] = useState(false); // 상태 변수 추가
-  const [schedules, setSchedules] = useState([]);// 일정 정보 저장 배열
-  const [mySchedule, setMySchedule] = useState(null);//일정 보기
- 
-  const postSchedule = () => {
-    const title = document.querySelector(".titleSchedule").value;
-    const time = document.querySelector(".timeSchedule").value;
-    const place = document.querySelector(".placeSchedule").value;
-    const content = document.querySelector(".memoSchedule").value;
-    const postDate = document.querySelector(".postDateSchedule").value;
+function Diary(props, {date}) {
+  const [showSchedule, setShowSchedule] = useState(false);
+  const [schedules, setSchedules] = useState([]); //일정 리스트
+  const [mySchedule, setMySchedule] = useState([]); //일정 보기
+  const [showMySchedule, setShowMySchedule] = useState(false); //화면 클릭
+
   
-  
-    axios.post("http://3.36.144.128:8080/api/mypage/schedule", { postDate, title, time, place, content })
+  const [title, setTitle] = useState('');
+  const [time, setTime] = useState('');
+  const [place, setPlace] = useState('');
+  const [content, setContent] = useState('');
+  const [targetDate, setTargetDate] = useState(props.date);
+
+//등록 버튼을 누르면 정보가 넘어가는 동시에 달력 전체에 뿌려짐
+const postSchedule = () => {
+  axios.post("http://3.36.144.128:8080/api/mypage/schedule", {
+    title,
+    time,
+    place,
+    content,
+    targetDate,
+  })
     .then((response) => {
-      setSchedules([...schedules, response.data]); // 등록된 일정 목록에 새로 추가
-      setShowSchedule(false); // 일정 등록 화면 닫기
-      setMySchedule(response.data); // 등록된 일정을 mySchedule에 할당
-      
+      setSchedules([...schedules, response.data]);
+      setShowSchedule(false);
+      setMySchedule([response.data]);
+
+      axios.get("http://3.36.144.128:8080/api/mypage/schedule")
+        .then((response) => {
+          const filteredSchedules = response.data.filter(
+            (schedule) => schedule.targetDate === props.date
+          );
+          setMySchedule(filteredSchedules);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     })
     .catch((error) => {
       console.log(error);
     });
 };
 
-const handleClickSchedule = (schedule) => {
-  setMySchedule(schedule);
-};
-  
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://3.36.144.128:8080/api/mypage/schedule/");
+      const scheduleIds = response.data.map((schedule) => schedule.id);
+      console.log(scheduleIds)
 
-const ScheduleItem = ({ schedule }) => {
-  return (
-    <div className="scheduleItem" onClick={() => handleClickSchedule(schedule)} key={schedule.id}>
-      <div>{schedule.title}</div>
-      <div>{schedule.time}</div>
-      <div>{schedule.place}</div>
-      <div>{schedule.content}</div>
-      <div>{schedule.postDate}</div>
-    </div>
-  );
-};
+      const filteredSchedules1 = response.data.filter((schedule) => schedule.targetDate === props.date);
 
+      const requests = filteredSchedules1.map((schedule) =>
+        axios.get(`http://3.36.144.128:8080/api/mypage/schedule/${schedule.id}`)
+      );
+      const responses = await Promise.all(requests);
+      const filteredSchedules = responses.map((response) => response.data);
 
-  useEffect(() => {
-    axios.get("http://3.36.144.128:8080/api/mypage/schedule")
-      .then((response) => {
-        setSchedules(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+      console.log(filteredSchedules)
+      if (filteredSchedules.length > 0) {
+        setMySchedule([filteredSchedules]);
+      } else {
+        setMySchedule([]);
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  fetchData();
+}, [props.date]);
 
 
 
@@ -62,25 +81,25 @@ const ScheduleItem = ({ schedule }) => {
   return (
     
     <div className="schedule">
-    <button className="dailySchedule" onClick={()=> setMySchedule(true)}>
-      ㅇㅇ
-    </button>
-    {mySchedule && (
-        <div className="checkSchedule">
-          <div className="checkTitle">제목: {mySchedule.title}</div>
-          <div className="checkTime">시각: {mySchedule.time}</div>
-          <div className="checkPlace">장소: {mySchedule.place}</div>
-          <div className="checkContent">메모: {mySchedule.content}</div>
-        
-        </div>
-        
-      )}
+<button className="dailySchedule" >
 
-    <button className="writeSchedule" onClick={() => setShowSchedule(true)}>
+{mySchedule && mySchedule.length > 0 ? mySchedule[0][0].title : "일정 없음"}
+    </button>
+    {mySchedule && Object.keys(mySchedule).length > 0 &&
+        <div className="mySchedule">
+          <div>{mySchedule[0][0].title}</div>
+          <div>{mySchedule[0][0].time}</div>
+          <div>{mySchedule[0][0].place}</div>
+          <div>{mySchedule[0][0].content}</div>
+          {console.log(mySchedule)}
+        </div>
+}
+
+    <button className="writeSchedule" onClick={() => setShowSchedule(!showSchedule)}>
       <img src='assets/img/writingIcon.png' className='scheduleButton' ></img>
     </button>
       {/* 상태에 따라 다른 UI 렌더링 */}
-      {showSchedule && (
+      {mySchedule && (
         <div className="postSchedule">
           <div className="namePost">
               일정 등록
@@ -111,16 +130,17 @@ const ScheduleItem = ({ schedule }) => {
         
 
           <button className="postScheduleButton" onClick={postSchedule}>
-              등록
-          </button>
+  등록
+</button>
+
         </div>
       )}
       {/* 등록된 일정 목록 렌더링 */}
-      <div className="scheduleList">
-        {schedules.map((schedule,id) => (
-          <ScheduleItem key={id} schedule={schedule} />
+      {/*<div className="scheduleList" style={{backgroundColor:'wheat'}}>
+        {schedules.map((schedule) => (
+          <ScheduleItem key={schedule.id} schedule={schedule} />
         ))}
-      </div>
+        </div>*/}
     </div>
     
   );
