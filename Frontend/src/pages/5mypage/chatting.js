@@ -1,53 +1,44 @@
+import React, { useState, useEffect } from 'react';
+import Chatroom from '../../components/chatting';
+import axios from 'axios';
 import './chatting.css';
-import React  from 'react';
-import {useState} from 'react';
-import Chatroom from "../../components/chatting";
-
-function Chatting () {
-
-    const [content,setContent] = useState();
-
-    const [visible,setVisible] = useState(false);
+import '../4groupbuying/detail_groupBuying';
 
 
-    const selectComponent = {
-        Chatroom: <Chatroom/>
-    }
-    
-    return( 
-        <div>
-            <div className='upper_note'>
-                <div className='upperNote'>
-                    쪽지함
-                </div>
+function Chatting ({userId, chatrooms}) {
+  const [visibleChatroomId, setVisibleChatroomId] = useState(null);
 
-             
-            </div>
-
-            <div className='chattingContainer'>
-                쪽지
-                <div className='openChat'>
-                    <button
-                    type='button'
-                    className='Openchat'
-                    name={Chatroom}
-                    onClick={()=>{
-                        setVisible(!visible);
-                    }}
-              
-                   >
-                    <img className = "chatProfileImg"  src='assets/img/default_profile.png'>
-                     </img>
-                     
-                    </button>
-                    {visible && <Chatroom/>}
-                </div>
-            </div>
-
-  
-
+  const handleChatroomClick = (chatroomId) => {
+    setVisibleChatroomId(chatroomId === visibleChatroomId ? null : chatroomId);
+  };
+  {console.log(chatrooms)}
+  return (
+    <div>
+      <div className='upper_note'>
+        <div className='upperNote'>
+          쪽지함
         </div>
-    )
+      </div>
+
+      <div className='chattingContainer'>
+        쪽지
+        <div className='openChat'>
+          {chatrooms.map((chatroom) => (
+            <div key={chatroom.id}>
+              <button
+                type='button'
+                className='Openchat'
+                onClick={() => handleChatroomClick(chatroom.id)}
+              >
+                <img className="chatProfileImg" src='assets/img/default_profile.png' />
+              </button>
+              {visibleChatroomId === chatroom.id && <Chatroom userId={userId} chatroom={chatroom} />}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Chatting;
