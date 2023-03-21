@@ -78,20 +78,59 @@ function PostgroupBuying() {
   const navigate = useNavigate();
   const onSubmit = (e) => {
     e.preventDefault();
+    
+    if (title.length === 0) {
+      alert("제목을 입력해주세요")
+    }
+    else if (category.length === 0) {
+      alert("카테고리를 선택해주세요")
+    }
+    else if (product.length === 0) {
+      alert("상품명을 입력해주세요")
+    }
+    /*else if (link.length === 0) {
+      alert("링크를 입력해주세요")
+    }*/
+    else if (postImage.length === 0) {
+      alert("사진을 업로드 해주세요")
+    }
+    else if (price.length === 0) {
+      alert("공동구매 비용을 입력해주세요")
+    }
+    else if (isNaN(price)) {
+      alert("공동구매 비용을 숫자로 입력해주세요")
+    }
+    else if (memberLimit.length === 0) {
+      alert("모집인원을 입력해주세요")
+    }
+    else if (isNaN(memberLimit)) {
+      alert("모집인원을 숫자로 입력해주세요")
+    }
+    else if (deadLine.length === 0) {
+      alert("마감일을 선택해주세요")
+    }
+    else if (gu.length === 0) {
+      alert("사는 동네를 선택해주세요")
+    }
+    else if (dong.length === 0) {
+      alert("동을 선택해주세요")
+    }
+    else {
+      const form = new FormData()
+      form.append('postImage', postImage)
+      form.append('groupBuyingRequestDto', new Blob([JSON.stringify(groupBuyingRequestDto)], {
+        type: "application/json"
+      }))
 
-    const form = new FormData()
-    form.append('postImage', postImage)
-    form.append('groupBuyingRequestDto', new Blob([JSON.stringify(groupBuyingRequestDto)], {
-      type: "application/json"
-    }))
-
-    axios.post("http://3.36.144.128:8080/api/groupBuying", form, {headers})
-      .then(function(response) {
-        console.log(response)
-        navigate('/groupBuying')
-      }) .catch(function(error) {
-        console.log(error)
-      })
+      axios.post("http://3.36.144.128:8080/api/groupBuying", form, {headers})
+        .then(function(response) {
+          console.log(response)
+          alert("등록되었습니다")
+          navigate('/groupBuying')
+        }) .catch(function(error) {
+          console.log(error)
+        })
+      }
     }
 
     return (

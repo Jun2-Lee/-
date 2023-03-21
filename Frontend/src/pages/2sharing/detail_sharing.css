@@ -66,9 +66,6 @@
 
 }
 
-
-
-
 .modify_sharing, .delete_sharing{
      font-size:12px;
      font-weight:bolder;
@@ -77,15 +74,10 @@
      background-color: #FFFAF3;
   }
 
-
-
-  .sharedetailImg{
-    background-color: white;
+  .sharedetailImg img {
     width: 312px;
     height: 312px;
     margin-left: 120px
-
-
   }
   
   .profile {
@@ -93,7 +85,6 @@
     margin-left: -408px;
   }
 
-  
   .Ingredient_sharing {
     background-color: var(--sub_orange);
     border: none;
@@ -135,7 +126,6 @@
   }
 
   .shareApplication{
-
     border:0;
     outline:0; 
     background-color:  #FF8327;

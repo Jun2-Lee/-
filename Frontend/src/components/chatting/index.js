@@ -1,30 +1,57 @@
-import React from 'react';
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import './index.css';
 import {useState} from 'react';
+import {DummyList1} from '../chatList/dummyList1.js';
 
 function Chatroom(){
 
 
-    let [chatting, setChatting] = useState(''); //사용자가 입력하고 있는 채팅
-    let [feedChatting, setFeedChatting] = useState([]); //채팅 리스트
-    let [isValid, setIsValid] = useState(false); 
 
+    const [chatting, setChatting] = useState(''); //사용자가 입력하고 있는 채팅
+    const [feedChatting, setFeedChatting] = useState(DummyList1); //채팅 리스트
+    const [isValid, setIsValid] = useState(false); 
 
-    let post = e => {
-        const copyFeedChatting = [...feedChatting];
-        copyFeedChatting.push(chatting); 
-        setFeedChatting(copyFeedChatting);
+//input에 따라 바뀌는 리스트
+    const handleAddContent = () => {
+        const newItem = {
+            id: feedChatting.length + 1,
+            content: chatting,
+            sendTime: new Date().toLocaleString(),
+            other: 'me'
+        };
+        setFeedChatting([...feedChatting, newItem]);
         setChatting('');
+    };
 
-    
-    };//유효성 검사를 통과하고 '등록' 클릭 시 발생하는 함수 post
-
+    //채팅 말풍선
     const ChattingList = props => {return(
         <div>
-            <div className='chatBubble'>
-                <img className = "ChatBubble"  src='assets/img/chatBubble.png'></img>
-                <div className='outputChat'>{props.userChatting}</div>
+            <div className='chatBubble'
+              style={{
+                display:'flex',
+                textAlign: 'right',
+                position:'relative',
+                margin: 'padding',
+                width: '100px',
+                height: '50px',
+                backgroundColor: 'white',
+                borderRadius: '10px'
+            
+            }}
+            
+            >
+                <div className="outputTime"
+                 style={{
+                    marginLeft:"-65px",
+                    marginTop:"15px",
+                    fontSize:"12px"
+                 }}
+                >{props.sendTime}</div>
+                <div className='outputChat'>{props.userChatting}
+                </div>
+
+                
             </div>
 
 
@@ -32,7 +59,37 @@ function Chatroom(){
     )
 }
 
-    return(
+const ChattingListReturn= props => {return(
+    <div>
+        <div className='chatBubbleReturn'
+          style={{
+            display:'flex',
+            textAlign: 'right',
+            position:'relative',
+            margin: 'padding',
+            width: '100px',
+            height: '50px',
+            backgroundColor: 'white',
+            borderRadius: '10px'}}
+        
+        >
+            <div className="outputTime"
+                 style={{
+                    marginLeft:"110px",
+                    marginTop:"15px",
+                    fontSize:"12px"
+                 }}
+                >{props.sendTime}</div>
+            <div className='outputChat'>{props.userChatting}</div>
+        </div>
+
+
+    </div>
+)
+}
+  
+
+       return(
         <div>
              <div className='noteRoom' style={{overflow:'scroll'}}>
                 <img className = "noteImg"  src='assets/img/noteImg.png'>
@@ -40,18 +97,39 @@ function Chatroom(){
 
                 <div className='purchase_comment' >
                 
-                    {feedChatting.map((chattingArr,i) => {
+                    {feedChatting.map((item,i) => {
+                        if(item.other==='me'){
                           return (
-                        
-                            <ChattingList
+                            <ul>
+                            <li className='opacityBox' >
+                                <ChattingList
                             
-                              userChatting = {chattingArr}
-                              key = {i}
+                                userChatting = {item.content}
+                                sendTime = {item.sendTime}
+                                key = {i}
                   
                             
-                          />
+                                />
+                            </li>
+                            </ul>
+
                         
                       );
+                    }
+                    else{
+                        return(
+                            <ul>
+                             <li key = {i}>
+                                <ChattingListReturn
+                                    userChatting = {item.content}
+                                    sendTime = {item.sendTime}
+                                    key = {i}
+                                
+                                />
+                            </li>
+                            </ul>
+                        )
+                    }
                       
                   })}</div>
                 
@@ -69,24 +147,27 @@ function Chatroom(){
                                 ? setIsValid(true)
                                 : setIsValid(false);
                         }}
-                        value = {chatting}
+             
                         
                         >
                 </input>
-                <button
+                <div >
+                    <button
                         type='button'
                         className='submitChat'
-                        onClick={post}
+                        onClick={handleAddContent}
                         disabled={isValid ? false : true}
                         
                         >
-                    <img  src='assets/img/submitChat.png'/>
-                </button>
+                        <img  src='assets/img/submitChat.png'/>
+                    </button>
+                    
+                </div>
             </div>
 
-          </div>
+          </div>);
        
-    )
+    
 }
 
 export default Chatroom;

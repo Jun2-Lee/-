@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from "react";
 import "./Layout.css";
+import ProfileGoogle from "./userInfo";
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import axios from 'axios'
 
 //import { profileImage, nickName } from "./kakao_login/profile";
+
 
 function Layout() {
   const [hover, setHover] = useState(false);
@@ -49,7 +51,7 @@ function Layout() {
             마이페이지
           </Link>
         </nav>
-
+        
         <div className="header_profile">
           <img
             className="header_profileImg"
@@ -58,7 +60,8 @@ function Layout() {
           />
 
           <Link className="profile_nickName" to="/editProfile">
-            뭐먹지 님
+            이름
+
           </Link>
           <Link className="profile_link" id="mypageLink" to="/myPage">
             마이페이지
@@ -70,6 +73,8 @@ function Layout() {
             쪽지
           </Link>
         </div>
+
+
       </header>
 
       <div
@@ -87,7 +92,7 @@ function Layout() {
               <Link to="/sharing">나눔글 목록</Link>
             </article>
             <article className="hover_dutchPay">
-              <Link to="/postDelivery">n빵 등록</Link>
+              <Link to="/postDutchpay">n빵 등록</Link>
               <Link to="/dutchPay">n빵 목록</Link>
             </article>
             <article className="hover_groupBuying">

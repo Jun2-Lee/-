@@ -14,62 +14,6 @@
     margin-top: 30px;
 }
 
-.noteRoom{
-    width: 621px;
-    height: 420px;
-    background-color: var(--sub_orange);
-    border-radius: 5px;
-    margin-left: 640px;
-    margin-top: 30px;
-    display: flex;
-    position: relative;
-}
-
-.noteImg{
-    margin-top: 30px;
-    margin-left: 195px;
-    position: absolute;
-}
-
-.inputChat, .submitChat{
-    position:absolute;
-}
-
-.inputChat{
-    width: 575px;
-    height: 36px;
-    margin-top: 370px;
-    margin-left: 20px;
-    border:0;
-    outline:0;
-    border-radius: 5px;
-}
-
-.submitChat{
-    border:0;
-    outline:0; 
-    margin-top: 375px;
-    margin-left: 550px;
-    background-color:  white;
-}
-.chattingBox{
-    margin-top: -425px;
-    margin-left: 635px;
-}
-
-.ChatBubble{
-    position: relative;
-}
-
-.outputChat{
-    position: absolute;
-    margin-top: -27px;
-}
-
-.chatBubble{
-    margin-left: 380px;
-}
-
 .chattingContainer{
     width: 208px;
     height: 420px;
@@ -79,3 +23,18 @@
     margin-top: 30px;
     position: absolute;
 }
+
+.Openchat{
+    width: 191px;
+    height: 61px;
+    border-radius: 5px;
+    background-color: white;
+    border:0;
+    outline:0;
+    margin-left: 9px;
+}
+
+.chatProfileImg{
+    margin-right: 125px;
+}
+
