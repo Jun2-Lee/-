@@ -17,26 +17,38 @@ public class GroupBuyingResponseDto {
     String profileImage;
     Long userId;
     String nickName;
-    Double manner;
+    String postImage;
     String category;
     String product;
+    String content;
+    String link;
+    String gu;
+    String dong;
     LocalDateTime deadLine;
+    LocalDateTime postTime;
+    int price;
     int limitMember;
     int currentMember;
     List<CommentResponseDto> commentList;
 
     public GroupBuyingResponseDto(GroupBuying groupBuying, List<CommentResponseDto> commentList) {
         this.id = groupBuying.getId();
-        this.profileImage = groupBuying.getImage();
+        this.profileImage = groupBuying.getUser().getProfileImage();
         this.title = groupBuying.getTitle();
         this.userId = groupBuying.getUser().getId();
         this.nickName = groupBuying.getUser().getNickname();
-        this.manner = groupBuying.getUser().getManner();
         this.category = groupBuying.getCategory();
+        this.postImage = groupBuying.getImage();
         this.product = groupBuying.getProduct();
+        this.price = groupBuying.getCost();
         this.deadLine = groupBuying.getDeadLine();
+        this.content = groupBuying.getContent();
+        this.link = groupBuying.getLink();
+        this.gu = groupBuying.getGu();
+        this.dong = groupBuying.getDong();
         this.currentMember = groupBuying.getMemberList().size();
         this.limitMember = groupBuying.getLimitMember();
         this.commentList = commentList;
+        this.postTime = groupBuying.getPostTime();
     }
 }

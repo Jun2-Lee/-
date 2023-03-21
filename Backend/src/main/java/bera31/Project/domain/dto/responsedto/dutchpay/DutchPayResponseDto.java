@@ -20,6 +20,7 @@ public class DutchPayResponseDto {
     String address;
     String detailAddress;
     LocalDateTime deadLine;
+    LocalDateTime postTime;
     String content;
     int currentMember;
 
@@ -37,5 +38,6 @@ public class DutchPayResponseDto {
         this.address = dutchPay.getAddress();
         this.detailAddress = dutchPay.getDetailAddress();
         this.content = dutchPay.getContent();
+        this.postTime = dutchPay.getPostTime();
     }
 }

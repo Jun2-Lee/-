@@ -21,6 +21,7 @@ public class DutchPayListResponseDto {
     int currentMember;
     int limitMember;
     LocalDateTime deadLine;
+    LocalDateTime postTime;
 
     public DutchPayListResponseDto(DutchPay dutchPay) {
         this.id = dutchPay.getId();
@@ -31,5 +32,6 @@ public class DutchPayListResponseDto {
         this.limitMember = dutchPay.getLimitMember();
         this.currentMember = dutchPay.getMemberList().size();
         this.deadLine = dutchPay.getDeadLine();
+        this.postTime = dutchPay.getPostTime();
     }
 }

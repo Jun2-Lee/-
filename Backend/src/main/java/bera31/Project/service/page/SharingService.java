@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 public class SharingService {
     private final MemberRepository memberRepository;
     private final SharingRepository sharingRepository;
-    private final CommentService commentService;
     private final LikeRepository likeRepository;
     private final S3Uploader s3Uploader;
 
@@ -56,8 +55,7 @@ public class SharingService {
     }
 
     public void postSharing(SharingRequestDto sharingRequestDto, MultipartFile postImage) throws IOException {
-        //Member currentMember = loadCurrentMember();
-        Member currentMember = memberRepository.findById(1);
+        Member currentMember = loadCurrentMember();
 
         Sharing newSharing = new Sharing(sharingRequestDto, currentMember);
         newSharing.setImage(s3Uploader.upload(postImage, "sharing"));
@@ -77,7 +75,7 @@ public class SharingService {
 
     public String pushLikeSharing(Long postId) {
         Member currentMember = loadCurrentMember();
-        //Member currentMember = memberRepository.findById(1);
+
         Sharing currentSharing = sharingRepository.findById(postId);
         Optional<LikedSharing> existsLike = likeRepository.findByPostIdAndUserId(currentSharing, currentMember);
 
