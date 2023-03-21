@@ -1,4 +1,4 @@
-import './detail_purchase.css';
+import './detail_groupBuying.css';
 import moment from 'moment';
 import 'moment/locale/ko';
 import React  from 'react';
