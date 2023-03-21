@@ -5,11 +5,11 @@ import './index.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-function SharingList() {
+export default function GroupBuyingList() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    axios.get('http://3.36.144.128:8080/api/sharing')
+    axios.get('http://3.36.144.128:8080/api/groupBuying')
       .then(response => {
         setItems(response.data.map(item => {
           const date = new Date(item.postTime);
@@ -21,9 +21,9 @@ function SharingList() {
   }, [])
 
   return (
-    <div className='sharing_list'>
+    <div className='groupbuying_list'>
       {items.map((item, index) => (
-        <Link to={`/sharing/${item.id}`} style={{ textDecoration: 'none' }}>
+        <Link to={`/groupBuying/${item.id}`} style={{ textDecoration: 'none' }}>
           <div key={index} className='item'>
             <div className='item_image'>
               <img src={item.image} alt='이미지 불러오기 실패' />
@@ -36,14 +36,6 @@ function SharingList() {
           </div>
         </Link>
       ))}
-      
-      <div className='writing'>
-        <Link to="/postSharing" className='postsharing_link'>
-          <img src='assets/img/writingIcon.png' className='writingIcon' />
-        </Link>
-      </div>
     </div>
   )
 }
-
-export default SharingList;

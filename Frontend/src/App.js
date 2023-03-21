@@ -50,7 +50,7 @@ function App() {
 
    
         <Route path="/sharing" element={<SharingPage />} />
-        <Route path="/detailSharing" element={<DetailSharing />} />
+        <Route path="/sharing/:postId" element={<DetailSharing />} />
         <Route path="/postSharing" element={<PostSharing />} />
         
         <Route path="/dutchPay" element={<DutchPayPage />} />
@@ -58,7 +58,7 @@ function App() {
 
 
         <Route path="/groupBuying" element={<GroupBuyingPage />} />
-        <Route path="/detailGroupBuying" element={<DetailGroupBuying />} />
+        <Route path="/groupBuying/:postId" element={<DetailGroupBuying />} />
         <Route path="/postGroupBuying" element={<PostgroupBuying />} />
 
         <Route path="/myPage" element={<MyPage />} />
