@@ -2,11 +2,34 @@ import './detail_groupBuying.css';
 import moment from 'moment';
 import 'moment/locale/ko';
 import React  from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
+import axios from "axios";
+import { useParams } from 'react-router-dom';
+import Chatroom from '../../components/chatting';
+
 
 function DetailGroupBuying() {
     const nowTime = moment().format('YYYY-MM-DD');
+    const { postId } = useParams();
+    const [chatrooms, setChatrooms] =useState([]);
+    const [userId, setUserId] = useState([]);
+  
 
+    function ChatroomItem(props) {
+      const userId = props.userId;
+      if (!Array.isArray(userId) || userId.length === 0) {
+        return null;
+      }
+      return userId.map(user => <Chatroom key={user.userId} userId={user.userId} />);
+    }
+    
+
+    function addChatroom() {
+      const newUserId = [{ userId: userId[0].userId }];
+      setChatrooms([...chatrooms, <ChatroomItem userId={newUserId} />]);
+    }
+    
     let [userName] = useState('');
     let [comment, setComment] = useState(''); //사용자가 입력하고 있는 댓글
     let [feedComments, setFeedComments] = useState([]); //댓글 리스트
@@ -32,7 +55,34 @@ function DetailGroupBuying() {
             
         );
     }
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get('http://3.36.144.128:8080/api/groupBuying/');
+          const postIds = response.data.map((content) => content.id);
+       
     
+          const requests = postIds.map((postId) => 
+            axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)  
+          );
+          const responses = await Promise.all(requests);
+          const contents = responses.map((response) => response.data);
+          
+          setUserId(contents);
+          
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }, []);
+    
+    useEffect(() => {
+      console.log(userId);
+
+     
+    }, [userId]);
+
     return(
       <div className="detail_purchase">
        
@@ -104,9 +154,22 @@ function DetailGroupBuying() {
             <div className="IngredientStatus"/>
             </div>
 
+     
+
             <div className="LowerUserHelp">
               <button className = "like">찜</button>
               <button className = "application">신청하기</button>
+              <div className='sendMessage'>
+              {userId && (
+          <Link to={{ pathname: `/chatting` }}>
+            <button className='SendMessage' onClick={addChatroom}>쪽지</button>
+          { chatrooms.map((chatroom, index) => (
+            <ChatroomItem key={index} userId={chatroom} />
+          ))}
+        </Link>
+      )}
+          </div>
+
             </div>   
 
 
@@ -159,4 +222,4 @@ function DetailGroupBuying() {
         )
 }
 
-export default DetailGroupBuying
+export default DetailGroupBuying;
