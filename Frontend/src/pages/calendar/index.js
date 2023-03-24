@@ -4,7 +4,7 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
 import { Icon } from '@iconify/react';
 import "./index.css";
-import Dairy from "../../components/dairy";
+import Diary from "../../components/diary";
 
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
     return (
@@ -103,7 +103,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
         );
         days = [];
     }
-    return <div className="body">{rows} {selectedDay && <Dairy date={formattedSelectedDay} />}</div>;
+    return <div className="body">{rows} {selectedDay && <Diary date={formattedSelectedDay} />}</div>;
 };
 
 
