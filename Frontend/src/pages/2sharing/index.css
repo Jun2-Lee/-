@@ -27,14 +27,14 @@
   position: absolute;
 }
 
-.search {
+.sharing_body_search {
   width: 54rem;
   height: 1.938rem;
   grid-column: 1 / 3;
   background-color:  var(--background);
   
 }
-.categoryBar {
+.sharing_body_categoryBar {
   background-color: var(--sub_orange);
   width: 9.25rem;
   height: 42.5rem;

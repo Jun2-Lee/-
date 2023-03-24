@@ -1,7 +1,8 @@
+/*
 import React, { Component } from "react";
 import "./index.css";
 import searchIcon from "../../assets/img/searchIcon.png";
-import DummyList from "../../components/sharingList"
+//import DummyList from "../../components/sharingList"
 class Search extends Component {
   
   constructor(){
@@ -70,3 +71,5 @@ class Search extends Component {
 }};
 
 export default Search;
+
+*/
