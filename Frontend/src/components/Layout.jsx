@@ -100,12 +100,12 @@ function Layout() {
               <Link to="/groupBuying">공동구매 목록</Link>
             </article>
             <article className="hover_myPage">
-              <Link to="/">내 프로필</Link>
-              <Link to="/">쪽지함</Link>
+              <Link to="/myPage">내 프로필</Link>
+              <Link to="/chatting">쪽지함</Link>
               <Link to="/myWriting">내가 쓴 글</Link>
               <Link to="/">참여 목록</Link>
               <Link to="/">찜 목록</Link>
-              <Link to="/">캘린더</Link>
+              <Link to="/calendar">캘린더</Link>
             </article>
           </div>
         )}
