@@ -11,24 +11,7 @@ import Chatroom from '../../components/chatting';
 
 
 function DetailGroupBuying() {
-    const nowTime = moment().format('YYYY-MM-DD');
-    const [chatrooms, setChatrooms] =useState([]);
     const [userId, setUserId] = useState([]);
-  
-
-    function ChatroomItem(props) {
-      const userId = props.userId;
-      if (!Array.isArray(userId) || userId.length === 0) {
-        return null;
-      }
-      return userId.map(user => <Chatroom key={user.userId} userId={user.userId} />);
-    }
-    
-
-    function addChatroom() {
-      const newUserId = [{ userId: userId[0].userId }];
-      setChatrooms([...chatrooms, <ChatroomItem userId={newUserId} />]);
-    }
   
 
     let [userName] = useState('');
@@ -214,10 +197,8 @@ function DetailGroupBuying() {
               <div className='sendMessage'>
               {userId && (
           <Link to={{ pathname: `/chatting` }}>
-            <button className='SendMessage' onClick={addChatroom}>쪽지</button>
-          { chatrooms.map((chatroom, index) => (
-            <ChatroomItem key={index} userId={chatroom} />
-          ))}
+            <button className='SendMessage' >쪽지</button>
+         
         </Link>
       )}
           </div>
