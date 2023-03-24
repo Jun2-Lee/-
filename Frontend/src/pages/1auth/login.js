@@ -61,7 +61,7 @@ export default function Login() {
     })
   }
   
-  const JWT_EXPIRY_TIME = 0.01 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
+  const JWT_EXPIRY_TIME = 0.1 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
 
   function onLoginSuccess(response) {
       const { accessToken, refreshToken } = response.data;
