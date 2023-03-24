@@ -1,9 +1,19 @@
-import './detail_groupBuying.css'
-import axios from 'axios'
-import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+
+import './detail_groupBuying.css';
+import moment from 'moment';
+import 'moment/locale/ko';
+import React  from 'react';
+import {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
+import axios from "axios";
+import { useParams, useNavigate } from 'react-router-dom';
+import Chatroom from '../../components/chatting';
+
 
 function DetailGroupBuying() {
+    const [userId, setUserId] = useState([]);
+  
+
     let [userName] = useState('');
     let [comment, setComment] = useState(''); //사용자가 입력하고 있는 댓글
     let [feedComments, setFeedComments] = useState([]); //댓글 리스트
@@ -29,6 +39,8 @@ function DetailGroupBuying() {
             
         );
     }
+
+  
 
     //지수
     const [data, setData] = useState({});
@@ -61,7 +73,34 @@ function DetailGroupBuying() {
           console.log(error)
         });
     }
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get('http://3.36.144.128:8080/api/groupBuying/');
+          const postIds = response.data.map((content) => content.id);
+        
+          const requests = postIds.map((postId) => 
+            axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)  
+          );
+          const responses = await Promise.all(requests);
+          const contents = responses.map((response) => response.data);
+          
+          setUserId(contents);
+          
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }, []);
     
+    useEffect(() => {
+      console.log(userId);
+
+     
+    }, [userId]);
+
     return(
       <div className="detail_purchase">
        
@@ -150,9 +189,20 @@ function DetailGroupBuying() {
             </div>
             </div>
 
+     
+
             <div className="LowerUserHelp">
               <button className = "like">찜</button>
               <button className = "application">신청하기</button>
+              <div className='sendMessage'>
+              {userId && (
+          <Link to={{ pathname: `/chatting` }}>
+            <button className='SendMessage' >쪽지</button>
+         
+        </Link>
+      )}
+          </div>
+
             </div>   
 
 
@@ -205,4 +255,4 @@ function DetailGroupBuying() {
         )
 }
 
-export default DetailGroupBuying
+export default DetailGroupBuying;

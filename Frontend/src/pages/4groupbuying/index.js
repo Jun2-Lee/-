@@ -1,4 +1,5 @@
 import React from "react";
+import {useState, useEffect} from 'react';
 import Search from "../../components/search";
 import CategoryBar from "../../components/categoryBar";
 import GroupBuyingList from '../../components/groupbuyingList'
@@ -6,6 +7,9 @@ import "./index.css";
 
 
 function Groupbuying() {
+
+
+
   return (
     <div className="groupbuying_body">
       <section className="groupbuying_search">
