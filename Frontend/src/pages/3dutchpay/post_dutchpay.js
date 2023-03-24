@@ -31,7 +31,7 @@ function PostDutchpay() {
     content: '',
   });
 
-  const { store, category, deliveryCost, limitMember, deadLine, content } = dutchpayRequestDto;
+  const { store, category, address, deliveryCost, limitMember, deadLine, content } = dutchpayRequestDto;
 
   const onChange = (e) => {
     const { value, name } = e.target;
