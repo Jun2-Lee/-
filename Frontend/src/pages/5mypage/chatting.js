@@ -5,12 +5,9 @@ import './chatting.css';
 import '../4groupbuying/detail_groupBuying';
 
 
-function Chatting ({userId, chatrooms}) {
-  const [visibleChatroomId, setVisibleChatroomId] = useState(null);
+function Chatting () {
 
-  const handleChatroomClick = (chatroomId) => {
-    setVisibleChatroomId(chatroomId === visibleChatroomId ? null : chatroomId);
-  };
+
 
   return (
     <div>
@@ -23,21 +20,20 @@ function Chatting ({userId, chatrooms}) {
       <div className='chattingContainer'>
         쪽지
         <div className='openChat'>
-          {chatrooms.map((chatroom) => (
-            <div key={chatroom.id}>
+         
               <button
                 type='button'
                 className='Openchat'
-                onClick={() => handleChatroomClick(chatroom.id)}
+              
               >
                 <img className="chatProfileImg" src='assets/img/default_profile.png' />
               </button>
-              {visibleChatroomId === chatroom.id && <Chatroom userId={userId} chatroom={chatroom} />}
+             
             </div>
-          ))}
+          <Chatroom/>
         </div>
       </div>
-    </div>
+
   );
 }
 
