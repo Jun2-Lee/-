@@ -76,9 +76,7 @@ function PostDutchpay() {
 
           <div className="DeliveryAddress">
             <label className="form-label">배달 주소</label>
-            <input 
-              className="deliveryAddress"
-              />
+            <input input name='address' onChange={onChange} value={address} className="deliveryAddress" />
             <button type="submit" className="searchAddress">주소 검색</button>
           </div>
 
