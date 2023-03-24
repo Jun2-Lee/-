@@ -12,6 +12,8 @@ function DetailSharing() {
   const [expiry, setExpiry] = useState('');
   const [deadLine, setDeadline] = useState('');
 
+  //header 
+  //axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
   useEffect(() => {
     axios.get(`http://3.36.144.128:8080/api/sharing/${postId}`)
       .then(response => {
