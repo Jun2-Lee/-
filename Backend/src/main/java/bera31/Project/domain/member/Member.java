@@ -1,6 +1,7 @@
 package bera31.Project.domain.member;
 
-import bera31.Project.domain.message.Message;
+import bera31.Project.domain.page.intersection.LikedGroupBuying;
+import bera31.Project.domain.page.intersection.LikedSharing;
 import bera31.Project.domain.schedule.Schedule;
 import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
@@ -33,42 +34,32 @@ public class Member {
     private String dong;
     private String gu;
     private double manner;
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Sharing> sharingList = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GroupBuying> buyingList = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DutchPay> dutchPayList = new ArrayList<>();
 
-    /*
-    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
-    private List<Message> sendedMessages = new ArrayList<>();
-    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
-    private List<Message> receivedMessages = new ArrayList<>();
-     */
-    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GroupBuyingIntersection> participantingGroupBuying = new ArrayList<>();
-    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DutchPayIntersection> participantingDutchPay = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "MEMBER_ID")
-    private List<Sharing> favoriteSharing = new ArrayList<>();
-    @OneToMany
-    @JoinColumn(name = "MEMBER_ID")
-    private List<GroupBuying> favoriteBuying = new ArrayList<>();
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<LikedSharing> likedSharings = new ArrayList<>();
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<LikedGroupBuying> likedGroupBuyings = new ArrayList<>();
 
-    @Transient
+    /*@Transient
     private List<String> favoriteFood = new ArrayList<>();
+    // 얘는 영속적인 값이 아니게 되는데?
+    // 이걸 어떻게 처리를 할 것인가?*/
 
-    /*
-    @OneToMany(mappedBy = "member1")
-    private List<Room> roomList = new ArrayList<>();
-    */
-
-    @OneToMany
-    @JoinColumn(name = "MEMBER_ID")
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Schedule> memoList = new ArrayList<>();
 
     public Member(String email, String password, String nickname, String dong, String gu) {
@@ -78,30 +69,32 @@ public class Member {
         this.dong = dong;
         this.gu = gu;
         this.authority = Authority.ROLE_USER;
+        this.provider = Provider.NAONG;
     }
-    /*
-    public void sendMessage(Message message){
-        this.sendedMessages.add(message);
-    }
-    public void receiveMessage(Message message){
-        this.sendedMessages.add(message);
-    }
-     */
 
     public void postGroupBuying(GroupBuying groupBuying) {
-        buyingList.add(groupBuying);
+        this.buyingList.add(groupBuying);
     }
 
-    public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection) {
-        participantingGroupBuying.add(groupBuyingIntersection);
+    public void postSharing(Sharing sharing) {
+        this.sharingList.add(sharing);
     }
 
     public void postDutchPay(DutchPay dutchPay) {
-        dutchPayList.add(dutchPay);
+        this.dutchPayList.add(dutchPay);
     }
 
-    public void participantDutchPay(DutchPayIntersection dutchPayIntersection){
-        participantingDutchPay.add(dutchPayIntersection);
+    public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection) {
+        this.participantingGroupBuying.add(groupBuyingIntersection);
+    }
+    public void participantDutchPay(DutchPayIntersection dutchPayIntersection) {
+        this.participantingDutchPay.add(dutchPayIntersection);
+    }
+    public void pushLikeGroupBuying(LikedGroupBuying likedGroupBuying) {
+        this.likedGroupBuyings.add(likedGroupBuying);
+    }
+    public void pushLikeSharing(LikedSharing likedSharing) {
+        this.likedSharings.add(likedSharing);
     }
 
     public void changePassword(String password) {
@@ -113,35 +106,20 @@ public class Member {
         this.gu = gu;
     }
 
-    public void changeImage(String image) {
+    public void setKakaoMemberInfo(String image) {
         this.profileImage = image;
+        this.provider = Provider.KAKAO;
     }
 
-    public void changeFavIngredients(List<String> favIngredients) {
-        this.favoriteFood = favIngredients;
+    public void setKakaoMemberNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public void addMemo(Schedule schedule) {
         this.memoList.add(schedule);
     }
 
-    public void addSharing(Sharing sharing) {
-        this.sharingList.add(sharing);
-    }
-
-    public void addFavoriteSharing(Sharing sharing) {
-        this.favoriteSharing.add(sharing);
-    }
-
-    public void cancelFavoriteSharing(Sharing sharing) {
-        this.favoriteSharing.remove(sharing);
-    }
-
-    public void addFavoriteGroupBuying(GroupBuying groupBuying) {
-        this.favoriteBuying.add(groupBuying);
-    }
-
-    public void cancelFavoriteGroupBuying(GroupBuying groupBuying) {
-        this.favoriteBuying.remove(groupBuying);
-    }
+   /* public void changeFavIngredients(List<String> favIngredients) {
+        this.favoriteFood = favIngredients;
+    }*/
 }

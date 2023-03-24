@@ -11,7 +11,7 @@ function Chatting ({userId, chatrooms}) {
   const handleChatroomClick = (chatroomId) => {
     setVisibleChatroomId(chatroomId === visibleChatroomId ? null : chatroomId);
   };
-  {console.log(chatrooms)}
+
   return (
     <div>
       <div className='upper_note'>

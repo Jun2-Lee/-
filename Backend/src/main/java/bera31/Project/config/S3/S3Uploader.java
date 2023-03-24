@@ -24,13 +24,13 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException{
+    public String upload(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("파일 변환에 실패했습니다."));
         return upload(uploadFile, dirName);
     }
 
-    private String upload(File uploadFile, String dirName){
+    private String upload(File uploadFile, String dirName) {
         String fileName = dirName + "/" + uploadFile.getName();
         String uploadImageUrl = putS3(uploadFile, fileName);
 
@@ -38,21 +38,20 @@ public class S3Uploader {
         return uploadImageUrl; // DB에 저장되는건 End point
     }
 
-    public void deleteRemoteFile(String filePath){
+    public void deleteRemoteFile(String filePath) {
         log.info(filePath);
         amazonS3Client.deleteObject(bucket, filePath);
     }
 
-    private void removeLocalFile(File target){
-        if(target.delete()){
+    private void removeLocalFile(File target) {
+        if (target.delete()) {
             log.info("파일이 정상적으로 삭제되었습니다.");
-        }
-        else {
+        } else {
             log.info("파일을 정상적으로 삭제하지 못했습니다!");
         }
     }
 
-    private String putS3(File uploadFile, String fileName){
+    private String putS3(File uploadFile, String fileName) {
         // S3 Bucket에 저장 후 Endpoint를 받아오는 함수
         amazonS3Client.putObject(
                 new PutObjectRequest(bucket, fileName, uploadFile)
@@ -60,9 +59,9 @@ public class S3Uploader {
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
-    private Optional<File> convert(MultipartFile file) throws  IOException {
+    private Optional<File> convert(MultipartFile file) throws IOException {
         File convertFile = new File(System.getProperty("user.dir") + "/" + file.getOriginalFilename());
-        if(convertFile.createNewFile()) {
+        if (convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(file.getBytes());
             }

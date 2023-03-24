@@ -11,7 +11,6 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class MemberRepository {
-
     private final EntityManager em;
 
     public Member save(Member member) {
@@ -22,7 +21,6 @@ public class MemberRepository {
     public void delete(Member member) {
         em.remove(member);
     }
-
 
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)

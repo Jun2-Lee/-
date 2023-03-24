@@ -1,6 +1,10 @@
 package bera31.Project.config.jwt;
 
 import bera31.Project.domain.dto.responsedto.AuthTokenDto;
+import bera31.Project.exception.ErrorResponse;
+import bera31.Project.exception.ErrorResponseEntity;
+import bera31.Project.exception.exceptions.ExpiredTokenException;
+import bera31.Project.exception.exceptions.UserNotFoundException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -28,19 +33,21 @@ public class JwtTokenProvider {
     private static final long ACCESS_TOKEN_LIFETIME = 15 * 60 * 1000;
     private static final long REFRESH_TOKEN_LIFETIME = 14 * 24 * 60 * 60 * 1000;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey){
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.secretKey = Keys.hmacShaKeyFor(keyBytes);
     } // 설정 File의 Secret Key를 해독하여 저장
 
-    public AuthTokenDto generateToken(Authentication authentication){
+    public AuthTokenDto generateToken(Authentication authentication) {
         // 유저에 대한 권한 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
+
         Date accessTokenValidTime = new Date(now + ACCESS_TOKEN_LIFETIME);
+
         String accessToken = Jwts.builder() // Access Token 생성
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -57,10 +64,10 @@ public class JwtTokenProvider {
         return new AuthTokenDto("Bearer", accessToken, refreshToken, accessTokenValidTime);
     }
 
-    public Authentication getAuthentication(String token){
+    public Authentication getAuthentication(String token) {
         Claims claims = parseClaims(token);
 
-        if(claims.get("auth") == null){
+        if (claims.get("auth") == null) {
             throw new RuntimeException("권한 정보가 없는 Token 입니다.");
         }
 
@@ -76,17 +83,17 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    public boolean validateToken(String token){
-        try{
+    public boolean validateToken(String token) {
+        try {
             Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
             return true;
-        } catch (SecurityException | MalformedJwtException e){
+        } catch (SecurityException | MalformedJwtException e) {
             log.info("올바르지 않은 서명의 JWT Token 입니다.", e);
-        } catch (ExpiredJwtException e){
-            log.info("만료된 JWT 입니다.", e);
-        } catch (UnsupportedJwtException e){
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredTokenException(ErrorResponse.EXPIRED_TOKEN);
+        } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 형식의 JWT Token 입니다.", e);
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             log.info("JWT Claims가 비어있습니다.", e);
         }
 
@@ -94,10 +101,10 @@ public class JwtTokenProvider {
     }
 
     // 토큰 복호화 과정
-    public Claims parseClaims(String accessToken){
-        try{
+    public Claims parseClaims(String accessToken) {
+        try {
             return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(accessToken).getBody();
-        } catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
     }

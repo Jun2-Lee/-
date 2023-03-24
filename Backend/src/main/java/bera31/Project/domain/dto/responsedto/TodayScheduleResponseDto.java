@@ -7,7 +7,7 @@ import lombok.Getter;
 public class TodayScheduleResponseDto {
     String title;
 
-    public TodayScheduleResponseDto(Schedule schedule){
+    public TodayScheduleResponseDto(Schedule schedule) {
         this.title = schedule.getTitle();
     }
 }

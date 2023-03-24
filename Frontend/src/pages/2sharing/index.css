@@ -45,17 +45,5 @@
   width: 43.625rem;
   height: 42.5rem;
   border-radius: 0.313rem;
-  margin-left: 170px;
-  margin-top: 0px;
-  position:relative;
-}
-
-.writing {
-  text-align: right;
-  margin-top: -50px;
-  margin-right: 25PX;
-}
-
-.writingIcon {
-  width: 2.813rem;
+  margin-bottom: 5.125rem;
 }

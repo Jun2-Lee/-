@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 
-function Login() {
+export default function Login() {
   const REST_API_KEY = "e14465c8dab22961a692f89cdcfb540b";
   const REDIRECT_URI = "http://localhost:3000/oauth/callback/kakao";
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
@@ -38,12 +38,45 @@ function Login() {
             {
               headers: { 'Content-Type': 'application/json'}
             })
-    .then(function(response) {
-      console.log(response)
-      navigate('/')
-    }) .catch(function(error) {
+    .then(onLoginSuccess) 
+    .catch(function(error) {
       console.log(error)
     })
+  }
+
+  function onSilentRefresh() {
+    //local storage에 저장된 토큰 값 가져오기
+    const accessToken = localStorage.getItem('access_token');
+    const refreshToken = localStorage.getItem('refresh_token');
+    axios.post("http://3.36.144.128:8080/api/auth/reissue", 
+            {
+              accessToken: accessToken,
+              refreshToken: refreshToken
+            }, 
+            {
+              headers: { 'Content-Type': 'application/json'}
+            })
+    .then(onLoginSuccess) 
+    .catch(function(error) {
+      console.log(error)
+    })
+  }
+  
+  const JWT_EXPIRY_TIME = 0.25 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
+
+  function onLoginSuccess(response) {
+      const { accessToken, refreshToken } = response.data;
+      // local storage에 at, rt 저장
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+
+      // accessToken 설정
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
+      // accessToken 만료하기 1분 전에 로그인 연장
+      setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
+      navigate('/')
+      console.log(response)
   }
 
   return (
@@ -56,7 +89,7 @@ function Login() {
         </div>
 
         <div className="GetPW">
-          <label>비밀번호</label>
+          <label id="getPW">비밀번호</label>
           <br></br>
           <input name='password' onChange={onChange} value={password} className="getPW"/>
         </div>
@@ -66,13 +99,7 @@ function Login() {
         </div>
 
         <div className="UserHelp">
-          <a href="#" id="findPW">비밀번호 찾기</a>
-          <a href="#" id="userHelp"> | </a>
           <a href="/signup" id="userSignUp">회원가입</a>
-        </div>
-
-        <div className="naverLogin">
-          <button className="NAVER">네이버로 로그인</button>
         </div>
 
         <div className="kakaoLogin">
@@ -81,12 +108,7 @@ function Login() {
           </Link>
         </div>
 
-        <div className="googleLogin">
-          <button className="GOOGLE">구글로 로그인</button>
-        </div>
       </div>
     </div>
   );
-} 
-
-export default Login;
+  } 

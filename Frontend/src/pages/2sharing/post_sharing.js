@@ -99,19 +99,47 @@ function PostSharing() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const form = new FormData()
-    form.append('postImage', postImage)
-    form.append('sharingRequestDto', new Blob([JSON.stringify(sharingRequestDto)], {
-      type: "application/json"
-    }))
+    if (title.length === 0) {
+      alert("제목을 입력해주세요")
+    }
+    else if (category.length === 0) {
+      alert("카테고리를 선택해주세요")
+    }
+    else if (product.length === 0) {
+      alert("품목을 선택해주세요")
+    }
+    else if (postImage.length === 0) {
+      alert("사진을 업로드 해주세요")
+    }
+    else if (gu.length === 0) {
+      alert("사는 동네를 선택해주세요")
+    }
+    else if (dong.length === 0) {
+      alert("동을 선택해주세요")
+    }
+    else if (expiry.length === 0) {
+      alert("유통기한을 선택해주세요")
+    }
+    else if (deadLine.length === 0) {
+      alert("마감일을 선택해주세요")
+    }
+    
+    else {
+      const form = new FormData()
+      form.append('postImage', postImage)
+      form.append('sharingRequestDto', new Blob([JSON.stringify(sharingRequestDto)], {
+        type: "application/json"
+      }))
 
-    axios.post("http://3.36.144.128:8080/api/sharing", form, {headers})
-      .then(function(response) {
-        console.log(response)
-        navigate('/sharing')
-      }) .catch(function(error) {
-        console.log(error)
-      })
+      axios.post("http://3.36.144.128:8080/api/sharing", form, {headers})
+        .then(function(response) {
+          console.log(response)
+          alert("등록되었습니다")
+          navigate('/sharing')
+        }) .catch(function(error) {
+          console.log(error)
+        })
+      }
     }
 
     return (
