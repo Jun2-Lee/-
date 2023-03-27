@@ -1,6 +1,6 @@
 
 import './login.css';
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route,  Link} from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
@@ -26,6 +26,22 @@ export default function Login() {
   const { email, password } = loginInput; // 비구조화 할당을 통해 값 추출
 
   const navigate = useNavigate();
+
+  const getLoginInfo = () => {
+    const accessToken = localStorage.getItem('accessToken')
+    const refreshToken = localStorage.getItem('refreshToken')
+    return { accessToken, refreshToken }
+  }
+
+  // 컴포넌트에서 로그인 정보를 가져와 상태값을 업데이트하는 useEffect 훅
+  const [accessToken, setAccessToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
+
+  useEffect(() => {
+    const { accessToken, refreshToken } = getLoginInfo();
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
+  }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -80,7 +96,7 @@ export default function Login() {
   }
   onSilentRefresh.timeoutId = null;
 
-  const JWT_EXPIRY_TIME = 0.1 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
+  const JWT_EXPIRY_TIME = 0.25 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
 
   function onLoginSuccess(response) {
       const { accessToken, refreshToken } = response.data;
@@ -95,7 +111,6 @@ export default function Login() {
 
       // accessToken 만료하기 1분 전에 로그인 연장
       setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
-      navigate('/')
       console.log(response)
   }
 
