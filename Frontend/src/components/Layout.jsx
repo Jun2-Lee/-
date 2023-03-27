@@ -24,6 +24,9 @@ function Layout() {
     })
   }
 
+  const isLoggedIn = localStorage.getItem('accessToken') !== null;
+  console.log(isLoggedIn)
+
   return (
     <>
       <header
@@ -59,9 +62,16 @@ function Layout() {
             
           />
 
+          <div>
+                {isLoggedIn ? (
+                  <p>로그인 되었습니다.</p>
+                ) : (
+                  <p>로그인을 해주세요.</p>
+                )}
+              </div>
+
           <Link className="profile_nickName" to="/editProfile">
             이름
-
           </Link>
           <Link className="profile_link" id="mypageLink" to="/myPage">
             마이페이지
