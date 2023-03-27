@@ -58,7 +58,8 @@ public class SecurityConfig {
                 .antMatchers("/api/auth/**", "/", "/swagger-ui/**",
                         "/v3/api-docs", "/swagger-resources/**", "/naong-api",
                         "/swagger-ui.html", "/api/groupBuying", "/api/sharing", "/api/dutchPay",
-                        "/index.html", "/favicon.ico", "/css/**", "/fonts/**", "/img/**", "/js/**").permitAll()
+                        "/index.html", "/favicon.ico", "/css/**", "/fonts/**", "/img/**", "/js/**",
+                        "/assets/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()

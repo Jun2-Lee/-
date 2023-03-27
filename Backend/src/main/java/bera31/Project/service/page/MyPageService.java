@@ -101,9 +101,9 @@ public class MyPageService {
     }
 
     public List<GroupBuyingListResponseDto> showMyGroupBuying() {
-        Member findedMember = loadCurrentMember();
+        Member currentMember = loadCurrentMember();
 
-        return findedMember.getBuyingList().stream()
+        return currentMember.getBuyingList().stream()
                 .map(GroupBuyingListResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -127,9 +127,9 @@ public class MyPageService {
     }
 
     public List<DutchPayListResponseDto> showParticipantingDutchPay() {
-        Member findedMember = loadCurrentMember();
+        Member currentMember = loadCurrentMember();
 
-        return findedMember.getParticipantingDutchPay().stream()
+        return currentMember.getParticipantingDutchPay().stream()
                 .map(DutchPayIntersection::getDutchPay)
                 .map(DutchPayListResponseDto::new)
                 .collect(Collectors.toList());

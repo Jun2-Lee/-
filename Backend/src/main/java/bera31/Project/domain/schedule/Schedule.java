@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -30,12 +31,13 @@ public class Schedule {
     private String place;
     private String content;
 
-    public Schedule(ScheduleRequestDto scheduleRequestDto) {
+    public Schedule(ScheduleRequestDto scheduleRequestDto, Member member) {
         this.title = scheduleRequestDto.getTitle();
         this.targetDate = scheduleRequestDto.getTargetDate();
         this.time = scheduleRequestDto.getTime();
         this.place = scheduleRequestDto.getPlace();
         this.content = scheduleRequestDto.getContent();
+        this.author = member;
     }
 
     public void updateSchedule(ScheduleRequestDto scheduleRequestDto) {

@@ -43,13 +43,6 @@ public class GroupBuyingService {
     private final IntersectionRepository intersectionRepository;
     private final LikeRepository likeRepository;
 
-/*    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
-        return groupBuyingRepository.findByKeyword(keyword)
-                .stream()
-                .map(GroupBuyingListResponseDto::new)
-                .collect(Collectors.toList());
-    }*/
-
     @Transactional(readOnly = true)
     public List<GroupBuyingListResponseDto> findAllGroupBuying() {
         List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
@@ -70,8 +63,7 @@ public class GroupBuyingService {
     }
 
     public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
-        //Member findedMember = loadCurrentMember();
-        Member currentMember = memberRepository.findById(1);
+        Member currentMember = loadCurrentMember();
 
         GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, currentMember);
         newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
@@ -92,8 +84,7 @@ public class GroupBuyingService {
     }
 
     public Long participantGroupBuying(Long postId) {
-        //Member currentMember = loadCurrentMember();
-        Member currentMember = memberRepository.findById(1);
+        Member currentMember = loadCurrentMember();
         GroupBuying currentPost = groupBuyingRepository.findById(postId);
 
         if (currentPost.getLimitMember() <= currentPost.getMemberList().size())
@@ -108,7 +99,6 @@ public class GroupBuyingService {
 
     public String pushLikeGroupBuying(Long postId) {
         Member currentMember = loadCurrentMember();
-        //Member currentMember = memberRepository.findById(1);
         GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
         Optional<LikedGroupBuying> existsLike = likeRepository.findByPostIdAndUserId(currentGroupBuying, currentMember);
 

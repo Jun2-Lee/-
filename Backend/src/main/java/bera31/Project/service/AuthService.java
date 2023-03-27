@@ -86,6 +86,9 @@ public class AuthService {
     public AuthTokenDto reissue(TokenRequestDto tokenRequestDto) {
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
         String refreshToken = redisUtility.getValues(authentication.getName());
+        log.warn("ID : " + authentication.getName());
+        log.warn("redis token : " + redisUtility.getValues(authentication.getName()));
+        log.warn("request token : " + tokenRequestDto.getRefreshToken());
 
         if (refreshToken == null)
             throw new LoggedOutUserException(ErrorResponse.LOGGED_OUT_USER);
@@ -93,7 +96,8 @@ public class AuthService {
             throw new TokenMismatchException(ErrorResponse.TOKEN_MISMATCH);
 
         AuthTokenDto authTokenDto = tokenProvider.generateToken(authentication);
-        redisUtility.setValues(authentication.getName(), refreshToken, REFRESH_TOKEN_LIFETIME);
+        redisUtility.setValues(authentication.getName(), authTokenDto.getRefreshToken(), REFRESH_TOKEN_LIFETIME);
+        log.warn("Redis result : " + redisUtility.getValues(authentication.getName()));
         return authTokenDto;
     }
 

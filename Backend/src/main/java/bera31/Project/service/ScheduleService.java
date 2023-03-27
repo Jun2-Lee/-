@@ -27,7 +27,7 @@ public class ScheduleService {
     public Long postSchedule(ScheduleRequestDto scheduleRequestDto) {
         Member currentMember = loadCurrentMember();
 
-        Schedule newMemo = new Schedule(scheduleRequestDto);
+        Schedule newMemo = new Schedule(scheduleRequestDto, currentMember);
         currentMember.addMemo(newMemo);
         return scheduleRepository.save(newMemo);
     }

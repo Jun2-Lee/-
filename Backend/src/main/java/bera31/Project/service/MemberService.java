@@ -34,24 +34,24 @@ public class MemberService {
     private final RedisUtility redisUtility;
 
     public String changePassword(String password) {
-        Member findedMember = loadCurrentMember();
+        Member currentMember = loadCurrentMember();
 
-        if (findedMember.getProvider().equals(Provider.KAKAO))
+        if (currentMember.getProvider().equals(Provider.KAKAO))
             throw new KakaoUserAccessException(ErrorResponse.KAKAO_ACCESS_DENIED);
 
         String encodedPassword = passwordEncoder.encode(password);
-        findedMember.changePassword(encodedPassword);
+        currentMember.changePassword(encodedPassword);
         return "비밀번호가 변경되었습니다!";
     }
 
     public String changeMyInfo(EditInfoRequestDto editInfoRequestDto, MultipartFile profileImage) throws IOException {
-        Member findedMember = loadCurrentMember();
+        Member currentMember = loadCurrentMember();
 
-        s3Uploader.deleteRemoteFile(findedMember.getProfileImage().substring(52));
-        findedMember.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
+        s3Uploader.deleteRemoteFile(currentMember.getProfileImage().substring(52));
+        currentMember.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
 
-        findedMember.changeAddress(editInfoRequestDto.getDong(), editInfoRequestDto.getGu());
-        //findedMember.changeFavIngredients(editInfoRequestDto.getFavIngredients());
+        currentMember.changeAddress(editInfoRequestDto.getDong(), editInfoRequestDto.getGu());
+        //currentMember.changeFavIngredients(editInfoRequestDto.getFavIngredients());
         return "정보가 수정되었습니다!";
     }
 
