@@ -21,8 +21,8 @@ public class GroupBuyingListResponseDto {
     String nickname;
     String title;
     String category;
+    String dong;
     LocalDateTime postTime;
-    Address address;
     LocalDateTime deadLine;
     int limit;
     int currParticipant;
@@ -35,6 +35,7 @@ public class GroupBuyingListResponseDto {
         this.nickname = author.getNickname();
         this.title = groupBuying.getTitle();
         this.category = groupBuying.getCategory();
+        this.dong = groupBuying.getDong();
         this.postTime = groupBuying.getPostTime();
         this.deadLine = groupBuying.getDeadLine();
         this.limit = groupBuying.getLimitMember();

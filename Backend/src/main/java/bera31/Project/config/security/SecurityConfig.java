@@ -40,13 +40,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers(
-                "/index.html", "/favicon.ico", "/css/**", "/fonts/**", "/img/**", "/js/**"
-        );
-    }
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable() // JWT를 써야하므로, CSRF Token 비활성화
 
@@ -64,7 +57,8 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                 .antMatchers("/api/auth/**", "/", "/swagger-ui/**",
                         "/v3/api-docs", "/swagger-resources/**", "/naong-api",
-                        "/swagger-ui.html", "/**/*").permitAll()
+                        "/swagger-ui.html", "/api/groupBuying", "/api/sharing", "/api/dutchPay",
+                        "/index.html", "/favicon.ico", "/css/**", "/fonts/**", "/img/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()

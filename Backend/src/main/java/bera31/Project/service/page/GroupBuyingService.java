@@ -42,7 +42,6 @@ public class GroupBuyingService {
     private final MemberRepository memberRepository;
     private final IntersectionRepository intersectionRepository;
     private final LikeRepository likeRepository;
-    private final CommentService commentService;
 
 /*    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
         return groupBuyingRepository.findByKeyword(keyword)
@@ -54,7 +53,10 @@ public class GroupBuyingService {
     @Transactional(readOnly = true)
     public List<GroupBuyingListResponseDto> findAllGroupBuying() {
         List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
-        checkExpiredPost(findedGroupBuyings);
+
+        if(!findedGroupBuyings.isEmpty()) {
+            checkExpiredPost(findedGroupBuyings);
+        }
 
         return findedGroupBuyings.stream().map(GroupBuyingListResponseDto::new).collect(Collectors.toList());
     }

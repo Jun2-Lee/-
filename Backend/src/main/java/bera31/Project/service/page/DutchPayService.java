@@ -42,8 +42,7 @@ public class DutchPayService {
     }
 
     public Long postDutchPay(DutchPayRequestDto dutchPayRequestDto) {
-        Member currentMember = loadCurrentMember();
-        //Member currentMember = memberRepository.findById(1);
+        Member currentMember = memberRepository.findById(1);
         DutchPay dutchPay = new DutchPay(dutchPayRequestDto, currentMember);
 
         currentMember.postDutchPay(dutchPay);
@@ -52,8 +51,7 @@ public class DutchPayService {
     }
 
     public void participantDutchPay(Long id) {
-        //Member currentMember = loadCurrentMember();
-        Member currentMember = memberRepository.findById(1);
+        Member currentMember = loadCurrentMember();
         DutchPay currentPost = dutchPayRepository.findById(id);
 
         if (currentPost.getLimitMember() <= currentPost.getMemberList().size())
