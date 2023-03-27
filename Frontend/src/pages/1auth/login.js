@@ -1,10 +1,9 @@
 
 import './login.css';
-import {useState} from 'react';
+import {React, useState} from 'react';
 import {BrowserRouter as Router, Route,  Link} from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
-
 
 export default function Login() {
   const REST_API_KEY = "e14465c8dab22961a692f89cdcfb540b";
@@ -46,8 +45,8 @@ export default function Login() {
 
   function onSilentRefresh() {
     //local storage에 저장된 토큰 값 가져오기
-    const accessToken = localStorage.getItem('access_token');
-    const refreshToken = localStorage.getItem('refresh_token');
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
     axios.post("http://3.36.144.128:8080/api/auth/reissue", 
             {
               accessToken: accessToken,
@@ -62,7 +61,7 @@ export default function Login() {
     })
   }
   
-  const JWT_EXPIRY_TIME = 0.25 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
+  const JWT_EXPIRY_TIME = 0.1 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
 
   function onLoginSuccess(response) {
       const { accessToken, refreshToken } = response.data;

@@ -4,7 +4,7 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
 import { Icon } from '@iconify/react';
 import "./index.css";
-import Dairy from "../../components/dairy";
+import Diary from "../../components/diary";
 
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
     return (
@@ -46,6 +46,7 @@ const RenderDays = () => {
     return <div className="days row">{days}</div>;
 };
 
+
 const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
@@ -59,6 +60,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
     let day = startDate;
     let formattedDate = '';
 
+    const formattedSelectedDay = selectedDay ? format(selectedDay, 'yyyy-MM-dd') : '';
     while (day <= endDate) {
         for (let i = 0; i < 7; i++) {
             formattedDate = format(day, 'd');
@@ -74,10 +76,12 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
                            
                     }`}
                     key={day.toString()}
-                    onClick={() => {onDateClick(parse(cloneDay, 'yyyy-MM-dd', new Date()))
-                    setSelectedDay(cloneDay);
-                    setSelectedDay(!selectedDay)
-                }}
+                    onClick={() => {
+                        if (isSameMonth(cloneDay, monthStart)) {
+                            setSelectedDay(cloneDay);
+                            onDateClick(parse(cloneDay, 'yyyy-MM-dd', new Date()));
+                        }
+                    }}
                 >
                     <span
                         className={
@@ -99,8 +103,10 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
         );
         days = [];
     }
-    return <div className="body">{rows} {selectedDay && <Dairy date={selectedDay} />}</div>;
+    return <div className="body">{rows} {selectedDay && <Diary date={formattedSelectedDay} />}</div>;
 };
+
+
 
 export const Calendar = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
