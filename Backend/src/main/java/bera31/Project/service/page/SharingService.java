@@ -48,6 +48,16 @@ public class SharingService {
     }
 
     @Transactional(readOnly = true)
+    public List<SharingListResponseDto> findAllSharingWithPaging(int page) {
+        List<Sharing> findedSharings = sharingRepository.findAllWithPaging(page);
+        checkExpiredPost(findedSharings);
+
+        return findedSharings.stream()
+                .map(SharingListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public SharingResponseDto findSharing(Long postId) {
         List<CommentResponseDto> commentResponseDtoList =
                 makeCommentList(sharingRepository.findById(postId).getComments());

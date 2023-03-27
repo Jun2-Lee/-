@@ -34,6 +34,13 @@ public class GroupBuyingRepository {
                 .getSingleResult();
     }
 
+    public List<GroupBuying> findAllWithPaging(int page) {
+        return em.createQuery("select g from GroupBuying g", GroupBuying.class)
+                .setFirstResult((page - 1) * 6)
+                .setMaxResults(6)
+                .getResultList();
+    }
+
     public List<GroupBuying> findByKeyword(String keyword) {
         return em.createQuery("select g from GroupBuying g where g.title LIKE :keyword", GroupBuying.class)
                 .setParameter("keyword", "%" + keyword + "%")
