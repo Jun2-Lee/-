@@ -35,6 +35,16 @@ public class GroupBuyingController {
         return new ResponseEntity<>(groupBuyingService.findAllGroupBuying(), HttpStatus.OK);
     }
 
+    @Operation(summary = "변경된 공동 구매 전체 글 조회 API입니다.",
+            description = "공동구매 창 처음 접속 시 보여지는 글 목록 요청 Api 입니다. \n\n" +
+                    "전체 조회에도 각 게시글 마다 고유 id를 같이 보내놨습니다.\n\n" +
+                    "페이지네이션까지 된 목록 조회입니다.\n\n" +
+                    "해당 값은 글 내용 조회 시, 수정 시, 삭제 시, 참여 기능, 찜 기능에 사용됩니다.")
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity<List<GroupBuyingListResponseDto>> findAllGroupBuyingWithPaging(@PathVariable int pageNumber) {
+        return new ResponseEntity<>(groupBuyingService.findAllGroupBuyingWithPaging(pageNumber), HttpStatus.OK);
+    }
+
     @Operation(summary = "공동구매 글 작성 API입니다.",
             description = "사진은 필수 값입니다.\n\n" +
                     "form-data/multipart 형식으로 보내주시면 됩니다.")

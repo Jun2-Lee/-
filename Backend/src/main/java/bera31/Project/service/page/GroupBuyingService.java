@@ -61,6 +61,17 @@ public class GroupBuyingService {
         return findedGroupBuyings.stream().map(GroupBuyingListResponseDto::new).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<GroupBuyingListResponseDto> findAllGroupBuyingWithPaging(int page) {
+        List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAllWithPaging(page);
+
+        if(!findedGroupBuyings.isEmpty()) {
+            checkExpiredPost(findedGroupBuyings);
+        }
+
+        return findedGroupBuyings.stream().map(GroupBuyingListResponseDto::new).collect(Collectors.toList());
+    }
+
 
     @Transactional(readOnly = true)
     public GroupBuyingResponseDto findGroupBuying(Long postId) {
