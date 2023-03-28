@@ -15,6 +15,8 @@ import Signup from "./pages/1auth/signup";
 import SharingPage from "./pages/2sharing";
 import DetailSharing from "./pages/2sharing/detail_sharing";
 import PostSharing from "./pages/2sharing/post_sharing";
+import ModifyingSharing from "./pages/2sharing/modify_sharing";
+
 //3(n빵)
 import DutchPayPage from "./pages/3dutchpay";
 import PostDutchpay from "./pages/3dutchpay/post_dutchpay";
@@ -37,6 +39,7 @@ import Profile from "./pages/test/profile";
 function App() {
   return (
     <Router>
+      
       <Routes>
         <Route path="/" element={<Layout />}>
         <Route path="/" element={<Home />} />
@@ -51,6 +54,7 @@ function App() {
    
         <Route path="/sharing" element={<SharingPage />} />
         <Route path="/sharing/:postId" element={<DetailSharing />} />
+        <Route path="/sharing/modify/:postId" element={<ModifyingSharing/>}/>
         <Route path="/postSharing" element={<PostSharing />} />
         
         <Route path="/dutchPay" element={<DutchPayPage />} />
@@ -74,6 +78,7 @@ function App() {
         </Route>
 
       </Routes>
+     
     </Router>
   );
 };
