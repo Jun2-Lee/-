@@ -8,6 +8,7 @@ import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingResponseDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import bera31.Project.domain.page.intersection.LikedSharing;
 import bera31.Project.domain.page.sharing.Sharing;
@@ -59,9 +60,17 @@ public class SharingService {
 
     @Transactional(readOnly = true)
     public SharingResponseDto findSharing(Long postId) {
+        boolean checkMine = false;
+        Member currentMember = loadCurrentMember();
+        Sharing currentSharing = sharingRepository.findById(postId);
+
+        if(currentMember.getId().equals(currentSharing.getUser().getId())){
+            checkMine = true;
+        }
+
         List<CommentResponseDto> commentResponseDtoList =
                 makeCommentList(sharingRepository.findById(postId).getComments());
-        return new SharingResponseDto(sharingRepository.findById(postId), commentResponseDtoList);
+        return new SharingResponseDto(sharingRepository.findById(postId), commentResponseDtoList, checkMine);
     }
 
     public void postSharing(SharingRequestDto sharingRequestDto, MultipartFile postImage) throws IOException {

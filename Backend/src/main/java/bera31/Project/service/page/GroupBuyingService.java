@@ -68,9 +68,17 @@ public class GroupBuyingService {
 
     @Transactional(readOnly = true)
     public GroupBuyingResponseDto findGroupBuying(Long postId) {
+        boolean checkMine = false;
+        Member currentMember = loadCurrentMember();
+        GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
+
+        if(currentMember.getId().equals(currentGroupBuying.getUser().getId())){
+            checkMine = true;
+        }
+
         List<CommentResponseDto> commentResponseDtoList =
                 makeCommentList(groupBuyingRepository.findById(postId).getComments());
-        return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId), commentResponseDtoList);
+        return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId), commentResponseDtoList, checkMine);
     }
 
     public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
@@ -155,4 +163,6 @@ public class GroupBuyingService {
         }
         return commentResponseDtoList;
     }
+
+
 }

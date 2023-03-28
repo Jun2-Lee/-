@@ -38,7 +38,15 @@ public class DutchPayService {
 
     @Transactional(readOnly = true)
     public DutchPayResponseDto findDutchPay(Long id) {
-        return new DutchPayResponseDto(dutchPayRepository.findById(id));
+        boolean checkMine = false;
+        Member currentMember = loadCurrentMember();
+        DutchPay currentDutchPay = dutchPayRepository.findById(id);
+
+        if(currentMember.getId().equals(currentDutchPay.getUser().getId())){
+            checkMine = true;
+        }
+
+        return new DutchPayResponseDto(dutchPayRepository.findById(id), checkMine);
     }
 
     public Long postDutchPay(DutchPayRequestDto dutchPayRequestDto) {

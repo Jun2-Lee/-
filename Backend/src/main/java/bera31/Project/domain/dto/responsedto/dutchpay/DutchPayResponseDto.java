@@ -23,8 +23,9 @@ public class DutchPayResponseDto {
     LocalDateTime postTime;
     String content;
     int currentMember;
+    boolean checkMine;
 
-    public DutchPayResponseDto(DutchPay dutchPay) {
+    public DutchPayResponseDto(DutchPay dutchPay, boolean checkMine) {
         this.id = dutchPay.getId();
         this.userId = dutchPay.getUser().getId();
         this.nickname = dutchPay.getUser().getNickname();
@@ -39,5 +40,6 @@ public class DutchPayResponseDto {
         this.detailAddress = dutchPay.getDetailAddress();
         this.content = dutchPay.getContent();
         this.postTime = dutchPay.getPostTime();
+        this.checkMine = checkMine;
     }
 }
