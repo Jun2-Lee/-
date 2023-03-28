@@ -44,6 +44,7 @@ public class SharingController {
     @Operation(summary = "나눔 글 내용 조회 API입니다.",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.\n\n" +
                     "글에는 작성자의 고유 id가 같이 넘어갑니다.\n\n" +
+                    "checkMine 변수로 본인 글인지 확인 가능하게 해두었습니다\n\n" +
                     "쪽지 보내기 기능이 사용될 경우, 해당 작성자의 id로 보내면 됩니다.")
     @GetMapping("/{postId}")
     public ResponseEntity<SharingResponseDto> findSharing(@PathVariable Long postId) {
