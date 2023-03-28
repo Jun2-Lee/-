@@ -20,7 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/sharing")
 public class SharingController {
-
     private final SharingService sharingService;
     private final CommentService commentService;
 
