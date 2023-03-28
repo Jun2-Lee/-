@@ -3,7 +3,7 @@ import './index.css';
 import axios from "axios";
 
 
-function Diary(props, {date}) {
+function Diary(props, date) {
   const [showSchedule, setShowSchedule] = useState(false);
   const [schedules, setSchedules] = useState([]); //일정 리스트
   const [mySchedule, setMySchedule] = useState([]); //일정 보기
@@ -26,7 +26,7 @@ const postSchedule = () => {
     targetDate,
   })
     .then((response) => {
-      setSchedules([...schedules, response.data]);
+      setSchedules([...schedules, response.data])
       setShowSchedule(false);
       setMySchedule([response.data]);
 
