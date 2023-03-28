@@ -2,7 +2,7 @@
 import './detail_sharing.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 
 function DetailSharing() {
   const [data, setData] = useState({});
@@ -40,6 +40,29 @@ function DetailSharing() {
       });
   }
 
+function handleModifying(postId) {
+
+  const data = {
+    category: 'string',
+    content: 'string',
+    deadLine: '2023-03-26T08:14:17.006Z',
+    dong: 'string',
+    expiry: '2023-03-26T08:14:17.006Z',
+    gu: 'string',
+    product: 'string',
+    title: 'string',
+  };
+  axios.put(`http://3.36.144.128:8080/api/sharing/${postId}`,data)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+//수정
+
+
   return(
     <div className='detail_sharing'>
     
@@ -50,7 +73,10 @@ function DetailSharing() {
 
 
     <div className='userhelp_sharedetail'>
-      <button className = "modify_sharing">수정하기</button>
+    <Link to={{ pathname: `/sharing/modify/${postId}` }}>
+      <button className="modify_sharing" >수정하기</button>
+      </Link>
+
       <button className = "delete_sharing" onClick={handleDelete}>삭제하기</button>
     </div>
 
