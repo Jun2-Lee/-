@@ -48,8 +48,10 @@ function DetailGroupBuying() {
     //yyyy-mm-dd로 변환
     const [postTime, setPostTime] = useState('');
     const [deadLine, setDeadline] = useState('');
-
+    
+    const accessToken = localStorage.getItem("accessToken")
     useEffect(() => {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
         .then(response => {
           setData(response.data);
@@ -58,7 +60,7 @@ function DetailGroupBuying() {
           setDeadline(new Date(response.data.deadLine).toLocaleDateString("ko-KR"));
         })
         .catch(error => console.log(error));
-    }, [postId]); //postId에 의존(postId에 따라 재실행)
+    }, [postId, accessToken]); //postId에 의존(postId에 따라 재실행)
 
     //게시물 삭제
     const navigate = useNavigate();
@@ -72,6 +74,10 @@ function DetailGroupBuying() {
         .catch(error => {
           console.log(error)
         });
+    }
+
+    function handleRevise() {
+      navigate(`/reviseGroupBuying/${postId}`)
     }
 
     useEffect(() => {
@@ -109,7 +115,7 @@ function DetailGroupBuying() {
             </div>
       
             <div className='userhelp_detail'>
-              <button className = "modify">수정하기</button>
+              <button className = "modify" onClick={handleRevise}>수정하기</button>
               <button className = "delete" onClick={handleDelete}>삭제하기</button>
             </div>
 
