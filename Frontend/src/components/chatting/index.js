@@ -3,11 +3,9 @@ import { Link } from "react-router-dom";
 import './index.css';
 import {useState} from 'react';
 import {DummyList1} from '../chatList/dummyList1.js';
+import axios from "axios";
 
-function Chatroom(){
-
-
-
+function Chatroom(userId){
     const [chatting, setChatting] = useState(''); //사용자가 입력하고 있는 채팅
     const [feedChatting, setFeedChatting] = useState(DummyList1); //채팅 리스트
     const [isValid, setIsValid] = useState(false); 
@@ -23,6 +21,14 @@ function Chatroom(){
         setFeedChatting([...feedChatting, newItem]);
         setChatting('');
     };
+
+
+    const postMessage = (userId) =>{
+        axios.post("http://3.36.144.128:8080/api/message")
+        .then((response)=>{
+            
+        })
+    }
 
     //채팅 말풍선
     const ChattingList = props => {return(

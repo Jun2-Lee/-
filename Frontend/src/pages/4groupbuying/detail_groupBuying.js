@@ -74,6 +74,7 @@ function DetailGroupBuying() {
         });
     }
 
+    //태영
     useEffect(() => {
       const fetchData = async () => {
         try {

@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Chatroom from '../../components/chatting';
-import axios from 'axios';
+
 import './chatting.css';
 import '../4groupbuying/detail_groupBuying';
 
 
 function Chatting () {
-
-
-
   return (
     <div>
       <div className='upper_note'>
