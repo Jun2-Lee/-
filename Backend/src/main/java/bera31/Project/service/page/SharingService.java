@@ -64,7 +64,7 @@ public class SharingService {
         Member currentMember = loadCurrentMember();
         Sharing currentSharing = sharingRepository.findById(postId);
 
-        if(currentMember.getId().equals(currentSharing.getUser().getId())){
+        if (currentMember.getId().equals(currentSharing.getUser().getId())) {
             checkMine = true;
         }
 
@@ -98,7 +98,7 @@ public class SharingService {
         Sharing currentSharing = sharingRepository.findById(postId);
         Optional<LikedSharing> existsLike = likeRepository.findByPostIdAndUserId(currentSharing, currentMember);
 
-        if(existsLike.isPresent()){
+        if (existsLike.isPresent()) {
             currentMember.getLikedSharings().remove(existsLike.get());
             return likeRepository.delete(existsLike.get());
         }
@@ -108,7 +108,7 @@ public class SharingService {
         return likeRepository.save(newLikeSharing);
     }
 
-    public String closeSharing(Long postId){
+    public String closeSharing(Long postId) {
         sharingRepository.findById(postId).expirePost();
         return "거래가 마감되었습니다.";
     }
@@ -133,8 +133,7 @@ public class SharingService {
                     commentResponseDto.addChild(new CommentResponseDto(child));
                 }
                 commentResponseDtoList.add(commentResponseDto);
-            }
-            else if(comment.getParent() == null){
+            } else if (comment.getParent() == null) {
                 commentResponseDtoList.add(commentResponseDto);
             }
         }

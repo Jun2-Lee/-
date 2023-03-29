@@ -57,7 +57,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                 .antMatchers("/api/auth/**", "/", "/swagger-ui/**",
                         "/v3/api-docs", "/swagger-resources/**", "/naong-api",
-                        "/swagger-ui.html", "/api/groupBuying", "/api/groupBuying/page/**","/api/sharing/page/**",
+                        "/swagger-ui.html", "/api/groupBuying", "/api/groupBuying/page/**", "/api/sharing/page/**",
                         "/api/sharing", "/api/dutchPay", "/index.html", "/favicon.ico", "/css/**", "/fonts/**",
                         "/img/**", "/js/**").permitAll()
                 .anyRequest().authenticated()

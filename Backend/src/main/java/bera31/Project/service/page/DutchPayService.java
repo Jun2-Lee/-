@@ -37,16 +37,16 @@ public class DutchPayService {
     }
 
     @Transactional(readOnly = true)
-    public DutchPayResponseDto findDutchPay(Long id) {
+    public DutchPayResponseDto findDutchPay(Long postId) {
         boolean checkMine = false;
         Member currentMember = loadCurrentMember();
-        DutchPay currentDutchPay = dutchPayRepository.findById(id);
+        DutchPay currentDutchPay = dutchPayRepository.findById(postId);
 
-        if(currentMember.getId().equals(currentDutchPay.getUser().getId())){
+        if (currentMember.getId().equals(currentDutchPay.getUser().getId())) {
             checkMine = true;
         }
 
-        return new DutchPayResponseDto(dutchPayRepository.findById(id), checkMine);
+        return new DutchPayResponseDto(dutchPayRepository.findById(postId), checkMine);
     }
 
     public Long postDutchPay(DutchPayRequestDto dutchPayRequestDto) {
@@ -58,9 +58,9 @@ public class DutchPayService {
         return dutchPayRepository.save(dutchPay);
     }
 
-    public void participantDutchPay(Long id) {
+    public void participantDutchPay(Long postId) {
         Member currentMember = loadCurrentMember();
-        DutchPay currentPost = dutchPayRepository.findById(id);
+        DutchPay currentPost = dutchPayRepository.findById(postId);
 
         if (currentPost.getLimitMember() <= currentPost.getMemberList().size())
             throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
@@ -72,8 +72,8 @@ public class DutchPayService {
         intersectionRepository.save(dutchPayIntersection);
     }
 
-    public void deleteDutchPay(Long id) {
-        dutchPayRepository.delete(dutchPayRepository.findById(id));
+    public void deleteDutchPay(Long postId) {
+        dutchPayRepository.delete(dutchPayRepository.findById(postId));
     }
 
     public Member loadCurrentMember() {

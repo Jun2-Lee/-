@@ -58,7 +58,7 @@ public class MessageService {
     public Long sendMessage(MessageRequestDto messageRequestDto) {
         Member receiver = findReceiver(messageRequestDto);
 
-        if(receiver == null)
+        if (receiver == null)
             throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
 
         Long maxRoomNumber = getMaxRoomNumber();
@@ -71,7 +71,7 @@ public class MessageService {
     public Long sendMessageToEachRoom(MessageRequestDto messageRequestDto, Long roomId) {
         Member receiver = findReceiver(messageRequestDto);
 
-        if(receiver == null)
+        if (receiver == null)
             throw new UserNotFoundException(ErrorResponse.USER_NOT_FOUND);
 
         Message newMessage = new Message(messageRequestDto, roomId, loadCurrentMember(), receiver);

@@ -87,12 +87,15 @@ public class Member {
     public void participantGroupBuying(GroupBuyingIntersection groupBuyingIntersection) {
         this.participantingGroupBuying.add(groupBuyingIntersection);
     }
+
     public void participantDutchPay(DutchPayIntersection dutchPayIntersection) {
         this.participantingDutchPay.add(dutchPayIntersection);
     }
+
     public void pushLikeGroupBuying(LikedGroupBuying likedGroupBuying) {
         this.likedGroupBuyings.add(likedGroupBuying);
     }
+
     public void pushLikeSharing(LikedSharing likedSharing) {
         this.likedSharings.add(likedSharing);
     }

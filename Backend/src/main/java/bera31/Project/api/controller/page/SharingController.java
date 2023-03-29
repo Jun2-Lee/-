@@ -85,7 +85,7 @@ public class SharingController {
     @Operation(summary = "거래 완료(조기 마감) API",
             description = "글 작성자가 버튼을 눌러 거래를 조기 마감시키는 API 입니다.")
     @PostMapping("/{postId}/finish")
-    public ResponseEntity<String> closeSharing(@PathVariable Long postId){
+    public ResponseEntity<String> closeSharing(@PathVariable Long postId) {
         return new ResponseEntity<>(sharingService.closeSharing(postId), HttpStatus.OK);
     }
 
@@ -100,9 +100,10 @@ public class SharingController {
             description = "글의 고유 id 뒤에 댓글 id를 붙여서 Request Parameter 형식으로 URL에 보내주시고,\n\n" +
                     " 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
     @PostMapping("/{postId}/{commentId}/childComment")
-    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId,@RequestBody CommentRequestDto commentRequestDto) {
+    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto) {
         commentService.saveChildComment(commentRequestDto, commentId);
     }
+
     @Operation(summary = "재료 나눔 댓글 삭제 API",
             description = "글의 고유 id 뒤에 댓글 id를 붙여서 Request Parameter 형식으로 URL에 보내주시면 됩니다.\n\n" +
                     "(답글도 동일합니다)")

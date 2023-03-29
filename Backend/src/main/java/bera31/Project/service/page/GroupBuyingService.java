@@ -54,7 +54,7 @@ public class GroupBuyingService {
     public List<GroupBuyingListResponseDto> findAllGroupBuying() {
         List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
 
-        if(!findedGroupBuyings.isEmpty()) {
+        if (!findedGroupBuyings.isEmpty()) {
             checkExpiredPost(findedGroupBuyings);
         }
 
@@ -65,7 +65,7 @@ public class GroupBuyingService {
     public List<GroupBuyingListResponseDto> findAllGroupBuyingWithPaging(int page) {
         List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAllWithPaging(page);
 
-        if(!findedGroupBuyings.isEmpty()) {
+        if (!findedGroupBuyings.isEmpty()) {
             checkExpiredPost(findedGroupBuyings);
         }
 
@@ -79,7 +79,7 @@ public class GroupBuyingService {
         Member currentMember = loadCurrentMember();
         GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
 
-        if(currentMember.getId().equals(currentGroupBuying.getUser().getId())){
+        if (currentMember.getId().equals(currentGroupBuying.getUser().getId())) {
             checkMine = true;
         }
 
@@ -130,7 +130,7 @@ public class GroupBuyingService {
         GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
         Optional<LikedGroupBuying> existsLike = likeRepository.findByPostIdAndUserId(currentGroupBuying, currentMember);
 
-        if(existsLike.isPresent()){
+        if (existsLike.isPresent()) {
             currentMember.getLikedGroupBuyings().remove(existsLike.get());
             return likeRepository.delete(existsLike.get());
         }
@@ -165,8 +165,7 @@ public class GroupBuyingService {
                     commentResponseDto.addChild(new CommentResponseDto(child));
                 }
                 commentResponseDtoList.add(commentResponseDto);
-            }
-            else if(comment.getParent() == null){
+            } else if (comment.getParent() == null) {
                 commentResponseDtoList.add(commentResponseDto);
             }
         }

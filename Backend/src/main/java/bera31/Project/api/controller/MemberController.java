@@ -22,7 +22,7 @@ public class MemberController {
             description = "form-data/multipart 형식으로 보내주시면 됩니다.")
     @PutMapping("/mypage/changeInfo")
     public ResponseEntity<String> changeInfo(@RequestPart EditInfoRequestDto editInfoRequestDto,
-                             @RequestPart MultipartFile profileImage) throws IOException {
+                                             @RequestPart MultipartFile profileImage) throws IOException {
         return new ResponseEntity<>(memberService.changeMyInfo(editInfoRequestDto, profileImage), HttpStatus.OK);
     }
 
@@ -38,7 +38,7 @@ public class MemberController {
             description = "요청을 보내주시면 DB에서 해당 회원을 제거합니다. \n\n" +
                     "이후, Refresh Token 또한 제거됩니다.")
     @DeleteMapping("/mypage/withdraw")
-    public ResponseEntity<String> withdraw(){
+    public ResponseEntity<String> withdraw() {
         return new ResponseEntity<>(memberService.deleteMember(), HttpStatus.OK);
     }
 }

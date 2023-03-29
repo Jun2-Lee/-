@@ -47,11 +47,12 @@ public class LikeRepository {
         return resultList.stream().findAny();
     }
 
-    public String delete(LikedGroupBuying likedGroupBuying){
+    public String delete(LikedGroupBuying likedGroupBuying) {
         em.remove(likedGroupBuying);
         return "찜 취소";
     }
-    public String delete(LikedSharing likedSharing){
+
+    public String delete(LikedSharing likedSharing) {
         em.remove(likedSharing);
         return "찜 취소";
     }
