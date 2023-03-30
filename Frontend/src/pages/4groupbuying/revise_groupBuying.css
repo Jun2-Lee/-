@@ -1,0 +1,75 @@
+.groupBuying_container {
+    display: flex;
+    justify-content: center;
+  }
+  
+.groupBuying_container .form-label {
+  width: 100px;
+  margin-right: 15px;
+  text-align: right;
+}
+
+.groupBuying_container .title, .category, .productName, .link, .totalGroupBuying, .numPeople_groupBuying, .deadlineGroupBuying {
+    background-color: var(--sub_orange);
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 30px;
+  }
+
+  .groupBuying_container .category {
+    width: 363px;
+    height: 31px;
+    appearance: none;
+    background: url("../../assets/img/toggleIconOpen.png") no-repeat 3% 50%/0.938rem auto;
+    background-size: 1rem;
+    background-color: var(--sub_orange);
+    padding-left: 2.1rem;
+  }
+
+  .groupBuying_container .productName, .link {
+    width: 363px;
+    height: 63px;
+  }
+
+  .groupBuying_container .productImg_upload {
+    display: flex;
+    margin-bottom: 30px;
+  }
+
+  .groupBuying_container .totalGroupBuying, .numPeople_groupBuying {
+    width: 178px;
+    height: 31px;
+  }
+
+  .totalDelivery, .numPeople, .deadlineDelivery {
+    width: 158px;
+    height: 31px;
+  }
+
+  #won, #myeong {
+    margin-left: 15px;
+  }
+
+  .explanation {
+    width: 363px;
+    height: 201px;
+  }
+
+  .submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .post_delivery {
+    width: 363px;
+    height: 31px;
+    background: var(--main_orange);
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-weight: 800;
+    margin-top: 27px;
+    margin-bottom: 46px;
+    margin-left: 32px;
+  }

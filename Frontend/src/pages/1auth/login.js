@@ -1,6 +1,6 @@
 
 import './login.css';
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route,  Link} from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
@@ -27,6 +27,22 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  const getLoginInfo = () => {
+    const accessToken = localStorage.getItem('accessToken')
+    const refreshToken = localStorage.getItem('refreshToken')
+    return { accessToken, refreshToken }
+  }
+
+  // 컴포넌트에서 로그인 정보를 가져와 상태값을 업데이트하는 useEffect 훅
+  const [accessToken, setAccessToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
+
+  useEffect(() => {
+    const { accessToken, refreshToken } = getLoginInfo();
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
+  }, []);
+
   const handleLogin = (e) => {
     e.preventDefault();
     axios.post("http://3.36.144.128:8080/api/auth/signin", 
@@ -47,6 +63,15 @@ export default function Login() {
     //local storage에 저장된 토큰 값 가져오기
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
+    //
+    let isRefreshing = false;
+
+  // 이전에 실행된 갱신 중인 경우 중복 실행 방지
+    if (onSilentRefresh.timeoutId) {
+      clearTimeout(onSilentRefresh.timeoutId);
+      isRefreshing = true;
+    }
+
     axios.post("http://3.36.144.128:8080/api/auth/reissue", 
             {
               accessToken: accessToken,
@@ -59,22 +84,33 @@ export default function Login() {
     .catch(function(error) {
       console.log(error)
     })
+    .finally(() => {
+      // 갱신이 완료된 경우에만 다시 자동 갱신 실행
+      if (!isRefreshing) {
+        onSilentRefresh.timeoutId = setTimeout(
+          onSilentRefresh,
+          JWT_EXPIRY_TIME - 60000
+        );
+      }
+      })
   }
-  
-  const JWT_EXPIRY_TIME = 0.1 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
+  onSilentRefresh.timeoutId = null;
+
+  const JWT_EXPIRY_TIME = 0.25 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
 
   function onLoginSuccess(response) {
       const { accessToken, refreshToken } = response.data;
       // local storage에 at, rt 저장
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
+      console.log(accessToken)
+      console.log(refreshToken)
 
       // accessToken 설정
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
       // accessToken 만료하기 1분 전에 로그인 연장
       setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
-      navigate('/')
       console.log(response)
   }
 

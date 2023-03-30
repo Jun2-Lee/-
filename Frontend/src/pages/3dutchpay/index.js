@@ -27,7 +27,7 @@ function DutchPayPage() {
 
         <div className="card_dutchpay">
           <div className="foodIcon">
-            <img className="f1" src="assets/img/dutchpay/족발,보쌈.png"/>
+            <img className="f1" src="assets/img/dutchpay/pig_hocks.png"/>
             <label id="foodName">족발</label>
           </div>
           <div className="card_sub1">
@@ -41,7 +41,7 @@ function DutchPayPage() {
 
         <div className="card_dutchpay">
           <div className="foodIcon">
-            <img className="f2" src="assets/img/dutchpay/찜,탕,찌개.png"/>
+            <img className="f2" src="assets/img/dutchpay/stew.png"/>
             <label id="foodName">찌개</label>
           </div>
           <div className="card_sub1">
@@ -55,7 +55,7 @@ function DutchPayPage() {
 
         <div className="card_dutchpay">
           <div className="foodIcon">
-            <img className="f3" src="assets/img/dutchpay/돈까스,회,일식.png"/>
+            <img className="f3" src="assets/img/dutchpay/japanese_food.png"/>
             <label id="foodName">일식</label>
           </div>
           <div className="card_sub1">
@@ -69,7 +69,7 @@ function DutchPayPage() {
 
         <div className="card_dutchpay">
           <div className="foodIcon">
-            <img className="f4" src="assets/img/dutchpay/피자.png"/>
+            <img className="f4" src="assets/img/dutchpay/pizza.png"/>
             <label id="foodName">피자</label>
           </div>
           <div className="card_sub1">
@@ -83,7 +83,7 @@ function DutchPayPage() {
 
         <div className="card_dutchpay">
           <div className="foodIcon">
-            <img className="f5" src="assets/img/dutchpay/고기,구이.png"/>
+            <img className="f5" src="assets/img/dutchpay/meat.png"/>
             <label id="foodName">고기/구이</label>
           </div>
           <div className="card_sub1">
