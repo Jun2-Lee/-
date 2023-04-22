@@ -163,7 +163,7 @@ function DetailGroupBuying() {
                 <label className="detailform">모집인원</label>
                 <div
                   className="recruitPurchase">
-                    {data.currentMember} / {data.limitMember} 명
+                    {data.currentMember} / {data.memberLimit} 명
                 </div>
               </div>
 
