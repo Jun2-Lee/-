@@ -6,8 +6,8 @@ function ImgUpload2({onSelectedImg, image}) {
     const [imgsrc, setImgsrc] = useState(null);
 
     useEffect(() => {
-    setImg(image);
-    setImgsrc(image);
+      setImg(image);
+      setImgsrc(image);
     }, [image]);
 
     function onChangeImg(e) {
