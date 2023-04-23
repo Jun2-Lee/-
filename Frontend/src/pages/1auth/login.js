@@ -116,7 +116,7 @@ export default function Login() {
 
   return (
     <div className='login_container'>
-      <div>
+      <form onSubmit={handleLogin}>=
         <div className="GetID">
         <label id="getID">아이디</label>
         <br></br>
@@ -126,7 +126,7 @@ export default function Login() {
         <div className="GetPW">
           <label id="getPW">비밀번호</label>
           <br></br>
-          <input name='password' onChange={onChange} value={password} onKeyDown={handleLogin} className="getPW" type="password"/>
+          <input name='password' onChange={onChange} value={password} className="getPW" type="password"/>
         </div>
 
         <div className="UserLogin">
@@ -143,7 +143,7 @@ export default function Login() {
           </Link>
         </div>
 
-      </div>
+      </form>
     </div>
   );
   } 
