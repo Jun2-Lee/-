@@ -30,9 +30,10 @@ public class SharingResponseDto {
     LocalDateTime expiry;
     LocalDateTime postTime;
     String image;
+    boolean checkMine;
     List<CommentResponseDto> commentResponseDtoList;
 
-    public SharingResponseDto(Sharing sharing, List<CommentResponseDto> commentResponseDtoList) {
+    public SharingResponseDto(Sharing sharing, List<CommentResponseDto> commentResponseDtoList, boolean checkMine) {
         this.id = sharing.getId();
         this.userId = sharing.getUser().getId();
         this.nickname = sharing.getUser().getNickname();
@@ -48,5 +49,6 @@ public class SharingResponseDto {
         this.expiry = sharing.getExpiry();
         this.image = sharing.getImage();
         this.commentResponseDtoList = commentResponseDtoList;
+        this.checkMine = checkMine;
     }
 }

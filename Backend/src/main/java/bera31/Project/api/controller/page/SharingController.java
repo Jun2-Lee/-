@@ -32,9 +32,19 @@ public class SharingController {
         return new ResponseEntity<>(sharingService.findAllSharing(), HttpStatus.OK);
     }
 
+    @Operation(summary = "나눔 글 전체 목록 조회 API입니다.",
+            description = "전체 조회에도 각 게시글 마다 고유 id를 같이 넣어놨습니다.\n\n" +
+                    "페이지네이션까지 완료한 조회입니다.\n\n" +
+                    "해당 값은 글 내용 조회 시, 수정 시, 삭제 시, 찜 기능에 사용됩니다.")
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity<List<SharingListResponseDto>> findAllSharingWithPaging(@PathVariable int pageNumber) {
+        return new ResponseEntity<>(sharingService.findAllSharingWithPaging(pageNumber), HttpStatus.OK);
+    }
+
     @Operation(summary = "나눔 글 내용 조회 API입니다.",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.\n\n" +
                     "글에는 작성자의 고유 id가 같이 넘어갑니다.\n\n" +
+                    "checkMine 변수로 본인 글인지 확인 가능하게 해두었습니다\n\n" +
                     "쪽지 보내기 기능이 사용될 경우, 해당 작성자의 id로 보내면 됩니다.")
     @GetMapping("/{postId}")
     public ResponseEntity<SharingResponseDto> findSharing(@PathVariable Long postId) {

@@ -38,12 +38,19 @@ public class DutchPayService {
 
     @Transactional(readOnly = true)
     public DutchPayResponseDto findDutchPay(Long id) {
-        return new DutchPayResponseDto(dutchPayRepository.findById(id));
+        boolean checkMine = false;
+        Member currentMember = loadCurrentMember();
+        DutchPay currentDutchPay = dutchPayRepository.findById(id);
+
+        if(currentMember.getId().equals(currentDutchPay.getUser().getId())){
+            checkMine = true;
+        }
+
+        return new DutchPayResponseDto(dutchPayRepository.findById(id), checkMine);
     }
 
     public Long postDutchPay(DutchPayRequestDto dutchPayRequestDto) {
-        Member currentMember = loadCurrentMember();
-        //Member currentMember = memberRepository.findById(1);
+        Member currentMember = memberRepository.findById(1);
         DutchPay dutchPay = new DutchPay(dutchPayRequestDto, currentMember);
 
         currentMember.postDutchPay(dutchPay);
@@ -52,8 +59,7 @@ public class DutchPayService {
     }
 
     public void participantDutchPay(Long id) {
-        //Member currentMember = loadCurrentMember();
-        Member currentMember = memberRepository.findById(1);
+        Member currentMember = loadCurrentMember();
         DutchPay currentPost = dutchPayRepository.findById(id);
 
         if (currentPost.getLimitMember() <= currentPost.getMemberList().size())

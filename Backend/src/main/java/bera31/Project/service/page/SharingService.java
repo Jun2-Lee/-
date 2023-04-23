@@ -8,6 +8,7 @@ import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingResponseDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import bera31.Project.domain.page.intersection.LikedSharing;
 import bera31.Project.domain.page.sharing.Sharing;
@@ -34,7 +35,6 @@ import java.util.stream.Collectors;
 public class SharingService {
     private final MemberRepository memberRepository;
     private final SharingRepository sharingRepository;
-    private final CommentService commentService;
     private final LikeRepository likeRepository;
     private final S3Uploader s3Uploader;
 
@@ -49,15 +49,32 @@ public class SharingService {
     }
 
     @Transactional(readOnly = true)
+    public List<SharingListResponseDto> findAllSharingWithPaging(int page) {
+        List<Sharing> findedSharings = sharingRepository.findAllWithPaging(page);
+        checkExpiredPost(findedSharings);
+
+        return findedSharings.stream()
+                .map(SharingListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public SharingResponseDto findSharing(Long postId) {
+        boolean checkMine = false;
+        Member currentMember = loadCurrentMember();
+        Sharing currentSharing = sharingRepository.findById(postId);
+
+        if(currentMember.getId().equals(currentSharing.getUser().getId())){
+            checkMine = true;
+        }
+
         List<CommentResponseDto> commentResponseDtoList =
                 makeCommentList(sharingRepository.findById(postId).getComments());
-        return new SharingResponseDto(sharingRepository.findById(postId), commentResponseDtoList);
+        return new SharingResponseDto(sharingRepository.findById(postId), commentResponseDtoList, checkMine);
     }
 
     public void postSharing(SharingRequestDto sharingRequestDto, MultipartFile postImage) throws IOException {
-        //Member currentMember = loadCurrentMember();
-        Member currentMember = memberRepository.findById(1);
+        Member currentMember = loadCurrentMember();
 
         Sharing newSharing = new Sharing(sharingRequestDto, currentMember);
         newSharing.setImage(s3Uploader.upload(postImage, "sharing"));
@@ -77,7 +94,7 @@ public class SharingService {
 
     public String pushLikeSharing(Long postId) {
         Member currentMember = loadCurrentMember();
-        //Member currentMember = memberRepository.findById(1);
+
         Sharing currentSharing = sharingRepository.findById(postId);
         Optional<LikedSharing> existsLike = likeRepository.findByPostIdAndUserId(currentSharing, currentMember);
 
