@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import ImgUpload from '../../components/imgUpload'
-import AddressSelect from '../../components/addressSelect'
+import ImgUpload2 from '../../components/imgUpload2'
+import AddressSelect2 from '../../components/addressSelect2'
 import './revise_groupBuying.css'
 
 export default function RevisegroupBuying() {
@@ -18,6 +18,7 @@ export default function RevisegroupBuying() {
     const [dong, setDong] = useState('')
     const [gu, setGu] = useState('')
     const [content, setContent] = useState('')
+    const [image, setImage] = useState('')
 
     const [groupBuyingRequestDto, setGroupBuyingRequestDto] = useState({});
 
@@ -38,6 +39,7 @@ export default function RevisegroupBuying() {
         setGu(data.gu)
         setContent(data.content)
         setPostImage(null)
+        setImage(data.postImage)
 
         setGroupBuyingRequestDto({
           title: data.title,
@@ -135,7 +137,7 @@ export default function RevisegroupBuying() {
       [name]: value
     })
   };
-
+  console.log(postImage)
   const navigate = useNavigate();
   const onSubmit = (e) => {
     e.preventDefault();
@@ -183,6 +185,7 @@ export default function RevisegroupBuying() {
       axios.put(`http://3.36.144.128:8080/api/groupBuying/${postId}`, form, {headers})
         .then(function(response) {
           console.log(response)
+          console.log(groupBuyingRequestDto)
           alert("수정되었습니다")
           navigate('/groupBuying')
         }) .catch(function(error) {
@@ -190,6 +193,7 @@ export default function RevisegroupBuying() {
         })
       }
     }
+    console.log(groupBuyingRequestDto)
     
     return (
       <div className='groupBuying_container'>
@@ -220,7 +224,7 @@ export default function RevisegroupBuying() {
 
           <div className="productImg_upload">
             <label className="form-label">사진<br></br>(필수)</label>
-            <ImgUpload onSelectedImg={handleImg} />
+            <ImgUpload2 onSelectedImg={handleImg} image={image} />
           </div>
 
           <div className="TotalGroupBuying">
@@ -242,7 +246,7 @@ export default function RevisegroupBuying() {
 
           <div className="address">
             <label className="form-label">사는 동네</label>
-            <AddressSelect onSelectedGu={handleSelectedGu} onSelectedDong={handleSelectedDong}/>
+            <AddressSelect2 onSelectedGu={handleSelectedGu} onSelectedDong={handleSelectedDong} dong={data.dong} gu={data.gu}/>
           </div>
 
           <div className="Explanation">
