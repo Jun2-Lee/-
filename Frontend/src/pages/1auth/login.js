@@ -126,7 +126,7 @@ export default function Login() {
         <div className="GetPW">
           <label id="getPW">비밀번호</label>
           <br></br>
-          <input name='password' onChange={onChange} value={password} className="getPW" type="password"/>
+          <input name='password' onChange={onChange} value={password} onKeyDown={handleLogin} className="getPW" type="password"/>
         </div>
 
         <div className="UserLogin">
