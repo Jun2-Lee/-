@@ -11,10 +11,10 @@ function ImgUpload2({onSelectedImg, image}) {
     }, [image]);
 
     function onChangeImg(e) {
-    const file = e.target.files[0];
-    setImg(file);
-    setImgsrc(URL.createObjectURL(file));
-    onSelectedImg(file);
+      const file = e.target.files[0];
+      setImg(file);
+      setImgsrc(URL.createObjectURL(file));
+      onSelectedImg(file);
     };
 
   return (
