@@ -40,9 +40,6 @@ function AddressSelect2({onSelectedGu, onSelectedDong, dong, gu}) {
         onSelectedDong(event.target.value);
     }
 
-    console.log(selectedDong)
-    console.log(selectedGu)
-
     return (
     <div>
         <select id="gu" value={selectedGu} onChange={handleGuChange}>

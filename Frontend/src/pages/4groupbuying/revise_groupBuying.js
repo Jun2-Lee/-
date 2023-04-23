@@ -93,32 +93,20 @@ export default function RevisegroupBuying() {
   const [selectedGu, setSelectedGu] = useState('');
   const [selectedDong, setSelectedDong] = useState('');
 
-  function handleSelectedGu({selectedGuValue}) {
+  function handleSelectedGu(selectedGuValue) {
     setSelectedGu(selectedGuValue)
     setGroupBuyingRequestDto({
       ...groupBuyingRequestDto,
       gu: selectedGuValue
     })
-    /*
-    setData({
-      ...data,
-      gu: selectedGuValue
-    });
-    */
   }
-
+  
   function handleSelectedDong(selectedDongValue) {
     setSelectedDong(selectedDongValue)
     setGroupBuyingRequestDto({
       ...groupBuyingRequestDto,
       dong: selectedDongValue
     })
-    /*
-    setData({
-      ...data,
-      dong: selectedDongValue
-    });
-    */
   }
 
   //axios header 선언
@@ -137,7 +125,7 @@ export default function RevisegroupBuying() {
       [name]: value
     })
   };
-  console.log(postImage)
+
   const navigate = useNavigate();
   const onSubmit = (e) => {
     e.preventDefault();
@@ -185,7 +173,6 @@ export default function RevisegroupBuying() {
       axios.put(`http://3.36.144.128:8080/api/groupBuying/${postId}`, form, {headers})
         .then(function(response) {
           console.log(response)
-          console.log(groupBuyingRequestDto)
           alert("수정되었습니다")
           navigate('/groupBuying')
         }) .catch(function(error) {
