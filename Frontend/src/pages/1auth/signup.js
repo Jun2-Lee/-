@@ -8,6 +8,7 @@ import axios from 'axios';
 
 function Signup() {
   const navigate = useNavigate();
+  const [password_check, setPWCheck] = useState('')
 
   // 주소 선택
   const [selectedGu, setSelectedGu] = useState('');
@@ -30,7 +31,7 @@ function Signup() {
   }
 
   //이미지 업로드
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState('');
   const [imgsrc, setImgsrc] = useState("");
 
   function handleImg(selectedImgValue) {
@@ -60,23 +61,47 @@ function Signup() {
       [name]: value
     })
   };
-
+  console.log(password_check)
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const form = new FormData()
-    form.append('profileImage', profileImage)
-    form.append('signUpDto', new Blob([JSON.stringify(signUpDto)], {
-      type: "application/json"
-    }))
+    if (email.length === 0) {
+      alert("아이디를 입력해주세요")
+    }
+    else if (password.length === 0) {
+      alert("비밀번호를 입력해주세요")
+    }
+    else if (password !== password_check) {
+      alert("비밀번호가 일치하지 않습니다")
+    }
+    else if (nickname.length === 0) {
+      alert("닉네임을 입력해주세요")
+    }
+    else if (profileImage.length === 0) {
+      alert("프로필 사진을 업로드 해주세요")
+    }
+    else if (gu.length === 0) {
+      alert("사는 동네를 선택해주세요")
+    }
+    else if (dong.length === 0) {
+      alert("동을 선택해주세요")
+    }
+    else {
+      const form = new FormData()
+      form.append('profileImage', profileImage)
+      form.append('signUpDto', new Blob([JSON.stringify(signUpDto)], {
+        type: "application/json"
+      }))
 
-    axios.post("http://3.36.144.128:8080/api/auth/signup", form, {headers})
-      .then(function(response) {
-        console.log(response)
-        navigate('/login')
-      }) .catch(function(error) {
-        console.log(error)
-      })
+      axios.post("http://3.36.144.128:8080/api/auth/signup", form, {headers})
+        .then(function(response) {
+          console.log(response)
+          navigate('/login')
+        }) .catch(function(error) {
+          console.log(profileImage)
+          console.log(error)
+        })
+    }
   }
 
   return (
@@ -94,7 +119,7 @@ function Signup() {
 
         <div className="PASSWORD_CHECK">
           <label className="form-label">비밀번호 확인</label>
-          <input className="password_check"/>
+          <input name="password_check" onChange={e => setPWCheck(e.target.value)} value={password_check} className="password"/>
         </div>
 
         <div className="nick_name">
