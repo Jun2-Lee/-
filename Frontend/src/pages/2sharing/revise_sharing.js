@@ -16,6 +16,9 @@ function Revisesharing() {
     const [gu, setGu] = useState('')
     const [content, setContent] = useState('')
 
+    const [selectedFood, setSelectedFood] = useState('');
+    const [selectedDetail, setSelectedDetail] = useState('');
+
     const [sharingRequestDto, setSharingRequestDto] = useState({});
 
   useEffect(() => {
@@ -34,6 +37,9 @@ function Revisesharing() {
         setDeadLine(data.deadLine)
         setImage(data.image)
 
+        setSelectedFood(data.category)
+        setSelectedDetail(data.product)
+
         setSharingRequestDto({
           title: data.title,
           category: data.category,
@@ -45,8 +51,6 @@ function Revisesharing() {
           deadLine: data.deadLine,
           image: data.image
         })
-        //setImage(null)
-
       } catch (error) {
         console.error(error);
       }
@@ -68,10 +72,6 @@ function Revisesharing() {
     '간식/과자/떡': ['과자/쿠키', '초콜릿/젤리/캔디', '떡/한과', '아이스크림']
   };  
   
-  const [selectedFood, setSelectedFood] = useState('');
-  const [selectedDetail, setSelectedDetail] = useState('');
-
-  //여기 수정함
   function handleFoodChange(e) {
       setSelectedFood(e.target.value);
       setSelectedDetail('');
@@ -91,6 +91,10 @@ function Revisesharing() {
         ...sharingRequestDto,
         product: e.target.value
       })
+      setData({
+        ...data,
+        product: e.target.value
+      });
   }
 
   // 주소 선택
@@ -187,8 +191,8 @@ function Revisesharing() {
         })
       }
     }
+    console.log(selectedFood)
     console.log(sharingRequestDto)
-    console.log(image)
 
     return (
         <div className='postSharing_container'>
