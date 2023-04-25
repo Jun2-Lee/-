@@ -116,7 +116,7 @@ export default function Login() {
 
   return (
     <div className='login_container'>
-      <form onSubmit={handleLogin}>=
+      <form onSubmit={handleLogin}>
         <div className="GetID">
         <label id="getID">아이디</label>
         <br></br>
