@@ -40,6 +40,10 @@ function DetailSharing() {
       });
   }
 
+  function handleRevise() {
+    navigate(`/reviseSharing/${postId}`)
+  }
+
   return(
     <div className='detail_sharing'>
     
@@ -54,7 +58,7 @@ function DetailSharing() {
         {data.nickname} 님
       </div>
         <div>
-          <button className = "modify_sharing">수정하기</button>
+          <button className = "modify_sharing" onClick={handleRevise}>수정하기</button>
           <button className = "delete_sharing" onClick={handleDelete}>삭제하기</button>
           <div className="postTime"> {postTime} </div>
         </div>
