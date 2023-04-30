@@ -25,7 +25,7 @@ public class GroupBuyingResponseDto {
     LocalDateTime postTime;
     boolean checkMine;
     int price;
-    int limitMember;
+    int memberLimit;
     int currentMember;
     List<CommentResponseDto> commentList;
 
@@ -45,7 +45,7 @@ public class GroupBuyingResponseDto {
         this.gu = groupBuying.getGu();
         this.dong = groupBuying.getDong();
         this.currentMember = groupBuying.getMemberList().size();
-        this.limitMember = groupBuying.getLimitMember();
+        this.memberLimit = groupBuying.getMemberLimit();
         this.commentList = commentList;
         this.postTime = groupBuying.getPostTime();
         this.checkMine = checkMine;

@@ -77,15 +77,21 @@ public class SharingService {
         Member currentMember = loadCurrentMember();
 
         Sharing newSharing = new Sharing(sharingRequestDto, currentMember);
-        newSharing.setImage(s3Uploader.upload(postImage, "sharing"));
+        newSharing.updateImage(s3Uploader.upload(postImage, "sharing"));
 
         currentMember.postSharing(newSharing);
         sharingRepository.save(newSharing);
     }
 
-    public void updateSharing(Long postId, SharingRequestDto sharingRequestDto) {
-        Sharing findedSharing = sharingRepository.findById(postId);
-        findedSharing.updateSharing(sharingRequestDto);
+    public void updateSharing(Long postId, SharingRequestDto sharingRequestDto, MultipartFile postImage) throws IOException {
+        Sharing findedPost = sharingRepository.findById(postId);
+
+        if(postImage != null){
+            s3Uploader.deleteRemoteFile(findedPost.getImage().substring(52));
+            findedPost.updateImage(s3Uploader.upload(postImage, "sharing"));
+        }
+
+        findedPost.update(sharingRequestDto);
     }
 
     public void deleteSharing(Long postId) {

@@ -58,8 +58,11 @@ public class SecurityConfig {
                 .antMatchers("/api/auth/**", "/", "/swagger-ui/**",
                         "/v3/api-docs", "/swagger-resources/**", "/naong-api",
                         "/swagger-ui.html", "/api/groupBuying", "/api/groupBuying/page/**","/api/sharing/page/**",
-                        "/api/sharing", "/api/dutchPay", "/index.html", "/favicon.ico", "/css/**", "/fonts/**",
-                        "/img/**", "/js/**").permitAll()
+                        "/api/sharing", "/api/dutchPay", "/index.html",
+                        // 여기 아래로는 Frontend에서 발생하는 Unauthorized(401)에 대한 permission입니다.
+                        "/favicon.ico", "/css/**", "/fonts/**", "/img/**", "/js/**",
+                        "/groupBuying/assets/**", "/sharing/assets/**", "/dutchPay/assets/**").permitAll()
+
                 .anyRequest().authenticated()
 
                 .and()

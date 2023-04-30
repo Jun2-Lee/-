@@ -58,7 +58,7 @@ public class GroupBuyingController {
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @PutMapping("/{postId}")
     public ResponseEntity<Long> updateGroupBuying(@RequestPart GroupBuyingRequestDto groupBuyingRequestDto,
-                                                  @RequestPart MultipartFile postImage,
+                                                  @RequestPart(required = false) MultipartFile postImage,
                                                   @PathVariable Long postId) throws IOException {
         return new ResponseEntity<>(groupBuyingService.updateGroupBuying(groupBuyingRequestDto, postImage, postId), HttpStatus.OK);
     }

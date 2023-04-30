@@ -85,7 +85,7 @@ public class GroupBuyingService {
         Member currentMember = loadCurrentMember();
 
         GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, currentMember);
-        newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
+        newGroupBuying.updateImage(s3Uploader.upload(postImage, "groupBuying"));
         currentMember.postGroupBuying(newGroupBuying);
 
         return groupBuyingRepository.save(newGroupBuying);
@@ -93,9 +93,13 @@ public class GroupBuyingService {
 
     public Long updateGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage, Long postId) throws IOException {
         GroupBuying findedPost = groupBuyingRepository.findById(postId);
-        s3Uploader.deleteRemoteFile(findedPost.getImage().substring(52));
 
-        return findedPost.update(groupBuyingRequestDto, s3Uploader.upload(postImage, "groupBuying"));
+        if(postImage != null) {
+            s3Uploader.deleteRemoteFile(findedPost.getImage().substring(52));
+            findedPost.updateImage(s3Uploader.upload(postImage, "groupBuying"));
+        }
+
+        return findedPost.update(groupBuyingRequestDto);
     }
 
     public void deleteGroupBuying(Long postId) {
@@ -106,7 +110,7 @@ public class GroupBuyingService {
         Member currentMember = loadCurrentMember();
         GroupBuying currentPost = groupBuyingRepository.findById(postId);
 
-        if (currentPost.getLimitMember() <= currentPost.getMemberList().size())
+        if (currentPost.getMemberLimit() <= currentPost.getMemberList().size())
             throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
 
         GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(currentMember, currentPost);

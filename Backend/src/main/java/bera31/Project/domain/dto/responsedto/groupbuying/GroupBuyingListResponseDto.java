@@ -24,7 +24,7 @@ public class GroupBuyingListResponseDto {
     String dong;
     LocalDateTime postTime;
     LocalDateTime deadLine;
-    int limit;
+    int memberLimit;
     int currParticipant;
     boolean isFinish;
 
@@ -38,7 +38,7 @@ public class GroupBuyingListResponseDto {
         this.dong = groupBuying.getDong();
         this.postTime = groupBuying.getPostTime();
         this.deadLine = groupBuying.getDeadLine();
-        this.limit = groupBuying.getLimitMember();
+        this.memberLimit = groupBuying.getMemberLimit();
         this.currParticipant = groupBuying.getMemberList().size();
         this.isFinish = groupBuying.isFinish();
     }

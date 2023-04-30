@@ -26,7 +26,7 @@ public class GroupBuying extends Contents {
     String content;
     int cost;
     String image;
-    int limitMember;
+    int memberLimit;
     String gu;
     String dong;
 
@@ -36,7 +36,7 @@ public class GroupBuying extends Contents {
     List<LikedGroupBuying> likedMemberList = new ArrayList<>();
     boolean isFinish;
 
-    public void setImage(String image) {
+    public void updateImage(String image) {
         this.image = image;
     }
 
@@ -48,9 +48,9 @@ public class GroupBuying extends Contents {
         this.isFinish = true;
     }
 
-    public Long update(GroupBuyingRequestDto groupBuyingRequestDto, String image) {
+    public Long update(GroupBuyingRequestDto groupBuyingRequestDto) {
         this.cost = groupBuyingRequestDto.getPrice();
-        this.limitMember = groupBuyingRequestDto.getMemberLimit();
+        this.memberLimit = groupBuyingRequestDto.getMemberLimit();
         this.content = groupBuyingRequestDto.getContent();
         this.product = groupBuyingRequestDto.getProduct();
         this.deadLine = groupBuyingRequestDto.getDeadLine();
@@ -58,14 +58,13 @@ public class GroupBuying extends Contents {
         this.title = groupBuyingRequestDto.getTitle();
         this.gu = groupBuyingRequestDto.getGu();
         this.dong = groupBuyingRequestDto.getDong();
-        this.image = image;
         return this.getId();
     }
 
     public GroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, Member member) {
         this.user = member;
         this.cost = groupBuyingRequestDto.getPrice();
-        this.limitMember = groupBuyingRequestDto.getMemberLimit();
+        this.memberLimit = groupBuyingRequestDto.getMemberLimit();
         this.content = groupBuyingRequestDto.getContent();
         this.isFinish = false;
         this.category = groupBuyingRequestDto.getCategory();

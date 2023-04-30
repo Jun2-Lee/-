@@ -63,7 +63,7 @@ public class MessageService {
 
         Long maxRoomNumber = getMaxRoomNumber();
         Message newMessage = new Message(messageRequestDto, maxRoomNumber + 1,
-                loadCurrentMember(), findReceiver(messageRequestDto));
+                loadCurrentMember(), receiver);
 
         return messageRepository.save(newMessage);
     }

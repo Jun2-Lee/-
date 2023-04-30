@@ -22,7 +22,7 @@ public class MemberController {
             description = "form-data/multipart 형식으로 보내주시면 됩니다.")
     @PutMapping("/mypage/changeInfo")
     public ResponseEntity<String> changeInfo(@RequestPart EditInfoRequestDto editInfoRequestDto,
-                             @RequestPart MultipartFile profileImage) throws IOException {
+                             @RequestPart(required = false) MultipartFile profileImage) throws IOException {
         return new ResponseEntity<>(memberService.changeMyInfo(editInfoRequestDto, profileImage), HttpStatus.OK);
     }
 

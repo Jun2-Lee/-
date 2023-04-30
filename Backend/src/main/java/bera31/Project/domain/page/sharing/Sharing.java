@@ -47,7 +47,7 @@ public class Sharing extends Contents {
         this.isFinish = false;
     }
 
-    public void updateSharing(SharingRequestDto sharingRequestDto) {
+    public void update(SharingRequestDto sharingRequestDto) {
         this.title = sharingRequestDto.getTitle();
         this.content = sharingRequestDto.getContent();
         this.category = sharingRequestDto.getCategory();
@@ -58,7 +58,7 @@ public class Sharing extends Contents {
         this.deadLine = sharingRequestDto.getDeadLine();
     }
 
-    public void setImage(String image) {
+    public void updateImage(String image) {
         this.image = image;
     }
 

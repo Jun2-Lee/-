@@ -63,8 +63,9 @@ public class SharingController {
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @PutMapping("/{postId}")
     public void updateSharing(@PathVariable Long postId,
-                              @RequestBody SharingRequestDto sharingRequestDto) {
-        sharingService.updateSharing(postId, sharingRequestDto);
+                              @RequestPart SharingRequestDto sharingRequestDto,
+                              @RequestPart(required = false) MultipartFile postImage) throws IOException {
+        sharingService.updateSharing(postId, sharingRequestDto, postImage);
     }
 
     @Operation(summary = "나눔 글 삭제 API입니다.",

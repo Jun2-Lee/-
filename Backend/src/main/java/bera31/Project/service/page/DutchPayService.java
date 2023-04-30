@@ -50,7 +50,7 @@ public class DutchPayService {
     }
 
     public Long postDutchPay(DutchPayRequestDto dutchPayRequestDto) {
-        Member currentMember = memberRepository.findById(1);
+        Member currentMember = loadCurrentMember();
         DutchPay dutchPay = new DutchPay(dutchPayRequestDto, currentMember);
 
         currentMember.postDutchPay(dutchPay);

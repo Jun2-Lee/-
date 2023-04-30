@@ -45,7 +45,7 @@ public class AuthService {
         Member member = new Member(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword()),
                 signUpDto.getNickname(), signUpDto.getDong(), signUpDto.getGu());
 
-        if (!profileImage.isEmpty())
+        if (profileImage != null)
             member.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
 
         return memberRepository.save(member).getId();

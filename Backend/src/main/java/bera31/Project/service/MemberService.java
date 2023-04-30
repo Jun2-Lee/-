@@ -47,8 +47,11 @@ public class MemberService {
     public String changeMyInfo(EditInfoRequestDto editInfoRequestDto, MultipartFile profileImage) throws IOException {
         Member currentMember = loadCurrentMember();
 
-        s3Uploader.deleteRemoteFile(currentMember.getProfileImage().substring(52));
-        currentMember.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
+        if(profileImage != null) {
+            if(currentMember.getProfileImage() != null)
+                s3Uploader.deleteRemoteFile(currentMember.getProfileImage().substring(52));
+            currentMember.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
+        }
 
         currentMember.changeAddress(editInfoRequestDto.getDong(), editInfoRequestDto.getGu());
         //currentMember.changeFavIngredients(editInfoRequestDto.getFavIngredients());
