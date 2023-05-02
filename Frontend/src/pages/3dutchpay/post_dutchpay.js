@@ -2,10 +2,24 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './post_dutchpay.css'
 import axios from 'axios'
+import DaumPostcode from 'react-daum-postcode';
+import Modal from 'react-modal';
 
 function PostDutchpay() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [addressInput, setAddressInput] = useState('')
+
+  const onToggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const onCompletePost = data => {
+    setAddressInput(data.address)
+    onToggleModal(); // 주소창은 자동으로 사라지므로 모달만 꺼주면 된다.
+  };
+
   //음식 카테고리 선택 (수정해야함)
-  const foodTypes = ['족발/보쌈', '찜/탕/찌개', '돈까스/회/일식', '피자', '고기/구이', '야식', '양식', '치킨', '중식', '아시안', '백반/죽/국수', '도시락', '분식', '카페/디저트', '패스트푸드', '채식']
+  const foodTypes = ['선택', '족발/보쌈', '찜/탕/찌개', '돈까스/회/일식', '피자', '고기/구이', '야식', '양식', '치킨', '중식', '아시안', '백반/죽/국수', '도시락', '분식', '카페/디저트', '패스트푸드', '채식']
   const [selectedFood, setSelectedFood] = useState('');
 
   function handleFoodChange(e) {
@@ -41,35 +55,17 @@ function PostDutchpay() {
       [name]: value
     })
   };
-  /*
-  const handleAddress1 = (e) => {
-    setAddress1(e.target.value)
-    setDutchpayRequestDto({
-      ...dutchpayRequestDto,
-      address: e.target.value + " " + address2
-    })
-  }
 
-  const handleAddress2 = (e) => {
-    setAddress2(e.target.value)
-    setDutchpayRequestDto({
-      ...dutchpayRequestDto,
-      address: address1 + " " + e.target.value
-    })
-  }
-  */
-  console.log(address)
   const navigate = useNavigate();
   const onSubmit = (e) => {
     e.preventDefault();
-
     if (store.length === 0) {
       alert("매장 이름을 입력해주세요")
     }
-    else if (category.length === 0) {
+    else if (category.length === 0 || category == "선택") {
       alert("카테고리를 선택해주세요")
     }
-    else if (address.length === 0) {
+    else if (addressInput.length === 0) {
       alert("배달 주소를 입력해주세요")
     }
     else if (detailAddress.length === 0) {
@@ -91,30 +87,30 @@ function PostDutchpay() {
       alert("마감일을 입력해주세요")
     }
     else {
-      /*let form = new FormData()
+      let form = new FormData();
       form.append("store", store)
       form.append("category", category)
-      form.append("address", address)
+      form.append("address", addressInput)
+      form.append("detailAddress", detailAddress)
       form.append("deliveryCost", deliveryCost)
       form.append("limitMember", limitMember)
       form.append("deadLine", deadLine)
-      form.append("content", content)*/
+      form.append("content", content)
 
-      axios.post("http://3.36.144.128:8080/api/dutchPay", dutchpayRequestDto, {headers})
+      axios.post("http://3.36.144.128:8080/api/dutchPay", form, {headers})
         .then(function(response) {
           console.log(response)
           alert("등록되었습니다")
           navigate('/dutchpay')
         }) .catch(function(error) {
           console.log(error)
-          console.log(dutchpayRequestDto)
         })
     }
   }
 
     return (
       <div className='postDutchpay_container'>
-        <form onSubmit={onSubmit}>
+        <div>
           <div className="StoreName">
             <label className="form-label">매장 이름</label>
             <input name='store' onChange={onChange} value={store} className="storeName"/>
@@ -131,8 +127,17 @@ function PostDutchpay() {
 
           <div className="DeliveryAddress">
             <label className="form-label">배달 주소</label>
-            <input name='address' onChange={onChange} value={address} className="deliveryAddress" />
-            <button type="submit" className="searchAddress">주소 검색</button>
+            <input name='address' onChange={onChange} value={addressInput} className="deliveryAddress"/>
+            <button onClick={onToggleModal} className="searchAddress">주소 검색</button>
+            {isOpen && (
+              <Modal
+                  isOpen={true}
+                  onOk={onToggleModal}
+                  onCancel={onToggleModal}
+                  className='address_search_modal'>
+                  <DaumPostcode onComplete={onCompletePost} />
+              </Modal>
+            )} 
           </div>
 
           <div className="DetailedAddress">
@@ -162,9 +167,9 @@ function PostDutchpay() {
           </div>
 
           <div className="submit">
-            <input type="submit" className="post_dutchpay" value="등록하기"></input>
+            <input type="submit" onClick={onSubmit} className="post_dutchpay" value="등록하기"></input>
           </div>
-        </form>
+        </div>
       </div>
     );
 }
