@@ -10,6 +10,8 @@ function DutchPayPage() {
   const [data, setData] = useState([]);
   const [detail, setDetail] = useState([]);
   const [showDiv, setShowDiv] = useState(false);
+  const [isMine, setIsMine] = useState(false);
+  const [id, setId] = useState('')
   const accessToken = localStorage.getItem('accessToken');
 
   useEffect(() => {
@@ -31,10 +33,12 @@ function DutchPayPage() {
   function handleDetail(id) {
     //setShowDiv(!showDiv)
     setShowDiv(true);
+    setId(id)
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
     axios.get(`http://3.36.144.128:8080/api/dutchPay/${id}`)
         .then(response => {
           setDetail(response.data)
+          setIsMine(response.data.checkMine)
           const container = document.getElementById('map');
           const options = {
             center: new kakao.maps.LatLng(35.229609, 129.089358),
@@ -70,6 +74,16 @@ function DutchPayPage() {
         .catch(error => console.log(error));      
   }
 
+  const handleApplication = (e) => {
+    e.preventDefault();
+    axios.post(`http://3.36.144.128:8080/api/dutchPay/${id}`)
+      .then(response => {
+        console.log(response)
+        alert("신청 목록은 마이페이지에서 확인하실 수 있습니다.")
+      })
+      .catch(error => console.log(error))
+  }
+
   return (
     <div className='dutch'>
       <div className="list_dutchpay">
@@ -84,7 +98,7 @@ function DutchPayPage() {
 
       {data.map((item, index) => (
         <div className="card_container">
-          <div key ={index} className="card_dutchpay" onClick={() => handleDetail(item.id)}>
+          <div key ={index} className="card_dutchpay" onClick={() => {handleDetail(item.id); setId(item.id)}}>
             <div className="foodIcon">
               {item.category === '족발/보쌈' && <img className="f1" src="assets/img/dutchpay/pig_hocks.png"/>}
               {item.category === '찜/탕/찌개' && <img className="f1" src="assets/img/dutchpay/stew.png"/>}
@@ -132,13 +146,14 @@ function DutchPayPage() {
           <div className="address_dutchpay">{detail.address}</div>
           <div className="explanation_dutchpay">{detail.content}</div>
         </div>
+        {isMine && 
         <div className="UserHelp_dutchpay">
           <a href="#" id="modify_dutchpay">수정하기</a>
           <a href="#" id="userHelp_dutchpay"> | </a>
           <a href="#" id="delete_dutchpay">삭제하기</a>
-        </div>
+        </div>}
         <div className="signupDutchpay">
-              <input type="submit" className="signup_dutchpay" value="신청하기"></input>
+            {!isMine && <button type="submit" onClick={handleApplication} className="signup_dutchpay">신청하기</button>}
         </div>
       </div>
     )}
