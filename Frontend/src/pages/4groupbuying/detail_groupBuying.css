@@ -134,7 +134,7 @@
     margin-top: 60px;
   }
 
-  .like{
+  .like {
     border:0;
     outline:0; 
     background-color: var(--sub_orange);
@@ -146,7 +146,7 @@
     border-radius: 5px;
   }
 
-  .application{
+  .application, .finishTrading {
 
     border:0;
     outline:0; 
