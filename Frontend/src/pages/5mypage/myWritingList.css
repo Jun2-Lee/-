@@ -2,6 +2,7 @@
   width: 100%;
   background-color: var(--sub_orange);
 }
+
 .myWriting_list {
   display: grid;
   grid-template-columns: repeat(3, 11.875rem);
@@ -24,6 +25,7 @@
   padding: 0.938rem;
   font-size: 0.688rem;
   box-shadow: 0 0.125rem 0.188rem 0 rgba(0, 0, 0, 0.25);
+  border-radius: 0.313rem;
 }
 
 .myWriting_list .item_image,
@@ -41,6 +43,11 @@
 .myWriting_list .item_image,
 .myWriting_list .item_title {
   grid-column: 1 / 3;
+}
+
+.myWriting_list .item_image {
+  width: 10rem;
+  height: 10rem;
 }
 
 .myWriting_list .item_date {
