@@ -9,5 +9,4 @@ import java.util.List;
 public class EditInfoRequestDto {
     String gu;
     String dong;
-    List<String> favIngredients;
 }

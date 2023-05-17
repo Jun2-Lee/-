@@ -3,6 +3,7 @@ package bera31.Project.api.controller.page;
 import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.MyPageResponseDto;
+import bera31.Project.domain.dto.responsedto.ChangeInfoDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
 import bera31.Project.service.page.MyPageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,6 +40,12 @@ public class MyPageController {
         return new ResponseEntity<>(myPageService.showMyPage(), HttpStatus.OK);
     }
 
+    @Operation(summary = "내 정보 변경 페이지 API입니다.")
+    @GetMapping("/changeInfo")
+    public ResponseEntity<ChangeInfoDto> showChangeInfoPage(){
+        return new ResponseEntity<>(myPageService.showChangeInfoPage(), HttpStatus.OK);
+    }
+
     @Operation(summary = "내가 쓴 공동 구매 API입니다.")
     @GetMapping("/myGroupBuying")
     public ResponseEntity<List<GroupBuyingListResponseDto>> showMyGroupBuying() {
@@ -49,6 +56,12 @@ public class MyPageController {
     @GetMapping("/myDutchPay")
     public ResponseEntity<List<DutchPayListResponseDto>> showMyDutchPay() {
         return new ResponseEntity<>(myPageService.showMyDutchPay(), HttpStatus.OK);
+    }
+
+    @Operation(summary = "내가 쓴 나눔 API입니다.")
+    @GetMapping("/mySharing")
+    public ResponseEntity<List<SharingListResponseDto>> showMySharing(){
+        return new ResponseEntity<>(myPageService.showMySharing(), HttpStatus.OK);
     }
 
     @Operation(summary = "내가 참여 중인 공동 구매 API입니다.")

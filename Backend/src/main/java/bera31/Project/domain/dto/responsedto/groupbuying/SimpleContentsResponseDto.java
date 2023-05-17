@@ -27,7 +27,7 @@ public class SimpleContentsResponseDto {
 
     public SimpleContentsResponseDto(DutchPay dutchPay) {
         this.id = dutchPay.getId();
-        this.title = dutchPay.getTitle();
+        this.title = dutchPay.getStore();
         this.postTime = dutchPay.getPostTime();
     }
 }

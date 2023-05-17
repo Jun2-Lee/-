@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class DutchPayListResponseDto {
     Long id;
+    String nickname;
     String store;
     String category;
     String address;
@@ -25,6 +26,7 @@ public class DutchPayListResponseDto {
 
     public DutchPayListResponseDto(DutchPay dutchPay) {
         this.id = dutchPay.getId();
+        this.nickname = dutchPay.getUser().getNickname();
         this.store = dutchPay.getStore();
         this.category = dutchPay.getCategory();
         this.address = dutchPay.getAddress();

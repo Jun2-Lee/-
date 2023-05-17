@@ -27,7 +27,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class MemberService {
-    private final LikeRepository likeRepository;
     private final MemberRepository memberRepository;
     private final S3Uploader s3Uploader;
     private final PasswordEncoder passwordEncoder;
@@ -54,7 +53,6 @@ public class MemberService {
         }
 
         currentMember.changeAddress(editInfoRequestDto.getDong(), editInfoRequestDto.getGu());
-        //currentMember.changeFavIngredients(editInfoRequestDto.getFavIngredients());
         return "정보가 수정되었습니다!";
     }
 

@@ -4,6 +4,7 @@ import bera31.Project.domain.dto.responsedto.*;
 import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.SimpleContentsResponseDto;
+import bera31.Project.domain.dto.responsedto.ChangeInfoDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.intersection.DutchPayIntersection;
@@ -11,7 +12,6 @@ import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
 import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import bera31.Project.domain.page.intersection.LikedSharing;
 import bera31.Project.repository.MemberRepository;
-import bera31.Project.repository.page.IntersectionRepository;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -100,6 +100,12 @@ public class MyPageService {
                 todaySchedules);
     }
 
+    public ChangeInfoDto showChangeInfoPage(){
+        Member currentMember = loadCurrentMember();
+
+        return new ChangeInfoDto(currentMember.getEmail(), currentMember.getDong(), currentMember.getGu());
+    }
+
     public List<GroupBuyingListResponseDto> showMyGroupBuying() {
         Member currentMember = loadCurrentMember();
 
@@ -113,6 +119,14 @@ public class MyPageService {
 
         return currentMember.getDutchPayList().stream()
                 .map(DutchPayListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<SharingListResponseDto> showMySharing() {
+        Member currentMember = loadCurrentMember();
+
+        return currentMember.getSharingList().stream()
+                .map(SharingListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
