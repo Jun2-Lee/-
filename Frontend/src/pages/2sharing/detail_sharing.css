@@ -134,7 +134,7 @@
     border-radius: 5px;
   }
 
-  .shareApplication{
+  .shareApplication, .finishSharing {
     border:0;
     outline:0; 
     background-color:  #FF8327;
