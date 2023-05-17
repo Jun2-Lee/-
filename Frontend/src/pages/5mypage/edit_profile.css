@@ -1,17 +1,23 @@
 
-.biglogo{
+.biglogo {
     display: flex;
     justify-content: center;
 }
 
-.editID,.editName{
+.biglogo img {
+    width: 102px;
+    height: 102px;
+    border-radius: 50%;
+}
+
+.editID, .editName, .editGred {
     display: flex;
     justify-content: center;
     margin-right: 54px;
     margin-top: 31px;
 }
 
-.EditID, .EditName{
+.EditID, .EditName, .favoriteIngred {
     background-color: var(--sub_orange);
     width: 297px;
     height: 31px;
@@ -26,16 +32,14 @@
     margin-top: 31px;
 }
 
-.id-label, .name-label{
+.editProfile_container label {
     font-size: 16px;
     font-weight: 800;
     margin-right: 19px;
-}
-.adress-label{
-    font-size: 16px;
-    font-weight: 800;
-    margin-top: 5px;
-    margin-right: 19px;
+    background-color: pink;
+    width: 100px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .edit_gu, .edit_dong{
@@ -58,7 +62,7 @@
 
 }
 
-.edit_submit{
+.editProfile_container .edit_submit {
     display: flex;
     justify-content: center;
     margin-top: 50px;
@@ -77,15 +81,6 @@
     border-radius: 5px;
     color: white;
 }
-
-.Tag{
-    display: flex;
-    font-size: 16px;
-    font-weight: 800;
-    margin-left: 120px;
-    margin-top: 30px;
-    justify-content: center;
-  }
 
 .addtag{
     margin-left: 250px;
