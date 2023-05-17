@@ -48,6 +48,7 @@ function DetailGroupBuying() {
     //yyyy-mm-dd로 변환
     const [postTime, setPostTime] = useState('');
     const [deadLine, setDeadline] = useState('');
+    const [isMine, setIsMine] = useState(false);
     
     const accessToken = localStorage.getItem("accessToken")
     useEffect(() => {
@@ -55,6 +56,7 @@ function DetailGroupBuying() {
       axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
         .then(response => {
           setData(response.data);
+          setIsMine(response.data.checkMine);
           //yyyy-mm-dd로 변환
           setPostTime(new Date(response.data.postTime).toLocaleDateString("ko-KR"));
           setDeadline(new Date(response.data.deadLine).toLocaleDateString("ko-KR"));
@@ -79,6 +81,29 @@ function DetailGroupBuying() {
     function handleRevise() {
       navigate(`/reviseGroupBuying/${postId}`)
     }
+
+    const handleClipping = (e) => {
+      e.preventDefault();
+      axios.post(`http://3.36.144.128:8080/api/groupBuying/${postId}/like`)
+        .then(response => alert("찜 목록은 마이페이지에서 확인하실 수 있습니다."))
+        .then(error => console.log(error))
+    }
+
+    const handleApplication = (e) => {
+      e.preventDefault();
+      axios.post(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+        .then(response => alert("신청 목록은 마이페이지에서 확인하실 수 있습니다."))
+        .then(error => console.log(error))
+    }
+
+    const handleFinishing = (e) => {
+      e.preventDefault();
+      axios.post(`http://3.36.144.128:8080/api/groupBuying/${postId}/finish`)
+        .then(response => alert("공동구매 신청을 마감하였습니다."))
+        .then(error => console.log(error))
+    }
+
+    //여기 위에까지 지수
 
     useEffect(() => {
       const fetchData = async () => {
@@ -114,10 +139,10 @@ function DetailGroupBuying() {
               <p id = "detail_title">{data.title}</p>
             </div>
       
-            <div className='userhelp_detail'>
+            {isMine && <div className='userhelp_detail'>
               <button className = "modify" onClick={handleRevise}>수정하기</button>
               <button className = "delete" onClick={handleDelete}>삭제하기</button>
-            </div>
+            </div>}
 
         
             <div id = "nowTime">
@@ -198,16 +223,16 @@ function DetailGroupBuying() {
      
 
             <div className="LowerUserHelp">
-              <button className = "like">찜</button>
-              <button className = "application">신청하기</button>
+              {!isMine && <button className = "like" onClick={handleClipping}>찜</button>}
+              {!isMine && <button className = "application" onClick={handleApplication}>신청하기</button>}
               <div className='sendMessage'>
-              {userId && (
-          <Link to={{ pathname: `/chatting` }}>
-            <button className='SendMessage' >쪽지</button>
-         
-        </Link>
-      )}
-          </div>
+              {!isMine && userId && (
+                <Link to={{ pathname: `/chatting` }}>
+                  <button className='SendMessage' >쪽지</button>
+                </Link>
+              )}
+              {isMine && <button className = "finishTrading" onClick={handleFinishing}>거래 완료</button>}
+            </div>
 
             </div>   
 
