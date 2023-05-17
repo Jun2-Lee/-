@@ -107,8 +107,8 @@ function Layout() {
               <Link to="/myPage">내 프로필</Link>
               <Link to="/chatting">쪽지함</Link>
               <Link to="/myWriting">내가 쓴 글</Link>
-              <Link to="/">참여 목록</Link>
-              <Link to="/">찜 목록</Link>
+              <Link to="/myApplication">신청 목록</Link>
+              <Link to="/myClipping">찜 목록</Link>
               <Link to="/calendar">캘린더</Link>
             </article>
           </div>
