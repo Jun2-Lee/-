@@ -8,10 +8,10 @@ import axios from 'axios';
 
 function MyWriting() {
   const [mySharing, setSharing] = useState('');
-  const [myDutch, setDutchpay] = useState('');
+  const [myDutch, setDutchpay] = useState(null); // 기본값을 null로 설정합니다.
   const [myGroup, setGroup] = useState('');
   const { kakao } = window;
-  
+
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken')
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
@@ -24,7 +24,7 @@ function MyWriting() {
         }))
       })
       .catch(err => console.log(err));
-    
+
     axios.get('http://3.36.144.128:8080/api/mypage/myDutchPay') 
       .then(res => {
         setDutchpay(res.data.map(item => {
@@ -32,35 +32,6 @@ function MyWriting() {
           const formattedDate = date.toLocaleDateString("ko-KR");
           return { ...item, postTime: formattedDate };
         }));
-        console.log(res.data)
-        res.data.map(item => {
-          const container = document.getElementsByClassName('item_image');
-          const options = {
-            center: new kakao.maps.LatLng(35.229609, 129.089358),
-            level: 3
-          };
-          // 지도를 생성
-          const map = new kakao.maps.Map(container, options);
-          // 주소-좌표 변환 객체 생성
-          const geocoder = new kakao.maps.services.Geocoder();
-          // 주소로 좌표를 검색
-          geocoder.addressSearch(item.address, function (result, status) {
-            // 정상적으로 검색이 완료됐으면 
-            if (status === kakao.maps.services.Status.OK) {
-              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-              // 결과값으로 받은 위치를 마커로 표시
-              var marker = new kakao.maps.Marker({
-                map: map,
-                position: coords
-              });
-        
-              //infowindow.open(map, marker);
-        
-              // 지도의 중심을 결과값으로 받은 위치로 이동시키기
-              map.setCenter(coords);
-            }
-          });
-        });
       })
       .catch(err => console.log(err));
 
@@ -73,11 +44,43 @@ function MyWriting() {
         }));
       })
       .catch(err => console.log(err));
-  }, [])
+  }, []);
+
+  //수정된 부분
+  useEffect(() => {
+    if (myDutch !== null) {
+      showMaps(myDutch);
+    }
+  });
 
   const [isSharingClicked, setSharingClicked] = useState(true);
   const [isDutchpayClicked, setDutchpayClicked] = useState(false);
   const [isGroupbuyingClicked, setGroupClicked] = useState(false);
+
+  //지도 보여주기
+  const showMaps = (data) => {
+    const addresses = data.map(item => item.address);
+    const containers = document.getElementsByClassName('item_map');
+    Array.from(containers).forEach((container, index) => {
+      const options = {
+        center: new kakao.maps.LatLng(35.229609, 129.089358),
+        level: 3
+      };
+      const map = new kakao.maps.Map(container, options);
+      const geocoder = new kakao.maps.services.Geocoder();
+      geocoder.addressSearch(addresses[index], function (result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+          var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+          });
+
+          map.setCenter(coords);
+        }
+      });
+    });
+  };
 
   return (
     <>
@@ -118,12 +121,11 @@ function MyWriting() {
             {isDutchpayClicked && myDutch && myDutch.map((item, index) => (
               <div key={index}>
                 <div className="item">
-                  <div className='item_image'>이미지</div>
+                  <div className='item_map'></div>
                   <div className='item_nickname'>{item.nickname}</div>
                   <div className='item_date'>{item.postTime}</div>
                   <div className='item_title'>{item.store}</div>
-                  <div className='item_area'>{item.address}</div>
-                  <div className='item_deadline'>0일 후 마감</div>
+                  <div className='item_address'>{item.address}</div>
                 </div>
               </div>
             ))}
