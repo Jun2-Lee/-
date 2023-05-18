@@ -27,6 +27,7 @@ import RevisegroupBuying from "./pages/4groupbuying/revise_groupBuying"
 //5
 import MyPage from "./pages/5mypage";
 import EditProfile from "./pages/5mypage/edit_profile";
+import ChangePassword from "./pages/5mypage/changePassword";
 import MyWriting from "./pages/5mypage/myWriting";
 import MyApplication from "./pages/5mypage/myApplication";
 import MyClipping from "./pages/5mypage/myClipping";
@@ -69,6 +70,7 @@ function App() {
 
         <Route path="/myPage" element={<MyPage />} />
         <Route path="/editProfile" element={<EditProfile />} />
+        <Route path="/changePw" element={<ChangePassword />} />
         <Route path="/myWriting" element={<MyWriting />} />
         <Route path="/myApplication" element={<MyApplication />} />
         <Route path="/myClipping" element={<MyClipping />} />

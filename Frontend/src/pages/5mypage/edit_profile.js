@@ -2,12 +2,13 @@ import './edit_profile.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddressSelect2 from '../../components/addressSelect2'
+import { useNavigate } from 'react-router-dom';
 
 function EditProfile() {
     const [data, setData] = useState('');
     const [data2, setData2] = useState('');
-    const [dong, setDong] = useState('');
-    const [gu, setGu] = useState('');
+    const [dong, setDong] = useState();
+    const [gu, setGu] = useState();
     const [profileImage, setImage] = useState('');
 
     useEffect(() => {
@@ -30,54 +31,76 @@ function EditProfile() {
     }, [])
 
     const [editInfoRequestDto, setEditInfoRequestDto] = useState({
-        dong: dong,
-        gu: gu
+        dong: data.dong,
+        gu: data.gu
     });
-
+    
     // 주소 선택
     const [selectedGu, setSelectedGu] = useState('');
     const [selectedDong, setSelectedDong] = useState('');
 
     function handleSelectedGu(selectedGuValue) {
         setSelectedGu(selectedGuValue)
+
         setEditInfoRequestDto({
-        ...editInfoRequestDto,
-        gu: selectedGuValue
+            ...editInfoRequestDto,
+            gu: selectedGuValue
         })
     }
     
     function handleSelectedDong(selectedDongValue) {
         setSelectedDong(selectedDongValue)
         setEditInfoRequestDto({
-        ...editInfoRequestDto,
-        dong: selectedDongValue
+            ...editInfoRequestDto,
+            dong: selectedDongValue
         })
     }
     
     const headers = {
         'Content-Type': 'multipart/form-data'
     }
-
+    console.log(data)
+    const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (gu == null || dong == null) alert("사는 동네를 선택해주세요.")
+        if ((selectedGu === '' && selectedDong !== '') || (selectedGu !== '' && selectedDong === '')) alert("사는 동네를 선택해주세요.");
         else {
             const accessToken = localStorage.getItem('accessToken');
             axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
-            const form = new FormData()
+            const form = new FormData();
+            if (selectedGu === '' && selectedDong === '') {
+                setEditInfoRequestDto({
+                    ...editInfoRequestDto,
+                    dong: data.dong,
+                    gu: data.gu
+                });
+                console.log(data.dong)
+                console.log(data.gu)
+            }
+            else {
+                setEditInfoRequestDto({
+                    ...editInfoRequestDto,
+                    dong: selectedDong,
+                    gu: selectedGu
+                });
+            }
+            
             form.append('profileImage', profileImage)
             form.append('editInfoRequestDto', new Blob([JSON.stringify(editInfoRequestDto)], {type: "application/json"}))
 
-            axios.put('http://3.36.144.128:8080​/api​/mypage​/changeInfo', form, {headers})
+            axios.put('http://3.36.144.128:8080/api/mypage/changeInfo', form, {headers})
                 .then(res => {
                     console.log(res)
-                    alert("회원 정보가 수정되었습니다.")
+                    console.log(editInfoRequestDto)
+                    alert(res.data)
+                    navigate('/mypage')
                 })
                 .catch(err => console.log(err))
         }
     }
     console.log(editInfoRequestDto)
+    
 
     return (
         <div className='editProfile_container'>

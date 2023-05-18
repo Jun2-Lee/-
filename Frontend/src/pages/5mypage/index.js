@@ -89,7 +89,8 @@ function MyPage() {
           </div>
 
           <div className="modify_profile">
-            <Link to="/editProfile">프로필 수정하기</Link>
+            <Link to="/changePW">비밀번호 변경하기&nbsp;</Link>| 
+            <Link to="/editProfile">&nbsp;프로필 수정하기</Link>
           </div>
         </div>
 
