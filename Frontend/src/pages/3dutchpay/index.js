@@ -34,6 +34,7 @@ function DutchPayPage() {
     //setShowDiv(!showDiv)
     setShowDiv(true);
     setId(id)
+    const accessToken = localStorage.getItem('accessToken')
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
     axios.get(`http://3.36.144.128:8080/api/dutchPay/${id}`)
         .then(response => {
@@ -82,6 +83,17 @@ function DutchPayPage() {
         alert("신청 목록은 마이페이지에서 확인하실 수 있습니다.")
       })
       .catch(error => console.log(error))
+  }
+
+  const handleDelete = (e) => {
+    const accessToken = localStorage.getItem('accessToken')
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+    axios.delete(`http://3.36.144.128:8080/api/dutchPay/${id}`) 
+      .then(() => {
+        alert("삭제되었습니다."); 
+        window.location.replace("/dutchpay")
+      })
+      .catch(err => console.log(err))
   }
 
   return (
@@ -148,9 +160,9 @@ function DutchPayPage() {
         </div>
         {isMine && 
         <div className="UserHelp_dutchpay">
-          <a href="#" id="modify_dutchpay">수정하기</a>
-          <a href="#" id="userHelp_dutchpay"> | </a>
-          <a href="#" id="delete_dutchpay">삭제하기</a>
+          <Link to="" id="modify_dutchpay">수정하기</Link>
+          <span id="userHelp_dutchpay"> | </span>
+          <span onClick={handleDelete} id="delete_dutchpay">삭제하기</span>
         </div>}
         <div className="signupDutchpay">
             {!isMine && <button type="submit" onClick={handleApplication} className="signup_dutchpay">신청하기</button>}
