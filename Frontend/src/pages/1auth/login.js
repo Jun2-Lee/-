@@ -55,7 +55,7 @@ export default function Login() {
             })
     .then(onLoginSuccess) 
     .catch(function(error) {
-      if (error.response.status == 400) alert("아이디 또는 비밀번호를 확인해주세요.")
+      if (error.response.status == 400 || error.response.status == 404) alert("아이디 또는 비밀번호를 확인해주세요.")
       console.log(error) 
     })
   }
