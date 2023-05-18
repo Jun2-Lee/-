@@ -30,6 +30,7 @@ import MyPage from "./pages/5mypage";
 import EditProfile from "./pages/5mypage/edit_profile";
 import MyWriting from "./pages/5mypage/myWriting";
 import Chatting from "./pages/5mypage/chatting"
+import ChnnPassword from "./pages/5mypage/changePassword";
 
 //로그인 테스트
 import Login2 from "./pages/test";
@@ -71,6 +72,7 @@ function App() {
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/myWriting" element={<MyWriting />} />
         <Route path="/Chatting" element={<Chatting />} />
+        <Route path="/passwordChange" element={<ChnnPassword/>}/>
 
 
         {/* 카카오 로그인 테스트 */}
