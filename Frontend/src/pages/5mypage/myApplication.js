@@ -62,7 +62,7 @@ export default function MyApplication() {
         }));
       })
       .catch(err => console.log(err));
-  })
+  }, [])
 
   const [isDutchpayClicked, setDutchpayClicked] = useState(true);
   const [isGroupbuyingClicked, setGroupClicked] = useState(false);

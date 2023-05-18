@@ -73,7 +73,7 @@ function MyWriting() {
         }));
       })
       .catch(err => console.log(err));
-  })
+  }, [])
 
   const [isSharingClicked, setSharingClicked] = useState(true);
   const [isDutchpayClicked, setDutchpayClicked] = useState(false);

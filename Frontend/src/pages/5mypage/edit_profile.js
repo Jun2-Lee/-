@@ -27,7 +27,7 @@ function EditProfile() {
             setData2(response.data);
         })
         .catch(err => console.log(err))
-    })
+    }, [])
 
     const [editInfoRequestDto, setEditInfoRequestDto] = useState({
         dong: dong,

@@ -23,7 +23,7 @@ export default function MyClipping() {
         })
       .catch(err => console.log(err));
       
-    axios.get('​http://3.36.144.128:8080/api/mypage/favoriteGroupBuying') 
+    axios.get('http://3.36.144.128:8080/api/mypage/favoriteGroupBuying')
       .then(res => {
         setGroup(res.data.map(item => {
           const date = new Date(item.postTime);
@@ -32,7 +32,7 @@ export default function MyClipping() {
         }))
         })
       .catch(err => console.log(err));
-    })
+    }, [])
 
   const [isSharingClicked, setSharingClicked] = useState(true);
   const [isGroupbuyingClicked, setGroupClicked] = useState(false);
