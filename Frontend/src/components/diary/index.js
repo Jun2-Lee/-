@@ -3,13 +3,13 @@ import './index.css';
 import axios from "axios";
 
 
-function Diary(props, date) {
+function Diary(props, {date}) {
   const [showSchedule, setShowSchedule] = useState(false);
   const [schedules, setSchedules] = useState([]); //일정 리스트
   const [mySchedule, setMySchedule] = useState([]); //일정 보기
   const [showMySchedule, setShowMySchedule] = useState(false); //화면 클릭
 
-  
+
   const [title, setTitle] = useState('');
   const [time, setTime] = useState('');
   const [place, setPlace] = useState('');
@@ -18,6 +18,8 @@ function Diary(props, date) {
 
 //등록 버튼을 누르면 정보가 넘어가는 동시에 달력 전체에 뿌려짐
 const postSchedule = () => {
+  const accessToken = localStorage.getItem("accessToken")
+  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
   axios.post("http://3.36.144.128:8080/api/mypage/schedule", {
     title,
     time,
@@ -26,10 +28,11 @@ const postSchedule = () => {
     targetDate,
   })
     .then((response) => {
-      setSchedules([...schedules, response.data])
+      setSchedules([...schedules, response.data]);
       setShowSchedule(false);
       setMySchedule([response.data]);
-
+      const accessToken = localStorage.getItem("accessToken")
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       axios.get("http://3.36.144.128:8080/api/mypage/schedule")
         .then((response) => {
           const filteredSchedules = response.data.filter(
@@ -48,13 +51,15 @@ const postSchedule = () => {
 
 useEffect(() => {
   const fetchData = async () => {
+    const accessToken = localStorage.getItem("accessToken")
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     try {
       const response = await axios.get("http://3.36.144.128:8080/api/mypage/schedule/");
       const scheduleIds = response.data.map((schedule) => schedule.id);
       console.log(scheduleIds)
 
       const filteredSchedules1 = response.data.filter((schedule) => schedule.targetDate === props.date);
-
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       const requests = filteredSchedules1.map((schedule) =>
         axios.get(`http://3.36.144.128:8080/api/mypage/schedule/${schedule.id}`)
       );
@@ -79,7 +84,7 @@ useEffect(() => {
 
 
   return (
-    
+
     <div className="schedule">
 <button className="dailySchedule" >
 
@@ -104,7 +109,7 @@ useEffect(() => {
           <div className="namePost">
               일정 등록
           </div>
-         
+
           <div className="titleInput">
             <label className="TitleSchedule">제목</label>
             <input className="titleSchedule" />
@@ -125,9 +130,9 @@ useEffect(() => {
             <input className="memoSchedule" />
           </div>
 
-          
 
-        
+
+
 
           <button className="postScheduleButton" onClick={postSchedule}>
   등록
@@ -142,7 +147,7 @@ useEffect(() => {
         ))}
         </div>*/}
     </div>
-    
+
   );
 }
 
