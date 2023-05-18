@@ -96,7 +96,9 @@ function PostDutchpay() {
       form.append("limitMember", limitMember)
       form.append("deadLine", deadLine)
       form.append("content", content)
-
+      
+      const accessToken = localStorage.getItem('accessToken')
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
       axios.post("http://3.36.144.128:8080/api/dutchPay", form, {headers})
         .then(function(response) {
           console.log(response)
