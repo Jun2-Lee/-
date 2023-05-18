@@ -7,33 +7,30 @@ import { useNavigate } from 'react-router-dom';
 function EditProfile() {
     const [data, setData] = useState('');
     const [data2, setData2] = useState('');
-    const [dong, setDong] = useState();
-    const [gu, setGu] = useState();
     const [profileImage, setImage] = useState('');
+    const [editInfoRequestDto, setEditInfoRequestDto] = useState({
+        dong: data.dong,
+        gu: data.gu
+      });
+    
+    useEffect(() => {
+        const initialEditInfoRequestDto = {
+          dong: data.dong,
+          gu: data.gu
+        };
+        setEditInfoRequestDto(initialEditInfoRequestDto);
+      }, [data.dong, data.gu]);
 
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
         axios.get('http://3.36.144.128:8080/api/mypage/changeInfo')
-            .then(response => {
-                console.log(response.data);
-                setData(response.data);
-                setDong(response.data.dong);
-                setGu(response.data.gu);
-            })
+            .then(response => setData(response.data))
             .catch(err => console.log(err))
         axios.get('http://3.36.144.128:8080/api/mypage')
-        .then(response => {
-            console.log(response.data);
-            setData2(response.data);
-        })
+        .then(response => setData2(response.data))
         .catch(err => console.log(err))
     }, [])
-
-    const [editInfoRequestDto, setEditInfoRequestDto] = useState({
-        dong: data.dong,
-        gu: data.gu
-    });
     
     // 주소 선택
     const [selectedGu, setSelectedGu] = useState('');
@@ -59,7 +56,6 @@ function EditProfile() {
     const headers = {
         'Content-Type': 'multipart/form-data'
     }
-    console.log(data)
     const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -75,8 +71,6 @@ function EditProfile() {
                     dong: data.dong,
                     gu: data.gu
                 });
-                console.log(data.dong)
-                console.log(data.gu)
             }
             else {
                 setEditInfoRequestDto({
@@ -91,16 +85,12 @@ function EditProfile() {
 
             axios.put('http://3.36.144.128:8080/api/mypage/changeInfo', form, {headers})
                 .then(res => {
-                    console.log(res)
-                    console.log(editInfoRequestDto)
                     alert(res.data)
                     navigate('/mypage')
                 })
                 .catch(err => console.log(err))
         }
     }
-    console.log(editInfoRequestDto)
-    
 
     return (
         <div className='editProfile_container'>
