@@ -42,7 +42,6 @@ public class GroupBuyingService {
     private final MemberRepository memberRepository;
     private final IntersectionRepository intersectionRepository;
     private final LikeRepository likeRepository;
-    private final CommentService commentService;
 
 /*    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
         return groupBuyingRepository.findByKeyword(keyword)
@@ -54,7 +53,21 @@ public class GroupBuyingService {
     @Transactional(readOnly = true)
     public List<GroupBuyingListResponseDto> findAllGroupBuying() {
         List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
-        checkExpiredPost(findedGroupBuyings);
+
+        if(!findedGroupBuyings.isEmpty()) {
+            checkExpiredPost(findedGroupBuyings);
+        }
+
+        return findedGroupBuyings.stream().map(GroupBuyingListResponseDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<GroupBuyingListResponseDto> findAllGroupBuyingWithPaging(int page) {
+        List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAllWithPaging(page);
+
+        if(!findedGroupBuyings.isEmpty()) {
+            checkExpiredPost(findedGroupBuyings);
+        }
 
         return findedGroupBuyings.stream().map(GroupBuyingListResponseDto::new).collect(Collectors.toList());
     }
@@ -62,14 +75,21 @@ public class GroupBuyingService {
 
     @Transactional(readOnly = true)
     public GroupBuyingResponseDto findGroupBuying(Long postId) {
+        boolean checkMine = false;
+        Member currentMember = loadCurrentMember();
+        GroupBuying currentGroupBuying = groupBuyingRepository.findById(postId);
+
+        if(currentMember.getId().equals(currentGroupBuying.getUser().getId())){
+            checkMine = true;
+        }
+
         List<CommentResponseDto> commentResponseDtoList =
                 makeCommentList(groupBuyingRepository.findById(postId).getComments());
-        return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId), commentResponseDtoList);
+        return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId), commentResponseDtoList, checkMine);
     }
 
     public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
-        //Member findedMember = loadCurrentMember();
-        Member currentMember = memberRepository.findById(1);
+        Member currentMember = loadCurrentMember();
 
         GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, currentMember);
         newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
@@ -152,4 +172,6 @@ public class GroupBuyingService {
         }
         return commentResponseDtoList;
     }
+
+
 }

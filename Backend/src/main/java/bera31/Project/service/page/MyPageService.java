@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class MyPageService {
     private final MemberRepository memberRepository;
-    private final IntersectionRepository intersectionRepository;
 
     public MyPageResponseDto showMyPage() {
         Member findedMember = loadCurrentMember();

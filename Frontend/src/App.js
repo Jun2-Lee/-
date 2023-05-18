@@ -22,8 +22,9 @@ import DutchPayPage from "./pages/3dutchpay";
 import PostDutchpay from "./pages/3dutchpay/post_dutchpay";
 //4(공동구매)
 import GroupBuyingPage from "./pages/4groupbuying";
-import DetailGroupBuying from "./pages/4groupbuying/detail_groupBuying.js";
+import DetailGroupBuying from "./pages/4groupbuying/detail_groupBuying";
 import PostgroupBuying from "./pages/4groupbuying/post_groupBuying";
+import RevisegroupBuying from "./pages/4groupbuying/revise_groupBuying"
 //5
 import MyPage from "./pages/5mypage";
 import EditProfile from "./pages/5mypage/edit_profile";
@@ -64,6 +65,7 @@ function App() {
         <Route path="/groupBuying" element={<GroupBuyingPage />} />
         <Route path="/groupBuying/:postId" element={<DetailGroupBuying />} />
         <Route path="/postGroupBuying" element={<PostgroupBuying />} />
+        <Route path="/reviseGroupBuying/:postId" element={<RevisegroupBuying />} />
 
         <Route path="/myPage" element={<MyPage />} />
         <Route path="/editProfile" element={<EditProfile />} />

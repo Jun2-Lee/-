@@ -12,9 +12,9 @@ function DetailSharing() {
   const [expiry, setExpiry] = useState('');
   const [deadLine, setDeadline] = useState('');
 
-  //header 
-  //axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  const accessToken = localStorage.getItem('accessToken')
   useEffect(() => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
     axios.get(`http://3.36.144.128:8080/api/sharing/${postId}`)
       .then(response => {
         setData(response.data);
@@ -95,55 +95,82 @@ function handleModifying(postId) {
       <div className='sharedetailImg'>
         <img src={data.image} />
       </div>
-      <div className='items_sharing'>
-                <div className="category_sharing">
-                <label className="detailform_sharing">카테고리</label>
-                <div
-                  className="categorySharing">
-                    {data.category}
-                </div>
-              </div>
-              <div className="item_sharing">
-                <label className="detailform_sharing">품목</label>
-                <div
-                  className="itemSharing">{data.product}</div>
-              </div>
 
-              <div className="expiry_sharing">
-                <label className="detailform_sharing">유통기한</label>
-                <div
-                  className="expirySharing">
-                    {expiry}
-                  </div>
-              </div>
+      <div className='userhelp_sharedetail'>
+      <div className = "profile_sharing">
+        <img className = "profileImg"  src={data.profileImage}/>
+        {data.nickname} 님
+      </div>
+        <div>
+          <button className = "modify_sharing">수정하기</button>
+          <button className = "delete_sharing" onClick={handleDelete}>삭제하기</button>
+          <div className="postTime"> {postTime} </div>
+        </div>
+      </div>
 
-              <div className="deadline_sharing">
-                <label className="detailform_sharing">마감일</label>
-                <div 
-                  className="DeadlineSharing">
-                    {deadLine}
-                  </div>
-              </div>
-              {data.dong}
-              {data.gu}
-              
-            </div>
+      <div className='component_sharing'>
+
+        <div className='sharedetailImg'>
+          <img src={data.image} />
         </div>
 
+        <div className='items_sharing'>
+          <div className="category_sharing">
+          <label className="detailform_sharing">카테고리</label>
+          <div className="categorySharing">
+              {data.category}
+          </div>
+        </div>
+
+          <div className="item_sharing">
+            <label className="detailform_sharing">품목</label>
+            <div
+              className="itemSharing">{data.product}</div>
+          </div>
+
+          <div className="expiry_sharing">
+            <label className="detailform_sharing">유통기한</label>
+            <div
+              className="expirySharing">
+                {expiry}
+              </div>
+          </div>
+
+                <div className="deadline_sharing">
+                  <label className="detailform_sharing">마감일</label>
+                  <div 
+                    className="DeadlineSharing">
+                      {deadLine}
+                    </div>
+                </div>
+
+                <div className="deadline_sharing">
+                  <label className="detailform_sharing">사는 동네</label>
+                  <div className="DeadlineSharing">
+                    {data.dong} {data.gu}
+                  </div>
+                </div>
+                  
+              </div>
+          </div>
 
 
-    <div className="ingredient_sharing">
-      <label id="Ingredient_sharing">재료상태</label>
-      <br></br>
-    <div className="Ingredient_sharing">
-      {data.content}
+
+      <div className="ingredient_sharing">
+        <label id="Ingredient_sharing">재료상태</label>
+        <br></br>
+      <div className="Ingredient_sharing">
+        {data.content}
+      </div>
+      </div>
+
+      <div className="LowerUserHelp_sharing">
+        <button className = "shareLike">찜</button>
+        <button className = "shareApplication">신청하기</button>
+      </div>
+
+
     </div>
-    </div>
-
-    <div className="LowerUserHelp_sharing">
-      <button className = "shareLike">찜</button>
-      <button className = "shareApplication">신청하기</button>
-    </div>    
 
 </div>
 

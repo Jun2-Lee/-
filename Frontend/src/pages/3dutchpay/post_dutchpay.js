@@ -31,7 +31,7 @@ function PostDutchpay() {
     content: '',
   });
 
-  const { store, category, deliveryCost, limitMember, deadLine, content } = dutchpayRequestDto;
+  const { store, category, address, deliveryCost, limitMember, deadLine, content } = dutchpayRequestDto;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -76,9 +76,7 @@ function PostDutchpay() {
 
           <div className="DeliveryAddress">
             <label className="form-label">배달 주소</label>
-            <input 
-              className="deliveryAddress"
-              />
+            <input input name='address' onChange={onChange} value={address} className="deliveryAddress" />
             <button type="submit" className="searchAddress">주소 검색</button>
           </div>
 

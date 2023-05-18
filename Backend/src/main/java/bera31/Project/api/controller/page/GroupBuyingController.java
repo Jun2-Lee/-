@@ -35,6 +35,16 @@ public class GroupBuyingController {
         return new ResponseEntity<>(groupBuyingService.findAllGroupBuying(), HttpStatus.OK);
     }
 
+    @Operation(summary = "변경된 공동 구매 전체 글 조회 API입니다.",
+            description = "공동구매 창 처음 접속 시 보여지는 글 목록 요청 Api 입니다. \n\n" +
+                    "전체 조회에도 각 게시글 마다 고유 id를 같이 보내놨습니다.\n\n" +
+                    "페이지네이션까지 된 목록 조회입니다.\n\n" +
+                    "해당 값은 글 내용 조회 시, 수정 시, 삭제 시, 참여 기능, 찜 기능에 사용됩니다.")
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity<List<GroupBuyingListResponseDto>> findAllGroupBuyingWithPaging(@PathVariable int pageNumber) {
+        return new ResponseEntity<>(groupBuyingService.findAllGroupBuyingWithPaging(pageNumber), HttpStatus.OK);
+    }
+
     @Operation(summary = "공동구매 글 작성 API입니다.",
             description = "사진은 필수 값입니다.\n\n" +
                     "form-data/multipart 형식으로 보내주시면 됩니다.")
@@ -56,6 +66,7 @@ public class GroupBuyingController {
     @Operation(summary = "공동구매 글 상세 조회 API 입니다.",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.\n\n" +
                     "글에는 작성자의 고유 id가 같이 넘어갑니다.\n\n" +
+                    "checkMine 변수로 본인 글인지 확인 가능하게 해두었습니다\n\n" +
                     "쪽지 보내기 기능이 사용될 경우, 해당 작성자의 id로 보내면 됩니다.")
     @GetMapping("/{postId}")
     public ResponseEntity<GroupBuyingResponseDto> findGroupBuying(@PathVariable Long postId) {

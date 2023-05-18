@@ -1,42 +1,42 @@
-.detail_sharing{
-  margin-left: 150px;
+.detail_sharing {
+  display: flex;
+  justify-content: center;
+  padding-top: 27px;
 }
 
-
-
-.sharingdetail_Title {
+.detail_sharing .sharingdetail_title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--sub_orange);
+  font-weight: 800;
   font-size: 16px;
-  font-weight:bolder;
   height: 42px;
   width: 833px;
   border-radius: 5px;
-  margin-top: 30px;
 }
 
-#sharingdetail_title{
-  display: flex;
-  justify-content: center;
-  margin-top: -30px;
-  line-height: 47px;
-}
-
-
-
-.userhelp_sharedetail{
+.detail_sharing .userhelp_sharedetail {
   margin-top: 10px;
-  margin-left: 720px;
-
-}
-
-.component_sharing{
-
   display: flex;
+  margin-bottom: 55px;
+  background-color: green;
 }
 
-.items_sharing{
+.detail_sharing .postTime {
+  text-align: end;
+  margin-right: 8px;
+}
+
+.detail_sharing .component_sharing{
+  display: flex;
+  background-color: aqua;
+}
+
+.detail_sharing .items_sharing{
   flex-direction: column;
   margin-left: 50px;
+  background-color: pink;
  
 }
 
@@ -47,7 +47,7 @@
   height: 42px;
   margin-left: 13px;
   border-radius: 5px;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 }
 
 .category_sharing, .item_sharing,.expiry_sharing,.deadline_sharing{
@@ -77,12 +77,21 @@
   .sharedetailImg img {
     width: 312px;
     height: 312px;
-    margin-left: 120px
+    margin-left: 120px;
   }
   
-  .profile {
-    margin-top: 100px;
-    margin-left: -408px;
+  .profile_sharing {
+    color: var(--main_orange);
+    font-weight: 700;
+    font-size: 15px;
+    margin-right: 600px;
+  }
+
+  .profile_sharing img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    margin-right: 14px;
   }
 
   .Ingredient_sharing {
