@@ -101,6 +101,7 @@ function ModifyingSharing(){
       };
     
       console.log(title);
+      
       const navigate = useNavigate();
       const onSubmit = (e) => {
         e.preventDefault();
