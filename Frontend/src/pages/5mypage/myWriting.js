@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./myWriting.css";
 import "./myWritingList.css";
 import ShortcutBar from "../../components/shortcutBar";
-import Pagination from '../../components/pagination';
+import Pagination from 'react-js-pagination';
 import axios from 'axios';
 
 function MyWriting() {
@@ -82,6 +82,18 @@ function MyWriting() {
     });
   };
 
+  //pagination
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+    console.log(pageNumber)
+  } 
+
+  const itemsPerPage = 6;
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
   return (
     <>
       <div className="myWriting_title">내가 쓴 글</div>
@@ -103,7 +115,7 @@ function MyWriting() {
 
         <section className="myWritingList">
           <div className='myWriting_list'>
-            {isSharingClicked && mySharing && mySharing.map((item, index) => (
+            {isSharingClicked && mySharing && mySharing.slice(startIndex, endIndex).map((item, index) => (
               <div key={index}>
                 <Link to={`/sharing/${item.id}`} style={{textDecoration: 'none', color: 'black'}}>
                   <div className="item">
@@ -118,7 +130,7 @@ function MyWriting() {
               </div>
             ))}
 
-            {isDutchpayClicked && myDutch && myDutch.map((item, index) => (
+            {isDutchpayClicked && myDutch && myDutch.slice(startIndex, endIndex).map((item, index) => (
               <div key={index}>
                 <div className="item">
                   <div className='item_map'></div>
@@ -130,7 +142,7 @@ function MyWriting() {
               </div>
             ))}
 
-            {isGroupbuyingClicked && myGroup && myGroup.map((item, index) => (
+            {isGroupbuyingClicked && myGroup && myGroup.slice(startIndex, endIndex).map((item, index) => (
               <div key={index}>
                 <Link to={`/groupBuying/${item.id}`} style={{textDecoration: 'none', color: 'black'}}>
                   <div className="item">
@@ -144,12 +156,20 @@ function MyWriting() {
                 </Link>
               </div>
             ))}
-
-            <div className='myWriting_pagination'> 
-              <Pagination /> 
-            </div>
           </div>
         </section>
+
+        <div className='myWriting_pagination'> 
+          <Pagination
+              activePage={page}
+              itemsCountPerPage={itemsPerPage}
+              totalItemsCount={100}
+              pageRangeDisplayed={5}
+              prevPageText={"‹"}
+              nextPageText={"›"}
+              onChange={handlePageChange}
+          />
+        </div>
       </div>
     </>
   );
