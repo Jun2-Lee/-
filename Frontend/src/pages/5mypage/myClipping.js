@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./myWriting.css";
 import "./myWritingList.css";
 import ShortcutBar from "../../components/shortcutBar";
-import Pagination from '../../components/pagination';
+import Pagination from "react-js-pagination";
 import axios from 'axios';
 
 export default function MyClipping() {
@@ -36,6 +36,18 @@ export default function MyClipping() {
 
   const [isSharingClicked, setSharingClicked] = useState(true);
   const [isGroupbuyingClicked, setGroupClicked] = useState(false);
+
+  //pagination
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+    console.log(pageNumber)
+  } 
+
+  const itemsPerPage = 6;
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
 
   return (
     <>
@@ -85,12 +97,20 @@ export default function MyClipping() {
                 </Link>
               </div>
             ))}
-
-            <div className='myWriting_pagination'> 
-              <Pagination /> 
-            </div>
           </div>
         </section>
+
+        <div className='myWriting_pagination'> 
+          <Pagination
+              activePage={page}
+              itemsCountPerPage={itemsPerPage}
+              totalItemsCount={100}
+              pageRangeDisplayed={5}
+              prevPageText={"‹"}
+              nextPageText={"›"}
+              onChange={handlePageChange}
+          />
+        </div>
       </div>
     </>
   );
