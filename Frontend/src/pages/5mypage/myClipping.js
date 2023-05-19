@@ -68,7 +68,7 @@ export default function MyClipping() {
 
         <section className="myWritingList">
           <div className='myWriting_list'>
-            {isSharingClicked && mySharing && mySharing.map((item, index) => (
+            {isSharingClicked && mySharing && mySharing.slice(startIndex, endIndex).map((item, index) => (
               <div key={index}>
                 <Link to={`/sharing/${item.id}`} style={{textDecoration: 'none', color: 'black'}}>
                   <div className="item">
@@ -83,7 +83,7 @@ export default function MyClipping() {
               </div>
             ))}
 
-            {isGroupbuyingClicked && myGroup && myGroup.map((item, index) => (
+            {isGroupbuyingClicked && myGroup && myGroup.slice(startIndex, endIndex).map((item, index) => (
               <div key={index}>
                 <Link to={`/groupBuying/${item.id}`} style={{textDecoration: 'none', color: 'black'}}>
                   <div className="item">

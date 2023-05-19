@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useParams } from 'react-router-dom'
+import Pagination from "react-js-pagination";
 import './index.css';
 import axios from 'axios'
 
@@ -96,6 +96,16 @@ function DutchPayPage() {
       .catch(err => console.log(err))
   }
 
+  //pagination
+  const [page, setPage] = useState(1);
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+    console.log(pageNumber)
+  } 
+  const itemsPerPage = 5;
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
   return (
     <div className='dutch'>
       <div className="list_dutchpay">
@@ -108,7 +118,7 @@ function DutchPayPage() {
           <option value="고기·구이">고기·구이</option>
         </select>
 
-      {data.map((item, index) => (
+      {data.slice(startIndex, endIndex).map((item, index) => (
         <div className="card_container">
           <div key ={index} className="card_dutchpay" onClick={() => {handleDetail(item.id); setId(item.id)}}>
             <div className="foodIcon">
@@ -130,6 +140,18 @@ function DutchPayPage() {
           </div>
         </div>
       ))}
+
+        <div className='pagination_dutchpay'> 
+          <Pagination
+              activePage={page}
+              itemsCountPerPage={itemsPerPage}
+              totalItemsCount={100}
+              pageRangeDisplayed={5}
+              prevPageText={"‹"}
+              nextPageText={"›"}
+              onChange={handlePageChange}
+          />
+        </div>
     </div>
 
     {showDiv && (

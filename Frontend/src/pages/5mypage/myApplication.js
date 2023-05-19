@@ -101,7 +101,7 @@ export default function Application() {
 
         <section className="myWritingList">
           <div className='myWriting_list'>
-            {isDutchpayClicked && myDutch && myDutch.map((item, index) => (
+            {isDutchpayClicked && myDutch && myDutch.slice(startIndex, endIndex).map((item, index) => (
               <div key={index}>
                 <div className="item">
                   <div className='item_map'></div>
@@ -113,7 +113,7 @@ export default function Application() {
               </div>
             ))}
 
-            {isGroupbuyingClicked && myGroup && myGroup.map((item, index) => (
+            {isGroupbuyingClicked && myGroup && myGroup.slice(startIndex, endIndex).map((item, index) => (
               <div key={index}>
                 <Link to={`/groupBuying/${item.id}`} style={{textDecoration: 'none', color: 'black'}}>
                   <div className="item">

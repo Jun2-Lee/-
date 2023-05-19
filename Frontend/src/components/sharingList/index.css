@@ -52,17 +52,6 @@
   text-align: right;
 }
 
-.sharing_pagination {
-  margin-top: 0.938rem;
-  grid-column: 2 / 3;
-  display: grid;
-  text-align: center;
-} 
-
-.writing {
-  text-align: right;
-}
-
 .writingIcon {
   width: 2.813rem;
 }
