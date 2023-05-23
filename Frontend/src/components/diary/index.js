@@ -1,9 +1,10 @@
 import React, { useState, useEffect} from "react";
 import './index.css';
 import axios from "axios";
+import { useParams, useNavigate } from 'react-router-dom';
 
 
-function Diary(props, {date}) {
+function Diary(props) {
   const [showSchedule, setShowSchedule] = useState(false);
   const [schedules, setSchedules] = useState([]); //일정 리스트
   const [mySchedule, setMySchedule] = useState([]); //일정 보기
@@ -16,33 +17,43 @@ function Diary(props, {date}) {
   const [content, setContent] = useState('');
   const [targetDate, setTargetDate] = useState(props.date);
 
+  
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+    const handleTimeChange = (event) => {
+    setTime(event.target.value);
+  };
+
+  const handlePlaceChange = (event) => {
+    setPlace(event.target.value);
+  };
+
+  const handleContentChange = (event) => {
+    setContent(event.target.value);
+  };
+
+
 //등록 버튼을 누르면 정보가 넘어가는 동시에 달력 전체에 뿌려짐
+
 const postSchedule = () => {
-  const accessToken = localStorage.getItem("accessToken")
-  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-  axios.post("http://3.36.144.128:8080/api/mypage/schedule", {
-    title,
-    time,
-    place,
-    content,
-    targetDate,
-  })
+  const accessToken = localStorage.getItem("accessToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  axios
+    .post("http://3.36.144.128:8080/api/mypage/schedule", {
+      title,
+      time,
+      place,
+      content,
+      targetDate,
+    })
     .then((response) => {
       setSchedules([...schedules, response.data]);
       setShowSchedule(false);
-      setMySchedule([response.data]);
-      const accessToken = localStorage.getItem("accessToken")
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      axios.get("http://3.36.144.128:8080/api/mypage/schedule")
-        .then((response) => {
-          const filteredSchedules = response.data.filter(
-            (schedule) => schedule.targetDate === props.date
-          );
-          setMySchedule(filteredSchedules);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+
+      // 새로운 스케줄을 기존 mySchedule에 추가하여 업데이트
+      setMySchedule([...mySchedule, response.data]);
     })
     .catch((error) => {
       console.log(error);
@@ -50,16 +61,31 @@ const postSchedule = () => {
 };
 
 useEffect(() => {
+  const accessToken = localStorage.getItem("accessToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   const fetchData = async () => {
-    const accessToken = localStorage.getItem("accessToken")
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    try {
+      const response = await axios.get("http://3.36.144.128:8080/api/mypage/schedule/");
+      
+      console.log(response.data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  fetchData();
+}, [props.date]);
+
+
+
+useEffect(() => {
+  const fetchData = async () => {
     try {
       const response = await axios.get("http://3.36.144.128:8080/api/mypage/schedule/");
       const scheduleIds = response.data.map((schedule) => schedule.id);
       console.log(scheduleIds)
 
       const filteredSchedules1 = response.data.filter((schedule) => schedule.targetDate === props.date);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
       const requests = filteredSchedules1.map((schedule) =>
         axios.get(`http://3.36.144.128:8080/api/mypage/schedule/${schedule.id}`)
       );
@@ -68,7 +94,7 @@ useEffect(() => {
 
       console.log(filteredSchedules)
       if (filteredSchedules.length > 0) {
-        setMySchedule([filteredSchedules]);
+        setMySchedule(filteredSchedules); // 수정: [filteredSchedules] 대신 filteredSchedules를 설정
       } else {
         setMySchedule([]);
       }
@@ -81,25 +107,39 @@ useEffect(() => {
 }, [props.date]);
 
 
+console.log(mySchedule)
 
 
-  return (
 
-    <div className="schedule">
-<button className="dailySchedule" >
 
-{mySchedule && mySchedule.length > 0 ? mySchedule[0][0].title : "일정 없음"}
-    </button>
-    {mySchedule && Object.keys(mySchedule).length > 0 &&
-        <div className="mySchedule">
-          <div>{mySchedule[0][0].title}</div>
-          <div>{mySchedule[0][0].time}</div>
-          <div>{mySchedule[0][0].place}</div>
-          <div>{mySchedule[0][0].content}</div>
-          {console.log(mySchedule)}
-        </div>
-}
+return (
+  <div className="schedule" >
+    <div className="schedule-list" >
+      {mySchedule.map((schedule, index) => (
+        <button
+          key={index}
+          className="dailySchedule"
+          onClick={() => setShowMySchedule(schedule)}
+        >
+          {schedule.title}
+        </button>
+      ))}
+    </div>
+    {showMySchedule && (
+      <div className="mySchedule">
+        <div>{showMySchedule.title}</div>
+        <div>{showMySchedule.time}</div>
+        <div>{showMySchedule.place}</div>
+        <div>{showMySchedule.content}</div>
+      </div>
+    )}
+    {mySchedule.length === 0 && (
+      <div className="mySchedule">
+        <div>x</div>
+      </div>
+    )}
 
+  
     <button className="writeSchedule" onClick={() => setShowSchedule(!showSchedule)}>
       <img src='assets/img/writingIcon.png' className='scheduleButton' ></img>
     </button>
@@ -112,22 +152,22 @@ useEffect(() => {
 
           <div className="titleInput">
             <label className="TitleSchedule">제목</label>
-            <input className="titleSchedule" />
+            <input className="titleSchedule"value={title} onChange={handleTitleChange}/>
           </div>
 
           <div className="timeInput">
             <label className="TimeSchedule">시각</label>
-            <input className="timeSchedule" />
+            <input className="timeSchedule" value={time} onChange={handleTimeChange} />
           </div>
 
           <div className="placeInput">
             <label className="PlaceSchedule">장소</label>
-            <input className="placeSchedule" />
+            <input className="placeSchedule"value={place} onChange={handlePlaceChange} />
           </div>
 
           <div className="memoInput">
             <label className="MemoSchedule">메모</label>
-            <input className="memoSchedule" />
+            <input className="memoSchedule" value={content} onChange={handleContentChange}/>
           </div>
 
 
