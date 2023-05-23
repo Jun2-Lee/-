@@ -178,6 +178,9 @@
     border-radius: 5px;
 
   }
+  .reply{
+    background-color:var(--sub_orange);
+  }
 
   .userCommentBox{
     margin-left: 11px;

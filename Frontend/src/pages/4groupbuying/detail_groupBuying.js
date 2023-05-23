@@ -9,68 +9,95 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import commentLine from '../../assets/img/commentLine.png';
 import reply from '../../assets/img/reply.png';
-
+import replyDto from '../../assets/img/reply.png';
 function DetailGroupBuying() {
-    
-  const [comments, setComments] = useState([]); 
-    const[idComment, setIdComment] = useState([]);
-    const [getUserId, setUserId] = useState([]);
-    const [ButtonTrue, setButtonTrue] = useState(false);
-
+  const [comments, setComments] = useState([]);
+  const [idComment, setIdComment] = useState([]);
+  const [getUserId, setUserId] = useState([]);
+  let [isValid, setIsValid] = useState(false);
+  const { postId } = useParams();
+  const { commentId } = useParams();
+  const ShowReplyInputBox = ({postId, commentId}) => {
    
-    let [isValid, setIsValid] = useState(false);
+    const [replyDto, setReplyDto] = useState({ reply: '' });
+
+    const onChange = (e) => {
+      const { value } = e.target;
+      setReplyDto({
+        ...replyDto,
+        reply: value
+      });
+
+  
+    };
+
+    useEffect(() => {
+  const accessToken = localStorage.getItem("accessToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  axios
+    .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+    .then((response) => {
+      if (response.data.commentList) {
+        const contentsReply = response.data.commentList.map(comment => comment.childCommentResponseDto.map(reply => reply.content));
+        setReplyDto(prevState => ({ ...prevState, reply: contentsReply }));
+        console.log(data);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}, [postId]);
+
+useEffect(() => {
+  console.log(replyDto);
+}, [replyDto]);
+
+console.log(replyDto);
 
 
-    //답글 box
-    const ShowReplyInputBox = () => {
-      const [replyDto, setReplyDto] = useState({ reply: '' });
-      const { reply } = replyDto;
-      const { postId } = useParams();
+    const handlePostReply = ({ postId, commentId }) => {
 
-      // 현재 선택된 댓글의 id
-      const {commentId} = useParams();
-     
-    
-      const onChange = (e) => {
-        const { value } = e.target;
-        setReplyDto({
-          ...replyDto,
-          reply: value
-        });
-      };
-    
       console.log(commentId);
-      console.log(postId);
-      const handlePostReply = () => {
-       
-        const headers = {
-          'Content-Type': 'application/json'
-        }
-        const accessToken = localStorage.getItem("accessToken");
-        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-        axios
-          .post(`http://3.36.144.128:8080/api/groupBuying/${postId}/${commentId}/childComment`, { content: reply }, { headers })
-          .then((response) => {
-            
-            console.log(response);
-            alert("등록되었습니다");
-            setReplyDto({ reply: '' }); //답글 작성 후 입력창 초기화
-           
-            // 답글 목록 업데이트
-            axios
-              .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
-              .then((response) => {
-                setReplyDto(response.data.commentList);
-                console.log(response.data);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      const headers = {
+        'Content-Type': 'application/json'
       };
+      
+    
+
+      const accessToken = localStorage.getItem("accessToken");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      axios
+        .post(`http://3.36.144.128:8080/api/groupBuying/${postId}/${commentId}/childComment`, { content: replyDto.reply }, { headers })
+        .then((response) => {
+          console.log(response);
+          alert("등록되었습니다");
+          setReplyDto({ reply: '' }); //답글 작성 후 입력창 초기화
+
+          // 답글 목록 업데이트
+          axios
+            .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+            .then((response) => {
+              setReplyDto(response.data.commentList);
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    
+    useEffect(() => {
+      console.log(replyDto);
+    }, [replyDto]);
+
+    
+    console.log(replyDto);
+    useEffect(() => {
+      console.log(commentId);
+    }, [commentId]);
 
     
     
@@ -88,9 +115,11 @@ function DetailGroupBuying() {
             <button
               type='submit'
               className='submitReply'
+              
               onClick={(e) => {
                 e.preventDefault();
                 handlePostReply();
+                
               }}
               disabled={!isValid}
               style={{fontSize:'9px'}}
@@ -104,28 +133,30 @@ function DetailGroupBuying() {
         </div>
       );
     };
-    
-       
+
+
     useEffect(() => {
       const accessToken = localStorage.getItem("accessToken");
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-    
+  
       axios
         .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
         .then((response) => {
           const Id = response.data.commentList.map((id) => id.id);
-        
-          setIdComment(prevState => ({ ...prevState, id: Id }));
-          
+  
+          setIdComment(Id);
         })
         .catch((error) => {
           console.log(error);
         });
-    }, []);
-    console.log(idComment);
+    }, [postId, commentId]);
+  
+     console.log(idComment);
+     console.log(commentId)
+
 
     const Post = () => {
-      const { postId, commentId } = useParams();
+
       const [commentDto, setCommentDto] = useState({comment:''});
       const{comment} = commentDto;
     
@@ -192,37 +223,89 @@ function DetailGroupBuying() {
       }, [commentDto]);
 
    
-  
       console.log(commentDto);
+
+      
   
       return (
         <div>
-         
-         <div className='inputcomment'>
-        <div className="userCommentBox">
-          {data.commentList && data.commentList.map((comment) => (
-            <div key={comment.id} className="comment">
-              <p className="userProfile"><img src={comment.profileImage}/></p>
-              <p className="userName">{comment.author}님</p>
-              <p className="userComment">{comment.content}</p>
+       <div className='inputcomment'>
+  <div className="userCommentBox">
+    {data.commentList && data.commentList.map((comment) => (
+      <div key={comment.id} className="comment">
+        <p className="userProfile"><img src={comment.profileImage}/></p>
+        <p className="userName">{comment.author}님</p>
+        <p className="userComment">{comment.content}</p>
+        
+        <button className="reply" onClick={() => setShowReplyInputBox(comment.id)}>
+          <img alt="buttonImg" src={replyDto}/>답글
+        </button>
+        {showReplyInputBox === comment.id && (
+          <ShowReplyInputBox postId={postId} commentId={comment.id} />
+        )}
+
+        {console.log(comment.id)}
+        <p className="userPostTime">{comment.postTime}</p>
+        <div className="commentline"><img alt="commentLineImg" src={commentLine}/></div>
+        
+        <div className="replyCommentBox" style={{marginTop:"-100px", marginLeft:"50px"}}>
+          {comment.childCommentResponseDto && comment.childCommentResponseDto.map((reply1) => (
+            <div key={reply1.id} className="reply" style={{backgroundColor:"var(--sub_orange)"}}> 
+              <p className="userProfile"><img src={reply1.profileImage}/></p>
+              <p className="ReplyuserName">{reply1.author}님</p>
+              <p className="ReplyuserComment">{reply1.content}</p>
               
-              <button className="reply" onClick={() => setShowReplyInputBox(comment.id)}>
-                <img alt="buttonImg" src={reply}/>답글
+              <button className="reply" onClick={() => setShowReplyInputBox(reply1.id)}>
+                <img alt="buttonImg" src={replyDto}/>답글
               </button>
-              {showReplyInputBox === comment.id && (
-                <ShowReplyInputBox postId={postId} commentId={comment.id} />
+              {showReplyInputBox === reply1.id && (
+                <ShowReplyInputBox postId={postId} commentId={reply1.id} />
               )}
-
-              <p className="userPostTime">{comment.postTime}</p>
+              
+              <p className="userPostTime">{reply1.postTime}</p>
               <div className="commentline"><img alt="commentLineImg" src={commentLine}/></div>
-
-              {/* 답글 입력 상자 렌더링 */}
-             
+            
+              
+              <div className="nestedReplyCommentBox">
+                {reply1.childCommentResponseDto && reply1.childCommentResponseDto.map((nestedReply) => (
+                  <div key={nestedReply.id} className="nestedReply">
+                    <p className="userProfile"><img src={nestedReply.profileImage}/></p>
+                    <p className="NestedReplyuserName">{nestedReply.author}님</p>
+                    <p className="NestedReplyuserComment">{nestedReply.content}</p>
+                    
+                    <button className="reply" onClick={() => setShowReplyInputBox(nestedReply.id)}>
+                      <img alt="buttonImg" src={replyDto}/>답글
+                    </button>
+                    {showReplyInputBox === nestedReply.id && (
+                      <ShowReplyInputBox postId={postId} commentId={nestedReply.id} />
+                    )}
+                    
+                    <p className="userPostTime">{nestedReply.postTime}</p>
+                    <div className="commentline"><img alt="commentLineImg" src={commentLine}/></div>
+                  </div>
+                ))}
+              </div>
             </div>
+            
           ))}
+
+
         </div>
+
+     
+        
       </div>
-         
+      
+    ))}
+  </div>
+</div>
+
+
+        
+     
+       
+        
+  
           <div className='inputCommentBox'>
           <input
               type="text"
@@ -266,11 +349,14 @@ function DetailGroupBuying() {
 
     //지수
     const [data, setData] = useState({});
-    const { postId, commentId } = useParams();
+   
     //yyyy-mm-dd로 변환
     const [postTime, setPostTime] = useState('');
     const [deadLine, setDeadline] = useState('');
     
+
+  
+
 
     useEffect(() => {
       const accessToken = localStorage.getItem("accessToken")
@@ -285,7 +371,7 @@ function DetailGroupBuying() {
           setUserId(response.data.userId);
           
         
-          console.log(getUserId);
+         
   
           //yyyy-mm-dd로 변환
           setPostTime(new Date(response.data.postTime).toLocaleDateString("ko-KR"));
@@ -433,7 +519,7 @@ function DetailGroupBuying() {
               <div className='purchase_comment'>
                           
 
-                  <Post/>
+                  <Post commentId={commentId}/>
                 
             </div>
           </div>
