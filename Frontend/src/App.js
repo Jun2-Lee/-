@@ -15,7 +15,8 @@ import Signup from "./pages/1auth/signup";
 import SharingPage from "./pages/2sharing";
 import DetailSharing from "./pages/2sharing/detail_sharing";
 import PostSharing from "./pages/2sharing/post_sharing";
-import Revisesharing from "./pages/2sharing/revise_sharing"
+import ModifyingSharing from "./pages/2sharing/modify_sharing";
+
 //3(n빵)
 import DutchPayPage from "./pages/3dutchpay";
 import PostDutchpay from "./pages/3dutchpay/post_dutchpay";
@@ -29,6 +30,7 @@ import MyPage from "./pages/5mypage";
 import EditProfile from "./pages/5mypage/edit_profile";
 import MyWriting from "./pages/5mypage/myWriting";
 import Chatting from "./pages/5mypage/chatting"
+import ChnnPassword from "./pages/5mypage/changePassword";
 
 //로그인 테스트
 import Login2 from "./pages/test";
@@ -39,6 +41,7 @@ import Profile from "./pages/test/profile";
 function App() {
   return (
     <Router>
+      
       <Routes>
         <Route path="/" element={<Layout />}>
         <Route path="/" element={<Home />} />
@@ -53,8 +56,8 @@ function App() {
    
         <Route path="/sharing" element={<SharingPage />} />
         <Route path="/sharing/:postId" element={<DetailSharing />} />
+        <Route path="/sharing/modify/:postId" element={<ModifyingSharing/>}/>
         <Route path="/postSharing" element={<PostSharing />} />
-        <Route path="/reviseSharing/:postId" element={<Revisesharing />} />
         
         <Route path="/dutchPay" element={<DutchPayPage />} />
         <Route path="/postDutchpay" element={<PostDutchpay />} />
@@ -69,6 +72,7 @@ function App() {
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/myWriting" element={<MyWriting />} />
         <Route path="/Chatting" element={<Chatting />} />
+        <Route path="/passwordChange" element={<ChnnPassword/>}/>
 
 
         {/* 카카오 로그인 테스트 */}
@@ -78,6 +82,7 @@ function App() {
         </Route>
 
       </Routes>
+     
     </Router>
   );
 };

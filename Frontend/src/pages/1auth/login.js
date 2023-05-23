@@ -1,4 +1,5 @@
 
+
 import './login.css';
 import {React, useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route,  Link} from "react-router-dom";
@@ -96,7 +97,7 @@ export default function Login() {
   }
   onSilentRefresh.timeoutId = null;
 
-  const JWT_EXPIRY_TIME = 0.1 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
+  const JWT_EXPIRY_TIME = 0.25 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
 
   function onLoginSuccess(response) {
       const { accessToken, refreshToken } = response.data;
@@ -116,7 +117,7 @@ export default function Login() {
 
   return (
     <div className='login_container'>
-      <form onSubmit={handleLogin}>
+      <div>
         <div className="GetID">
         <label id="getID">아이디</label>
         <br></br>
@@ -126,7 +127,7 @@ export default function Login() {
         <div className="GetPW">
           <label id="getPW">비밀번호</label>
           <br></br>
-          <input name='password' onChange={onChange} value={password} className="getPW" type="password"/>
+          <input name='password' onChange={onChange} value={password} className="getPW"/>
         </div>
 
         <div className="UserLogin">
@@ -143,7 +144,7 @@ export default function Login() {
           </Link>
         </div>
 
-      </form>
+      </div>
     </div>
   );
   } 

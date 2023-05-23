@@ -25,7 +25,7 @@ function Layout() {
   }
 
   const isLoggedIn = localStorage.getItem('accessToken') !== null;
-  //console.log(isLoggedIn)
+  console.log(isLoggedIn)
 
   return (
     <>
@@ -38,6 +38,9 @@ function Layout() {
         </Link>
 
         <nav>
+          <Link className="nav_link" to="/">
+            공지사항
+          </Link>
           <Link className="nav_link" to="/sharing">
             재료 나눔
           </Link>
@@ -91,6 +94,9 @@ function Layout() {
       >
         {hover === true && (
           <div className="hover">
+            <article>
+              <Link to="/">공지사항</Link>
+            </article>
             <article className="hover_sharing">
               <Link to="/postSharing">나눔글 등록</Link>
               <Link to="/sharing">나눔글 목록</Link>
