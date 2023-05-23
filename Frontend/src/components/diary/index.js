@@ -46,7 +46,7 @@ const postSchedule = () => {
       time,
       place,
       content,
-      targetDate,
+      targetDate: props.date, // targetDate 값을 props.date로 설정
     })
     .then((response) => {
       setSchedules([...schedules, response.data]);
@@ -54,11 +54,13 @@ const postSchedule = () => {
 
       // 새로운 스케줄을 기존 mySchedule에 추가하여 업데이트
       setMySchedule([...mySchedule, response.data]);
+      window.location.reload();
     })
     .catch((error) => {
       console.log(error);
     });
 };
+
 
 useEffect(() => {
   const accessToken = localStorage.getItem("accessToken");
@@ -112,9 +114,10 @@ console.log(mySchedule)
 
 
 
+
 return (
   <div className="schedule" >
-    <div className="schedule-list" >
+    <div className="schedule-list">
       {mySchedule.map((schedule, index) => (
         <button
           key={index}
