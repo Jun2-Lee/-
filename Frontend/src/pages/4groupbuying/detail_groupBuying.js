@@ -55,8 +55,8 @@ useEffect(() => {
 console.log(replyDto);
 
 
-    const handlePostReply = ({ postId, commentId }) => {
-
+    const handlePostReply = () => {
+    
       console.log(commentId);
       const headers = {
         'Content-Type': 'application/json'
@@ -115,11 +115,9 @@ console.log(replyDto);
             <button
               type='submit'
               className='submitReply'
-              
               onClick={(e) => {
                 e.preventDefault();
                 handlePostReply();
-                
               }}
               disabled={!isValid}
               style={{fontSize:'9px'}}
@@ -229,7 +227,7 @@ console.log(replyDto);
   
       return (
         <div>
-       <div className='inputcomment'>
+         <div className='inputcomment'>
   <div className="userCommentBox">
     {data.commentList && data.commentList.map((comment) => (
       <div key={comment.id} className="comment">
@@ -238,68 +236,40 @@ console.log(replyDto);
         <p className="userComment">{comment.content}</p>
         
         <button className="reply" onClick={() => setShowReplyInputBox(comment.id)}>
-          <img alt="buttonImg" src={replyDto}/>답글
+          <img alt="buttonImg" src={reply}/>답글
         </button>
         {showReplyInputBox === comment.id && (
           <ShowReplyInputBox postId={postId} commentId={comment.id} />
         )}
-
         {console.log(comment.id)}
         <p className="userPostTime">{comment.postTime}</p>
         <div className="commentline"><img alt="commentLineImg" src={commentLine}/></div>
         
-        <div className="replyCommentBox" style={{marginTop:"-100px", marginLeft:"50px"}}>
-          {comment.childCommentResponseDto && comment.childCommentResponseDto.map((reply1) => (
-            <div key={reply1.id} className="reply" style={{backgroundColor:"var(--sub_orange)"}}> 
-              <p className="userProfile"><img src={reply1.profileImage}/></p>
-              <p className="ReplyuserName">{reply1.author}님</p>
-              <p className="ReplyuserComment">{reply1.content}</p>
+        
+        <div className="replyCommentBox"style={{marginTop:"-50px", marginLeft:"50px"}}>
+          {comment.childCommentResponseDto && comment.childCommentResponseDto.map((reply) => (
+            <div key={reply.id} className="reply"  style={{backgroundColor:"var(--sub_orange)"}}>
+              <p className="userProfile"><img src={reply.profileImage}/></p>
+              <p className="userName">{reply.author}님</p>
+              <p className="userComment">{reply.content}</p>
               
-              <button className="reply" onClick={() => setShowReplyInputBox(reply1.id)}>
+              <button className="reply" onClick={() => setShowReplyInputBox(reply.id)}>
                 <img alt="buttonImg" src={replyDto}/>답글
               </button>
-              {showReplyInputBox === reply1.id && (
-                <ShowReplyInputBox postId={postId} commentId={reply1.id} />
+              {showReplyInputBox === reply.id && (
+                <ShowReplyInputBox postId={postId} commentId={comment.id} />
               )}
               
-              <p className="userPostTime">{reply1.postTime}</p>
+              <p className="userPostTime">{reply.postTime}</p>
               <div className="commentline"><img alt="commentLineImg" src={commentLine}/></div>
-            
-              
-              <div className="nestedReplyCommentBox">
-                {reply1.childCommentResponseDto && reply1.childCommentResponseDto.map((nestedReply) => (
-                  <div key={nestedReply.id} className="nestedReply">
-                    <p className="userProfile"><img src={nestedReply.profileImage}/></p>
-                    <p className="NestedReplyuserName">{nestedReply.author}님</p>
-                    <p className="NestedReplyuserComment">{nestedReply.content}</p>
-                    
-                    <button className="reply" onClick={() => setShowReplyInputBox(nestedReply.id)}>
-                      <img alt="buttonImg" src={replyDto}/>답글
-                    </button>
-                    {showReplyInputBox === nestedReply.id && (
-                      <ShowReplyInputBox postId={postId} commentId={nestedReply.id} />
-                    )}
-                    
-                    <p className="userPostTime">{nestedReply.postTime}</p>
-                    <div className="commentline"><img alt="commentLineImg" src={commentLine}/></div>
-                  </div>
-                ))}
-              </div>
             </div>
-            
           ))}
-
-
         </div>
-
-     
         
       </div>
-      
     ))}
   </div>
 </div>
-
 
         
      
