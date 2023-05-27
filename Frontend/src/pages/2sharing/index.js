@@ -3,7 +3,6 @@ import CategoryBar from "../../components/categoryBar";
 //import Search from "../../components/search";
 import SharingList from '../../components/sharingList'
 import "./index.css";
-import Pagination from '../../components/pagination';
 
 function SharingPage() {
   return (
@@ -16,7 +15,6 @@ function SharingPage() {
       </section>
       <section className="sharingList">
         <SharingList />
-        <Pagination/>
       </section>
     </div>
   );

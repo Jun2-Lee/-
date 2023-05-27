@@ -7,7 +7,6 @@
   margin-left: 730px;
 }
 
-
 .detail_Title {
   background-color: var(--sub_orange);
   font-size: 16px;
@@ -135,7 +134,7 @@
     margin-top: 60px;
   }
 
-  .like{
+  .like {
     border:0;
     outline:0; 
     background-color: var(--sub_orange);
@@ -147,7 +146,7 @@
     border-radius: 5px;
   }
 
-  .application{
+  .application, .finishTrading {
 
     border:0;
     outline:0; 
@@ -161,10 +160,6 @@
     border-radius: 5px;
   }
 
-
-  .firstMessage{
-    margin-left: 100px;
-  }
   .SendMessage{
     border:0;
     outline:0; 
@@ -178,35 +173,14 @@
     border-radius: 5px;
 
   }
-  .reply{
-    background-color:var(--sub_orange);
-  }
 
-  .userCommentBox{
-    margin-left: 11px;
-    margin-top: 100px;
 
-  }
   
 
   .inputcomment{
     justify-content: center;
-   
-    width: 770px;
-    height: 778px;
-    background-color:var(--sub_orange);
-    border-radius: 5px;
-    overflow: scroll;
+    position:absolute;
   }
-
-  .inputCommentBox{
-    position: absolute;
-    background-color: var(--sub_orange);
-    width: 770px;
-    height: 130px;
-    border-radius: 5px;
-  }
-
 
 
 .inputComment{
@@ -214,19 +188,19 @@
     height: 102px;
     border-radius: 5px;
     justify-content:center;
-    margin-top:650px;
+    margin-top:0px;
     border:0;
     outline:0;
     border-top: 100px;
-    margin-left: 15px;
-    position:absolute;
-   margin-top:15px;
+    margin-left: 30px;
+
+
 }
 
 .submitComment{
     width: 63px;
     height: 33px;
-   
+    margin-right: 10px;
     border-radius: 5px;
     background-color: #FF8327;
     border:0;
@@ -234,24 +208,9 @@
     font-size: 16px;
     font-weight:bolder;
     color: white;
-    margin-top: 70px;
-    margin-left: 680px;
-    position:relative;
-}
-
-.submitReply{
-    width: 40px;
-    height: 20px;
-   
-    border-radius: 5px;
-    background-color: #FF8327;
-    border:0;
-    outline:0; 
-    font-weight:bolder;
-    color: white;
-    margin-top: -10px;
-    margin-left: 137px;
-    position:relative;
+    margin-top: 60px;
+    margin-left: 700px;
+    position:absolute;
 }
 
 .comment_cmp1{
@@ -290,7 +249,10 @@
   margin-left: 10px;
 }
 
-
+.userCommentBox{
+  margin-left: 11px;
+  margin-top: -30px;
+}
 
 .commentBox{
   height: 100px;
@@ -321,7 +283,6 @@
   justify-content:center;
   border:0;
   outline:0;
-  position: relative;
 }
 
 .submitReply{
@@ -336,40 +297,6 @@
 
 .purchase_reply{
   margin-top: 135px;
-}
-
-.userProfile img{
-  width: 35px;
-  height: 35px;
-  margin-bottom:-50px;
-}
-
-.userName{
-  margin-top: -15px;
-  color:#FF8327;
-  margin-left: 42px;
-  font-size: 14px;
-}
-
-.userComment{
-  font-size: 14px;
-
-}
-
-.userPostTime{
-  font-size: 10px;
-  margin-bottom: 100px;
-  margin-left: 595px;
-  
-}
-.comment{
- margin-top: -100px;
-  
-}
-
-.commentline img{
-  width: 740px;
-  margin-top: -220px;
 }
 
 

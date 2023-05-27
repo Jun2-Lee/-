@@ -6,7 +6,6 @@
     border-color: rgba(255, 131, 39, 0.75);
     border-radius: 5px;
     border-style: solid;
-  
 }
 
 .scheduleButton{
@@ -17,11 +16,10 @@
 .writeSchedule{
     background-color:var(--sub_orange);
     border: 0;
-    bottom: 10px; /* 변경: margin-top 제거, bottom 속성 추가 */
-    left: 10px; 
-   
+    margin-top: 440px;
+    margin-left: 125px;
     height: 20px;
-    position: absolute;
+    
 }
 .namePost{
     color: rgba(255, 131, 39, 0.75);
@@ -42,25 +40,14 @@
     border-style:solid;
     border-color:rgba(255, 131, 39, 0.75);
     margin-left: 310px;
-    margin-top: -300px;
+    margin-top: -480px;
    
-
 }
-
-  
-.schedule-list {
-     
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  
-  
 
 .dailySchedule{
     background-color: rgba(255, 131, 39, 0.75);
     margin-top: 20px;
-    flex-direction: row;
-    justify-content: flex-start;
+    position:absolute;
     width: 300px;
 }
 
@@ -72,7 +59,7 @@
     border-radius: 5px;
     border-style:solid;
     border-color:rgba(255, 131, 39, 0.75);
-    margin-left: 630px;
+    margin-left: 610px;
     
    
 }
