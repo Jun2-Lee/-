@@ -2,7 +2,7 @@
 import './detail_sharing.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 function DetailSharing() {
   const [data, setData] = useState({});
@@ -11,6 +11,8 @@ function DetailSharing() {
   const [postTime, setPostTime] = useState('');
   const [expiry, setExpiry] = useState('');
   const [deadLine, setDeadline] = useState('');
+  const [isMine, setIsMine] = useState(false);
+  const [isFinish, setFinished] = useState(false);
 
   const accessToken = localStorage.getItem('accessToken')
   useEffect(() => {
@@ -22,6 +24,7 @@ function DetailSharing() {
         setPostTime(new Date(response.data.postTime).toLocaleDateString("ko-KR"));
         setExpiry(new Date(response.data.expiry).toLocaleDateString("ko-KR"));
         setDeadline(new Date(response.data.deadLine).toLocaleDateString("ko-KR"));
+        if (response.data.checkMine) setIsMine(true);
       })
       .catch(error => console.log(error));
   }, [postId]); //postId에 의존(postId에 따라 재실행)
@@ -40,60 +43,39 @@ function DetailSharing() {
       });
   }
 
-function handleModifying(postId) {
+  function handleRevise() {
+    navigate(`/reviseSharing/${postId}`);
+  }
 
-  const data = {
-    category: 'string',
-    content: 'string',
-    deadLine: '2023-03-26T08:14:17.006Z',
-    dong: 'string',
-    expiry: '2023-03-26T08:14:17.006Z',
-    gu: 'string',
-    product: 'string',
-    title: 'string',
-  };
-  axios.put(`http://3.36.144.128:8080/api/sharing/${postId}`,data)
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-}
-//수정
+  const handleClipping = (e) => {
+    e.preventDefault();
+    axios.post(`http://3.36.144.128:8080/api/sharing/${postId}/like`)
+      .then(response => {
+        console.log(response);
+        alert("찜 목록은 마이페이지에서 확인하실 수 있습니다.");
+      })
+      .catch(error => console.log(error))
+  }
 
+  const handleFinishing = (e) => {
+    e.preventDefault();
+    axios.post(`http://3.36.144.128:8080/api/sharing/${postId}/finish`) 
+      .then(response => {
+        console.log(response);
+        alert(response.data);
+        setFinished(true);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
 
   return(
     <div className='detail_sharing'>
     
-
-    <div className='sharingdetail_Title'>
-      <p id = "sharingdetail_title">{data.title}</p>
-    </div>
-
-
-    <div className='userhelp_sharedetail'>
-    <Link to={{ pathname: `/sharing/modify/${postId}` }}>
-      <button className="modify_sharing" >수정하기</button>
-      </Link>
-
-      <button className = "delete_sharing" onClick={handleDelete}>삭제하기</button>
-    </div>
-
-
-    <div id = "nowTime">
-       {postTime}
-    </div>
-    
-    <div className = "profile_sharing">
-      {data.nickname}
-      <img className = "profileImg"  src={data.profileImage}/>
-    </div>
-
-
-    <div className='component_sharing'>
-      <div className='sharedetailImg'>
-        <img src={data.image} />
+    <div>
+      <div className='sharingdetail_title'>
+        {data.title}
       </div>
 
       <div className='userhelp_sharedetail'>
@@ -102,8 +84,8 @@ function handleModifying(postId) {
         {data.nickname} 님
       </div>
         <div>
-          <button className = "modify_sharing">수정하기</button>
-          <button className = "delete_sharing" onClick={handleDelete}>삭제하기</button>
+          {isMine && <button className = "modify_sharing" onClick={handleRevise}>수정하기</button>}
+          {isMine && <button className = "delete_sharing" onClick={handleDelete}>삭제하기</button>}
           <div className="postTime"> {postTime} </div>
         </div>
       </div>
@@ -154,8 +136,6 @@ function handleModifying(postId) {
               </div>
           </div>
 
-
-
       <div className="ingredient_sharing">
         <label id="Ingredient_sharing">재료상태</label>
         <br></br>
@@ -165,8 +145,9 @@ function handleModifying(postId) {
       </div>
 
       <div className="LowerUserHelp_sharing">
-        <button className = "shareLike">찜</button>
-        <button className = "shareApplication">신청하기</button>
+        {!isMine && <button className="shareLike" onClick={handleClipping}>찜</button>}
+        {!isMine && <button className="shareApplication">쪽지</button>}
+        {isMine && <button className="finishSharing" onClick={handleFinishing}>거래 완료</button>}
       </div>
 
 
