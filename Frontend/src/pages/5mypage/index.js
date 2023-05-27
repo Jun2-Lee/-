@@ -1,5 +1,6 @@
-import {useState} from "react";
+import { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import CategoryBar2 from "../../components/categoryBar2";
 import "./index.css";
 import axios from 'axios'
@@ -88,7 +89,8 @@ function MyPage() {
           </div>
 
           <div className="modify_profile">
-            <span>프로필 수정하기</span>
+            <Link to="/changePW">비밀번호 변경하기&nbsp;</Link>| 
+            <Link to="/editProfile">&nbsp;프로필 수정하기</Link>
           </div>
         </div>
 
@@ -112,7 +114,9 @@ function MyPage() {
           {isGroupbuyingClicked2 && data.simpleParticipantingGroupBuyingList && data.simpleParticipantingGroupBuyingList.map((item, index) => (
             <div key={index}>
               <div className="participation_list">
-                <div style={{width: '70%', fontSize: '11px'}}>{item.title}</div>
+                <div style={{width: '70%', fontSize: '11px'}}>
+                  <Link to={`/groupBuying/${item.id}`}>{item.title}</Link>
+                </div>
                 <div style={{width: '30%', display: 'flex', justifyContent: 'flex-end', color: '#737373', fontSize: '11px'}}>{item.postTime}</div>
               </div>
             </div>
@@ -138,7 +142,9 @@ function MyPage() {
           {isSharingClicked3 && data.simpleLikedSharingList && data.simpleLikedSharingList.map((item, index) => (
             <div key={index}>
               <div className="participation_list">
-                <div style={{width: '70%', fontSize: '11px'}}>{item.title}</div>
+                <div style={{width: '70%', fontSize: '11px'}}>
+                  <Link to={`/sharing/${item.id}`}>{item.title}</Link>
+                </div>
                 <div style={{width: '30%', display: 'flex', justifyContent: 'flex-end', color: '#737373', fontSize: '11px'}}>{item.postTime}</div>
               </div>
             </div>
@@ -147,7 +153,9 @@ function MyPage() {
           {isGroupbuyingClicked3 && data.simpleLikedGroupBuyingList && data.simpleLikedGroupBuyingList.map((item, index) => (
             <div key={index}>
               <div className="participation_list">
-                <div style={{width: '70%', fontSize: '11px'}}>{item.title}</div>
+                <div style={{width: '70%', fontSize: '11px'}}>
+                  <Link to={`/groupBuying/${item.id}`}>{item.title}</Link>
+                </div>
                 <div style={{width: '30%', display: 'flex', justifyContent: 'flex-end', color: '#737373', fontSize: '11px'}}>{item.postTime}</div>
               </div>
             </div>
@@ -167,7 +175,9 @@ function MyPage() {
           {isSharingClicked && data.simpleSharingList && data.simpleSharingList.map((item, index) => (
             <div key={index}>
               <div className="my_writing">
-                <div style={{width: '70%', fontSize: '11px'}}>{item.title}</div>
+                <div style={{width: '70%', fontSize: '11px'}}>
+                  <Link to={`/sharing/${item.id}`}>{item.title}</Link>
+                </div>
                 <div style={{width: '30%', display: 'flex', justifyContent: 'flex-end', color: '#737373', fontSize: '11px'}}>{item.postTime}</div>
               </div>
             </div>
@@ -185,7 +195,9 @@ function MyPage() {
           {isGroupbuyingClicked && data.simpleGroupBuyingList && data.simpleGroupBuyingList.map((item, index) => (
             <div key={index}>
               <div className="my_writing">
-                <div style={{width: '70%', fontSize: '11px'}}>{item.title}</div>
+                <div style={{width: '70%', fontSize: '11px'}}>
+                  <Link to={`/groupBuying/${item.id}`}>{item.title}</Link>
+                </div>
                 <div style={{width: '30%', display: 'flex', justifyContent: 'flex-end', color: '#737373', fontSize: '11px'}}>{item.postTime}</div>
               </div>
             </div>

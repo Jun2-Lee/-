@@ -18,6 +18,7 @@
   width: 43.625rem;
   height: 42.5rem;
   border-radius: 0.313rem;
+  height: 550px;
 }
 
 .myWriting_body {
@@ -48,10 +49,14 @@
   align-items: center;
 }
 
-.myWriting_link {
+.nav_myWriting .item {
   margin-left: 2.5rem;
   font-size: 1.188rem;
   font-weight: 700;
   text-decoration-line: none;
   color: black;
+}
+
+.nav_myWriting .item span {
+  margin-right: 1.5rem;
 }

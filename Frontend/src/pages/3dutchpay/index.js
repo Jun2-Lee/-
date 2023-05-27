@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useParams } from 'react-router-dom'
+import Pagination from "react-js-pagination";
 import './index.css';
 import axios from 'axios'
 
@@ -34,6 +34,7 @@ function DutchPayPage() {
     //setShowDiv(!showDiv)
     setShowDiv(true);
     setId(id)
+    const accessToken = localStorage.getItem('accessToken')
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
     axios.get(`http://3.36.144.128:8080/api/dutchPay/${id}`)
         .then(response => {
@@ -84,6 +85,27 @@ function DutchPayPage() {
       .catch(error => console.log(error))
   }
 
+  const handleDelete = (e) => {
+    const accessToken = localStorage.getItem('accessToken')
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+    axios.delete(`http://3.36.144.128:8080/api/dutchPay/${id}`) 
+      .then(() => {
+        alert("삭제되었습니다."); 
+        window.location.replace("/dutchpay")
+      })
+      .catch(err => console.log(err))
+  }
+
+  //pagination
+  const [page, setPage] = useState(1);
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+    console.log(pageNumber)
+  } 
+  const itemsPerPage = 5;
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
   return (
     <div className='dutch'>
       <div className="list_dutchpay">
@@ -96,7 +118,7 @@ function DutchPayPage() {
           <option value="고기·구이">고기·구이</option>
         </select>
 
-      {data.map((item, index) => (
+      {data.slice(startIndex, endIndex).map((item, index) => (
         <div className="card_container">
           <div key ={index} className="card_dutchpay" onClick={() => {handleDetail(item.id); setId(item.id)}}>
             <div className="foodIcon">
@@ -118,6 +140,18 @@ function DutchPayPage() {
           </div>
         </div>
       ))}
+
+        <div className='pagination_dutchpay'> 
+          <Pagination
+              activePage={page}
+              itemsCountPerPage={itemsPerPage}
+              totalItemsCount={100}
+              pageRangeDisplayed={5}
+              prevPageText={"‹"}
+              nextPageText={"›"}
+              onChange={handlePageChange}
+          />
+        </div>
     </div>
 
     {showDiv && (
@@ -148,9 +182,9 @@ function DutchPayPage() {
         </div>
         {isMine && 
         <div className="UserHelp_dutchpay">
-          <a href="#" id="modify_dutchpay">수정하기</a>
-          <a href="#" id="userHelp_dutchpay"> | </a>
-          <a href="#" id="delete_dutchpay">삭제하기</a>
+          <Link to="" id="modify_dutchpay">수정하기</Link>
+          <span id="userHelp_dutchpay"> | </span>
+          <span onClick={handleDelete} id="delete_dutchpay">삭제하기</span>
         </div>}
         <div className="signupDutchpay">
             {!isMine && <button type="submit" onClick={handleApplication} className="signup_dutchpay">신청하기</button>}
