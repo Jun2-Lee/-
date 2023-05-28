@@ -196,6 +196,17 @@ function DutchPayPage() {
               {detail.category === '돈까스/회/일식' && <img className="f1" src="assets/img/dutchpay/japanese_food.png"/>}
               {detail.category === '피자' && <img className="f1" src="assets/img/dutchpay/pizza.png"/>}
               {detail.category === '고기/구이' && <img className="f1" src="assets/img/dutchpay/meat.png"/>}
+              {detail.category === '야식' && <img className="f1" src="assets/img/dutchpay/midnight.png"/>}
+              {detail.category === '양식' && <img className="f1" src="assets/img/dutchpay/western.png"/>}
+              {detail.category === '치킨' && <img className="f1" src="assets/img/dutchpay/chicken.png"/>}
+              {detail.category === '중식' && <img className="f1" src="assets/img/dutchpay/chinese.png"/>}
+              {detail.category === '아시안' && <img className="f1" src="assets/img/dutchpay/asian.png"/>}
+              {detail.category === '백반/죽/국수' && <img className="f1" src="assets/img/dutchpay/rice.png"/>}
+              {detail.category === '도시락' && <img className="f1" src="assets/img/dutchpay/box_lunch.png"/>}
+              {detail.category === '분식' && <img className="f1" src="assets/img/dutchpay/flour_based.png"/>}
+              {detail.category === '카페/디저트' && <img className="f1" src="assets/img/dutchpay/dessert.png"/>}
+              {detail.category === '패스트푸드' && <img className="f1" src="assets/img/dutchpay/fastfood.png"/>}
+              {detail.category === '채식' && <img className="f1" src="assets/img/dutchpay/vegetable.png"/>}
             </div>
             <div className="detail_sub2">
               <div className="recruits_dutchpay">{detail.limitMember}명 모집</div>
@@ -208,8 +219,6 @@ function DutchPayPage() {
         </div>
         {isMine && 
         <div className="UserHelp_dutchpay">
-          <Link to="" id="modify_dutchpay">수정하기</Link>
-          <span id="userHelp_dutchpay"> | </span>
           <span onClick={handleDelete} id="delete_dutchpay">삭제하기</span>
         </div>}
         <div className="signupDutchpay">
