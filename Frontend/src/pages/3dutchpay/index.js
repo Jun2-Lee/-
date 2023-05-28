@@ -143,7 +143,17 @@ function DutchPayPage() {
               {item.category === '돈까스/회/일식' && <img className="f1" src="assets/img/dutchpay/japanese_food.png"/>}
               {item.category === '피자' && <img className="f1" src="assets/img/dutchpay/pizza.png"/>}
               {item.category === '고기/구이' && <img className="f1" src="assets/img/dutchpay/meat.png"/>}
-              {/*여기에 카테고리 더 추가해야 됨! */}
+              {item.category === '야식' && <img className="f1" src="assets/img/dutchpay/midnight.png"/>}
+              {item.category === '양식' && <img className="f1" src="assets/img/dutchpay/western.png"/>}
+              {item.category === '치킨' && <img className="f1" src="assets/img/dutchpay/chicken.png"/>}
+              {item.category === '중식' && <img className="f1" src="assets/img/dutchpay/chinese.png"/>}
+              {item.category === '아시안' && <img className="f1" src="assets/img/dutchpay/asian.png"/>}
+              {item.category === '백반/죽/국수' && <img className="f1" src="assets/img/dutchpay/rice.png"/>}
+              {item.category === '도시락' && <img className="f1" src="assets/img/dutchpay/box_lunch.png"/>}
+              {item.category === '분식' && <img className="f1" src="assets/img/dutchpay/flour_based.png"/>}
+              {item.category === '카페/디저트' && <img className="f1" src="assets/img/dutchpay/dessert.png"/>}
+              {item.category === '패스트푸드' && <img className="f1" src="assets/img/dutchpay/fastfood.png"/>}
+              {item.category === '채식' && <img className="f1" src="assets/img/dutchpay/vegetable.png"/>}
               <label id="foodName">{item.category}</label>
             </div>
             <div className="card_sub1">

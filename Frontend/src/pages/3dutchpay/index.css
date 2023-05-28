@@ -55,35 +55,9 @@
 }
 
 .f1 {
-    width: 44px;
+    width: 40px;
     height: 36.09px;
     margin-left: 3px;
-}
-
-.f2 {
-    width: 38.51px;
-    height: 29px;
-    margin-left: 6px;
-    margin-top: 6px;
-}
-
-.f3 {
-    width: 45px;
-    height: 23.21px;
-    margin-left: 2px;
-    margin-top: 9px;
-}
-
-.f4 {
-    width: 48.62px;
-    height: 35px;
-    margin-top: 2px;
-}
-
-.f5 {
-    width: 40.01px;
-    height: 35px;
-    margin-left: 8px;
 }
 
 #foodName {
