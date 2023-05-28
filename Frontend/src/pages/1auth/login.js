@@ -45,19 +45,23 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios.post("http://3.36.144.128:8080/api/auth/signin", 
-            {
-              email: email,
-              password: password
-            }, 
-            {
-              headers: { 'Content-Type': 'application/json'}
-            })
-    .then(onLoginSuccess) 
-    .catch(function(error) {
-      if (error.response.status == 400 || error.response.status == 404) alert("아이디 또는 비밀번호를 확인해주세요.")
-      console.log(error) 
-    })
+    if (email === '') alert("아이디를 입력해주세요.")
+    else if (password === '') alert("비밀번호를 입력해주세요.")
+    else {
+      axios.post("http://3.36.144.128:8080/api/auth/signin", 
+              {
+                email: email,
+                password: password
+              }, 
+              {
+                headers: { 'Content-Type': 'application/json'}
+              })
+      .then(onLoginSuccess) 
+      .catch(function(error) {
+        if (error.response.status == 400 || error.response.status == 404) alert("아이디 또는 비밀번호를 확인해주세요.")
+        console.log(error) 
+      })
+    }
   }
 
   function onSilentRefresh() {

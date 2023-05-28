@@ -19,6 +19,21 @@ export default function GroupBuyingList({startIndex, endIndex}) {
       .catch(error => console.log(error));
   }, [])
 
+  const calculateTimeLeft = (deadline) => {
+    const targetDate = new Date(deadline);
+    const today = new Date();
+
+    const differenceInTime = targetDate.getTime() - today.getTime();
+    const differenceInHours = Math.ceil(differenceInTime / (1000 * 3600));
+
+    if (differenceInHours >= 24) {
+      const differenceInDays = Math.ceil(differenceInHours / 24);
+      return `${differenceInDays}일 후 마감`;
+    } else {
+      return `${differenceInHours}시간 후 마감`;
+    }
+  };
+
   return (
     <div className='groupbuying_list'>
       {items.slice(startIndex, endIndex).map((item, index) => (
@@ -31,7 +46,7 @@ export default function GroupBuyingList({startIndex, endIndex}) {
             <div className='item_date'>{item.postTime}</div>
             <div className='item_title'>{item.title}</div>
             <div className='item_area'>{item.dong}</div>
-            <div className='item_deadline'>0일 후 마감</div>
+            <div className='item_deadline'>{calculateTimeLeft(item.deadLine)}</div>
           </div>
         </Link>
       ))}

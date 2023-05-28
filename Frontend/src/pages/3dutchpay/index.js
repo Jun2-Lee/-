@@ -106,6 +106,22 @@ function DutchPayPage() {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
+  //마감일 계산
+  const calculateTimeLeft = (deadline) => {
+    const targetDate = new Date(deadline);
+    const today = new Date();
+
+    const differenceInTime = targetDate.getTime() - today.getTime();
+    const differenceInHours = Math.ceil(differenceInTime / (1000 * 3600));
+
+    if (differenceInHours >= 24) {
+      const differenceInDays = Math.ceil(differenceInHours / 24);
+      return `${differenceInDays}일 후 마감`;
+    } else {
+      return `${differenceInHours}시간 후 마감`;
+    }
+  };
+
   return (
     <div className='dutch'>
       <div className="list_dutchpay">
@@ -134,7 +150,7 @@ function DutchPayPage() {
               <div className="title_dutchpay">{item.store}</div>
               <div className="card_sub2">
                 <div className="dong_dutchpay">{item.address}</div>
-                <div className="deadline_dutchpay">00:03:00</div>
+                <div className="deadline_dutchpay">{calculateTimeLeft(item.deadLine)}</div>
               </div>
             </div>
           </div>
@@ -174,7 +190,7 @@ function DutchPayPage() {
             <div className="detail_sub2">
               <div className="recruits_dutchpay">{detail.limitMember}명 모집</div>
               <div className="calcCost_dutchpay">{detail.deliveryCost}원/{detail.deliveryCost / detail.limitMember}원</div>
-              <div className="countdown_dutchpay">카운트 다운</div>
+              <div className="countdown_dutchpay">{calculateTimeLeft(detail.deadLine)}</div>
             </div>
           </div>
           <div className="address_dutchpay">{detail.address}</div>
