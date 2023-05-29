@@ -61,7 +61,7 @@ public class SecurityConfig {
                         "/api/groupBuying/{\\d+}", "/api/sharing/{\\d+}", "/api/dutchPay/{\\d+}",
                         "/api/sharing", "/api/dutchPay", "/index.html",
                         // 여기 아래로는 Frontend에서 발생하는 Unauthorized(401)에 대한 permission입니다.
-                        "/favicon.ico", "/css/**", "/fonts/**", "/img/**", "/js/**",
+                        "/favicon.ico", "/css/**", "/fonts/**", "/img/**", "/js/**", "/static/**",
                         "/groupBuying/assets/**", "/sharing/assets/**", "/dutchPay/assets/**").permitAll()
 
                 .anyRequest().authenticated()

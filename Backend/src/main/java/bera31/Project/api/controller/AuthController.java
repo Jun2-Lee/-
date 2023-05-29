@@ -28,7 +28,7 @@ public class AuthController {
 
     @Operation(summary = "닉네임 중복 확인 요청 API 입니다.",
             description = "Request Body가 아닌, url에 Request Parameter 형식으로 Nickname을 받습니다.")
-    @PostMapping("/signup/{nickname}")
+    @GetMapping("/signup")
     public ResponseEntity<String> checkDuplication(@RequestParam String nickname) {
         return new ResponseEntity<>(authService.checkNickname(nickname), HttpStatus.OK);
     }

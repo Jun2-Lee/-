@@ -52,6 +52,7 @@ public class AuthService {
     }
 
     public String checkNickname(String nickname) {
+        System.out.println(nickname);
         if (checkNicknameDuplication(nickname))
             throw new NicknameDuplicateException(ErrorResponse.NICKNAME_DUPLICATE);
 
@@ -106,7 +107,7 @@ public class AuthService {
     }
 
     private boolean checkNicknameDuplication(String nickname) {
-        return memberRepository.findByEmail(nickname).isPresent();
+        return memberRepository.findByNickName(nickname).isPresent();
     }
 
     private boolean checkPasswordCorrectness(LogInDto logInDto, Optional<Member> findedMember) {

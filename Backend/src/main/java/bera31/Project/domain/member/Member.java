@@ -54,11 +54,6 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<LikedGroupBuying> likedGroupBuyings = new ArrayList<>();
 
-    /*@Transient
-    private List<String> favoriteFood = new ArrayList<>();
-    // 얘는 영속적인 값이 아니게 되는데?
-    // 이걸 어떻게 처리를 할 것인가?*/
-
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Schedule> memoList = new ArrayList<>();
 
@@ -118,8 +113,4 @@ public class Member {
     public void addMemo(Schedule schedule) {
         this.memoList.add(schedule);
     }
-
-   /* public void changeFavIngredients(List<String> favIngredients) {
-        this.favoriteFood = favIngredients;
-    }*/
 }
