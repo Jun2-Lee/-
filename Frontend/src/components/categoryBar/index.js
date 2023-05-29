@@ -20,7 +20,6 @@ function CategoryBar() {
   return (
     <div>
       <div style={{ 
-        fontSize: "10px",
         textAlign: "center",
         margin: "1rem",
         fontWeight: "700",

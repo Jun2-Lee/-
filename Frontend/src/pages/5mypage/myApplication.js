@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./myWriting.css";
 import "./myWritingList.css";
-import ShortcutBar from "../../components/shortcutBar";
+import CategoryBar2 from "../../components/categoryBar2";
 import Pagination from "react-js-pagination";
 import axios from 'axios';
 
@@ -102,7 +102,7 @@ export default function Application() {
       <div className="myWriting_title">신청 목록</div>
       <div className="myWriting_body">
         <section className="shortcutBar">
-          <ShortcutBar />
+          <CategoryBar2 />
         </section>
 
         <section className="nav_myWriting">

@@ -1,7 +1,8 @@
 import React,{useState} from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import toggleClose from '../../assets/img/toggleIcon.png';
 import toggleOpen from '../../assets/img/toggleIconOpen.png';
-
 import './index.css';
 
 function CategoryBar2() {
@@ -17,10 +18,17 @@ function CategoryBar2() {
     setToggle(copy);
   };
 
+  const handleWithdraw = () => {
+    const accessToken = localStorage.getItem('accessToken');
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    axios.delete('http://3.36.144.128:8080/api/mypage/withdraw')
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err)) //자동 로그아웃 되는지? 아니면 내가 처리?
+  }
+
   return (
     <div>
       <div style={{ 
-        fontSize: "10px",
         textAlign: "center",
         margin: "1rem",
         fontWeight: "700",
@@ -36,61 +44,41 @@ function CategoryBar2() {
           </div>
         </ul>
           {isOpen[0] && <div className='sub-category-box'>
-            <li className='sub-category'>프로필 수정하기</li>
+            <Link to="/changePW"><li className='sub-category'>비밀번호 변경하기</li></Link>
+            <Link to="/editProfile"><li className='sub-category'>프로필 수정하기</li></Link>
           </div>}
         <ul className='category'>
-          <div onClick={()=>handleOpenToggle(1)}>
-            참여 목록
-            {isOpen[1] && <img className='toggleOpen' src={toggleOpen}></img>}
-            {!isOpen[1] && <img className='toggleClose' src={toggleClose}></img>}
-          </div>
-          <div className='toggleBtn'/>
-        </ul>
-          {isOpen[1] && <div className='sub-category-box'>
-            <li className='sub-category'>재료 나눔</li>
-            <li className='sub-category'>배달비 n빵</li>
-            <li className='sub-category'>공동구매</li>
-          </div>}
-        <ul className='category'>
-          <div onClick={()=>handleOpenToggle(2)}>
-            쪽지함
+          <div>
+            <Link to="/myApplication">신청 목록</Link>
           </div>
           <div className='toggleBtn'/>
         </ul>
         <ul className='category'>
-          <div onClick={()=>handleOpenToggle(3)}>
-            나의 찜
-            {isOpen[3] && <img className='toggleOpen' src={toggleOpen}></img>}
-            {!isOpen[3] && <img className='toggleClose' src={toggleClose}></img>}
-          </div>
-          <div className='toggleBtn'/>
-        </ul>
-          {isOpen[3] && <div className='sub-category-box'>
-            <li className='sub-category'>재료 나눔</li>
-            <li className='sub-category'>배달비 n빵</li>
-            <li className='sub-category'>공동구매</li>
-          </div>}
-        <ul className='category'>
-          <div onClick={()=>handleOpenToggle(4)}>
-            내가 쓴 글
-            {isOpen[4] && <img className='toggleOpen' src={toggleOpen}></img>}
-            {!isOpen[4] && <img className='toggleClose' src={toggleClose}></img>}
-          </div>
-          <div className='toggleBtn'/>
-        </ul>
-          {isOpen[4] && <div className='sub-category-box'>
-            <li className='sub-category'>재료 나눔</li>
-            <li className='sub-category'>배달비 n빵</li>
-            <li className='sub-category'>공동구매</li>
-          </div>}
-        <ul className='category'>
-          <div onClick={()=>handleOpenToggle(5)}>
-            캘린더
+          <div>
+            <Link to="/chatting">쪽지함</Link>
           </div>
           <div className='toggleBtn'/>
         </ul>
         <ul className='category'>
-          <div onClick={()=>handleOpenToggle(6)}>
+          <div>
+            <Link to="/myClipping">찜 목록</Link>
+          </div>
+          <div className='toggleBtn'/>
+        </ul>
+        <ul className='category'>
+          <div>
+            <Link to="/myWriting">내가 쓴 글</Link>
+          </div>
+          <div className='toggleBtn'/>
+        </ul>
+        <ul className='category'>
+          <div>
+            <Link to="/calendar">캘린더</Link>
+          </div>
+          <div className='toggleBtn'/>
+        </ul>
+        <ul className='category'>
+          <div onClick={handleWithdraw}>
             탈퇴하기
           </div>
           <div className='toggleBtn'/>
