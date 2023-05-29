@@ -1,11 +1,10 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import Paging from '../pagination'
 import './index.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-export default function GroupBuyingList() {
+export default function GroupBuyingList({startIndex, endIndex}) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -22,7 +21,7 @@ export default function GroupBuyingList() {
 
   return (
     <div className='groupbuying_list'>
-      {items.map((item, index) => (
+      {items.slice(startIndex, endIndex).map((item, index) => (
         <Link to={`/groupBuying/${item.id}`} style={{ textDecoration: 'none' }}>
           <div key={index} className='item'>
             <div className='item_image'>

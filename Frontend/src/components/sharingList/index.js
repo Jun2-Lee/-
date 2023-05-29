@@ -4,7 +4,7 @@ import './index.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-function SharingList() {
+function SharingList({startIndex, endIndex}) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function SharingList() {
 
   return (
     <div className='sharing_list'>
-      {items.map((item, index) => (
+      {items.slice(startIndex, endIndex).map((item, index) => (
         <Link to={`/sharing/${item.id}`} style={{ textDecoration: 'none' }}>
           <div key={index} className='item'>
             <div className='item_image'>
@@ -35,12 +35,6 @@ function SharingList() {
           </div>
         </Link>
       ))}
-      
-      <div className='writing'>
-        <Link to="/postSharing" className='postsharing_link'>
-          <img src='assets/img/writingIcon.png' className='writingIcon' />
-        </Link>
-      </div>
     </div>
   )
 }
