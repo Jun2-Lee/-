@@ -66,9 +66,6 @@ export default function Login() {
 
   function onSilentRefresh() {
     //local storage에 저장된 토큰 값 가져오기
-    const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
-    //
     let isRefreshing = false;
 
   // 이전에 실행된 갱신 중인 경우 중복 실행 방지
@@ -76,7 +73,9 @@ export default function Login() {
       clearTimeout(onSilentRefresh.timeoutId);
       isRefreshing = true;
     }
-
+    const accessToken = localStorage.getItem('accessToken');
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    const refreshToken = localStorage.getItem('refreshToken');
     axios.post("http://3.36.144.128:8080/api/auth/reissue", 
             {
               accessToken: accessToken,
