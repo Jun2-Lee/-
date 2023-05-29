@@ -4,7 +4,7 @@ import './index.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-export default function GroupBuyingList({startIndex, endIndex}) {
+export default function GroupBuyingList({startIndex, endIndex, category}) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function GroupBuyingList({startIndex, endIndex}) {
         }));
       })
       .catch(error => console.log(error));
-  }, [])
+  }, [category])
 
   const calculateTimeLeft = (deadline) => {
     const targetDate = new Date(deadline);
@@ -34,9 +34,12 @@ export default function GroupBuyingList({startIndex, endIndex}) {
     }
   };
 
+  //카테고리
+  const filteredItems = category ? items.filter(item => item.category === category) : items;
+
   return (
     <div className='groupbuying_list'>
-      {items.slice(startIndex, endIndex).map((item, index) => (
+      {filteredItems.slice(startIndex, endIndex).map((item, index) => (
         <Link to={`/groupBuying/${item.id}`} style={{ textDecoration: 'none' }}>
           <div key={index} className='item'>
             <div className='item_image'>

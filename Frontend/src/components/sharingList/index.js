@@ -4,13 +4,12 @@ import './index.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-function SharingList({startIndex, endIndex}) {
+function SharingList({startIndex, endIndex, category}) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     axios.get('http://3.36.144.128:8080/api/sharing')
       .then(response => {
-        console.log(response.data)
         setItems(response.data.map(item => {
           const date = new Date(item.postTime);
           const formattedDate = date.toLocaleDateString("ko-KR");
@@ -18,7 +17,7 @@ function SharingList({startIndex, endIndex}) {
         }));
       })
       .catch(error => console.log(error));
-  }, [])
+  }, [category]) // category가 변경될 때마다 API 호출
 
   const calculateTimeLeft = (deadline) => {
     const targetDate = new Date(deadline);
@@ -35,9 +34,12 @@ function SharingList({startIndex, endIndex}) {
     }
   };
 
+  //카테고리
+  const filteredItems = category ? items.filter(item => item.category === category) : items;
+
   return (
     <div className='sharing_list'>
-      {items.slice(startIndex, endIndex).map((item, index) => (
+      {filteredItems.slice(startIndex, endIndex).map((item, index) => (
         <Link to={`/sharing/${item.id}`} style={{ textDecoration: 'none' }}>
           <div key={index} className='item'>
             <div className='item_image'>
