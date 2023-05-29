@@ -61,7 +61,6 @@ function Signup() {
       [name]: value
     })
   };
-  console.log(password_check)
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -104,9 +103,15 @@ function Signup() {
     }
   }
 
+  const checkOverlap = () => {
+    axios.get(`http://3.36.144.128:8080/api/auth/signup?nickname=${nickname}`)
+      .then((res) => alert(res.data))
+      .catch((err) => alert(err.response.data.message))
+  }
+
   return (
     <div className="signup_container">
-      <form onSubmit={onSubmit}>
+      <div>
         <div className="ID">
           <label className="form-label">아이디</label>
           <input name='email' onChange={onChange} value={email} className="id"/>
@@ -125,7 +130,7 @@ function Signup() {
         <div className="nick_name">
           <label className="form-label">닉네임</label>
           <input name='nickname' onChange={onChange} value={nickname} className="nickName"/>
-          <button type="submit" className="overlap_check">중복 확인</button>
+          <button type="submit" className="overlap_check" onClick={checkOverlap}>중복 확인</button>
         </div>
 
         <div className="profile_upload">
@@ -139,9 +144,9 @@ function Signup() {
         </div>
 
         <div className="submit">
-          <input type="submit" className="submit_user_info" value="회원가입"></input>
+          <input type="submit" className="submit_user_info" value="회원가입" onClick={onSubmit}></input>
         </div>
-      </form> 
+      </div>
     </div>
   )
 }
