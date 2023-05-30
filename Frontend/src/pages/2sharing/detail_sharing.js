@@ -1,18 +1,290 @@
-
 import './detail_sharing.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 function DetailSharing() {
+  
   const [data, setData] = useState({});
-  const { postId } = useParams();
   //yyyy-mm-dd로 변환
   const [postTime, setPostTime] = useState('');
   const [expiry, setExpiry] = useState('');
   const [deadLine, setDeadline] = useState('');
   const [isMine, setIsMine] = useState(false);
   const [isFinish, setFinished] = useState(false);
+
+  const [comments, setComments] = useState([]);
+  const [idComment, setIdComment] = useState([]);
+  const [getUserId, setUserId] = useState([]);
+  let [isValid, setIsValid] = useState(false);
+  const { postId } = useParams();
+  const { commentId } = useParams();
+  const ShowReplyInputBox = ({postId, commentId}) => {
+   
+    const [replyDto_, setReplyDto_] = useState({ reply: '' });
+    const onChange = (e) => {
+      const { value } = e.target;
+      setReplyDto_({
+        ...replyDto_,
+        reply: value
+      });
+  
+    };
+    useEffect(() => {
+  const accessToken = localStorage.getItem("accessToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  axios
+    .get(`http://3.36.144.128:8080/api/sharing/${postId}`)
+    .then((response) => {
+      if (response.data.commentResponseDtoList) {
+        const contentsReply = response.data.commentResponseDtoList.map(comment => comment.childCommentResponseDto.map(reply => reply.content));
+        setReplyDto_(prevState => ({ ...prevState, reply: contentsReply }));
+        console.log(data);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}, [postId]);
+useEffect(() => {
+  console.log(replyDto_);
+}, [replyDto_]);
+console.log(replyDto_);
+const handlePostReply = () => {
+    
+  console.log(commentId);
+  const headers = {
+    'Content-Type': 'application/json'
+  };
+  
+
+  const accessToken = localStorage.getItem("accessToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  axios
+    .post(`http://3.36.144.128:8080/api/sharing/${postId}/${commentId}/childComment`, { content: replyDto_.reply }, { headers })
+    .then((response) => {
+      console.log(response);
+      alert("등록되었습니다");
+      setReplyDto_({ reply: '' }); //답글 작성 후 입력창 초기화
+      // 답글 목록 업데이트
+      axios
+        .get(`http://3.36.144.128:8080/api/sharing/${postId}`)
+        .then((response) => {
+          setReplyDto_(response.data.commentResponseDtoList);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+useEffect(() => {
+  console.log(replyDto_);
+}, [replyDto_]);
+
+console.log(replyDto_);
+useEffect(() => {
+  console.log(commentId);
+}, [commentId]);
+return (
+  <div className='replyBox' >
+    <input
+      type="text"
+      className='inputReply'
+      placeholder='답글 작성하기...'
+     
+      onChange={onChange}
+    />
+  <div className='buttonReply' >
+      <button
+        type='submit'
+        className='submitReply'
+        onClick={(e) => {
+          e.preventDefault();
+          handlePostReply();
+        }}
+        disabled={!isValid}
+        style={{fontSize:'9px'}}
+      >
+        등록
+      </button>
+      
+    
+    </div>
+  </div>
+);
+};
+
+const [postTimeComment, setPostTimeComment] = useState('');
+        
+useEffect(() => {
+const accessToken = localStorage.getItem("accessToken");
+axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
+axios
+  .get(`http://3.36.144.128:8080/api/sharing/${postId}`)
+  .then((response) => {
+    const Id = response.data.commentList.map((id) => id.id);
+    setIdComment(Id);
+    setPostTimeComment(new Date(response.data.commentList.postTime).toLocaleDateString("ko-KR"));
+    setPostTimeComment(postTime);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}, [postId, commentId]);
+
+const Post = () => {
+const [commentDto_, setCommentDto_] = useState({comment:''});
+const{comment} = commentDto_;
+
+const [showReplyInputBox, setShowReplyInputBox] = useState(null);
+const headers = {
+  'Content-Type': 'application/json'
+}
+
+const onChange = (e) => {
+  const { value, name } = e.target;
+  setCommentDto_({
+    ...commentDto_,
+    comment: value
+  });
+};
+
+const body = JSON.stringify({ content: comment })
+const handlePost = () => {
+  const accessToken = localStorage.getItem("accessToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  axios
+    .post(`http://3.36.144.128:8080/api/sharing/${postId}/comment`, { content: comment }, { headers })
+    .then((response) => {
+      console.log(response);
+      alert("등록되었습니다");
+      setCommentDto_({ comment: '' }); // 댓글 작성 후 입력창 초기화
+
+                // 댓글 목록 업데이트
+                axios
+                .get(`http://3.36.144.128:8080/api/sharing/${postId}`)
+                .then((response) => {
+                  setComments(response.data.commentResponseDtoList);
+                  console.log(response.data);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
+        
+      
+        useEffect(() => {
+          const accessToken = localStorage.getItem("accessToken");
+
+          axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+          axios
+            .get(`http://3.36.144.128:8080/api/sharing/${postId}`)
+            .then((response) => {
+              const contents = response.data.commentResponseDtoList.map((comment) => comment.content);
+            
+              setCommentDto_(prevState => ({ ...prevState, comment: contents }));
+     
+              console.log(data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }, [postId]);
+    
+        useEffect(() => {
+          console.log(commentDto_);
+        }, [commentDto_]);
+        console.log(commentDto_);
+
+        return (
+          <div>
+               <div className='inputcomment'>
+  <div className="userCommentBox">
+    {data.commentResponseDtoList && data.commentResponseDtoList.map((comment) => (
+      <div key={comment.id} className="comment">
+             <p className="userProfile"><img src={comment.profileImage}/></p>
+        <p className="userName">{comment.author}님</p>
+        <p className="userComment">{comment.content}</p>
+
+        <button className="reply"style={{marginRight:"10px"}} onClick={() => setShowReplyInputBox(comment.id)}>
+        답글
+        </button>
+        {showReplyInputBox === comment.id && (
+          <ShowReplyInputBox postId={postId} commentId={comment.id} />
+        )}
+            {console.log(comment.id)}
+          <div className="userPostTime">{new Date(comment.postTime).toLocaleString("ko-KR").replace('T', ' ').slice(0, -3)}</div>
+        <div className="commentline"><img alt="commentLineImg" src="/assets/img/commentLine.png"/></div>
+        <div className="replyCommentBox"style={{marginTop:"-50px", marginLeft:"50px"}}>
+          {comment.childCommentResponseDto && comment.childCommentResponseDto.map((reply) => (
+            <div key={reply.id} className="reply"  style={{backgroundColor:"var(--sub_orange)"}}>
+              <p className="userProfileReply"><img src={reply.profileImage}/></p>
+              <p className="userNameReply">{reply.author}님</p>
+              <p className="userCommentReply">{reply.content}</p>
+              <button className="reply" style={{marginRight:"10px"}} onClick={() => setShowReplyInputBox(reply.id)}>
+                답글
+              </button>
+              {showReplyInputBox === reply.id && (
+                <ShowReplyInputBox postId={postId} commentId={comment.id} />
+              )}
+               <div className="userPostTimeReply">{new Date(comment.postTime).toLocaleString("ko-KR").replace('T', ' ').slice(0, -3)}</div>
+              <div className="commentlineReply"><img alt="commentLineImg" src="/assets/img/commentLine.png"/>
+              </div>
+        </div>
+          ))}
+
+          </div>
+          </div>
+    ))}
+    </div>
+  </div>
+  <div className='inputCommentBox'>
+          <input
+              type="text"
+              className='inputComment'
+              placeholder='댓글 작성하기...'
+              onKeyUp={e => {
+                e.target.value.length > 0
+                  ? setIsValid(true)
+                  : setIsValid(false);
+              }}
+              
+              onChange={onChange}
+            />
+             <div className='buttonblank'>
+            <button
+              type='submit'
+              className='submitComment'
+              onClick={(e) => {
+                e.preventDefault();
+                handlePost();
+              }}
+              disabled={!isValid}
+            >
+              등록
+            </button>
+            
+          
+          </div>
+          </div>
+        </div>
+      );
+    
+  
+    }
+
+
+
 
   const accessToken = localStorage.getItem('accessToken')
   useEffect(() => {
@@ -154,7 +426,14 @@ function DetailSharing() {
       </div>
 
 
+      <div className='sharing_comment'>
+                          
+                          <Post commentId={commentId}/>
+                        
+                    </div>
     </div>
+
+  
 
 </div>
 

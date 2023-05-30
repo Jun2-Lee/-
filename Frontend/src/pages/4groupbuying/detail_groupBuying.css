@@ -1,11 +1,10 @@
 .detail_purchase{
   margin-left: 150px;
-
 }
-
 #nowTime{
   margin-left: 730px;
 }
+
 
 .detail_Title {
   background-color: var(--sub_orange);
@@ -16,69 +15,52 @@
   border-radius: 5px;
   margin-top: 30px;
 }
-
 #detail_title{
   display: flex;
   justify-content: center;
   margin-top: -30px;
   line-height: 47px;
 }
-
-
 .userhelp_detail{
   margin-top: 10px;
   margin-left: 720px;
-
 }
-
 
 .modify, .delete{
-     font-size:12px;
-     font-weight:bolder;
-     border:0;
-     outline:0; 
-     background-color: #FFFAF3;
-  }
+  font-size:12px;
+  font-weight:bolder;
+  border:0;
+  outline:0; 
+  background-color: #FFFAF3;
+}
+.detail_purchase .detailImg img {
+ background-color: white;
+ width: 312px;
+ height: 312px;
+ margin-left: 120px;
 
-
-
-  .detail_purchase .detailImg img {
-    background-color: white;
-    width: 312px;
-    height: 312px;
-    margin-left: 120px;
-  
-
-  }
-
+}
 .component_purchase{
-  display: flex;
+display: flex;
 
-  
 }
-
 .items_purchase{
-  flex-direction: column;
-  margin-left: 50px;
- 
-}
+flex-direction: column;
+margin-left: 50px;
 
+}
 .categoryPurchase, .itemPurchase ,.recruitPurchase, .costPurchase ,.DeadlinePurchase{
-  background-color: var(--sub_orange);
-  border: none;
-  width: 147px;
-  height: 42px;
-  margin-left: 13px;
-  border-radius: 5px;
-  margin-bottom: 30px;
+background-color: var(--sub_orange);
+border: none;
+width: 147px;
+height: 42px;
+margin-left: 13px;
+border-radius: 5px;
+margin-bottom: 30px;
 }
-
 .category_purchase, .item_purchase ,.recruit_purchase,.cost_purchase ,.deadline_purchase{
   display: flex;
-
 }
-
-
 .detailform{
   text-align: center;
   width: 100px;
@@ -87,130 +69,155 @@
   font-size: 16px;
   font-weight:bolder;
   margin-left: -25px;
+}
+  
+.profile {
+  margin-top: 100px;
+  margin-left: -408px;
+}
+
+.IngredientStatus {
+  background-color: var(--sub_orange);
+  border: none;
+  border-radius: 5px;
+  height: 128px;
+  width: 597px;
+  display: flex;
+}
+#won {
+  font-size: 16px;
+  font-weight:bolder;
+  margin-top: 7px;
+}
+#IngredientStatus{
+  margin-top: 50px;
+  font-size: 16px;
+  font-weight:bolder;
+  margin-top: 10px;
+  display: flex;
+  margin-left: 130px;
+}
+.IngredientStatus{
+  margin-left: 120px;
+ 
+}
+.LowerUserHelp{
+  margin-top: 60px;
+}
+.like{
+  border:0;
+  outline:0; 
+  background-color: var(--sub_orange);
+  font-size: 16px;
+  font-weight:bolder;
+  margin-left: 0px;
+  width: 70px;
+  height: 50px;
+  border-radius: 5px;
+}
+.application{
+
+  border:0;
+  outline:0; 
+  background-color:  #FF8327;
+  font-size: 16px;
+  font-weight:bolder;
+  color: white;
+  margin-left: 670px;
+  width: 97px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+
+.firstMessage{
+  margin-left: 100px;
+}
+.SendMessage{
+  border:0;
+  outline:0; 
+  background-color:  #FF8327;
+  font-size: 16px;
+  font-weight:bolder;
+  color: white;
+  width: 97px;
+  height: 50px;
+  border-radius: 5px;
+
+}
+.reply{
+  background-color:var(--sub_orange);
+ 
+}
+
+.userCommentBox{
+  margin-left: 11px;
+  margin-top: 100px;
 
 }
 
+.inputcomment{
+  justify-content: center;
   
-  .profile {
-    margin-top: 100px;
-    margin-left: -408px;
-  }
+  width: 770px;
+  height: 778px;
+  background-color:var(--sub_orange);
+  border-radius: 5px;
+  overflow: scroll;
+}
 
-  
-  .IngredientStatus {
-    background-color: var(--sub_orange);
-    border: none;
-    border-radius: 5px;
-    height: 128px;
-    width: 597px;
-    display: flex;
+.inputCommentBox{
+  position: absolute;
+  background-color: var(--sub_orange);
+  width: 770px;
+  height: 130px;
+  border-radius: 5px;
+}
 
-  }
-
-
-
-
-  #won {
-    font-size: 16px;
-    font-weight:bolder;
-    margin-top: 7px;
-  }
-
-  #IngredientStatus{
-    margin-top: 50px;
-    font-size: 16px;
-    font-weight:bolder;
-    margin-top: 10px;
-    display: flex;
-    margin-left: 130px;
-  }
-
-  .IngredientStatus{
-    margin-left: 120px;
-   
-  }
-  
-  .LowerUserHelp{
-    margin-top: 60px;
-  }
-
-  .like {
-    border:0;
-    outline:0; 
-    background-color: var(--sub_orange);
-    font-size: 16px;
-    font-weight:bolder;
-    margin-left: 0px;
-    width: 70px;
-    height: 50px;
-    border-radius: 5px;
-  }
-
-  .application, .finishTrading {
-
-    border:0;
-    outline:0; 
-    background-color:  #FF8327;
-    font-size: 16px;
-    font-weight:bolder;
-    color: white;
-    margin-left: 670px;
-    width: 97px;
-    height: 50px;
-    border-radius: 5px;
-  }
-
-  .SendMessage{
-    border:0;
-    outline:0; 
-    background-color:  #FF8327;
-    font-size: 16px;
-    font-weight:bolder;
-    color: white;
-
-    width: 97px;
-    height: 50px;
-    border-radius: 5px;
-
-  }
-
-
-  
-
-  .inputcomment{
-    justify-content: center;
-    position:absolute;
-  }
 
 
 .inputComment{
-    width: 740px;
-    height: 102px;
-    border-radius: 5px;
-    justify-content:center;
-    margin-top:0px;
-    border:0;
-    outline:0;
-    border-top: 100px;
-    margin-left: 30px;
-
-
+  width: 740px;
+  height: 102px;
+  border-radius: 5px;
+  justify-content:center;
+  margin-top:650px;
+  border:0;
+  outline:0;
+  border-top: 100px;
+  margin-left: 15px;
+  position:absolute;
+ margin-top:15px;
 }
 
 .submitComment{
-    width: 63px;
-    height: 33px;
-    margin-right: 10px;
+  width: 63px;
+  height: 33px;
+  border-radius: 5px;
+  background-color: #FF8327;
+  border:0;
+  outline:0; 
+  font-size: 16px;
+  font-weight:bolder;
+  color: white;
+  margin-top: 70px;
+    margin-left: 680px;
+    position:relative;
+}
+
+.submitReply{
+    width: 40px;
+    height: 20px;
+
     border-radius: 5px;
     background-color: #FF8327;
     border:0;
     outline:0; 
-    font-size: 16px;
     font-weight:bolder;
     color: white;
-    margin-top: 60px;
-    margin-left: 700px;
-    position:absolute;
+    margin-top: -10px;
+    margin-left: 137px;
+    position:relative;
 }
 
 .comment_cmp1{
@@ -221,13 +228,10 @@
   height: 534px;
   
 }
-
-
 .comment_cmp{
   width: 800px;
   margin-left: 10px;
 }
-
 .purchase_comment{
   width: 833px;
   height: 100px;
@@ -238,7 +242,6 @@
   justify-content:center;
   
 }
-
 .reply{
   border:0;
   outline:0; 
@@ -249,11 +252,6 @@
   margin-left: 10px;
 }
 
-.userCommentBox{
-  margin-left: 11px;
-  margin-top: -30px;
-}
-
 .commentBox{
   height: 100px;
   width: 800px;
@@ -261,28 +259,24 @@
   background-color:  var(--sub_orange);
   margin-top: -135px;
 }
-
-
 .reply_cmp{
   display: flex;
   margin-left: 27px;
 }
-
 .userReplyBox{
   margin-left: 95px;
   margin-top: -30px;
 }
-
 .inputreply{
   display: flex;
   margin-left: 95px;
 }
-
 .inputReply{
   border-radius: 5px;
   justify-content:center;
   border:0;
   outline:0;
+  position: relative;
 }
 
 .submitReply{
@@ -294,9 +288,58 @@
   font-weight:bolder;
   color: white;
 }
-
 .purchase_reply{
-  margin-top: 135px;
+  margin-top: 165px;
+}
+
+.userProfileReply img{
+  width: 35px;
+  height: 35px;
+  margin-top: -70px;
+}
+
+.userNameReply{
+  margin-top: -70px;
+  color:#FF8327;
+  margin-left: 42px;
+  font-size: 14px;
+}
+
+.userComment{
+  margin-left: 10px;
+}
+
+.userCommentReply{
+  font-size: 14px;
+  
+}
+
+.userPostTime{
+  font-size: 10px;
+  margin-bottom: 100px;
+  margin-left: 600px;
+
+}
+.comment{
+ margin-top: -100px;
+
+}
+
+.commentline img{
+  width: 790px;
+  margin-top: -220px;
+  margin-left: -30px;
 }
 
 
+.commentlineReply img{
+  width: 790px;
+  margin-left: -100px;
+  margin-top: -220px;
+}
+
+.userPostTimeReply{
+  font-size: 10px;
+  margin-bottom: 100px;
+  margin-left: 555px;
+}
