@@ -98,20 +98,20 @@ function DetailSharing() {
 
         <div className='items_sharing'>
           <div className="category_sharing">
-          <label className="detailform_sharing">카테고리</label>
+          <label htmlFor="detailform_sharing">카테고리</label>
           <div className="categorySharing">
               {data.category}
           </div>
         </div>
 
           <div className="item_sharing">
-            <label className="detailform_sharing">품목</label>
+            <label htmlFor="detailform_sharing">품목</label>
             <div
               className="itemSharing">{data.product}</div>
           </div>
 
           <div className="expiry_sharing">
-            <label className="detailform_sharing">유통기한</label>
+            <label htmlFor="detailform_sharing">유통기한</label>
             <div
               className="expirySharing">
                 {expiry}
@@ -119,7 +119,7 @@ function DetailSharing() {
           </div>
 
                 <div className="deadline_sharing">
-                  <label className="detailform_sharing">마감일</label>
+                  <label htmlFor="detailform_sharing">마감일</label>
                   <div 
                     className="DeadlineSharing">
                       {deadLine}
@@ -127,7 +127,7 @@ function DetailSharing() {
                 </div>
 
                 <div className="deadline_sharing">
-                  <label className="detailform_sharing">사는 동네</label>
+                  <label htmlFor="detailform_sharing">사는 동네</label>
                   <div className="DeadlineSharing">
                     {data.dong} {data.gu}
                   </div>
@@ -136,12 +136,15 @@ function DetailSharing() {
               </div>
           </div>
 
-      <div className="ingredient_sharing">
-        <label id="Ingredient_sharing">재료상태</label>
-        <br></br>
-      <div className="Ingredient_sharing">
-        {data.content}
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <div className="ingredient_sharing">
+          <label id='Ingredient_sharing'>재료상태</label>
+          <br></br>
+          <div className="Ingredient_sharing_content">
+            {data.content}
+        </div>
       </div>
+      
       </div>
 
       <div className="LowerUserHelp_sharing">
