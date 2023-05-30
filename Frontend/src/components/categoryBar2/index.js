@@ -1,8 +1,6 @@
 import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import toggleClose from '../../assets/img/toggleIcon.png';
-import toggleOpen from '../../assets/img/toggleIconOpen.png';
 import './index.css';
 
 function CategoryBar2() {
@@ -39,8 +37,8 @@ function CategoryBar2() {
         <ul className='category'> 
           <div onClick={()=>handleOpenToggle(0)}>
             내 프로필
-            {isOpen[0] && <img className='toggleOpen' src={toggleOpen}></img>}
-            {!isOpen[0] && <img className='toggleClose' src={toggleClose}></img>}
+            {isOpen[0] && <img className='toggleOpen' src="/assets/img/toggleIconOpen.png"></img>}
+            {!isOpen[0] && <img className='toggleClose' src="/assets/img/toggleIcon.png"></img>}
           </div>
         </ul>
           {isOpen[0] && <div className='sub-category-box'>
@@ -49,25 +47,25 @@ function CategoryBar2() {
           </div>}
         <ul className='category'>
           <div>
-            <Link to="/myApplication">신청 목록</Link>
-          </div>
-          <div className='toggleBtn'/>
-        </ul>
-        <ul className='category'>
-          <div>
             <Link to="/chatting">쪽지함</Link>
           </div>
           <div className='toggleBtn'/>
         </ul>
         <ul className='category'>
           <div>
-            <Link to="/myClipping">찜 목록</Link>
+            <Link to="/myWriting">내가 쓴 글</Link>
           </div>
           <div className='toggleBtn'/>
         </ul>
         <ul className='category'>
           <div>
-            <Link to="/myWriting">내가 쓴 글</Link>
+            <Link to="/myApplication">신청 목록</Link>
+          </div>
+          <div className='toggleBtn'/>
+        </ul>
+        <ul className='category'>
+          <div>
+            <Link to="/myClipping">찜 목록</Link>
           </div>
           <div className='toggleBtn'/>
         </ul>

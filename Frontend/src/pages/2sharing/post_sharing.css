@@ -3,7 +3,7 @@
 .postSharing_container {
   display: flex;
   justify-content: center;
-  /*margin-top: 2.875rem;*/
+  padding-top: 2.875rem;
 }
 
 .postSharing_container .foodImg_upload {
@@ -34,7 +34,7 @@
   height: 1.938rem;
   margin-right: 30px;
   appearance: none;
-  background: url("../../assets/img/toggleIconOpen.png") no-repeat 6% 50%/0.938rem auto;
+  background: ("../../../public/assets/img/toggleIconOpen.png") no-repeat 6% 50%/0.938rem auto;
   background-size: 1rem;
   background-color: var(--sub_orange);
   padding-left: 2.1rem;
@@ -56,7 +56,7 @@
   justify-content: center;
 }
 
-.post_sharing {
+.postSharing_container .post_sharing {
   width: 363px;
   height: 31px;
   background: var(--main_orange);
@@ -65,5 +65,5 @@
   color: white;
   font-weight: 800;
   margin-top: 27px;
-  margin-bottom: 46px;
+  margin-left: 30px;
 }

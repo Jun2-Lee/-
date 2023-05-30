@@ -25,12 +25,12 @@
     font-size: 0.625rem;
   }
   .toggleClose {
-    text-align: right;
     width: 0.625rem;
+    margin-right: 0.5rem;
   }
   .toggleOpen {
-    text-align: right;
     width: 0.625rem;
+    margin-right: 0.5rem;
   }
   .category > div {
     display: grid;

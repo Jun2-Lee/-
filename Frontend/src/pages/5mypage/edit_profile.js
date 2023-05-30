@@ -110,7 +110,6 @@ function EditProfile() {
 
             <div className='editAddress'>
                 <label htmlFor='form-label'>사는 동네</label>
-                {/*수정 필요*/}
                 <AddressSelect2 onSelectedGu={handleSelectedGu} onSelectedDong={handleSelectedDong} dong={data.dong} gu={data.gu} />
             </div>
 

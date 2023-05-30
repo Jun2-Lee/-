@@ -4,10 +4,11 @@ import Pagination from "react-js-pagination";
 import SharingList from '../../components/sharingList'
 import "./index.css";
 import "./pagination.css"
-import toggleClose from '../../assets/img/toggleIcon.png';
-import toggleOpen from '../../assets/img/toggleIconOpen.png';
 
 function SharingPage() {
+  //사진 경로
+  const toggleClose = "assets/img/toggleIcon.png"
+  const toggleOpen = "assets/img/toggleIconOpen.png"
   //pagination
   const [page, setPage] = useState(1);
   const handlePageChange = (pageNumber) => {
@@ -180,7 +181,7 @@ function SharingPage() {
                 <li className='sub-category' onClick={() => setSelectedCategory('차')}>차</li>
               </div>}
               <ul className='category'>
-              <div onClick={()=>handleOpenToggle(7)}>
+              <div onClick={()=>handleOpenToggle(9)}>
                 간식/과자/떡
                 {isOpen[9] && <img className='toggleOpen' src={toggleOpen}></img>}
                 {!isOpen[9] && <img className='toggleClose' src={toggleClose}></img>}

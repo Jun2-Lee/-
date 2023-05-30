@@ -5,7 +5,7 @@
     margin-right: 30px;
     
     appearance: none;
-    background: url("../../assets/img/toggleIconOpen.png") no-repeat 10% 50%/0.938rem auto;
+    background: url("../../../public/assets/img/toggleIconOpen.png") no-repeat 10% 50%/0.938rem auto;
     background-size: 1rem;
     background-color: var(--sub_orange);
     border: none;
