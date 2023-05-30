@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
-import commentLine from '../../assets/img/commentLine.png';
 
 function DetailGroupBuying() {
   const [comments, setComments] = useState([]);
@@ -227,7 +226,7 @@ const handlePost = () => {
             {console.log(comment.id)}
        <div className="userPostTime">{new Date(comment.postTime).toLocaleString("ko-KR").replace('T', ' ').slice(0, -3)}</div>
 
-        <div className="commentline"><img alt="commentLineImg" src={commentLine}/></div>
+        <div className="commentline"><img alt="commentLineImg" src="/assets/img/commentLine.png"/></div>
 
 
         <div className="replyCommentBox"style={{marginTop:"-50px", marginLeft:"50px"}}>
@@ -243,7 +242,7 @@ const handlePost = () => {
                 <ShowReplyInputBox postId={postId} commentId={comment.id} />
               )}
                  <div className="userPostTimeReply">{new Date(comment.postTime).toLocaleString("ko-KR").replace('T', ' ').slice(0, -3)}</div>
-              <div className="commentlineReply"><img alt="commentLineImg" src={commentLine}/>
+              <div className="commentlineReply"><img alt="commentLineImg" src="/assets/img/commentLine.png"/>
               </div>
         </div>
           ))}

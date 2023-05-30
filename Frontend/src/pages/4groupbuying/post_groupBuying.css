@@ -1,6 +1,7 @@
 .groupBuying_container {
     display: flex;
     justify-content: center;
+    padding-top: 2.875rem;
   }
   
 .groupBuying_container .form-label {
@@ -9,18 +10,19 @@
   text-align: right;
 }
 
-.groupBuying_container .title, .category, .productName, .link, .totalGroupBuying, .numPeople_groupBuying, .deadlineGroupBuying {
+.groupBuying_container .title, .category, .category2, .productName, .link, .totalGroupBuying, .numPeople_groupBuying, .deadlineGroupBuying {
     background-color: var(--sub_orange);
     border: none;
     border-radius: 5px;
     margin-bottom: 30px;
   }
 
-  .groupBuying_container .category {
-    width: 363px;
-    height: 31px;
+  .groupBuying_container .category, .category2 {
+    width: 13.75rem;
+    height: 1.938rem;
+    margin-right: 30px;
     appearance: none;
-    background: url("../../assets/img/toggleIconOpen.png") no-repeat 3% 50%/0.938rem auto;
+    background: url("../../../public/assets/img/toggleIconOpen.png") no-repeat 6% 50%/0.938rem auto;
     background-size: 1rem;
     background-color: var(--sub_orange);
     padding-left: 2.1rem;
@@ -70,6 +72,5 @@
     color: white;
     font-weight: 800;
     margin-top: 27px;
-    margin-bottom: 46px;
     margin-left: 32px;
   }

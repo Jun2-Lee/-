@@ -6,16 +6,38 @@ import AddressSelect from '../../components/addressSelect'
 import './post_groupBuying.css'
 
 function PostgroupBuying() {
-  //음식 카테고리 선택
-  const foodTypes = ['채소', '과일/견과/쌀', '수산물/건해산', '정육/계란', '우유/유제품', '면류/통조림', '샐러드/간편식', '양념', '생수/음료', '간식/과자/떡']
+  // 음식 카테고리, 상세분류 선택
+  const foodTypes = {
+    '채소': ['고구마/감자/당근', '시금치/쌈채소/나물','브로콜리/파프리카/양배추', '양파/대파/마늘/배추', '오이/호박/고추', '콩나물/버섯'],
+    '과일/견과/쌀': ['제철과일', '국산과일', '수입과일', '간편과일', '냉동/건과일', '견과류', '쌀/잡곡'],
+    '수산물/건해산': ['생선류', '굴비/반건류', '오징어/낙지/문어', '새우/게/랍스터', '해산물/조개류', '김/미역/해조류'],
+    '정육/계란': ['소고기', '돼지고기', '닭/오리고기', '양고기', '계란류'],
+    '우유/유제품': ['우유', '요거트/요구르트', '두유', '치즈', '버터/생크림'],
+    '면류/통조림': ['라면', '파스타면', '참치/스팸', '옥수수 통조림'],
+    '샐러드/간편식': ['샐러드/닭가슴살', '도시락', '피자/핫도그/만두', '죽/스프', '시리얼'],
+    '양념': ['식초/소스/드레싱', '양념/액젓/장류', '식용유/참기름/오일', '소금/설탕/향신료', '밀가루/믹스'],
+    '생수/음료': ['생수/탄산수', '음료', '커피', '차'],
+    '간식/과자/떡': ['과자/쿠키', '초콜릿/젤리/캔디', '떡/한과', '아이스크림']
+  };  
+  
   const [selectedFood, setSelectedFood] = useState('');
+  const [selectedDetail, setSelectedDetail] = useState('');
 
   function handleFoodChange(e) {
-    setSelectedFood(e.target.value);
-    setGroupBuyingRequestDto({
-      ...groupBuyingRequestDto,
-      category: e.target.value
-    })
+      setSelectedFood(e.target.value);
+      setSelectedDetail('');
+      setGroupBuyingRequestDto({
+        ...groupBuyingRequestDto,
+        category: e.target.value
+      })
+  }
+
+  function handleDetailChange(e) {
+      setSelectedDetail(e.target.value);
+      setGroupBuyingRequestDto({
+        ...groupBuyingRequestDto,
+        product: e.target.value
+      })
   }
 
   //이미지 업로드
@@ -140,16 +162,28 @@ function PostgroupBuying() {
             <label className="form-label">제목</label>
             <input name='title' onChange={onChange} value={title} className="title"/>
           </div>
-          
-          <div className="product_classification">
+
+          <div className="food_classification">
             <label className="form-label">카테고리</label>
-            <select name={category} onChange={handleFoodChange} value={selectedFood} className="category">
-              {foodTypes.map((foodType) => (
-              <option value={foodType} key={foodType}> {foodType} </option>
+            <select className='category' value={selectedFood} onChange={handleFoodChange}>
+              <option value="">분류</option>
+              {Object.keys(foodTypes).map((foodtype) => (
+                  <option key={foodtype} value={foodtype}>{foodtype}</option>
               ))}
             </select>
           </div>
 
+          <div className='product_container'>
+            <label className="form-label">품목</label>
+              <select className='category2' value={selectedDetail} onChange={handleDetailChange} disabled={!selectedFood}>
+                <option value="">상세 분류</option>
+                {foodTypes[selectedFood] && foodTypes[selectedFood].map((foodtype2) => (
+                    <option key={foodtype2} value={foodtype2}>{foodtype2}</option>
+                ))}
+              </select>
+          </div>
+          
+          {/*여기 수정*/}
           <div className="ProductName">
             <label className="form-label">상품명</label>
             <input name='product' onChange={onChange} value={product} className="productName"/>

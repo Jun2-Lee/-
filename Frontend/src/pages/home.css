@@ -2,6 +2,9 @@
   width: 54rem;
   height: 15.75rem;
   background-color: var(--sub_orange);
+  font-size: 1rem;
+  line-height: 2.5rem;
+  padding: 1.25rem 1.25rem;
 }
 
 .home_container {

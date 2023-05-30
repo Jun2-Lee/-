@@ -1,15 +1,21 @@
+* a {
+  color: black;
+  text-decoration: none;
+}
 .sideBar .category {
     font-size: 0.875rem;
     font-weight: 700;
     padding-left: 1rem;
     margin-bottom: 0.313rem;
     height: 1.563rem;
+    cursor: pointer;
   }
   .sub-category-box {
     margin: 0rem 0.875rem 0.563rem;
     background-color: white;
     border-radius: 0.27rem;
     display: grid;
+    cursor: pointer;
   }
   .sub-category {
     list-style: none;
@@ -19,12 +25,12 @@
     font-size: 0.625rem;
   }
   .toggleClose {
-    text-align: right;
     width: 0.625rem;
+    margin-right: 0.5rem;
   }
   .toggleOpen {
-    text-align: right;
     width: 0.625rem;
+    margin-right: 0.5rem;
   }
   .category > div {
     display: grid;

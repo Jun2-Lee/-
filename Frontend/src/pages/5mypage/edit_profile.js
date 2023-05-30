@@ -1,7 +1,7 @@
 import './edit_profile.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import AddressSelect2 from '../../components/addressSelect2'
+import AddressSelect3 from '../../components/addressSelect3'
 import { useNavigate } from 'react-router-dom';
 
 function EditProfile() {
@@ -110,8 +110,7 @@ function EditProfile() {
 
             <div className='editAddress'>
                 <label htmlFor='form-label'>사는 동네</label>
-                {/*수정 필요*/}
-                <AddressSelect2 onSelectedGu={handleSelectedGu} onSelectedDong={handleSelectedDong} dong={data.dong} gu={data.gu} />
+                <AddressSelect3 onSelectedGu={handleSelectedGu} onSelectedDong={handleSelectedDong} dong={data.dong} gu={data.gu} />
             </div>
 
             <div className='edit_submit'>

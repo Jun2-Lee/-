@@ -4,7 +4,7 @@ import './index.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-export default function GroupBuyingList({startIndex, endIndex}) {
+export default function GroupBuyingList({startIndex, endIndex, category}) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -17,11 +17,29 @@ export default function GroupBuyingList({startIndex, endIndex}) {
         }));
       })
       .catch(error => console.log(error));
-  }, [])
+  }, [category])
+
+  const calculateTimeLeft = (deadline) => {
+    const targetDate = new Date(deadline);
+    const today = new Date();
+
+    const differenceInTime = targetDate.getTime() - today.getTime();
+    const differenceInHours = Math.ceil(differenceInTime / (1000 * 3600));
+
+    if (differenceInHours >= 24) {
+      const differenceInDays = Math.ceil(differenceInHours / 24);
+      return `${differenceInDays}일 후 마감`;
+    } else {
+      return `${differenceInHours}시간 후 마감`;
+    }
+  };
+
+  //카테고리
+  const filteredItems = category ? items.filter(item => item.category === category) : items;
 
   return (
     <div className='groupbuying_list'>
-      {items.slice(startIndex, endIndex).map((item, index) => (
+      {filteredItems.slice(startIndex, endIndex).map((item, index) => (
         <Link to={`/groupBuying/${item.id}`} style={{ textDecoration: 'none' }}>
           <div key={index} className='item'>
             <div className='item_image'>
@@ -31,7 +49,7 @@ export default function GroupBuyingList({startIndex, endIndex}) {
             <div className='item_date'>{item.postTime}</div>
             <div className='item_title'>{item.title}</div>
             <div className='item_area'>{item.dong}</div>
-            <div className='item_deadline'>0일 후 마감</div>
+            <div className='item_deadline'>{calculateTimeLeft(item.deadLine)}</div>
           </div>
         </Link>
       ))}
