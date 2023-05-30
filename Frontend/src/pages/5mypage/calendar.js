@@ -3,7 +3,7 @@ import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays, parse, parseISO } from 'date-fns';
 import { Icon } from '@iconify/react';
-import "./index.css";
+import "./calendar.css";
 import axios from "axios";
 
 import Diary from "../../components/diary";
