@@ -1,0 +1,13 @@
+#gu3, #dong3 {
+    width: 8.75rem;
+    height: 1.938rem;
+    border-radius: 0.313rem;
+    margin-right: 10px;
+    
+    appearance: none;
+    background: url("../../../public/assets/img/toggleIconOpen.png") no-repeat 10% 50%/0.938rem auto;
+    background-size: 1rem;
+    background-color: var(--sub_orange);
+    border: none;
+    padding-left: 2.188rem;
+  }
