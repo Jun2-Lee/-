@@ -1,5 +1,6 @@
 package bera31.Project.repository.page;
 
+import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,12 @@ public class DutchPayRepository {
     public void delete(DutchPay dutchPay) {
         em.remove(dutchPay);
         return;
+    }
+
+    public List<DutchPay> findByAuthor(Member user) {
+        return em.createQuery("select d from DutchPay d where d.user =: user",DutchPay.class)
+                .setParameter("user", user)
+                .getResultList();
     }
 
     public List<DutchPay> findAll() {

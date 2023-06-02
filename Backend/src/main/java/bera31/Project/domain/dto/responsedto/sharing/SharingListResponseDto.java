@@ -20,6 +20,7 @@ public class SharingListResponseDto {
     String dong;
     LocalDateTime deadLine;
     LocalDateTime postTime;
+    String product;
 
     public SharingListResponseDto(Sharing sharing) {
         this.id = sharing.getId();
@@ -29,5 +30,6 @@ public class SharingListResponseDto {
         this.dong = sharing.getDong();
         this.deadLine = sharing.getDeadLine();
         this.postTime = sharing.getPostTime();
+        this.product = sharing.getProduct();
     }
 }

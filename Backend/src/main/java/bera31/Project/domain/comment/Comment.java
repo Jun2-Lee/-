@@ -28,7 +28,7 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     Comment parent;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = CascadeType.REMOVE)
     List<Comment> children = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")

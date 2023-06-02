@@ -30,7 +30,7 @@ public abstract class Contents {
     @JoinColumn(name = "MEMBER_ID")
     protected Member user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     List<Comment> comments = new ArrayList<>();
 
     protected LocalDateTime postTime;
@@ -39,4 +39,7 @@ public abstract class Contents {
         comments.add(comment);
     }
 
+    public void removeComment(Comment comment){
+        comments.remove(comment);
+    }
 }

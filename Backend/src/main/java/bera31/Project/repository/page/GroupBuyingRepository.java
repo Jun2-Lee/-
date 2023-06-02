@@ -1,5 +1,6 @@
 package bera31.Project.repository.page;
 
+import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -32,6 +33,12 @@ public class GroupBuyingRepository {
         return em.createQuery("select g from GroupBuying g where g.id =:id", GroupBuying.class)
                 .setParameter("id", id)
                 .getSingleResult();
+    }
+
+    public List<GroupBuying> findByAuthor(Member user) {
+        return em.createQuery("select g from GroupBuying g where g.user =: user",GroupBuying.class)
+                .setParameter("user", user)
+                .getResultList();
     }
 
     public List<GroupBuying> findAllWithPaging(int page) {

@@ -1,6 +1,7 @@
 package bera31.Project.repository;
 
 import bera31.Project.domain.comment.Comment;
+import bera31.Project.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +27,11 @@ public class CommentRepository {
                 .getResultList();
     }
 
+    public List<Comment> findByAuthor(Member user){
+        return em.createQuery("select c from Comment c where c.user =: user", Comment.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
 
     public Comment findCommentById(Long id) {
         return em.createQuery("select c from Comment c where c.id =:id", Comment.class)

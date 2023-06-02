@@ -47,6 +47,17 @@ public class LikeRepository {
         return resultList.stream().findAny();
     }
 
+    public List<LikedGroupBuying> findLGByUserId(Member member){
+        return em.createQuery("select lg from LikedGroupBuying lg where lg.member =: member", LikedGroupBuying.class)
+                .setParameter("member", member)
+                .getResultList();
+    }
+    public List<LikedSharing> findLSByUserId(Member member){
+        return em.createQuery("select ls from LikedSharing ls where ls.member =: member", LikedSharing.class)
+                .setParameter("member", member)
+                .getResultList();
+    }
+
     public String delete(LikedGroupBuying likedGroupBuying){
         em.remove(likedGroupBuying);
         return "찜 취소";

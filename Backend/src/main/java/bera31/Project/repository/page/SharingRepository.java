@@ -1,5 +1,7 @@
 package bera31.Project.repository.page;
 
+import bera31.Project.domain.member.Member;
+import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.domain.page.sharing.Sharing;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -21,6 +23,12 @@ public class SharingRepository {
     public void delete(Sharing sharing) {
         em.remove(sharing);
         return;
+    }
+
+    public List<Sharing> findByAuthor(Member user) {
+        return em.createQuery("select s from Sharing s where s.user =: user", Sharing.class)
+                .setParameter("user", user)
+                .getResultList();
     }
 
     public List<Sharing> findAll() {

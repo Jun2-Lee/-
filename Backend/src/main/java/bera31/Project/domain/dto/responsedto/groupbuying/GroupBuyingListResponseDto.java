@@ -20,7 +20,7 @@ public class GroupBuyingListResponseDto {
     String image;
     String nickname;
     String title;
-    String category;
+    String product;
     String dong;
     LocalDateTime postTime;
     LocalDateTime deadLine;
@@ -34,7 +34,7 @@ public class GroupBuyingListResponseDto {
         this.image = groupBuying.getImage();
         this.nickname = author.getNickname();
         this.title = groupBuying.getTitle();
-        this.category = groupBuying.getCategory();
+        this.product = groupBuying.getProduct();
         this.dong = groupBuying.getDong();
         this.postTime = groupBuying.getPostTime();
         this.deadLine = groupBuying.getDeadLine();
