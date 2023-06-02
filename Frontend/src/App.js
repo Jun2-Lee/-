@@ -6,7 +6,6 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 //0(home)
 import Home from "./pages/home";
 import Layout from "./components/Layout";
-import Calendar from "./pages/calendar";
 //1
 import Login from "./pages/1auth/login";
 import InitialInfo from "./pages/1auth/initial_info";
@@ -32,6 +31,7 @@ import MyWriting from "./pages/5mypage/myWriting";
 import MyApplication from "./pages/5mypage/myApplication";
 import MyClipping from "./pages/5mypage/myClipping";
 import Chatting from "./pages/5mypage/chatting"
+import Calendar from "./pages/5mypage/calendar";
 
 //로그인 테스트
 import Login2 from "./pages/test";

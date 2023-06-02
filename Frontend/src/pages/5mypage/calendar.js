@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
-import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
+import { isSameMonth, isSameDay, addDays, parse, parseISO } from 'date-fns';
 import { Icon } from '@iconify/react';
-import "./index.css";
+import "./calendar.css";
+import axios from "axios";
+
 import Diary from "../../components/diary";
 
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
     return (
         <div className="header row">
-            
+             <div className='prevMonth'>   <Icon icon="bi:arrow-left-circle-fill" onClick={prevMonth} /></div>
+
             <div className="col col-start">
+               
                 <span className="text">
-                    <span className="text month">
+                    <span className="textMonth">
                         {format(currentMonth, 'yyyy')}년 
                     </span>
                     {format(currentMonth, 'M')}월
                 </span>
-            </div>
-            <div className="col col-end">
-                <Icon icon="bi:arrow-left-circle-fill" onClick={{prevMonth}} />
+                <div className="nextMonth">
                 <Icon icon="bi:arrow-right-circle-fill" onClick={nextMonth} />
             </div>
+            </div>
+            
            
         </div>
     );
@@ -48,6 +52,23 @@ const RenderDays = () => {
 
 
 const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
+    const [mySchedule, setMySchedule] = useState([]); //일정 보기
+    useEffect(() => {
+        const accessToken = localStorage.getItem("accessToken");
+        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+        const fetchData = async () => {
+          try {
+            const response = await axios.get("http://3.36.144.128:8080/api/mypage/schedule/");
+            
+            console.log(response.data)
+            setMySchedule(response.data)
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchData();
+      }, []);
+      
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
@@ -65,6 +86,10 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
         for (let i = 0; i < 7; i++) {
             formattedDate = format(day, 'd');
             const cloneDay = day;
+            const filteredSchedules = mySchedule.filter((schedule) =>
+            isSameDay(parseISO(schedule.targetDate), cloneDay)
+          );
+    
             days.push(
                 <div
                     className={`col cell ${
@@ -92,8 +117,17 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
                     >
                         {formattedDate}
                     </span>
-                </div>,
-            );
+                    {filteredSchedules.length > 0 && (
+            <div className="schedule-list_">
+              {filteredSchedules.map((schedule) => (
+                <div key={schedule.id} className="dailySchedule_">
+                  {schedule.title}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
             day = addDays(day, 1);
         }
         rows.push(

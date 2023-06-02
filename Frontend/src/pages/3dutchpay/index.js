@@ -106,19 +106,53 @@ function DutchPayPage() {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
+  //마감일 계산
+  const calculateTimeLeft = (deadline) => {
+    const targetDate = new Date(deadline);
+    const today = new Date();
+
+    const differenceInTime = targetDate.getTime() - today.getTime();
+    const differenceInHours = Math.ceil(differenceInTime / (1000 * 3600));
+
+    if (differenceInHours >= 24) {
+      const differenceInDays = Math.ceil(differenceInHours / 24);
+      return `${differenceInDays}일 후 마감`;
+    } else {
+      return `${differenceInHours}시간 후 마감`;
+    }
+  };
+
+  //카테고리
+  const [selectedCategory, setCategory] = useState('');
+  const filteredItems = selectedCategory ? data.filter(item => item.category === selectedCategory) : data;
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  }
+  
   return (
     <div className='dutch'>
       <div className="list_dutchpay">
-        <select className="category_dutchpay">
-          <option value="">카테고리</option>
-          <option value="족발·보쌈">족발·보쌈</option>
-          <option value="찜·탕·찌개">찜·탕·찌개</option>
-          <option value="돈까스·회·일식">돈까스·회·일식</option>
+        <select className="category_dutchpay" onChange={handleCategoryChange}>
+          <option value="">전체</option>
+          <option value="족발/보쌈">족발/보쌈</option>
+          <option value="찜/탕/찌개">찜/탕/찌개</option>
+          <option value="돈까스/회/일식">돈까스/회/일식</option>
           <option value="피자">피자</option>
-          <option value="고기·구이">고기·구이</option>
+          <option value="고기/구이">고기/구이</option>
+          <option value="야식">야식</option>
+          <option value="양식">양식</option>
+          <option value="치킨">치킨</option>
+          <option value="중식">중식</option>
+          <option value="아시안">아시안</option>
+          <option value="백반/죽/국수">백반/죽/국수</option>
+          <option value="도시락">도시락</option>
+          <option value="분식">분식</option>
+          <option value="카페/디저트">카페/디저트</option>
+          <option value="패스트푸드">패스트푸드</option>
+          <option value="채식">채식</option>
         </select>
 
-      {data.slice(startIndex, endIndex).map((item, index) => (
+      {filteredItems.slice(startIndex, endIndex).map((item, index) => (
         <div className="card_container">
           <div key ={index} className="card_dutchpay" onClick={() => {handleDetail(item.id); setId(item.id)}}>
             <div className="foodIcon">
@@ -127,14 +161,24 @@ function DutchPayPage() {
               {item.category === '돈까스/회/일식' && <img className="f1" src="assets/img/dutchpay/japanese_food.png"/>}
               {item.category === '피자' && <img className="f1" src="assets/img/dutchpay/pizza.png"/>}
               {item.category === '고기/구이' && <img className="f1" src="assets/img/dutchpay/meat.png"/>}
-              {/*여기에 카테고리 더 추가해야 됨! */}
+              {item.category === '야식' && <img className="f1" src="assets/img/dutchpay/midnight.png"/>}
+              {item.category === '양식' && <img className="f1" src="assets/img/dutchpay/western.png"/>}
+              {item.category === '치킨' && <img className="f1" src="assets/img/dutchpay/chicken.png"/>}
+              {item.category === '중식' && <img className="f1" src="assets/img/dutchpay/chinese.png"/>}
+              {item.category === '아시안' && <img className="f1" src="assets/img/dutchpay/asian.png"/>}
+              {item.category === '백반/죽/국수' && <img className="f1" src="assets/img/dutchpay/rice.png"/>}
+              {item.category === '도시락' && <img className="f1" src="assets/img/dutchpay/box_lunch.png"/>}
+              {item.category === '분식' && <img className="f1" src="assets/img/dutchpay/flour_based.png"/>}
+              {item.category === '카페/디저트' && <img className="f1" src="assets/img/dutchpay/dessert.png"/>}
+              {item.category === '패스트푸드' && <img className="f1" src="assets/img/dutchpay/fastfood.png"/>}
+              {item.category === '채식' && <img className="f1" src="assets/img/dutchpay/vegetable.png"/>}
               <label id="foodName">{item.category}</label>
             </div>
             <div className="card_sub1">
               <div className="title_dutchpay">{item.store}</div>
               <div className="card_sub2">
-                <div className="dong_dutchpay">{item.address}</div>
-                <div className="deadline_dutchpay">00:03:00</div>
+                <div className="dong_dutchpay">{item.currentMember}명 / {item.limitMember}명</div>
+                <div className="deadline_dutchpay">{calculateTimeLeft(item.deadLine)}</div>
               </div>
             </div>
           </div>
@@ -162,7 +206,10 @@ function DutchPayPage() {
         </div>
 
         <div className="detail_container"> 
-          <div className="storeName_dutchpay">{detail.store}</div>
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div className="storeName_dutchpay">{detail.store}</div>
+          </div>
+          
           <div className="detail_sub1">
             <div className="foodImg_dutchpay">
               {detail.category === '족발/보쌈' && <img className="f1" src="assets/img/dutchpay/pig_hocks.png"/>}
@@ -170,20 +217,33 @@ function DutchPayPage() {
               {detail.category === '돈까스/회/일식' && <img className="f1" src="assets/img/dutchpay/japanese_food.png"/>}
               {detail.category === '피자' && <img className="f1" src="assets/img/dutchpay/pizza.png"/>}
               {detail.category === '고기/구이' && <img className="f1" src="assets/img/dutchpay/meat.png"/>}
+              {detail.category === '야식' && <img className="f1" src="assets/img/dutchpay/midnight.png"/>}
+              {detail.category === '양식' && <img className="f1" src="assets/img/dutchpay/western.png"/>}
+              {detail.category === '치킨' && <img className="f1" src="assets/img/dutchpay/chicken.png"/>}
+              {detail.category === '중식' && <img className="f1" src="assets/img/dutchpay/chinese.png"/>}
+              {detail.category === '아시안' && <img className="f1" src="assets/img/dutchpay/asian.png"/>}
+              {detail.category === '백반/죽/국수' && <img className="f1" src="assets/img/dutchpay/rice.png"/>}
+              {detail.category === '도시락' && <img className="f1" src="assets/img/dutchpay/box_lunch.png"/>}
+              {detail.category === '분식' && <img className="f1" src="assets/img/dutchpay/flour_based.png"/>}
+              {detail.category === '카페/디저트' && <img className="f1" src="assets/img/dutchpay/dessert.png"/>}
+              {detail.category === '패스트푸드' && <img className="f1" src="assets/img/dutchpay/fastfood.png"/>}
+              {detail.category === '채식' && <img className="f1" src="assets/img/dutchpay/vegetable.png"/>}
             </div>
             <div className="detail_sub2">
               <div className="recruits_dutchpay">{detail.limitMember}명 모집</div>
               <div className="calcCost_dutchpay">{detail.deliveryCost}원/{detail.deliveryCost / detail.limitMember}원</div>
-              <div className="countdown_dutchpay">카운트 다운</div>
+              <div className="countdown_dutchpay">{calculateTimeLeft(detail.deadLine)}</div>
             </div>
           </div>
-          <div className="address_dutchpay">{detail.address}</div>
-          <div className="explanation_dutchpay">{detail.content}</div>
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div className="address_dutchpay">{detail.address}</div>
+          </div>
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div className="explanation_dutchpay">{detail.content}</div>
+          </div>
         </div>
         {isMine && 
         <div className="UserHelp_dutchpay">
-          <Link to="" id="modify_dutchpay">수정하기</Link>
-          <span id="userHelp_dutchpay"> | </span>
           <span onClick={handleDelete} id="delete_dutchpay">삭제하기</span>
         </div>}
         <div className="signupDutchpay">

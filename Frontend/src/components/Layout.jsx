@@ -9,6 +9,7 @@ import axios from 'axios'
 
 function Layout() {
   const [hover, setHover] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   
   const navigate = useNavigate();
   const handleLogout = (e) => {
@@ -17,14 +18,15 @@ function Layout() {
             {
             })
     .then(function(response) {
-      console.log(response)
-      navigate('/')
+      console.log(response);
+      navigate('/');
+      setIsLoggedIn(false);
     }) .catch(function(error) {
       console.log(error)
     })
   }
 
-  const isLoggedIn = localStorage.getItem('accessToken') !== null;
+  //const isLoggedIn = localStorage.getItem('accessToken') !== null;
   //console.log(isLoggedIn)
 
   return (

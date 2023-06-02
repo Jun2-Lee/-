@@ -1,7 +1,18 @@
-
+.dailySchedule_{
+  background-color: #FF8327;
+  margin-top: 18px;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 90px;
+  font-size: 10px;
+  height: 15px;
+  border-radius: 5px;
+  margin-left: -10px;
+  border-color: rgba(255, 131, 39, 0.75);
+}
 .calendar {
     font-family: Arial, sans-serif;
-    position: relative;
+   
     width: 1200px;
     height: 1200px;
   }
@@ -36,7 +47,25 @@
     margin-left: 0px;
   }
 
-  
+  .textMonth{
+    margin-left: 600px;
+  }
+
+  .prevMonth{
+    margin-left: 558px;
+    margin-bottom: 8px;
+   
+    position:absolute;
+  }
+
+  .nextMonth{
+    margin-left: 750px;
+    margin-top: -35px;
+   
+    position:absolute;
+  }
+
+
   .days {
     display: flex;
     flex-wrap: wrap;

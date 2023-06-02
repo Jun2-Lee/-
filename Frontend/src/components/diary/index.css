@@ -1,11 +1,19 @@
 .schedule{
     width: 310px;
     height: 500px;
-    background-color: var(--sub_orange);
+    background-color:var(--sub_orange);
     position: absolute;
     border-color: rgba(255, 131, 39, 0.75);
     border-radius: 5px;
     border-style: solid;
+  
+}
+
+.scheduleBox{
+    
+    width: 1000px;
+    height: 500px;
+    position: absolute;
 }
 
 .scheduleButton{
@@ -13,18 +21,26 @@
     
 }
 
+
+
 .writeSchedule{
     background-color:var(--sub_orange);
     border: 0;
-    margin-top: 440px;
-    margin-left: 125px;
+    bottom: 10px; /* 변경: margin-top 제거, bottom 속성 추가 */
+    left: 10px; 
+   margin-top: 250px;
     height: 20px;
-    
+    position:relative;
+  
+
+
 }
 .namePost{
     color: rgba(255, 131, 39, 0.75);
     font-size: 16px;
     font-weight: 700;
+    margin-top: 15px;
+    margin-left: 24px;
 }
 
 .titleInput{
@@ -40,15 +56,29 @@
     border-style:solid;
     border-color:rgba(255, 131, 39, 0.75);
     margin-left: 310px;
-    margin-top: -480px;
+    margin-top: -300px;
    
+
 }
 
+  
+.schedule-list {
+     
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  
+  
+
 .dailySchedule{
-    background-color: rgba(255, 131, 39, 0.75);
+    background-color: #FF8327;
     margin-top: 20px;
-    position:absolute;
-    width: 300px;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 261px;
+    border-radius: 5px;
+    margin-left: 22px;
+    border-color: rgba(255, 131, 39, 0.75);
 }
 
 .mySchedule{
@@ -59,7 +89,115 @@
     border-radius: 5px;
     border-style:solid;
     border-color:rgba(255, 131, 39, 0.75);
-    margin-left: 610px;
+    margin-left: 630px;
+    margin-top: -10px;
     
    
 }
+
+.TitleSchedule,.TimeSchedule,.MemoSchedule,.PlaceSchedule{
+    margin-left: 22px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.titleSchedule,.timeSchedule,.memoSchedule,.placeSchedule{
+   border-radius: 5px;
+   margin-top: 5px;
+   margin-left: 22px;
+   border:0;
+    outline:0;
+}
+
+.PostSchedule{
+    margin-top: -20px;
+}
+
+.titleSchedule,.timeSchedule{
+    width: 261px;
+    height: 31px;
+}
+
+.placeSchedule{
+    width: 261px;
+    height: 61px;
+}
+
+.memoSchedule{
+    width: 261px;
+    height: 93px;
+}
+
+.postScheduleButton{
+    background-color: #FF8327;
+    color: white;
+    border-radius: 5px;
+    width: 95px;
+    height: 31px;
+    border:0;
+    outline:0;
+    margin-top: 50px;
+    margin-left: 105px;
+}
+
+.showPost{
+    color: rgba(255, 131, 39, 0.75);
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 15px;
+    margin-left: 24px;
+}
+
+.showTitleSchedule,.showTimeSchedule,.showMemoSchedule,.showPlaceSchedule{
+    margin-left: 22px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.showTitle,.showTime,.showMemo,.showPlace{
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-left: 22px;
+    border:0;
+     outline:0;
+     background-color: white;
+     width: 261px;
+ }
+
+ .showTime,.showTitle{
+    height: 31px;
+ }
+ .showMemo{
+   height: 93px;
+ }
+
+ .showPlace{
+    height: 61px;
+ }
+ 
+ .deleteButton{
+    background-color: #FF8327;
+    color: white;
+    border-radius: 5px;
+    width: 95px;
+    height: 31px;
+    border:0;
+    outline:0;
+    margin-top: 50px;
+    margin-left: 190px;
+    position: absolute;
+ }
+
+ .modifyButton{
+    position: relative;
+    background-color: #FF8327;
+    color: white;
+    border-radius: 5px;
+    width: 95px;
+    height: 31px;
+    border:0;
+    outline:0;
+    margin-top: 50px;
+    margin-left: 40px;
+ }

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./myWriting.css";
 import "./myWritingList.css";
-import ShortcutBar from "../../components/shortcutBar";
+import CategoryBar2 from "../../components/categoryBar2";
 import Pagination from 'react-js-pagination';
 import axios from 'axios';
 
@@ -94,12 +94,27 @@ function MyWriting() {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
+  const calculateTimeLeft = (deadline) => {
+    const targetDate = new Date(deadline);
+    const today = new Date();
+
+    const differenceInTime = targetDate.getTime() - today.getTime();
+    const differenceInHours = Math.ceil(differenceInTime / (1000 * 3600));
+
+    if (differenceInHours >= 24) {
+      const differenceInDays = Math.ceil(differenceInHours / 24);
+      return `${differenceInDays}일 후 마감`;
+    } else {
+      return `${differenceInHours}시간 후 마감`;
+    }
+  };
+
   return (
     <>
       <div className="myWriting_title">내가 쓴 글</div>
       <div className="myWriting_body">
         <section className="shortcutBar">
-          <ShortcutBar />
+          <CategoryBar2 />
         </section>
 
         <section className="nav_myWriting">
@@ -124,7 +139,7 @@ function MyWriting() {
                     <div className='item_date'>{item.postTime}</div>
                     <div className='item_title'>{item.title}</div>
                     <div className='item_area'>{item.dong}</div>
-                    <div className='item_deadline'>0일 후 마감</div>
+                    <div className='item_deadline'>{calculateTimeLeft(item.deadLine)}</div>
                   </div>
                 </Link>
               </div>
@@ -151,7 +166,7 @@ function MyWriting() {
                     <div className='item_date'>{item.postTime}</div>
                     <div className='item_title'>{item.title}</div>
                     <div className='item_area'>{item.dong}</div>
-                    <div className='item_deadline'>0일 후 마감</div>
+                    <div className='item_deadline'>{calculateTimeLeft(item.deadLine)}</div>
                   </div>
                 </Link>
               </div>

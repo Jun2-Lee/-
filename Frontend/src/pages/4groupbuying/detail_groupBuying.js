@@ -1,149 +1,357 @@
-
 import './detail_groupBuying.css';
-import moment from 'moment';
 import 'moment/locale/ko';
 import React  from 'react';
-import {useState, useEffect} from 'react';
+import {useState, useEffect,useCallback} from 'react';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { useParams, useNavigate } from 'react-router-dom';
-import Chatroom from '../../components/chatting';
-
+import { useLocation } from "react-router-dom";
 
 function DetailGroupBuying() {
-    const [userId, setUserId] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [idComment, setIdComment] = useState([]);
+  const [getUserId, setUserId] = useState([]);
+  let [isValid, setIsValid] = useState(false);
+  const { postId } = useParams();
+  const { commentId } = useParams();
+  const ShowReplyInputBox = ({postId, commentId}) => {
+   
+    const [replyDto, setReplyDto] = useState({ reply: '' });
+    const onChange = (e) => {
+      const { value } = e.target;
+      setReplyDto({
+        ...replyDto,
+        reply: value
+      });
   
-
-    let [userName] = useState('');
-    let [comment, setComment] = useState(''); //사용자가 입력하고 있는 댓글
-    let [feedComments, setFeedComments] = useState([]); //댓글 리스트
-    let [isValid, setIsValid] = useState(false); 
-
-    let post = e => {
-        const copyFeedComments = [...feedComments];
-        copyFeedComments.push(comment); //copyFeedComments에 comment를 push
-        setFeedComments(copyFeedComments);//feedComment를 setFeedComment로 변경
-        setComment('');//댓글창 초기화
-
+    };
+    useEffect(() => {
+  const accessToken = localStorage.getItem("accessToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  axios
+    .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+    .then((response) => {
+      if (response.data.commentList) {
+        const contentsReply = response.data.commentList.map(comment => comment.childCommentResponseDto.map(reply => reply.content));
+        setReplyDto(prevState => ({ ...prevState, reply: contentsReply }));
+        console.log(data);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}, [postId]);
+useEffect(() => {
+  console.log(replyDto);
+}, [replyDto]);
+console.log(replyDto);
+const handlePostReply = () => {
     
-    };//유효성 검사를 통과하고 '등록' 클릭 시 발생하는 함수 post
-
-    const CommentList = props => {
-        return (
-            <div className='userCommentBox'>
-                <p className='userName'>{props.userName}</p>
-                <div className='userComment'>{props.userComment}</div>
-                
-                
-            </div>
-            
-        );
-    }
-
+  console.log(commentId);
+  const headers = {
+    'Content-Type': 'application/json'
+  };
   
 
+  const accessToken = localStorage.getItem("accessToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  axios
+    .post(`http://3.36.144.128:8080/api/groupBuying/${postId}/${commentId}/childComment`, { content: replyDto.reply }, { headers })
+    .then((response) => {
+      console.log(response);
+      alert("등록되었습니다");
+      setReplyDto({ reply: '' }); //답글 작성 후 입력창 초기화
+      // 답글 목록 업데이트
+      axios
+        .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+        .then((response) => {
+          setReplyDto(response.data.commentList);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+useEffect(() => {
+  console.log(replyDto);
+}, [replyDto]);
+
+console.log(replyDto);
+useEffect(() => {
+  console.log(commentId);
+}, [commentId]);
+return (
+  <div className='replyBox' >
+    <input
+      type="text"
+      className='inputReply'
+      placeholder='답글 작성하기...'
+     
+      onChange={onChange}
+    />
+  <div className='buttonReply' >
+      <button
+        type='submit'
+        className='submitReply'
+        onClick={(e) => {
+          e.preventDefault();
+          handlePostReply();
+        }}
+        disabled={!isValid}
+        style={{fontSize:'9px'}}
+      >
+        등록
+      </button>
+      
+    
+    </div>
+  </div>
+);
+};
+const [postTimeComment, setPostTimeComment] = useState('');
+        
+useEffect(() => {
+const accessToken = localStorage.getItem("accessToken");
+axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
+axios
+  .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+  .then((response) => {
+    const Id = response.data.commentList.map((id) => id.id);
+    setIdComment(Id);
+    setPostTimeComment(new Date(response.data.commentList.postTime).toLocaleDateString("ko-KR"));
+    setPostTimeComment(postTime);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}, [postId, commentId]);
+
+
+console.log(idComment);
+console.log(commentId)
+const Post = () => {
+const [commentDto, setCommentDto] = useState({comment:''});
+const{comment} = commentDto;
+
+const [showReplyInputBox, setShowReplyInputBox] = useState(null);
+const headers = {
+  'Content-Type': 'application/json'
+}
+
+const onChange = (e) => {
+  const { value, name } = e.target;
+  setCommentDto({
+    ...commentDto,
+    comment: value
+  });
+};
+
+const body = JSON.stringify({ content: comment })
+const handlePost = () => {
+  const accessToken = localStorage.getItem("accessToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  axios
+    .post(`http://3.36.144.128:8080/api/groupBuying/${postId}/comment`, { content: comment }, { headers })
+    .then((response) => {
+      console.log(response);
+      alert("등록되었습니다");
+      setCommentDto({ comment: '' }); // 댓글 작성 후 입력창 초기화
+
+                // 댓글 목록 업데이트
+                axios
+                .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+                .then((response) => {
+                  setComments(response.data.commentList);
+                  console.log(response.data);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
+       
+        
+      
+        useEffect(() => {
+          const accessToken = localStorage.getItem("accessToken");
+
+          axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+          axios
+            .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+            .then((response) => {
+              const contents = response.data.commentList.map((comment) => comment.content);
+            
+              setCommentDto(prevState => ({ ...prevState, comment: contents }));
+     
+              console.log(data);
+
+        
+
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }, [postId]);
+    
+        useEffect(() => {
+          console.log(commentDto);
+        }, [commentDto]);
+        console.log(commentDto);
+
+        return (
+          <div>
+               <div className='inputcomment'>
+  <div className="userCommentBox">
+    {data.commentList && data.commentList.map((comment) => (
+      <div key={comment.id} className="comment">
+             <p className="userProfile"><img src={comment.profileImage}/></p>
+        <p className="userName">{comment.author}님</p>
+        <p className="userComment">{comment.content}</p>
+
+        <button className="reply"style={{marginRight:"10px"}} onClick={() => setShowReplyInputBox(comment.id)}>
+        답글
+        </button>
+        {showReplyInputBox === comment.id && (
+          <ShowReplyInputBox postId={postId} commentId={comment.id} />
+        )}
+            {console.log(comment.id)}
+       <div className="userPostTime">{new Date(comment.postTime).toLocaleString("ko-KR").replace('T', ' ').slice(0, -3)}</div>
+
+        <div className="commentline"><img alt="commentLineImg" src="/assets/img/commentLine.png"/></div>
+
+
+        <div className="replyCommentBox"style={{marginTop:"-50px", marginLeft:"50px"}}>
+          {comment.childCommentResponseDto && comment.childCommentResponseDto.map((reply) => (
+            <div key={reply.id} className="replyReply"  style={{backgroundColor:"var(--sub_orange)"}}>
+              <p className="userProfileReply"><img src={reply.profileImage}/></p>
+              <p className="userNameReply">{reply.author}님</p>
+              <p className="userCommentReply">{reply.content}</p>
+              <button className="reply" style={{marginRight:"10px"}} onClick={() => setShowReplyInputBox(reply.id)}>
+                답글
+              </button>
+              {showReplyInputBox === reply.id && (
+                <ShowReplyInputBox postId={postId} commentId={comment.id} />
+              )}
+                 <div className="userPostTimeReply">{new Date(comment.postTime).toLocaleString("ko-KR").replace('T', ' ').slice(0, -3)}</div>
+              <div className="commentlineReply"><img alt="commentLineImg" src="/assets/img/commentLine.png"/>
+              </div>
+        </div>
+          ))}
+
+          </div>
+          </div>
+    ))}
+    </div>
+  </div>
+  <div className='inputCommentBox'>
+          <input
+              type="text"
+              className='inputComment'
+              placeholder='댓글 작성하기...'
+              onKeyUp={e => {
+                e.target.value.length > 0
+                  ? setIsValid(true)
+                  : setIsValid(false);
+              }}
+              
+              onChange={onChange}
+            />
+             <div className='buttonblank'>
+            <button
+              type='submit'
+              className='submitComment'
+              onClick={(e) => {
+                e.preventDefault();
+                handlePost();
+              }}
+              disabled={!isValid}
+            >
+              등록
+            </button>
+            
+          
+          </div>
+          </div>
+        </div>
+      );
+    
+  
+    }
+    
     //지수
     const [data, setData] = useState({});
-    const { postId } = useParams();
+   
     //yyyy-mm-dd로 변환
     const [postTime, setPostTime] = useState('');
     const [deadLine, setDeadline] = useState('');
-    const [isMine, setIsMine] = useState(false);
     
-    const accessToken = localStorage.getItem("accessToken")
+  
     useEffect(() => {
+      const accessToken = localStorage.getItem("accessToken")
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      
       axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
         .then(response => {
           setData(response.data);
-          setIsMine(response.data.checkMine);
+          console.log(data);
+          console.log(data.commentList);
+          setUserId(response.data.userId);
+          
+        
+         
+  
           //yyyy-mm-dd로 변환
           setPostTime(new Date(response.data.postTime).toLocaleDateString("ko-KR"));
           setDeadline(new Date(response.data.deadLine).toLocaleDateString("ko-KR"));
         })
         .catch(error => console.log(error));
-    }, [postId, accessToken]); //postId에 의존(postId에 따라 재실행)
-
+    }, [postId, getUserId]); //postId에 의존(postId에 따라 재실행)
     //게시물 삭제
     const navigate = useNavigate();
-    function handleDelete() {
-      axios.delete(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
-        .then(response => {
-          console.log(response)
-          alert("삭제되었습니다")
-          navigate("/groupBuying")
-        })
-        .catch(error => {
-          console.log(error)
-        });
+    function HandleDelete() {
+             
+      const accessToken = localStorage.getItem('accessToken');
+      useEffect(()=>{
+        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        axios.delete(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+          .then(response => {
+            console.log(response)
+            alert("삭제되었습니다")
+            navigate("/groupBuying")
+          })
+          .catch(error => {
+            console.log(error)
+          });
+      })
+     
     }
-
+    //태영
     function handleRevise() {
       navigate(`/reviseGroupBuying/${postId}`)
-    }
+    } 
 
-    const handleClipping = (e) => {
-      e.preventDefault();
-      axios.post(`http://3.36.144.128:8080/api/groupBuying/${postId}/like`)
-        .then(response => alert("찜 목록은 마이페이지에서 확인하실 수 있습니다."))
-        .then(error => console.log(error))
-    }
-
-    const handleApplication = (e) => {
-      e.preventDefault();
-      axios.post(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
-        .then(response => alert("신청 목록은 마이페이지에서 확인하실 수 있습니다."))
-        .then(error => console.log(error))
-    }
-
-    const handleFinishing = (e) => {
-      e.preventDefault();
-      axios.post(`http://3.36.144.128:8080/api/groupBuying/${postId}/finish`)
-        .then(response => alert("공동구매 신청을 마감하였습니다."))
-        .then(error => console.log(error))
-    }
-
-    //여기 위에까지 지수
-
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get('http://3.36.144.128:8080/api/groupBuying/');
-          const postIds = response.data.map((content) => content.id);
-        
-          const requests = postIds.map((postId) => 
-            axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)  
-          );
-          const responses = await Promise.all(requests);
-          const contents = responses.map((response) => response.data);
-          
-          setUserId(contents);
-          
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
-    }, []);
-    
-    useEffect(() => {
-      console.log(userId);
-
-     
-    }, [userId]);
-
+  
     return(
+      
       <div className="detail_purchase">
        
             <div className='detail_Title'>
               <p id = "detail_title">{data.title}</p>
             </div>
       
-            {isMine && <div className='userhelp_detail'>
+            <div className='userhelp_detail'>
               <button className = "modify" onClick={handleRevise}>수정하기</button>
-              <button className = "delete" onClick={handleDelete}>삭제하기</button>
-            </div>}
-
+              <button className = "delete" onClick={HandleDelete}>삭제하기</button>
+            </div>
         
             <div id = "nowTime">
               {postTime}
@@ -151,26 +359,19 @@ function DetailGroupBuying() {
 
             <div className = "profile_purchase">
               {data.nickName}
-
               <img className = "profileImg" src={data.profileImage} />
             </div>
-
-
           <div className='component_purchase'>
             <div className='detailImg'>
               <a href={data.link}>
                 <img src={data.postImage} />
               </a>
-
               <div>
                 이미지를 클릭하면 상품 링크로 이동할 수 있습니다
               </div>
-            </div>
-
-            
-
-            <div className='items_purchase'>
-
+              </div>
+          
+              <div className='items_purchase'>
                 <div className="category_purchase">
                 <label className="detailform">카테고리</label>
                 <div
@@ -183,15 +384,13 @@ function DetailGroupBuying() {
                     {data.product}
                   </div>
               </div>
-
               <div className="recruit_purchase">
                 <label className="detailform">모집인원</label>
                 <div
                   className="recruitPurchase">
-                    {data.currentMember} / {data.memberLimit} 명
+               {data.currentMember} / {data.limitMember} 명
                 </div>
               </div>
-
               <div className="cost_purchase">
                 <label className="detailform">공동구매 비용</label>
                 <div 
@@ -200,7 +399,6 @@ function DetailGroupBuying() {
                   </div>
                 <p id='won'>원</p>
               </div>
-
               <div className="deadline_purchase">
                 <label className="detailform">마감일</label>
                 <div 
@@ -209,9 +407,8 @@ function DetailGroupBuying() {
                   </div>
               </div>
               {data.dong} {data.gu}
-            </div>
+              </div>
         </div>
-
             <div className="ingredientStatus">
               <label id="IngredientStatus">설명(기타사항)</label>
               <br></br>
@@ -219,71 +416,28 @@ function DetailGroupBuying() {
               {data.content}
             </div>
             </div>
-
      
-
             <div className="LowerUserHelp">
-              {!isMine && <button className = "like" onClick={handleClipping}>찜</button>}
-              {!isMine && <button className = "application" onClick={handleApplication}>신청하기</button>}
-              <div className='sendMessage'>
-              {!isMine && userId && (
-                <Link to={{ pathname: `/chatting` }}>
-                  <button className='SendMessage' >쪽지</button>
-                </Link>
-              )}
-              {isMine && <button className = "finishTrading" onClick={handleFinishing}>거래 완료</button>}
-            </div>
+              <button className = "like">찜</button>
+              <button className = "application">신청하기</button>
+              <div className="sendMessage">
+              <Link to={ "/chatting"} state= {{getUserId:getUserId}} >
 
+              <button className="SendMessage" >
+                 쪽지
+                  </button>
+              </Link>
+           
+      
+      </div>
             </div>   
-
-
               <div className='purchase_comment'>
-                          {feedComments.map((commentArr,i) => {
-                          return (
-                        
-                            <CommentList
-                              userName = {userName}
-                              userComment = {commentArr}
-                              key = {i}
-                            
-                          />
-                        
-                      );
-                      
-                  })}
+                          
+                  <Post commentId={commentId}/>
                 
-            
-                  <div className='inputcomment'>
-                    <input 
-                        type="text"
-                        className='inputComment'
-                        placeholder='댓글 작성하기...'
-                        onChange = {e => {
-                            setComment(e.target.value);
-                        }}
-                        onKeyUp={e=> {
-                            e.target.value.length>0
-                                ? setIsValid(true)
-                                : setIsValid(false);
-                        }}
-                        value = {comment}
-                    ></input> </div>
-
-                     <div className='buttonblank'>
-                        <button 
-                          type='button'
-                          className='submitComment'
-                          onClick={post}
-                          disabled={isValid ? false : true}
-                    >
-                        등록
-                      </button>
-            </div>
             </div>
           </div>
-      
-
-        )
-}
-
-export default DetailGroupBuying;
+            )
+          }
+          export default DetailGroupBuying;
+          

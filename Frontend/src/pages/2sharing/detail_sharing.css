@@ -19,29 +19,33 @@
 .detail_sharing .userhelp_sharedetail {
   margin-top: 10px;
   display: flex;
+  justify-content: space-between;
   margin-bottom: 55px;
-  background-color: green;
 }
 
 .detail_sharing .postTime {
   text-align: end;
-  margin-right: 8px;
+  margin-right: 5px;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .detail_sharing .component_sharing{
   display: flex;
-  background-color: aqua;
+  justify-content: center;
 }
 
 .detail_sharing .items_sharing{
   flex-direction: column;
   margin-left: 50px;
-  background-color: pink;
- 
 }
 
 .categorySharing, .itemSharing ,.expirySharing, .DeadlineSharing{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--sub_orange);
+  font-weight: 700;
   border: none;
   width: 147px;
   height: 42px;
@@ -55,14 +59,15 @@
 
 }
 
-.detailform_sharing{
+.detail_sharing label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   width: 100px;
-  margin-top: 5px;
-  border-radius: 5px;
   font-size: 16px;
-  font-weight:bolder;
-  margin-left: -25px;
+  font-weight: 700;
+  height: 42px;
 
 }
 
@@ -77,14 +82,12 @@
   .sharedetailImg img {
     width: 312px;
     height: 312px;
-    margin-left: 120px;
   }
   
   .profile_sharing {
     color: var(--main_orange);
     font-weight: 700;
     font-size: 15px;
-    margin-right: 600px;
   }
 
   .profile_sharing img {
@@ -94,32 +97,28 @@
     margin-right: 14px;
   }
 
-  .Ingredient_sharing {
+  .ingredient_sharing {
+    height: 180px;
+    background-color: pink;
+  }
+
+  .Ingredient_sharing_content {
     background-color: var(--sub_orange);
     border: none;
     border-radius: 5px;
     height: 128px;
-    width: 597px;
-    display: flex;
-
+    width: 620px;
   }
 
-  #Ingredient_sharing{
-    margin-top: 50px;
+  #Ingredient_sharing {
     font-size: 16px;
-    font-weight:bolder;
-    margin-top: 30px;
-    display: flex;
-    margin-left: 130px;
-  }
-
-  .Ingredient_sharing{
-    margin-left: 120px;
-   
+    font-weight: 700;
   }
   
   .LowerUserHelp_sharing{
-    margin-top: 60px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .shareLike{
@@ -128,7 +127,6 @@
     background-color: var(--sub_orange);
     font-size: 16px;
     font-weight:bolder;
-    margin-left: 0px;
     width: 70px;
     height: 50px;
     border-radius: 5px;
@@ -141,8 +139,262 @@
     font-size: 16px;
     font-weight:bolder;
     color: white;
-    margin-left: 670px;
     width: 97px;
     height: 50px;
     border-radius: 5px;
+  }
+
+  .SendMessage{
+    border:0;
+    outline:0; 
+    background-color:  #FF8327;
+    font-size: 16px;
+    font-weight:bolder;
+    color: white;
+    width: 97px;
+    height: 50px;
+    border-radius: 5px;
+  
+  }
+  .reply{
+    background-color:var(--sub_orange);
+  }
+  
+  .userCommentBox{
+    margin-left: 11px;
+    margin-top: 100px;
+  
+  }
+  
+  .inputcomment{
+    justify-content: center;
+    
+    width: 770px;
+    height: 778px;
+    background-color:var(--sub_orange);
+    border-radius: 5px;
+    overflow: scroll;
+  }
+  
+  .inputCommentBox{
+    position: absolute;
+    background-color: var(--sub_orange);
+    width: 770px;
+    height: 130px;
+    border-radius: 5px;
+  }
+  
+  
+  
+  .inputComment{
+    width: 740px;
+    height: 102px;
+    border-radius: 5px;
+    justify-content:center;
+    margin-top:650px;
+    border:0;
+    outline:0;
+    border-top: 100px;
+    margin-left: 15px;
+    position:absolute;
+   margin-top:15px;
+  }
+  
+  .submitComment{
+    width: 63px;
+    height: 33px;
+    border-radius: 5px;
+    background-color: #FF8327;
+    border:0;
+    outline:0; 
+    font-size: 16px;
+    font-weight:bolder;
+    color: white;
+    margin-top: 70px;
+      margin-left: 680px;
+      position:relative;
+  }
+  
+  .submitReply{
+      width: 40px;
+      height: 20px;
+  
+      border-radius: 5px;
+      background-color: #FF8327;
+      border:0;
+      outline:0; 
+      font-weight:bolder;
+      color: white;
+      margin-top: -10px;
+      margin-left: 137px;
+      position:relative;
+  }
+  
+  .comment_cmp1{
+    position:relative;
+    background-color: var(--sub_orange);
+    margin-top: 10px;
+    width: 800px;
+    height: 534px;
+    
+  }
+  .comment_cmp{
+    width: 800px;
+    margin-left: 10px;
+  }
+  .sharing_comment{
+    width: 833px;
+    height: 100px;
+    margin-top: 100px;
+    border-radius: 5px;
+    margin-right: 400px;
+    position:absolute;
+    justify-content:center;
+    margin-left: 0px;
+  }
+
+  .replyCommentBox{
+    margin-top: -50px;
+  }
+
+  
+.commentlineReply img{
+  width: 790px;
+  margin-left: -100px;
+  margin-top: -220px;
+}
+  .reply{
+    border:0;
+    outline:0; 
+    font-size: 12px;
+    font-weight:bold;
+    background-color: white;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  
+  .commentBox{
+    height: 100px;
+    width: 800px;
+    border-radius: 5px;
+    background-color:  var(--sub_orange);
+    margin-top: -135px;
+  }
+  .reply_cmp{
+    display: flex;
+    margin-left: 27px;
+  }
+  .userReplyBox{
+    margin-left: 95px;
+    margin-top: -30px;
+  }
+  .inputreply{
+    display: flex;
+    margin-left: 95px;
+  }
+  .inputReply{
+    border-radius: 5px;
+    justify-content:center;
+    border:0;
+    outline:0;
+    position: relative;
+  }
+  
+  .submitReply{
+    border-radius: 5px;
+    background-color: #FF8327;
+    border:0;
+    outline:0; 
+    font-size: 16px;
+    font-weight:bolder;
+    color: white;
+  }
+  .purchase_reply{
+    margin-top: 135px;
+  }
+  
+  .userProfile img{
+    width: 35px;
+    height: 35px;
+    margin-bottom:-50px;
+  }
+  
+  .userName{
+    margin-top: -15px;
+    color:#FF8327;
+    margin-left: 42px;
+    font-size: 14px;
+  }
+  
+  .userComment{
+    font-size: 14px;
+  
+  }
+  
+  .userPostTime{
+    font-size: 10px;
+    margin-bottom: 100px;
+    margin-left: 595px;
+  
+  }
+  .comment{
+   margin-top: -100px;
+  
+  }
+  
+  .commentline img{
+    width: 740px;
+    margin-top: -220px;
+  }
+  
+  .userProfileReply img{
+    width: 35px;
+    height: 35px;
+    margin-top: -70px;
+  }
+  
+  .userNameReply{
+    margin-top: -70px;
+    color:#FF8327;
+    margin-left: 42px;
+    font-size: 14px;
+  }
+  
+  .userComment{
+    margin-left: 10px;
+  }
+  
+  .userCommentReply{
+    font-size: 14px;
+    
+  }
+  
+  .userPostTime{
+    font-size: 10px;
+    margin-bottom: 100px;
+    margin-left: 600px;
+  
+  }
+  .comment{
+   margin-top: -100px;
+  
+  }
+  
+  .commentline img{
+    width: 790px;
+    margin-top: -220px;
+    margin-left: -30px;
+  }
+  
+  
+  .commentlineReply img{
+    width: 790px;
+    margin-left: -100px;
+    margin-top: -220px;
+  }
+  
+  .userPostTimeReply{
+    font-size: 10px;
+    margin-bottom: 100px;
+    margin-left: 555px;
   }
