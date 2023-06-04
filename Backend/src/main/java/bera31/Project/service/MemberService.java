@@ -7,6 +7,8 @@ import bera31.Project.domain.member.Member;
 import bera31.Project.domain.member.Provider;
 import bera31.Project.domain.page.dutchpay.DutchPay;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
+import bera31.Project.domain.page.intersection.DutchPayIntersection;
+import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
 import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import bera31.Project.domain.page.intersection.LikedSharing;
 import bera31.Project.domain.page.sharing.Sharing;
@@ -18,6 +20,7 @@ import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.DutchPayRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
+import bera31.Project.repository.page.IntersectionRepository;
 import bera31.Project.repository.page.SharingRepository;
 import bera31.Project.utility.RedisUtility;
 import bera31.Project.utility.SecurityUtility;
@@ -43,6 +46,7 @@ public class MemberService {
     private final DutchPayRepository dutchPayRepository;
     private final CommentRepository commentRepository;
     private final LikeRepository likeRepository;
+    private final IntersectionRepository intersectionRepository;
     // 결합도를 낮출 수 있을까?
 
     private final S3Uploader s3Uploader;
@@ -77,25 +81,22 @@ public class MemberService {
         Member currentMember = loadCurrentMember();
 
         // 참조 무결성 보존을 위한 로직
-        for(LikedSharing likedSharing : likeRepository.findLSByUserId(currentMember)) {
+        for(LikedSharing likedSharing : likeRepository.findLSByUserId(currentMember))
             likeRepository.delete(likedSharing);
-        }
-
-        for(LikedGroupBuying likedGroupBuying : likeRepository.findLGByUserId(currentMember)) {
+        for(LikedGroupBuying likedGroupBuying : likeRepository.findLGByUserId(currentMember))
             likeRepository.delete(likedGroupBuying);
-        }
-        for(Comment comment : commentRepository.findByAuthor(currentMember)) {
+        for(GroupBuyingIntersection groupBuyingIntersection : intersectionRepository.findGbiByUserId(currentMember))
+            intersectionRepository.delete(groupBuyingIntersection);
+        for(DutchPayIntersection dutchPayIntersection : intersectionRepository.findDpiByUserId(currentMember))
+            intersectionRepository.delete(dutchPayIntersection);
+        for(Comment comment : commentRepository.findByAuthor(currentMember))
             commentRepository.delete(comment);
-        }
-        for(GroupBuying groupBuying : groupBuyingRepository.findByAuthor(currentMember)) {
+        for(GroupBuying groupBuying : groupBuyingRepository.findByAuthor(currentMember))
             groupBuyingRepository.delete(groupBuying);
-        }
-        for(Sharing sharing : sharingRepository.findByAuthor(currentMember)) {
+        for(Sharing sharing : sharingRepository.findByAuthor(currentMember))
             sharingRepository.delete(sharing);
-        }
-        for(DutchPay dutchPay : dutchPayRepository.findByAuthor(currentMember)) {
+        for(DutchPay dutchPay : dutchPayRepository.findByAuthor(currentMember))
             dutchPayRepository.delete(dutchPay);
-        }
 
         redisUtility.deleteValues(currentMember.getEmail());
         memberRepository.delete(currentMember);

@@ -26,10 +26,27 @@ public class IntersectionRepository {
         return dutchPayIntersection.getId();
     }
 
-    public List<GroupBuyingIntersection> findByUserId(Member participant) {
-        return em.createQuery("select gbi from GroupBuyingIntersection gbi join fetch gbi.groupBuying " +
+    public List<GroupBuyingIntersection> findGbiByUserId(Member participant) {
+        return em.createQuery("select gbi from GroupBuyingIntersection gbi " +
                         "where gbi.participant =: participant", GroupBuyingIntersection.class)
                 .setParameter("participant", participant)
                 .getResultList();
+    }
+
+    public List<DutchPayIntersection> findDpiByUserId(Member participant){
+        return em.createQuery("select dpi from DutchPayIntersection dpi " +
+                "where dpi.participant =: participant", DutchPayIntersection.class)
+                .setParameter("participant", participant)
+                .getResultList();
+    }
+
+    public String delete(GroupBuyingIntersection groupBuyingIntersection){
+        em.remove(groupBuyingIntersection);
+        return "정상적으로 삭제 되었습니다.";
+    }
+
+    public String delete(DutchPayIntersection dutchPayIntersection){
+        em.remove(dutchPayIntersection);
+        return "정상적으로 삭제 되었습니다.";
     }
 }
