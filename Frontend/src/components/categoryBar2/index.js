@@ -1,9 +1,18 @@
-import React,{useState} from 'react';
+import React,{ useState, useEffect } from 'react';
 import { Link , useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
 
 function CategoryBar2() {
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('refreshToken') === 'null' ? false : true);
+
+  useEffect(() => {
+    LoginCheck();
+  });
+
+  const LoginCheck = () => {
+    setIsLoggedIn(localStorage.getItem('refreshToken') === 'null' ? false : true);
+  };
   const [isOpen, setToggle] = useState([false, false, false, false, false, false, false, false, false]);
 
   const handleOpenToggle = (index) => {
@@ -25,7 +34,12 @@ function CategoryBar2() {
       .catch((err) => console.log(err)) 
     // 탈퇴 후 로그아웃 처리 
     axios.post('http://3.36.144.128:8080/api/auth/logout')
-      .then(() => navigate('/'))
+      .then(() => {
+        localStorage.setItem('accessToken', 'null');
+        localStorage.setItem('refreshToken', 'null');
+        LoginCheck();
+        navigate('/');
+      })
       .catch((err) => console.log(err))
   }
 

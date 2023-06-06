@@ -6,9 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 export default function Login() {
-  const REST_API_KEY = "e14465c8dab22961a692f89cdcfb540b";
-  const REDIRECT_URI = "http://localhost:3000/oauth/callback/kakao";
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const handleKeyPress = (e) => {
+    e.preventDefault();
+    if (e.key === 'Enter') {
+      handleLogin();
+    }
+  };
 
   const [loginInput, setLoginInput] = useState({
     email: '',
@@ -42,7 +45,7 @@ export default function Login() {
   }, []);
 
   const handleLogin = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     if (email === '') alert("아이디를 입력해주세요.")
     else if (password === '') alert("비밀번호를 입력해주세요.")
     else {
@@ -124,13 +127,13 @@ export default function Login() {
         <div className="GetID">
         <label id="getID">아이디</label>
         <br></br>
-        <input name='email' onChange={onChange} value={email} className="getID"/>
+        <input name='email' onChange={onChange} value={email} className="getID" onKeyPress={handleKeyPress}/>
         </div>
 
         <div className="GetPW">
           <label id="getPW">비밀번호</label>
           <br></br>
-          <input name='password' onChange={onChange} value={password} className="getPW" type="password"/>
+          <input name='password' onChange={onChange} value={password} className="getPW" type="password" onKeyPress={handleKeyPress}/>
         </div>
 
         <div className="UserLogin">

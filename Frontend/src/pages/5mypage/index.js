@@ -134,10 +134,12 @@ function MyPage() {
 
         <div className="mypage_container">
           <label id="mypage_label">쪽지함</label>
+          {/* mypage api의 response에 쪽지함이 없어서 일단 주석 처리
           <div className="participation_list"></div>
           <div className="participation_list"></div>
           <div className="participation_list"></div>
           <div className="participation_list"></div>
+          */}
         </div>
 
         <div className="mypage_container">
