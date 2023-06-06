@@ -59,7 +59,6 @@ const handlePostReply = () => {
     .post(`http://3.36.144.128:8080/api/groupBuying/${postId}/${commentId}/childComment`, { content: replyDto.reply }, { headers })
     .then((response) => {
       console.log(response);
-      alert("등록되었습니다");
       setReplyDto({ reply: '' }); //답글 작성 후 입력창 초기화
       // 답글 목록 업데이트
       axios
@@ -67,6 +66,7 @@ const handlePostReply = () => {
         .then((response) => {
           setReplyDto(response.data.commentList);
           console.log(response.data);
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -165,7 +165,6 @@ const handlePost = () => {
     .post(`http://3.36.144.128:8080/api/groupBuying/${postId}/comment`, { content: comment }, { headers })
     .then((response) => {
       console.log(response);
-      alert("등록되었습니다");
       setCommentDto({ comment: '' }); // 댓글 작성 후 입력창 초기화
 
                 // 댓글 목록 업데이트
@@ -173,6 +172,7 @@ const handlePost = () => {
                 .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
                 .then((response) => {
                   setComments(response.data.commentList);
+                  window.location.reload();
                   console.log(response.data);
                 })
                 .catch((error) => {
@@ -218,7 +218,7 @@ const handlePost = () => {
   <div className="userCommentBox">
     {data.commentList && data.commentList.map((comment) => (
       <div key={comment.id} className="comment">
-             <p className="userProfile"><img src={comment.profileImage}/></p>
+             <p className="userProfile"><img src={comment.profileImage} style={{borderRadius: '50%'}}/></p>
         <p className="userName">{comment.author}님</p>
         <p className="userComment">{comment.content}</p>
 
@@ -237,7 +237,7 @@ const handlePost = () => {
         <div className="replyCommentBox"style={{marginTop:"-50px", marginLeft:"50px"}}>
           {comment.childCommentResponseDto && comment.childCommentResponseDto.map((reply) => (
             <div key={reply.id} className="replyReply"  style={{backgroundColor:"var(--sub_orange)"}}>
-              <p className="userProfileReply"><img src={reply.profileImage}/></p>
+              <p className="userProfileReply"><img src={reply.profileImage} style={{borderRadius: '50%'}}/></p>
               <p className="userNameReply">{reply.author}님</p>
               <p className="userCommentReply">{reply.content}</p>
               <button className="reply" style={{marginRight:"10px"}} onClick={() => setShowReplyInputBox(reply.id)}>

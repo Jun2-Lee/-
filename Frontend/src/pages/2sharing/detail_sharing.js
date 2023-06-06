@@ -63,15 +63,13 @@ const handlePostReply = () => {
   axios
     .post(`http://3.36.144.128:8080/api/sharing/${postId}/${commentId}/childComment`, { content: replyDto_.reply }, { headers })
     .then((response) => {
-      console.log(response);
-      alert("등록되었습니다");
       setReplyDto_({ reply: '' }); //답글 작성 후 입력창 초기화
       // 답글 목록 업데이트
       axios
         .get(`http://3.36.144.128:8080/api/sharing/${postId}`)
         .then((response) => {
           setReplyDto_(response.data.commentResponseDtoList);
-          console.log(response.data);
+          window.location.replace("/")
         })
         .catch((error) => {
           console.log(error);
@@ -162,8 +160,6 @@ const handlePost = () => {
   axios
     .post(`http://3.36.144.128:8080/api/sharing/${postId}/comment`, { content: comment }, { headers })
     .then((response) => {
-      console.log(response);
-      alert("등록되었습니다");
       setCommentDto_({ comment: '' }); // 댓글 작성 후 입력창 초기화
 
                 // 댓글 목록 업데이트
@@ -171,7 +167,7 @@ const handlePost = () => {
                 .get(`http://3.36.144.128:8080/api/sharing/${postId}`)
                 .then((response) => {
                   setComments(response.data.commentResponseDtoList);
-                  console.log(response.data);
+                  window.location.reload();
                 })
                 .catch((error) => {
                   console.log(error);
@@ -212,7 +208,7 @@ const handlePost = () => {
   <div className="userCommentBox">
     {data.commentResponseDtoList && data.commentResponseDtoList.map((comment) => (
       <div key={comment.id} className="comment">
-             <p className="userProfile"><img src={comment.profileImage}/></p>
+             <p className="userProfile"><img src={comment.profileImage} style={{borderRadius: '50%'}}/></p>
         <p className="userName">{comment.author}님</p>
         <p className="userComment">{comment.content}</p>
 
@@ -228,7 +224,7 @@ const handlePost = () => {
         <div className="replyCommentBox"style={{marginTop:"-50px", marginLeft:"50px"}}>
           {comment.childCommentResponseDto && comment.childCommentResponseDto.map((reply) => (
             <div key={reply.id} className="reply"  style={{backgroundColor:"var(--sub_orange)"}}>
-              <p className="userProfileReply"><img src={reply.profileImage}/></p>
+              <p className="userProfileReply"><img src={reply.profileImage} style={{borderRadius: '50%'}}/></p>
               <p className="userNameReply">{reply.author}님</p>
               <p className="userCommentReply">{reply.content}</p>
               <button className="reply" style={{marginRight:"10px"}} onClick={() => setShowReplyInputBox(reply.id)}>
@@ -329,7 +325,7 @@ const handlePost = () => {
     e.preventDefault();
     axios.post(`http://3.36.144.128:8080/api/sharing/${postId}/like`)
       .then(response => {
-        console.log(response);
+
         alert("찜 목록은 마이페이지에서 확인하실 수 있습니다.");
       })
       .catch(error => console.log(error))
@@ -339,7 +335,7 @@ const handlePost = () => {
     e.preventDefault();
     axios.post(`http://3.36.144.128:8080/api/sharing/${postId}/finish`) 
       .then(response => {
-        console.log(response);
+
         alert(response.data);
         setFinished(true);
       })
