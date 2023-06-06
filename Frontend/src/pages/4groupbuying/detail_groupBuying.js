@@ -34,20 +34,14 @@ function DetailGroupBuying() {
       if (response.data.commentList) {
         const contentsReply = response.data.commentList.map(comment => comment.childCommentResponseDto.map(reply => reply.content));
         setReplyDto(prevState => ({ ...prevState, reply: contentsReply }));
-        console.log(data);
       }
     })
     .catch((error) => {
       console.log(error);
     });
 }, [postId]);
-useEffect(() => {
-  console.log(replyDto);
-}, [replyDto]);
-console.log(replyDto);
+
 const handlePostReply = () => {
-    
-  console.log(commentId);
   const headers = {
     'Content-Type': 'application/json'
   };
@@ -58,14 +52,12 @@ const handlePostReply = () => {
   axios
     .post(`http://3.36.144.128:8080/api/groupBuying/${postId}/${commentId}/childComment`, { content: replyDto.reply }, { headers })
     .then((response) => {
-      console.log(response);
       setReplyDto({ reply: '' }); //답글 작성 후 입력창 초기화
       // 답글 목록 업데이트
       axios
         .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
         .then((response) => {
           setReplyDto(response.data.commentList);
-          console.log(response.data);
           window.location.reload();
         })
         .catch((error) => {
@@ -77,14 +69,6 @@ const handlePostReply = () => {
     });
 };
 
-useEffect(() => {
-  console.log(replyDto);
-}, [replyDto]);
-
-console.log(replyDto);
-useEffect(() => {
-  console.log(commentId);
-}, [commentId]);
 return (
   <div className='replyBox' >
     <input
@@ -228,7 +212,6 @@ const handlePost = () => {
         {showReplyInputBox === comment.id && (
           <ShowReplyInputBox postId={postId} commentId={comment.id} />
         )}
-            {console.log(comment.id)}
        <div className="userPostTime">{new Date(comment.postTime).toLocaleString("ko-KR").replace('T', ' ').slice(0, -3)}</div>
 
         <div className="commentline"><img alt="commentLineImg" src="/assets/img/commentLine.png"/></div>
@@ -307,8 +290,6 @@ const handlePost = () => {
       axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
         .then(response => {
           setData(response.data);
-          console.log(data);
-          console.log(data.commentList);
           setUserId(response.data.userId);
           
         
@@ -329,7 +310,6 @@ const handlePost = () => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
         axios.delete(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
           .then(response => {
-            console.log(response)
             alert("삭제되었습니다")
             navigate("/groupBuying")
           })

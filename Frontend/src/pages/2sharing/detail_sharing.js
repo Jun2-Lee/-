@@ -39,20 +39,14 @@ function DetailSharing() {
       if (response.data.commentResponseDtoList) {
         const contentsReply = response.data.commentResponseDtoList.map(comment => comment.childCommentResponseDto.map(reply => reply.content));
         setReplyDto_(prevState => ({ ...prevState, reply: contentsReply }));
-        console.log(data);
       }
     })
     .catch((error) => {
       console.log(error);
     });
 }, [postId]);
-useEffect(() => {
-  console.log(replyDto_);
-}, [replyDto_]);
-console.log(replyDto_);
+
 const handlePostReply = () => {
-    
-  console.log(commentId);
   const headers = {
     'Content-Type': 'application/json'
   };
@@ -80,14 +74,6 @@ const handlePostReply = () => {
     });
 };
 
-useEffect(() => {
-  console.log(replyDto_);
-}, [replyDto_]);
-
-console.log(replyDto_);
-useEffect(() => {
-  console.log(commentId);
-}, [commentId]);
 return (
   <div className='replyBox' >
     <input
@@ -196,11 +182,6 @@ const handlePost = () => {
               console.log(error);
             });
         }, [postId]);
-    
-        useEffect(() => {
-          console.log(commentDto_);
-        }, [commentDto_]);
-        console.log(commentDto_);
 
         return (
           <div>
@@ -308,7 +289,6 @@ const handlePost = () => {
   function handleDelete() {
     axios.delete(`http://3.36.144.128:8080/api/sharing/${postId}`)
       .then(response => {
-        console.log(response)
         alert("삭제되었습니다")
         navigate("/sharing")
       })
