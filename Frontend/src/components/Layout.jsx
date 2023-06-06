@@ -1,20 +1,27 @@
 import React, {useState, useEffect} from "react";
 import "./Layout.css";
-import ProfileGoogle from "./userInfo";
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import axios from 'axios'
 
-//import { profileImage, nickName } from "./kakao_login/profile";
-
-
 function Layout() {
-  const [hover, setHover] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('refreshToken') === 'null' ? false : true);
   
   const navigate = useNavigate();
+  const [image, setImage] = useState('');
+  const [nickname, setNickname] = useState('');
 
   useEffect(() => {
     LoginCheck();
+    if (isLoggedIn) {
+      const accessToken = localStorage.getItem('accessToken');
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      axios.get('http://3.36.144.128:8080/api/mypage')
+        .then((res) => {
+          setImage(res.data.image);
+          setNickname(res.data.nickname);
+        })
+        .catch((err) => console.log(err))
+    }
   });
 
   const LoginCheck = () => {
@@ -41,10 +48,7 @@ function Layout() {
   
   return (
     <>
-      <header
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
+      <header>
         <Link to="/">
           <img className="header_logoImg" src="/assets/img/logo.png" />
         </Link>
@@ -64,19 +68,19 @@ function Layout() {
           </Link>
         </nav>
         
-        <div className="header_profile">
-          <img
-            className="header_profileImg"
-            /*src="/assets/img/default_profile.png"*/
-            
-          />
+        
 
           <div>
-                {isLoggedIn ? (
-                  <div>
-                  <Link className="profile_nickName" to="/editProfile">
-                  이름
+            {isLoggedIn ? (
+              <div className="header_profile">
+                <img
+                  className="header_profileImg"
+                  src={image}
+                />
+                <Link className="profile_nickName" to="/editProfile">
+                  {nickname} 님
                 </Link>
+ 
                 <Link className="profile_link" id="mypageLink" to="/myPage">
                   마이페이지
                 </Link>
@@ -86,25 +90,19 @@ function Layout() {
                 <Link className="profile_link" to="/chatting">
                   쪽지
                 </Link>
-                </div>
-                ) : (
-                  <p>로그인을 해주세요.</p>
-                )}
               </div>
-          {/*           
-          <Link className="profile_nickName" to="/editProfile">
-            이름
-          </Link>
-          <Link className="profile_link" id="mypageLink" to="/myPage">
-            마이페이지
-          </Link>
-          <Link className="profile_link" id="logoutLink" to='/' onClick={handleLogout}>
-            로그아웃
-          </Link>
-          <Link className="profile_link" to="/chatting">
-            쪽지
-          </Link>
-          */}
+            ) : 
+            (
+              <div className="header_profile_2">
+                <Link className="profile_link_2" id="signupLink" to="/signup">
+                  회원가입
+                </Link>
+                <Link className="profile_link_2" id="loginLink" to='/login' style={{marginLeft: '1rem'}}>
+                  로그인
+                </Link>
+              </div>
+            )}
+
         </div>
       </header>
 

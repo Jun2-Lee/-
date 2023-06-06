@@ -80,9 +80,31 @@ nav {
   text-decoration-line: none;
 }
 
-/**
-* hover
-*/
+.header_profile_2 {
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+  padding-bottom: 5px;
+}
+
+.profile_link_2 {
+  text-decoration-line: none;
+  color: black;
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 5px 15px;
+  background-color: #ff8327;
+  border-radius: 50px;
+  color: white;
+  text-align: center;
+}
+
+.profile_link_2:hover {
+  color: black;
+}
+
+/*
+hover
 .hover_area {
   width: 100%;
   height: auto;
@@ -111,6 +133,7 @@ nav {
   font-size: 0.75rem;
   font-weight: 700;
 }
+*/
 
 /**
 * main
