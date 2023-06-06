@@ -150,7 +150,7 @@ function PostgroupBuying() {
       form.append('groupBuyingRequestDto', new Blob([JSON.stringify(groupBuyingRequestDto)], {
         type: "application/json"
       }))
-
+      
       axios.post("http://3.36.144.128:8080/api/groupBuying", form, {headers})
         .then(function(response) {
           console.log(response)
@@ -162,6 +162,8 @@ function PostgroupBuying() {
       }
     }
 
+    console.log(groupBuyingRequestDto)
+
     return (
       <div className='groupBuying_container'>
         <form onSubmit={onSubmit}>
@@ -172,7 +174,7 @@ function PostgroupBuying() {
 
           <div className="food_classification">
             <label className="form-label">카테고리</label>
-            <select className='category' value={selectedFood} onChange={handleFoodChange}>
+            <select className='category' value={selectedFood} onChange={handleFoodChange} style={{width: '13.75rem'}}>
               <option value="">분류</option>
               {Object.keys(foodTypes).map((foodtype) => (
                   <option key={foodtype} value={foodtype}>{foodtype}</option>
@@ -189,12 +191,7 @@ function PostgroupBuying() {
                 ))}
               </select>
           </div>
-          
-          {/*여기 수정*/}
-          <div className="ProductName">
-            <label className="form-label">상품명</label>
-            <input name='product' onChange={onChange} value={product} className="productName"/>
-          </div>
+        
 
           <div className="Link">
             <label className="form-label">링크</label>

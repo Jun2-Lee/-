@@ -66,6 +66,7 @@ export default function RevisegroupBuying() {
   //음식 카테고리 선택
   const foodTypes = ['채소', '과일/견과/쌀', '수산물/건해산', '정육/계란', '우유/유제품', '면류/통조림', '샐러드/간편식', '양념', '생수/음료', '간식/과자/떡']
   const [selectedFood, setSelectedFood] = useState('');
+  const [selectedDetail, setSelectedDetail] = useState('');
 
   function handleFoodChange(e) {
     setSelectedFood(e.target.value);
@@ -78,6 +79,18 @@ export default function RevisegroupBuying() {
       category: e.target.value
     });
   }
+
+  function handleDetailChange(e) {
+    setSelectedDetail(e.target.value);
+    setGroupBuyingRequestDto({
+      ...groupBuyingRequestDto,
+      product: e.target.value
+    })
+    setData({
+      ...data,
+      product: e.target.value
+    });
+}
 
   //이미지 업로드
   const [postImage, setPostImage] = useState("");
@@ -199,9 +212,14 @@ export default function RevisegroupBuying() {
             </select>
           </div>
 
-          <div className="ProductName">
-            <label className="form-label">상품명</label>
-            <input name='product' onChange={onChange} value={data.product} className="productName" />
+          <div className='product_container'>
+            <label className="form-label">품목</label>
+            <select className='category2' value={data.product} onChange={handleDetailChange} disabled={!selectedFood}>
+                <option value="">상세 분류</option>
+                {foodTypes[selectedFood] && foodTypes[selectedFood].map((foodtype2) => (
+                    <option key={foodtype2} value={foodtype2}>{foodtype2}</option>
+                ))}
+            </select>
           </div>
 
           <div className="Link">

@@ -306,7 +306,7 @@ const handlePost = () => {
     function HandleDelete() {
              
       const accessToken = localStorage.getItem('accessToken');
-      useEffect(()=>{
+
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
         axios.delete(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
           .then(response => {
@@ -316,7 +316,7 @@ const handlePost = () => {
           .catch(error => {
             console.log(error)
           });
-      })
+
      
     }
     //태영
