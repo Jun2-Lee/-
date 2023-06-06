@@ -392,8 +392,6 @@ const handlePost = () => {
 
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <div className="ingredient_sharing">
-          <label id='Ingredient_sharing'>재료상태</label>
-          <br></br>
           <div className="Ingredient_sharing_content">
             {data.content}
         </div>
@@ -408,19 +406,14 @@ const handlePost = () => {
       </div>
 
 
-      <div className='sharing_comment'>
-                          
-                          <Post commentId={commentId}/>
-                        
-                    </div>
+      <div className='sharing_comment' style={{display: 'flex', justifyContent: 'center', margin: '30px'}}>
+        <div>
+          <Post commentId={commentId}/>
+        </div>
+      </div>
+
+      </div>
     </div>
-
-  
-
-</div>
-
-    
-  
   )
 }
 
