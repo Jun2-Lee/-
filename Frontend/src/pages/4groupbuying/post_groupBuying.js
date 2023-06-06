@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import ImgUpload from '../../components/imgUpload'
@@ -6,6 +6,13 @@ import AddressSelect from '../../components/addressSelect'
 import './post_groupBuying.css'
 
 function PostgroupBuying() {
+  useEffect(() => {
+    if (localStorage.getItem('refreshToken') === 'null') {
+      alert("로그인을 해주세요.");
+      navigate('/login');
+    }
+  })
+  
   // 음식 카테고리, 상세분류 선택
   const foodTypes = {
     '채소': ['고구마/감자/당근', '시금치/쌈채소/나물','브로콜리/파프리카/양배추', '양파/대파/마늘/배추', '오이/호박/고추', '콩나물/버섯'],

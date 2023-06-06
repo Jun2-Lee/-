@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
 
@@ -16,12 +16,17 @@ function CategoryBar2() {
     setToggle(copy);
   };
 
+  const navigate = useNavigate();
   const handleWithdraw = () => {
     const accessToken = localStorage.getItem('accessToken');
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     axios.delete('http://3.36.144.128:8080/api/mypage/withdraw')
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err)) //자동 로그아웃 되는지? 아니면 내가 처리?
+      .then((res) => alert(res.data))
+      .catch((err) => console.log(err)) 
+    // 탈퇴 후 로그아웃 처리 
+    axios.post('http://3.36.144.128:8080/api/auth/logout')
+      .then(() => navigate('/'))
+      .catch((err) => console.log(err))
   }
 
   return (

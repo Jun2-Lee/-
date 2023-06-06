@@ -35,7 +35,7 @@ function SharingList({startIndex, endIndex, category}) {
   };
 
   //카테고리
-  const filteredItems = category ? items.filter(item => item.category === category) : items;
+  const filteredItems = category ? items.filter(item => item.product === category) : items;
 
   return (
     <div className='sharing_list'>

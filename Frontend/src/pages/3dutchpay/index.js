@@ -132,25 +132,33 @@ function DutchPayPage() {
   return (
     <div className='dutch'>
       <div className="list_dutchpay">
-        <select className="category_dutchpay" onChange={handleCategoryChange}>
-          <option value="">전체</option>
-          <option value="족발/보쌈">족발/보쌈</option>
-          <option value="찜/탕/찌개">찜/탕/찌개</option>
-          <option value="돈까스/회/일식">돈까스/회/일식</option>
-          <option value="피자">피자</option>
-          <option value="고기/구이">고기/구이</option>
-          <option value="야식">야식</option>
-          <option value="양식">양식</option>
-          <option value="치킨">치킨</option>
-          <option value="중식">중식</option>
-          <option value="아시안">아시안</option>
-          <option value="백반/죽/국수">백반/죽/국수</option>
-          <option value="도시락">도시락</option>
-          <option value="분식">분식</option>
-          <option value="카페/디저트">카페/디저트</option>
-          <option value="패스트푸드">패스트푸드</option>
-          <option value="채식">채식</option>
-        </select>
+        <div style={{display: 'flex'}}>
+          <select className="category_dutchpay" onChange={handleCategoryChange}>
+            <option value="">전체</option>
+            <option value="족발/보쌈">족발/보쌈</option>
+            <option value="찜/탕/찌개">찜/탕/찌개</option>
+            <option value="돈까스/회/일식">돈까스/회/일식</option>
+            <option value="피자">피자</option>
+            <option value="고기/구이">고기/구이</option>
+            <option value="야식">야식</option>
+            <option value="양식">양식</option>
+            <option value="치킨">치킨</option>
+            <option value="중식">중식</option>
+            <option value="아시안">아시안</option>
+            <option value="백반/죽/국수">백반/죽/국수</option>
+            <option value="도시락">도시락</option>
+            <option value="분식">분식</option>
+            <option value="카페/디저트">카페/디저트</option>
+            <option value="패스트푸드">패스트푸드</option>
+            <option value="채식">채식</option>
+          </select>
+
+          <div className='writingIcon_dutchpay' style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', width: '100%', marginRight: '30px', marginTop: '20px'}}>
+              <Link to="/postDutchpay">
+                <img src='assets/img/writingIcon.png' className='writingIcon' />
+              </Link>
+          </div>
+        </div>
 
       {filteredItems.slice(startIndex, endIndex).map((item, index) => (
         <div className="card_container">

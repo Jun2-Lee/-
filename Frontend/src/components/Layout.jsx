@@ -9,9 +9,18 @@ import axios from 'axios'
 
 function Layout() {
   const [hover, setHover] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('refreshToken') === 'null' ? false : true);
   
   const navigate = useNavigate();
+
+  useEffect(() => {
+    LoginCheck();
+  });
+
+  const LoginCheck = () => {
+    setIsLoggedIn(localStorage.getItem('refreshToken') === 'null' ? false : true);
+  };
+
   const handleLogout = (e) => {
     e.preventDefault();
     axios.post("http://3.36.144.128:8080/api/auth/logout", 
@@ -19,16 +28,17 @@ function Layout() {
             })
     .then(function(response) {
       console.log(response);
+      
+      localStorage.setItem('accessToken', 'null');
+      localStorage.setItem('refreshToken', 'null');
+
+      LoginCheck();
       navigate('/');
-      setIsLoggedIn(false);
     }) .catch(function(error) {
       console.log(error)
     })
   }
-
-  //const isLoggedIn = localStorage.getItem('accessToken') !== null;
-  //console.log(isLoggedIn)
-
+  
   return (
     <>
       <header
@@ -63,12 +73,25 @@ function Layout() {
 
           <div>
                 {isLoggedIn ? (
-                  <p>로그인 되었습니다.</p>
+                  <div>
+                  <Link className="profile_nickName" to="/editProfile">
+                  이름
+                </Link>
+                <Link className="profile_link" id="mypageLink" to="/myPage">
+                  마이페이지
+                </Link>
+                <Link className="profile_link" id="logoutLink" to='/' onClick={handleLogout}>
+                  로그아웃
+                </Link>
+                <Link className="profile_link" to="/chatting">
+                  쪽지
+                </Link>
+                </div>
                 ) : (
                   <p>로그인을 해주세요.</p>
                 )}
               </div>
-
+          {/*           
           <Link className="profile_nickName" to="/editProfile">
             이름
           </Link>
@@ -81,41 +104,9 @@ function Layout() {
           <Link className="profile_link" to="/chatting">
             쪽지
           </Link>
+          */}
         </div>
-
-
       </header>
-
-      <div
-        className="hover_area"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        {hover === true && (
-          <div className="hover">
-            <article className="hover_sharing">
-              <Link to="/postSharing">나눔글 등록</Link>
-              <Link to="/sharing">나눔글 목록</Link>
-            </article>
-            <article className="hover_dutchPay">
-              <Link to="/postDutchpay">n빵 등록</Link>
-              <Link to="/dutchPay">n빵 목록</Link>
-            </article>
-            <article className="hover_groupBuying">
-              <Link to="/postGroupBuying">공동구매 등록</Link>
-              <Link to="/groupBuying">공동구매 목록</Link>
-            </article>
-            <article className="hover_myPage">
-              <Link to="/myPage">내 프로필</Link>
-              <Link to="/chatting">쪽지함</Link>
-              <Link to="/myWriting">내가 쓴 글</Link>
-              <Link to="/myApplication">신청 목록</Link>
-              <Link to="/myClipping">찜 목록</Link>
-              <Link to="/calendar">캘린더</Link>
-            </article>
-          </div>
-        )}
-      </div>
 
       <main>
         <Outlet />

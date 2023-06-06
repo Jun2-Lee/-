@@ -25,8 +25,6 @@ export default function Login() {
 
   const { email, password } = loginInput; // 비구조화 할당을 통해 값 추출
 
-  const navigate = useNavigate();
-
   const getLoginInfo = () => {
     const accessToken = localStorage.getItem('accessToken')
     const refreshToken = localStorage.getItem('refreshToken')
@@ -102,6 +100,7 @@ export default function Login() {
 
   const JWT_EXPIRY_TIME = 0.1 * 3600 * 1000; // 만료 시간 (15분 밀리 초로 표현)
 
+  const navigate = useNavigate();
   function onLoginSuccess(response) {
       const { accessToken, refreshToken } = response.data;
       // local storage에 at, rt 저장
@@ -116,6 +115,7 @@ export default function Login() {
       // accessToken 만료하기 1분 전에 로그인 연장
       setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
       console.log(response)
+      navigate('/')
   }
 
   return (

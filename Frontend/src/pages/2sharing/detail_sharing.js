@@ -288,8 +288,13 @@ const handlePost = () => {
 
   const accessToken = localStorage.getItem('accessToken')
   useEffect(() => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-    axios.get(`http://3.36.144.128:8080/api/sharing/${postId}`)
+    if (localStorage.getItem('refreshToken') === 'null') {
+      alert("로그인을 해주세요.");
+      navigate('/login');
+    }
+    else {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+      axios.get(`http://3.36.144.128:8080/api/sharing/${postId}`)
       .then(response => {
         setData(response.data);
         //yyyy-mm-dd로 변환
@@ -299,6 +304,7 @@ const handlePost = () => {
         if (response.data.checkMine) setIsMine(true);
       })
       .catch(error => console.log(error));
+    }
   }, [postId]); //postId에 의존(postId에 따라 재실행)
 
   //게시물 삭제

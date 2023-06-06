@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './post_dutchpay.css'
 import axios from 'axios'
@@ -6,6 +6,13 @@ import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-modal';
 
 function PostDutchpay() {
+  useEffect(() => {
+    if (localStorage.getItem('refreshToken') === 'null') {
+      alert("로그인을 해주세요.");
+      navigate('/login');
+    }
+  })
+  
   const [isOpen, setIsOpen] = useState(false);
   const [addressInput, setAddressInput] = useState('')
 

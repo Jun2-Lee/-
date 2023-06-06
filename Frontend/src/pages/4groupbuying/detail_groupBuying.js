@@ -116,11 +116,15 @@ return (
 const [postTimeComment, setPostTimeComment] = useState('');
         
 useEffect(() => {
-const accessToken = localStorage.getItem("accessToken");
+  if (localStorage.getItem('refreshToken') === 'null') {
+    alert("로그인을 해주세요.");
+    navigate('/login');
+  }
+  else {
+    const accessToken = localStorage.getItem("accessToken");
 axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-axios
-  .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
   .then((response) => {
     const Id = response.data.commentList.map((id) => id.id);
     setIdComment(Id);
@@ -130,6 +134,7 @@ axios
   .catch((error) => {
     console.log(error);
   });
+  }
 }, [postId, commentId]);
 
 
