@@ -140,13 +140,13 @@ export default function Login() {
         <div className="UserHelp">
           <a href="/signup" id="userSignUp">회원가입</a>
         </div>
-
+        {/*
         <div className="kakaoLogin">
           <Link to = {KAKAO_AUTH_URL}>
             <button className="KAKAO">카카오로 로그인</button>
           </Link>
         </div>
-
+        */}
       </form>
     </div>
   );
