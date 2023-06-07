@@ -1,13 +1,11 @@
 
 import './login.css';
 import {React, useState, useEffect} from 'react';
-import {BrowserRouter as Router, Route,  Link} from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 export default function Login() {
   const handleKeyPress = (e) => {
-    e.preventDefault();
     if (e.key === 'Enter') {
       handleLogin();
     }
@@ -20,10 +18,11 @@ export default function Login() {
 
   const onChange = (e) => {
     const { value, name } = e.target;
+  
     setLoginInput({
       ...loginInput,
       [name]: value
-    })
+    });
   };
 
   const { email, password } = loginInput; // 비구조화 할당을 통해 값 추출

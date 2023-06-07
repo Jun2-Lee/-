@@ -383,7 +383,7 @@ const handlePost = () => {
                 <div className="deadline_sharing">
                   <label htmlFor="detailform_sharing">사는 동네</label>
                   <div className="DeadlineSharing">
-                    {data.dong} {data.gu}
+                    {data.gu} {data.dong} 
                   </div>
                 </div>
                   

@@ -366,7 +366,7 @@ const handlePost = () => {
           <div className='userhelp_sharedetail'>
           <div className = "profile_sharing">
             <img className = "profileImg"  src={data.profileImage}/>
-            {data.nickname} 님
+            {data.nickName} 님
           </div>
             <div>
               {isMine && <button className = "modify_sharing" onClick={handleRevise}>수정하기</button>}
@@ -426,7 +426,7 @@ const handlePost = () => {
                     <div className="deadline_sharing">
                       <label htmlFor="detailform_sharing">사는 동네</label>
                       <div className="DeadlineSharing">
-                        {data.dong} {data.gu}
+                        {data.gu} {data.dong} 
                       </div>
                     </div>
                       

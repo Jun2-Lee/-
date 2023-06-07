@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import './index.css';
 import axios from 'axios'
@@ -31,48 +31,51 @@ function DutchPayPage() {
   }, [])
 
   function handleDetail(id) {
-    //setShowDiv(!showDiv)
-    setShowDiv(true);
-    setId(id)
-    const accessToken = localStorage.getItem('accessToken')
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-    axios.get(`http://3.36.144.128:8080/api/dutchPay/${id}`)
-        .then(response => {
-          setDetail(response.data)
-          setIsMine(response.data.checkMine)
-          const container = document.getElementById('map');
-          const options = {
-            center: new kakao.maps.LatLng(35.229609, 129.089358),
-            level: 3
-          };
-          // 지도를 생성
-          const map = new kakao.maps.Map(container, options);
-          // 주소-좌표 변환 객체 생성
-          const geocoder = new kakao.maps.services.Geocoder();
-          // 주소로 좌표를 검색
-          geocoder.addressSearch(response.data.address, function (result, status) {
+    if (localStorage.getItem('refreshToken') !== 'null') {
+      //setShowDiv(!showDiv)
+      setShowDiv(true);
+      setId(id)
+      const accessToken = localStorage.getItem('accessToken')
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+      axios.get(`http://3.36.144.128:8080/api/dutchPay/${id}`)
+          .then(response => {
+            setDetail(response.data)
+            setIsMine(response.data.checkMine)
+            const container = document.getElementById('map');
+            const options = {
+              center: new kakao.maps.LatLng(35.229609, 129.089358),
+              level: 3
+            };
+            // 지도를 생성
+            const map = new kakao.maps.Map(container, options);
+            // 주소-좌표 변환 객체 생성
+            const geocoder = new kakao.maps.services.Geocoder();
+            // 주소로 좌표를 검색
+            geocoder.addressSearch(response.data.address, function (result, status) {
 
-            // 정상적으로 검색이 완료됐으면 
-            if (status === kakao.maps.services.Status.OK) {
-              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-              // 결과값으로 받은 위치를 마커로 표시
-              var marker = new kakao.maps.Marker({
-                map: map,
-                position: coords
-              });
-        
-              // 인포윈도우로 장소에 대한 설명 표시
-              var infowindow = new kakao.maps.InfoWindow({
-                content: `<div style="width:150px; text-align:center; padding:6px 0;">${response.data.store}</div>`
-              });
-              infowindow.open(map, marker);
-        
-              // 지도의 중심을 결과값으로 받은 위치로 이동시키기
-              map.setCenter(coords);
-            }
+              // 정상적으로 검색이 완료됐으면 
+              if (status === kakao.maps.services.Status.OK) {
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                // 결과값으로 받은 위치를 마커로 표시
+                var marker = new kakao.maps.Marker({
+                  map: map,
+                  position: coords
+                });
+          
+                // 인포윈도우로 장소에 대한 설명 표시
+                var infowindow = new kakao.maps.InfoWindow({
+                  content: `<div style="width:150px; text-align:center; padding:6px 0;">${response.data.store}</div>`
+                });
+                infowindow.open(map, marker);
+          
+                // 지도의 중심을 결과값으로 받은 위치로 이동시키기
+                map.setCenter(coords);
+              }
+            })
           })
-        })
-        .catch(error => console.log(error));      
+          .catch(error => console.log(error));    
+    }  
+    else alert("로그인을 해주세요.")
   }
 
   const handleApplication = (e) => {
