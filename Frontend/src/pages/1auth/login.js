@@ -41,13 +41,14 @@ export default function Login() {
     const { accessToken, refreshToken } = getLoginInfo();
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
-  }, []);
+  });
 
-  const handleLogin = (e) => {
-    //e.preventDefault();
+  const handleLogin = () => {
     if (email === '') alert("아이디를 입력해주세요.")
     else if (password === '') alert("비밀번호를 입력해주세요.")
     else {
+      const accessToken = localStorage.getItem('accessToken');
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       axios.post("http://3.36.144.128:8080/api/auth/signin", 
               {
                 email: email,
