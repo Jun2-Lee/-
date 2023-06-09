@@ -10,6 +10,10 @@ function Layout() {
   const [image, setImage] = useState('');
   const [nickname, setNickname] = useState('');
 
+  const LoginCheck = () => {
+    setIsLoggedIn(localStorage.getItem('refreshToken') === 'null' ? false : true);
+  };
+
   useEffect(() => {
     LoginCheck();
     if (isLoggedIn) {
@@ -17,25 +21,21 @@ function Layout() {
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       axios.get('http://3.36.144.128:8080/api/mypage')
         .then((res) => {
+          console.log(res.data)
           setImage(res.data.image);
           setNickname(res.data.nickname);
         })
         .catch((err) => console.log(err))
     }
-  });
-
-  const LoginCheck = () => {
-    setIsLoggedIn(localStorage.getItem('refreshToken') === 'null' ? false : true);
-  };
+  }, [isLoggedIn]); // isLoggedIn 변경 시에만 useEffect 내부 코드 실행
 
   const handleLogout = (e) => {
     e.preventDefault();
-    axios.post("http://3.36.144.128:8080/api/auth/logout", 
-            {
-            })
+    const accessToken = localStorage.getItem('accessToken');
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    axios.post("http://3.36.144.128:8080/api/auth/logout")
     .then(function(response) {
       console.log(response);
-      
       localStorage.setItem('accessToken', 'null');
       localStorage.setItem('refreshToken', 'null');
 

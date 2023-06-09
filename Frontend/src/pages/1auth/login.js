@@ -41,7 +41,7 @@ export default function Login() {
     const { accessToken, refreshToken } = getLoginInfo();
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
-  });
+  }, [localStorage.getItem('accessToken'), localStorage.getItem('refreshToken')]);
 
   const handleLogin = () => {
     if (email === '') alert("아이디를 입력해주세요.")
@@ -57,7 +57,10 @@ export default function Login() {
               {
                 headers: { 'Content-Type': 'application/json'}
               })
-      .then(onLoginSuccess) 
+      .then((res) => {
+        console.log(res)
+        onLoginSuccess();
+      }) 
       .catch(function(error) {
         if (error.response.status == 400 || error.response.status == 404) alert("아이디 또는 비밀번호를 확인해주세요.")
         console.log(error) 
@@ -85,7 +88,10 @@ export default function Login() {
             {
               headers: { 'Content-Type': 'application/json'}
             })
-    .then(onLoginSuccess) 
+    .then((res) => {
+      console.log(res)
+      onLoginSuccess()
+    }) 
     .catch(function(error) {
       console.log(error)
     })
