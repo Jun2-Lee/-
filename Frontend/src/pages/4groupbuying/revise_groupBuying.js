@@ -20,6 +20,9 @@ export default function RevisegroupBuying() {
     const [content, setContent] = useState('')
     const [image, setImage] = useState('')
 
+    const [selectedFood, setSelectedFood] = useState('');
+    const [selectedDetail, setSelectedDetail] = useState('');
+
     const [groupBuyingRequestDto, setGroupBuyingRequestDto] = useState({});
 
   useEffect(() => {
@@ -40,6 +43,9 @@ export default function RevisegroupBuying() {
         setContent(data.content)
         setPostImage(null)
         setImage(data.postImage)
+
+        setSelectedFood(data.category)
+        setSelectedDetail(data.product)
 
         setGroupBuyingRequestDto({
           title: data.title,
@@ -77,8 +83,6 @@ export default function RevisegroupBuying() {
     '생수/음료': ['생수/탄산수', '음료', '커피', '차'],
     '간식/과자/떡': ['과자/쿠키', '초콜릿/젤리/캔디', '떡/한과', '아이스크림']
   };  
-  const [selectedFood, setSelectedFood] = useState('');
-  const [selectedDetail, setSelectedDetail] = useState('');
 
   function handleFoodChange(e) {
     setSelectedFood(e.target.value);
@@ -218,7 +222,7 @@ export default function RevisegroupBuying() {
           <div className="product_classification">
             <label className="form-label">카테고리</label>
             <select name={category} onChange={handleFoodChange} value={data.category} className="category">
-              {foodTypes.map((foodType) => (
+              {Object.keys(foodTypes).map((foodType) => (
               <option value={foodType} key={foodType}> {foodType} </option>
               ))}
             </select>
