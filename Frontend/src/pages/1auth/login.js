@@ -57,9 +57,9 @@ export default function Login() {
               {
                 headers: { 'Content-Type': 'application/json'}
               })
-      .then((res) => {
-        console.log(res)
-        onLoginSuccess();
+      .then((response) => {
+        console.log(response)
+        onLoginSuccess(response);
       }) 
       .catch(function(error) {
         if (error.response.status == 400 || error.response.status == 404) alert("아이디 또는 비밀번호를 확인해주세요.")
@@ -88,9 +88,9 @@ export default function Login() {
             {
               headers: { 'Content-Type': 'application/json'}
             })
-    .then((res) => {
-      console.log(res)
-      onLoginSuccess()
+    .then((response) => {
+      console.log(response)
+      onLoginSuccess(response)
     }) 
     .catch(function(error) {
       console.log(error)
