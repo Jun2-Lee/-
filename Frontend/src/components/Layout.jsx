@@ -27,7 +27,7 @@ function Layout() {
         })
         .catch((err) => console.log(err))
     }
-  }, [isLoggedIn]); // isLoggedIn 변경 시에만 useEffect 내부 코드 실행
+  }); // isLoggedIn 변경 시에만 useEffect 내부 코드 실행
 
   const handleLogout = (e) => {
     e.preventDefault();

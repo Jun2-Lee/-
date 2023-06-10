@@ -41,7 +41,7 @@ export default function Login() {
     const { accessToken, refreshToken } = getLoginInfo();
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
-  }, [localStorage.getItem('accessToken'), localStorage.getItem('refreshToken')]);
+  });
 
   const handleLogin = () => {
     if (email === '') alert("아이디를 입력해주세요.")
