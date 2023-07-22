@@ -1,13 +1,14 @@
 import './detail_groupBuying.css';
 import 'moment/locale/ko';
 import React  from 'react';
-import {useState, useEffect,useCallback} from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 
 function DetailGroupBuying() {
+  
   const [comments, setComments] = useState([]);
   const [idComment, setIdComment] = useState([]);
   const [getUserId, setUserId] = useState([]);
@@ -34,20 +35,14 @@ function DetailGroupBuying() {
       if (response.data.commentList) {
         const contentsReply = response.data.commentList.map(comment => comment.childCommentResponseDto.map(reply => reply.content));
         setReplyDto(prevState => ({ ...prevState, reply: contentsReply }));
-        console.log(data);
       }
     })
     .catch((error) => {
       console.log(error);
     });
 }, [postId]);
-useEffect(() => {
-  console.log(replyDto);
-}, [replyDto]);
-console.log(replyDto);
+
 const handlePostReply = () => {
-    
-  console.log(commentId);
   const headers = {
     'Content-Type': 'application/json'
   };
@@ -58,15 +53,13 @@ const handlePostReply = () => {
   axios
     .post(`http://3.36.144.128:8080/api/groupBuying/${postId}/${commentId}/childComment`, { content: replyDto.reply }, { headers })
     .then((response) => {
-      console.log(response);
-      alert("등록되었습니다");
       setReplyDto({ reply: '' }); //답글 작성 후 입력창 초기화
       // 답글 목록 업데이트
       axios
         .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
         .then((response) => {
           setReplyDto(response.data.commentList);
-          console.log(response.data);
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -77,14 +70,6 @@ const handlePostReply = () => {
     });
 };
 
-useEffect(() => {
-  console.log(replyDto);
-}, [replyDto]);
-
-console.log(replyDto);
-useEffect(() => {
-  console.log(commentId);
-}, [commentId]);
 return (
   <div className='replyBox' >
     <input
@@ -116,11 +101,15 @@ return (
 const [postTimeComment, setPostTimeComment] = useState('');
         
 useEffect(() => {
-const accessToken = localStorage.getItem("accessToken");
+  if (localStorage.getItem('refreshToken') === 'null') {
+    alert("로그인을 해주세요.");
+    navigate('/login');
+  }
+  else {
+    const accessToken = localStorage.getItem("accessToken");
 axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-axios
-  .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
   .then((response) => {
     const Id = response.data.commentList.map((id) => id.id);
     setIdComment(Id);
@@ -130,6 +119,7 @@ axios
   .catch((error) => {
     console.log(error);
   });
+  }
 }, [postId, commentId]);
 
 
@@ -160,7 +150,6 @@ const handlePost = () => {
     .post(`http://3.36.144.128:8080/api/groupBuying/${postId}/comment`, { content: comment }, { headers })
     .then((response) => {
       console.log(response);
-      alert("등록되었습니다");
       setCommentDto({ comment: '' }); // 댓글 작성 후 입력창 초기화
 
                 // 댓글 목록 업데이트
@@ -168,6 +157,7 @@ const handlePost = () => {
                 .get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
                 .then((response) => {
                   setComments(response.data.commentList);
+                  window.location.reload();
                   console.log(response.data);
                 })
                 .catch((error) => {
@@ -213,7 +203,7 @@ const handlePost = () => {
   <div className="userCommentBox">
     {data.commentList && data.commentList.map((comment) => (
       <div key={comment.id} className="comment">
-             <p className="userProfile"><img src={comment.profileImage}/></p>
+             <p className="userProfile"><img src={comment.profileImage} style={{borderRadius: '50%'}}/></p>
         <p className="userName">{comment.author}님</p>
         <p className="userComment">{comment.content}</p>
 
@@ -223,7 +213,6 @@ const handlePost = () => {
         {showReplyInputBox === comment.id && (
           <ShowReplyInputBox postId={postId} commentId={comment.id} />
         )}
-            {console.log(comment.id)}
        <div className="userPostTime">{new Date(comment.postTime).toLocaleString("ko-KR").replace('T', ' ').slice(0, -3)}</div>
 
         <div className="commentline"><img alt="commentLineImg" src="/assets/img/commentLine.png"/></div>
@@ -232,7 +221,7 @@ const handlePost = () => {
         <div className="replyCommentBox"style={{marginTop:"-50px", marginLeft:"50px"}}>
           {comment.childCommentResponseDto && comment.childCommentResponseDto.map((reply) => (
             <div key={reply.id} className="replyReply"  style={{backgroundColor:"var(--sub_orange)"}}>
-              <p className="userProfileReply"><img src={reply.profileImage}/></p>
+              <p className="userProfileReply"><img src={reply.profileImage} style={{borderRadius: '50%'}}/></p>
               <p className="userNameReply">{reply.author}님</p>
               <p className="userCommentReply">{reply.content}</p>
               <button className="reply" style={{marginRight:"10px"}} onClick={() => setShowReplyInputBox(reply.id)}>
@@ -293,151 +282,182 @@ const handlePost = () => {
     //yyyy-mm-dd로 변환
     const [postTime, setPostTime] = useState('');
     const [deadLine, setDeadline] = useState('');
+    const [isMine, setIsMine] = useState(false);
+    const [isFinish, setFinished] = useState(false);
     
-  
     useEffect(() => {
-      const accessToken = localStorage.getItem("accessToken")
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      
-      axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
-        .then(response => {
-          setData(response.data);
-          console.log(data);
-          console.log(data.commentList);
-          setUserId(response.data.userId);
-          
+      if (localStorage.getItem('refreshToken') === 'null') {
+        alert("로그인을 해주세요.");
+        navigate('/login');
+      }
+      else {
+        const accessToken = localStorage.getItem("accessToken")
+        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
         
-         
-  
-          //yyyy-mm-dd로 변환
-          setPostTime(new Date(response.data.postTime).toLocaleDateString("ko-KR"));
-          setDeadline(new Date(response.data.deadLine).toLocaleDateString("ko-KR"));
-        })
-        .catch(error => console.log(error));
+        axios.get(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+          .then(response => {
+            setData(response.data);
+            setUserId(response.data.userId);
+            //yyyy-mm-dd로 변환
+            setPostTime(new Date(response.data.postTime).toLocaleDateString("ko-KR"));
+            setDeadline(new Date(response.data.deadLine).toLocaleDateString("ko-KR"));
+            if (response.data.checkMine) setIsMine(true);
+          })
+          .catch(error => console.log(error));
+        }
     }, [postId, getUserId]); //postId에 의존(postId에 따라 재실행)
+
     //게시물 삭제
     const navigate = useNavigate();
-    function HandleDelete() {
-             
-      const accessToken = localStorage.getItem('accessToken');
-      useEffect(()=>{
-        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    function handleDelete() {
         axios.delete(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
-          .then(response => {
-            console.log(response)
+          .then(() => {
             alert("삭제되었습니다")
             navigate("/groupBuying")
           })
           .catch(error => {
             console.log(error)
           });
-      })
+
      
     }
-    //태영
+
     function handleRevise() {
       navigate(`/reviseGroupBuying/${postId}`)
     } 
 
-  
+    const handleClipping = (e) => {
+      e.preventDefault();
+      axios.post(`http://3.36.144.128:8080/api/groupBuying/${postId}/like`)
+        .then(response => {
+          alert("찜 목록은 마이페이지에서 확인하실 수 있습니다.");
+        })
+        .catch(error => console.log(error))
+    }
+
+    const handleApplication = (e) => {
+      e.preventDefault();
+      axios.post(`http://3.36.144.128:8080/api/groupBuying/${postId}`)
+        .then(() => {
+          alert("신청 목록은 마이페이지에서 확인하실 수 있습니다.");
+        })
+        .catch(error => console.log(error))
+    }
+
+    const handleFinishing = (e) => {
+      e.preventDefault();
+      axios.post(`http://3.36.144.128:8080/api/groupBuying/${postId}/finish`) 
+        .then(response => {
+          alert(response.data);
+          setFinished(true);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+
     return(
-      
-      <div className="detail_purchase">
-       
-            <div className='detail_Title'>
-              <p id = "detail_title">{data.title}</p>
-            </div>
-      
-            <div className='userhelp_detail'>
-              <button className = "modify" onClick={handleRevise}>수정하기</button>
-              <button className = "delete" onClick={HandleDelete}>삭제하기</button>
-            </div>
-        
-            <div id = "nowTime">
-              {postTime}
-            </div>
+      <div className='detail_sharing'>
+        <div>
+          <div className='sharingdetail_title'>
+            {data.title}
+          </div>
 
-            <div className = "profile_purchase">
-              {data.nickName}
-              <img className = "profileImg" src={data.profileImage} />
-            </div>
-          <div className='component_purchase'>
-            <div className='detailImg'>
-              <a href={data.link}>
-                <img src={data.postImage} />
-              </a>
-              <div>
-                이미지를 클릭하면 상품 링크로 이동할 수 있습니다
-              </div>
-              </div>
-          
-              <div className='items_purchase'>
-                <div className="category_purchase">
-                <label className="detailform">카테고리</label>
-                <div
-                  className="categoryPurchase">{data.category}</div>
-              </div>
-              <div className="item_purchase">
-                <label className="detailform">품목</label>
-                <div
-                  className="itemPurchase">
-                    {data.product}
-                  </div>
-              </div>
-              <div className="recruit_purchase">
-                <label className="detailform">모집인원</label>
-                <div
-                  className="recruitPurchase">
-               {data.currentMember} / {data.limitMember} 명
-                </div>
-              </div>
-              <div className="cost_purchase">
-                <label className="detailform">공동구매 비용</label>
-                <div 
-                  className="costPurchase">
-                    {data.price}
-                  </div>
-                <p id='won'>원</p>
-              </div>
-              <div className="deadline_purchase">
-                <label className="detailform">마감일</label>
-                <div 
-                  className="DeadlinePurchase">
-                    {deadLine}
-                  </div>
-              </div>
-              {data.dong} {data.gu}
-              </div>
-        </div>
-            <div className="ingredientStatus">
-              <label id="IngredientStatus">설명(기타사항)</label>
-              <br></br>
-            <div className="IngredientStatus">
-              {data.content}
-            </div>
-            </div>
-     
-            <div className="LowerUserHelp">
-              <button className = "like">찜</button>
-              <button className = "application">신청하기</button>
-              <div className="sendMessage">
-              <Link to={ "/chatting"} state= {{getUserId:getUserId}} >
-
-              <button className="SendMessage" >
-                 쪽지
-                  </button>
-              </Link>
-           
-      
-      </div>
-            </div>   
-              <div className='purchase_comment'>
-                          
-                  <Post commentId={commentId}/>
-                
+          <div className='userhelp_sharedetail'>
+          <div className = "profile_sharing">
+            <img className = "profileImg"  src={data.profileImage}/>
+            {data.nickName} 님
+          </div>
+            <div>
+              {isMine && <button className = "modify_sharing" onClick={handleRevise}>수정하기</button>}
+              {isMine && <button className = "delete_sharing" onClick={handleDelete}>삭제하기</button>}
+              <div className="postTime"> {postTime} </div>
             </div>
           </div>
-            )
-          }
-          export default DetailGroupBuying;
+
+          <div className='component_sharing'>
+            <div>
+              <Link to={data.link}>
+                <div className='sharedetailImg'>
+                  <img src={data.postImage} />
+                </div>
+              </Link>
+              <div style={{marginTop: '5px', backgroundColor: 'var(--main_orange)', color: 'white', padding: '0px 3px'}}>이미지를 클릭하면 상품 링크로 이동할 수 있습니다</div>
+            </div>
+
+            <div className='items_sharing'>
+              <div className="category_sharing">
+              <label htmlFor="detailform_sharing">카테고리</label>
+              <div className="categorySharing">
+                  {data.category}
+              </div>
+            </div>
+
+              <div className="item_sharing">
+                <label htmlFor="detailform_sharing">품목</label>
+                <div
+                  className="itemSharing">{data.product}</div>
+              </div>
+
+              <div className="expiry_sharing">
+                <label htmlFor="detailform_sharing">모집인원</label>
+                <div
+                  className="expirySharing">
+                    {data.currentMember} / {data.memberLimit} 명
+                  </div>
+              </div>
+
+              <div className="expiry_sharing">
+                <label htmlFor="detailform_sharing">공동구매 비용</label>
+                <div
+                  className="expirySharing">
+                    {data.price}원
+                  </div>
+              </div>
+
+                    <div className="deadline_sharing">
+                      <label htmlFor="detailform_sharing">마감일</label>
+                      <div 
+                        className="DeadlineSharing">
+                          {deadLine}
+                        </div>
+                    </div>
+
+                    <div className="deadline_sharing">
+                      <label htmlFor="detailform_sharing">사는 동네</label>
+                      <div className="DeadlineSharing">
+                        {data.gu} {data.dong} 
+                      </div>
+                    </div>
+                      
+                  </div>
+              </div>
+
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div className="ingredient_sharing">
+              <div className="Ingredient_sharing_content">
+                {data.content}
+            </div>
+          </div>
+          
+          </div>
+
+          <div className="LowerUserHelp_sharing">
+            {!isMine && <button className="shareLike" onClick={handleClipping}>찜</button>}
+            {!isMine && <button className="finishSharing" style={{marginRight: '25px'}} onClick={handleApplication}>신청하기</button>}
+            {!isMine && <button className="shareApplication">쪽지</button>}
+            {isMine && <button className="finishSharing" onClick={handleFinishing}>거래 완료</button>}
+          </div>  
+
+          <div className='purchase_comment' style={{display: 'flex', justifyContent: 'center', margin: '30px'}}>       
+              <div>
+                <Post commentId={commentId}/>
+              </div>
+          </div>
+        </div> 
+      </div>
+    )
+}
+
+export default DetailGroupBuying;
           

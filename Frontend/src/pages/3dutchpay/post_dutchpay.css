@@ -10,7 +10,14 @@
   text-align: right;
 }
 
-.postDutchpay_container .storeName, .category, .deliveryAddress, .detailedAddress, .totalDelivery, .numPeople, .deadlineDelivery, .explanation {
+.postDutchpay_container .storeName, 
+.postDutchpay_container .category, 
+.postDutchpay_container .deliveryAddress, 
+.postDutchpay_container .detailedAddress, 
+.postDutchpay_container .totalDelivery, 
+.postDutchpay_container .numPeople, 
+.postDutchpay_container .deadlineDelivery, 
+.explanation {
   background-color: var(--sub_orange);
   border: none;
   border-radius: 5px;

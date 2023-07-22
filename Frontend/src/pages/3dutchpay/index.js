@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import './index.css';
 import axios from 'axios'
@@ -31,48 +31,51 @@ function DutchPayPage() {
   }, [])
 
   function handleDetail(id) {
-    //setShowDiv(!showDiv)
-    setShowDiv(true);
-    setId(id)
-    const accessToken = localStorage.getItem('accessToken')
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-    axios.get(`http://3.36.144.128:8080/api/dutchPay/${id}`)
-        .then(response => {
-          setDetail(response.data)
-          setIsMine(response.data.checkMine)
-          const container = document.getElementById('map');
-          const options = {
-            center: new kakao.maps.LatLng(35.229609, 129.089358),
-            level: 3
-          };
-          // 지도를 생성
-          const map = new kakao.maps.Map(container, options);
-          // 주소-좌표 변환 객체 생성
-          const geocoder = new kakao.maps.services.Geocoder();
-          // 주소로 좌표를 검색
-          geocoder.addressSearch(response.data.address, function (result, status) {
+    if (localStorage.getItem('refreshToken') !== 'null') {
+      //setShowDiv(!showDiv)
+      setShowDiv(true);
+      setId(id)
+      const accessToken = localStorage.getItem('accessToken')
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+      axios.get(`http://3.36.144.128:8080/api/dutchPay/${id}`)
+          .then(response => {
+            setDetail(response.data)
+            setIsMine(response.data.checkMine)
+            const container = document.getElementById('map');
+            const options = {
+              center: new kakao.maps.LatLng(35.229609, 129.089358),
+              level: 3
+            };
+            // 지도를 생성
+            const map = new kakao.maps.Map(container, options);
+            // 주소-좌표 변환 객체 생성
+            const geocoder = new kakao.maps.services.Geocoder();
+            // 주소로 좌표를 검색
+            geocoder.addressSearch(response.data.address, function (result, status) {
 
-            // 정상적으로 검색이 완료됐으면 
-            if (status === kakao.maps.services.Status.OK) {
-              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-              // 결과값으로 받은 위치를 마커로 표시
-              var marker = new kakao.maps.Marker({
-                map: map,
-                position: coords
-              });
-        
-              // 인포윈도우로 장소에 대한 설명 표시
-              var infowindow = new kakao.maps.InfoWindow({
-                content: `<div style="width:150px; text-align:center; padding:6px 0;">${response.data.store}</div>`
-              });
-              infowindow.open(map, marker);
-        
-              // 지도의 중심을 결과값으로 받은 위치로 이동시키기
-              map.setCenter(coords);
-            }
+              // 정상적으로 검색이 완료됐으면 
+              if (status === kakao.maps.services.Status.OK) {
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                // 결과값으로 받은 위치를 마커로 표시
+                var marker = new kakao.maps.Marker({
+                  map: map,
+                  position: coords
+                });
+          
+                // 인포윈도우로 장소에 대한 설명 표시
+                var infowindow = new kakao.maps.InfoWindow({
+                  content: `<div style="width:150px; text-align:center; padding:6px 0;">${response.data.store}</div>`
+                });
+                infowindow.open(map, marker);
+          
+                // 지도의 중심을 결과값으로 받은 위치로 이동시키기
+                map.setCenter(coords);
+              }
+            })
           })
-        })
-        .catch(error => console.log(error));      
+          .catch(error => console.log(error));    
+    }  
+    else alert("로그인을 해주세요.")
   }
 
   const handleApplication = (e) => {
@@ -132,25 +135,33 @@ function DutchPayPage() {
   return (
     <div className='dutch'>
       <div className="list_dutchpay">
-        <select className="category_dutchpay" onChange={handleCategoryChange}>
-          <option value="">전체</option>
-          <option value="족발/보쌈">족발/보쌈</option>
-          <option value="찜/탕/찌개">찜/탕/찌개</option>
-          <option value="돈까스/회/일식">돈까스/회/일식</option>
-          <option value="피자">피자</option>
-          <option value="고기/구이">고기/구이</option>
-          <option value="야식">야식</option>
-          <option value="양식">양식</option>
-          <option value="치킨">치킨</option>
-          <option value="중식">중식</option>
-          <option value="아시안">아시안</option>
-          <option value="백반/죽/국수">백반/죽/국수</option>
-          <option value="도시락">도시락</option>
-          <option value="분식">분식</option>
-          <option value="카페/디저트">카페/디저트</option>
-          <option value="패스트푸드">패스트푸드</option>
-          <option value="채식">채식</option>
-        </select>
+        <div style={{display: 'flex'}}>
+          <select className="category_dutchpay" onChange={handleCategoryChange}>
+            <option value="">전체</option>
+            <option value="족발/보쌈">족발/보쌈</option>
+            <option value="찜/탕/찌개">찜/탕/찌개</option>
+            <option value="돈까스/회/일식">돈까스/회/일식</option>
+            <option value="피자">피자</option>
+            <option value="고기/구이">고기/구이</option>
+            <option value="야식">야식</option>
+            <option value="양식">양식</option>
+            <option value="치킨">치킨</option>
+            <option value="중식">중식</option>
+            <option value="아시안">아시안</option>
+            <option value="백반/죽/국수">백반/죽/국수</option>
+            <option value="도시락">도시락</option>
+            <option value="분식">분식</option>
+            <option value="카페/디저트">카페/디저트</option>
+            <option value="패스트푸드">패스트푸드</option>
+            <option value="채식">채식</option>
+          </select>
+
+          <div className='writingIcon_dutchpay' style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', width: '100%', marginRight: '30px', marginTop: '20px'}}>
+              <Link to="/postDutchpay">
+                <img src='assets/img/writingIcon.png' className='writingIcon' />
+              </Link>
+          </div>
+        </div>
 
       {filteredItems.slice(startIndex, endIndex).map((item, index) => (
         <div className="card_container">

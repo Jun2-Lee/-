@@ -39,20 +39,14 @@ function DetailSharing() {
       if (response.data.commentResponseDtoList) {
         const contentsReply = response.data.commentResponseDtoList.map(comment => comment.childCommentResponseDto.map(reply => reply.content));
         setReplyDto_(prevState => ({ ...prevState, reply: contentsReply }));
-        console.log(data);
       }
     })
     .catch((error) => {
       console.log(error);
     });
 }, [postId]);
-useEffect(() => {
-  console.log(replyDto_);
-}, [replyDto_]);
-console.log(replyDto_);
+
 const handlePostReply = () => {
-    
-  console.log(commentId);
   const headers = {
     'Content-Type': 'application/json'
   };
@@ -63,15 +57,13 @@ const handlePostReply = () => {
   axios
     .post(`http://3.36.144.128:8080/api/sharing/${postId}/${commentId}/childComment`, { content: replyDto_.reply }, { headers })
     .then((response) => {
-      console.log(response);
-      alert("등록되었습니다");
       setReplyDto_({ reply: '' }); //답글 작성 후 입력창 초기화
       // 답글 목록 업데이트
       axios
         .get(`http://3.36.144.128:8080/api/sharing/${postId}`)
         .then((response) => {
           setReplyDto_(response.data.commentResponseDtoList);
-          console.log(response.data);
+          window.location.replace("/")
         })
         .catch((error) => {
           console.log(error);
@@ -82,14 +74,6 @@ const handlePostReply = () => {
     });
 };
 
-useEffect(() => {
-  console.log(replyDto_);
-}, [replyDto_]);
-
-console.log(replyDto_);
-useEffect(() => {
-  console.log(commentId);
-}, [commentId]);
 return (
   <div className='replyBox' >
     <input
@@ -162,8 +146,6 @@ const handlePost = () => {
   axios
     .post(`http://3.36.144.128:8080/api/sharing/${postId}/comment`, { content: comment }, { headers })
     .then((response) => {
-      console.log(response);
-      alert("등록되었습니다");
       setCommentDto_({ comment: '' }); // 댓글 작성 후 입력창 초기화
 
                 // 댓글 목록 업데이트
@@ -171,7 +153,7 @@ const handlePost = () => {
                 .get(`http://3.36.144.128:8080/api/sharing/${postId}`)
                 .then((response) => {
                   setComments(response.data.commentResponseDtoList);
-                  console.log(response.data);
+                  window.location.reload();
                 })
                 .catch((error) => {
                   console.log(error);
@@ -200,11 +182,6 @@ const handlePost = () => {
               console.log(error);
             });
         }, [postId]);
-    
-        useEffect(() => {
-          console.log(commentDto_);
-        }, [commentDto_]);
-        console.log(commentDto_);
 
         return (
           <div>
@@ -212,7 +189,7 @@ const handlePost = () => {
   <div className="userCommentBox">
     {data.commentResponseDtoList && data.commentResponseDtoList.map((comment) => (
       <div key={comment.id} className="comment">
-             <p className="userProfile"><img src={comment.profileImage}/></p>
+             <p className="userProfile"><img src={comment.profileImage} style={{borderRadius: '50%'}}/></p>
         <p className="userName">{comment.author}님</p>
         <p className="userComment">{comment.content}</p>
 
@@ -228,7 +205,7 @@ const handlePost = () => {
         <div className="replyCommentBox"style={{marginTop:"-50px", marginLeft:"50px"}}>
           {comment.childCommentResponseDto && comment.childCommentResponseDto.map((reply) => (
             <div key={reply.id} className="reply"  style={{backgroundColor:"var(--sub_orange)"}}>
-              <p className="userProfileReply"><img src={reply.profileImage}/></p>
+              <p className="userProfileReply"><img src={reply.profileImage} style={{borderRadius: '50%'}}/></p>
               <p className="userNameReply">{reply.author}님</p>
               <p className="userCommentReply">{reply.content}</p>
               <button className="reply" style={{marginRight:"10px"}} onClick={() => setShowReplyInputBox(reply.id)}>
@@ -288,8 +265,13 @@ const handlePost = () => {
 
   const accessToken = localStorage.getItem('accessToken')
   useEffect(() => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-    axios.get(`http://3.36.144.128:8080/api/sharing/${postId}`)
+    if (localStorage.getItem('refreshToken') === 'null') {
+      alert("로그인을 해주세요.");
+      navigate('/login');
+    }
+    else {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+      axios.get(`http://3.36.144.128:8080/api/sharing/${postId}`)
       .then(response => {
         setData(response.data);
         //yyyy-mm-dd로 변환
@@ -299,6 +281,7 @@ const handlePost = () => {
         if (response.data.checkMine) setIsMine(true);
       })
       .catch(error => console.log(error));
+    }
   }, [postId]); //postId에 의존(postId에 따라 재실행)
 
   //게시물 삭제
@@ -306,7 +289,6 @@ const handlePost = () => {
   function handleDelete() {
     axios.delete(`http://3.36.144.128:8080/api/sharing/${postId}`)
       .then(response => {
-        console.log(response)
         alert("삭제되었습니다")
         navigate("/sharing")
       })
@@ -323,7 +305,7 @@ const handlePost = () => {
     e.preventDefault();
     axios.post(`http://3.36.144.128:8080/api/sharing/${postId}/like`)
       .then(response => {
-        console.log(response);
+
         alert("찜 목록은 마이페이지에서 확인하실 수 있습니다.");
       })
       .catch(error => console.log(error))
@@ -333,7 +315,7 @@ const handlePost = () => {
     e.preventDefault();
     axios.post(`http://3.36.144.128:8080/api/sharing/${postId}/finish`) 
       .then(response => {
-        console.log(response);
+
         alert(response.data);
         setFinished(true);
       })
@@ -401,7 +383,7 @@ const handlePost = () => {
                 <div className="deadline_sharing">
                   <label htmlFor="detailform_sharing">사는 동네</label>
                   <div className="DeadlineSharing">
-                    {data.dong} {data.gu}
+                    {data.gu} {data.dong} 
                   </div>
                 </div>
                   
@@ -410,8 +392,6 @@ const handlePost = () => {
 
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <div className="ingredient_sharing">
-          <label id='Ingredient_sharing'>재료상태</label>
-          <br></br>
           <div className="Ingredient_sharing_content">
             {data.content}
         </div>
@@ -426,19 +406,14 @@ const handlePost = () => {
       </div>
 
 
-      <div className='sharing_comment'>
-                          
-                          <Post commentId={commentId}/>
-                        
-                    </div>
+      <div className='sharing_comment' style={{display: 'flex', justifyContent: 'center', margin: '30px'}}>
+        <div>
+          <Post commentId={commentId}/>
+        </div>
+      </div>
+
+      </div>
     </div>
-
-  
-
-</div>
-
-    
-  
   )
 }
 

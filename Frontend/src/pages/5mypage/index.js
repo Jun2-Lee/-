@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CategoryBar2 from "../../components/categoryBar2";
 import "./index.css";
 import axios from 'axios'
 
 function MyPage() {
+  
+  const navigate = useNavigate();
+
   const[data, setData] = useState('');
 
   function formatDate(dateString) {
@@ -15,8 +19,13 @@ function MyPage() {
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}.${month}.${day}`;
   }
-  
+  /*접근 제한 */
   useEffect(() => {
+    if (localStorage.getItem('refreshToken') === 'null') {
+      alert("로그인을 해주세요.");
+      navigate('/login');
+    }
+
     const accessToken = localStorage.getItem('accessToken')
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
     axios.get('http://3.36.144.128:8080/api/mypage')
@@ -125,10 +134,12 @@ function MyPage() {
 
         <div className="mypage_container">
           <label id="mypage_label">쪽지함</label>
+          {/* mypage api의 response에 쪽지함이 없어서 일단 주석 처리
           <div className="participation_list"></div>
           <div className="participation_list"></div>
           <div className="participation_list"></div>
           <div className="participation_list"></div>
+          */}
         </div>
 
         <div className="mypage_container">

@@ -34,7 +34,7 @@
   height: 1.938rem;
   margin-right: 30px;
   appearance: none;
-  background: ("../../../public/assets/img/toggleIconOpen.png") no-repeat 6% 50%/0.938rem auto;
+  background: url("../../../public/assets/img/toggleIconOpen.png") no-repeat 6% 50%/0.938rem auto;
   background-size: 1rem;
   background-color: var(--sub_orange);
   padding-left: 2.1rem;

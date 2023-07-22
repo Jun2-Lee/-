@@ -10,7 +10,7 @@
   text-align: right;
 }
 
-.groupBuying_container .title, .category, .category2, .productName, .link, .totalGroupBuying, .numPeople_groupBuying, .deadlineGroupBuying {
+.groupBuying_container .title, .productName, .link, .totalGroupBuying, .numPeople_groupBuying, .deadlineGroupBuying {
     background-color: var(--sub_orange);
     border: none;
     border-radius: 5px;

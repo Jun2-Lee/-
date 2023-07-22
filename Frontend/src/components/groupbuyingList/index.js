@@ -33,9 +33,9 @@ export default function GroupBuyingList({startIndex, endIndex, category}) {
       return `${differenceInHours}시간 후 마감`;
     }
   };
-
+  console.log(items)
   //카테고리
-  const filteredItems = category ? items.filter(item => item.category === category) : items;
+  const filteredItems = category ? items.filter(item => item.product === category) : items;
 
   return (
     <div className='groupbuying_list'>

@@ -1,40 +1,54 @@
 import React, {useState, useEffect} from "react";
 import "./Layout.css";
-import ProfileGoogle from "./userInfo";
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import axios from 'axios'
 
-//import { profileImage, nickName } from "./kakao_login/profile";
-
-
 function Layout() {
-  const [hover, setHover] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('refreshToken') === 'null' ? false : true);
   
   const navigate = useNavigate();
+  const [image, setImage] = useState('');
+  const [nickname, setNickname] = useState('');
+
+  const LoginCheck = () => {
+    setIsLoggedIn(localStorage.getItem('refreshToken') === 'null' ? false : true);
+  };
+
+  useEffect(() => {
+    LoginCheck();
+    if (isLoggedIn) {
+      const accessToken = localStorage.getItem('accessToken');
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      axios.get('http://3.36.144.128:8080/api/mypage')
+        .then((res) => {
+          console.log(res.data)
+          setImage(res.data.image);
+          setNickname(res.data.nickname);
+        })
+        .catch((err) => console.log(err))
+    }
+  }); // isLoggedIn 변경 시에만 useEffect 내부 코드 실행
+
   const handleLogout = (e) => {
     e.preventDefault();
-    axios.post("http://3.36.144.128:8080/api/auth/logout", 
-            {
-            })
+    const accessToken = localStorage.getItem('accessToken');
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    axios.post("http://3.36.144.128:8080/api/auth/logout")
     .then(function(response) {
       console.log(response);
+      localStorage.setItem('accessToken', 'null');
+      localStorage.setItem('refreshToken', 'null');
+
+      LoginCheck();
       navigate('/');
-      setIsLoggedIn(false);
     }) .catch(function(error) {
       console.log(error)
     })
   }
-
-  //const isLoggedIn = localStorage.getItem('accessToken') !== null;
-  //console.log(isLoggedIn)
-
+  
   return (
     <>
-      <header
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
+      <header>
         <Link to="/">
           <img className="header_logoImg" src="/assets/img/logo.png" />
         </Link>
@@ -54,68 +68,43 @@ function Layout() {
           </Link>
         </nav>
         
-        <div className="header_profile">
-          <img
-            className="header_profileImg"
-            /*src="/assets/img/default_profile.png"*/
-            
-          />
+        
 
           <div>
-                {isLoggedIn ? (
-                  <p>로그인 되었습니다.</p>
-                ) : (
-                  <p>로그인을 해주세요.</p>
-                )}
+            {isLoggedIn ? (
+              <div className="header_profile">
+                <img
+                  className="header_profileImg"
+                  src={image}
+                />
+                <Link className="profile_nickName" to="/editProfile">
+                  {nickname} 님
+                </Link>
+ 
+                <Link className="profile_link" id="mypageLink" to="/myPage">
+                  마이페이지
+                </Link>
+                <Link className="profile_link" id="logoutLink" to='/' onClick={handleLogout}>
+                  로그아웃
+                </Link>
+                <Link className="profile_link" to="/chatting">
+                  쪽지
+                </Link>
               </div>
+            ) : 
+            (
+              <div className="header_profile_2">
+                <Link className="profile_link_2" id="signupLink" to="/signup">
+                  회원가입
+                </Link>
+                <Link className="profile_link_2" id="loginLink" to='/login' style={{marginLeft: '1rem'}}>
+                  로그인
+                </Link>
+              </div>
+            )}
 
-          <Link className="profile_nickName" to="/editProfile">
-            이름
-          </Link>
-          <Link className="profile_link" id="mypageLink" to="/myPage">
-            마이페이지
-          </Link>
-          <Link className="profile_link" id="logoutLink" to='/' onClick={handleLogout}>
-            로그아웃
-          </Link>
-          <Link className="profile_link" to="/chatting">
-            쪽지
-          </Link>
         </div>
-
-
       </header>
-
-      <div
-        className="hover_area"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        {hover === true && (
-          <div className="hover">
-            <article className="hover_sharing">
-              <Link to="/postSharing">나눔글 등록</Link>
-              <Link to="/sharing">나눔글 목록</Link>
-            </article>
-            <article className="hover_dutchPay">
-              <Link to="/postDutchpay">n빵 등록</Link>
-              <Link to="/dutchPay">n빵 목록</Link>
-            </article>
-            <article className="hover_groupBuying">
-              <Link to="/postGroupBuying">공동구매 등록</Link>
-              <Link to="/groupBuying">공동구매 목록</Link>
-            </article>
-            <article className="hover_myPage">
-              <Link to="/myPage">내 프로필</Link>
-              <Link to="/chatting">쪽지함</Link>
-              <Link to="/myWriting">내가 쓴 글</Link>
-              <Link to="/myApplication">신청 목록</Link>
-              <Link to="/myClipping">찜 목록</Link>
-              <Link to="/calendar">캘린더</Link>
-            </article>
-          </div>
-        )}
-      </div>
 
       <main>
         <Outlet />
